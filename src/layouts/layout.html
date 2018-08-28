@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US"
+	itemscope 
+	itemtype="http://schema.org/Blog" 
+	prefix="og: http://ogp.me/ns#" >
+<head>
+    <title>{{title}} | {{company}}</title>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="{{ description }}" />
+    <meta name="keywords" content="{{ keywords }}" />
+    <meta name="Distribution" content="Global" />
+    <meta name="Rating" content="General" />
+    <meta name="Robots" content="INDEX,FOLLOW" />
+    <meta name="author" content="{{ company }}" />
+    <meta name="Revisit-after" content="31 Days" />
+    <meta name="application-name" content="{{ company }}">
+    <link rel="canonical" href="https://docodethatmatters.com" />
+    <meta property="og:title" content="{{title}} | {{company}}" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:url" content="https://docodethatmatters.com" />
+    <meta property="og:site_name" content="{{company}}" />
+    <meta property="og:description" content="{{desc}}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{{title}} | {{company}}" />
+    <meta name="twitter:description" content="{{desc}}" />
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="https://unpkg.com/picnic">
+  </head>
+  <body>
+
+  <nav>
+    <a href="#" class="brand">
+      <span>Do Code<div class='small-device'></div> That Matters</span>
+    </a>
+
+    <!-- responsive-->
+    <input id="bmenub" type="checkbox" class="show">
+    <label for="bmenub" class="burger pseudo button">&#9776; Menu</label>
+    <!--<div class="menu">
+      <a href="#" class="pseudo button icon-picture">Demo</a>
+      <a href="#" class="button blackButton">Plugins</a>
+    </div>-->
+  </nav>
+
+    <main>
+ <ul class="recent">
+  {{#each posts }}
+    <li><a href="/{{ path }}">{{ title }}</a></li>
+  {{/each}}
+</ul>
+
+    {{{ contents }}}
+    </main>
+    <script type="text/javascript" >
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-93963699-1', { 'cookieDomain': 'docodethatmatters.com' } );
+      // Plugins
+      ga('require', 'displayfeatures');ga('require', 'ec');ga('require', 'linkid', 'linkid.js');ga('require', 'outboundLinkTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+    <script>
+    document.onkeydown = function(e){
+      if (e.keyCode == 27) {
+        var mods = document.querySelectorAll('.modal > [type=checkbox]');
+        [].forEach.call(mods, function(mod){ mod.checked = false; });
+      }
+    }
+    </script>
+  </body>
+</html>

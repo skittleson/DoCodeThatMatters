@@ -1,0 +1,25 @@
+{
+  "name": "static-site-example",
+  "private": true,
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "jstransformer-nunjucks": "^0.5.0",
+    "metalsmith": "^2.1.0",
+    "metalsmith-collections": "^0.9.0",
+    "metalsmith-css-packer": "^0.2.0",
+    "metalsmith-drafts": "0.0.1",
+    "metalsmith-html-minifier": "^3.0.0",
+    "metalsmith-in-place": "^4.2.0",
+    "metalsmith-layouts": "^1.4.1",
+    "metalsmith-markdown": "^0.2.1",
+    "metalsmith-permalinks": "^0.5.0"
+  },
+  "devDependencies": {
+    "clean-css": "^4.2.1",
+    "metalsmith-clean-css": "^6.0.0",
+    "metalsmith-concat": "^6.0.0",
+    "metalsmith-filedata": "^0.1.0",
+    "metalsmith-sass": "^1.5.1",
+    "metalsmith-uglify": "^2.3.0"
+  }
+}
