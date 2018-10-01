@@ -6,7 +6,6 @@ var assets = require("metalsmith-assets");
 var sitemap = require("metalsmith-mapsite");
 var layouts = require("metalsmith-layouts");
 var inplace = require("metalsmith-in-place");
-var jstransformer = require("metalsmith-jstransformer");
 
 const siteMeta = {
   domain: "https://docodethatmatters.com",

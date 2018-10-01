@@ -2,16 +2,14 @@
 layout: index.hbs
 ---
 
-New home page
-
-{{company}}
-
-
-<ul class="unstyledUl">
-    {{#each articles}}
-    <li>
-        <img src='{{this.image}}' style='width:100px;' />
-        <a href="{{this.path}}">{{this.title}}</a> - {{this.desc}}
-    </li>
-    {{/each}}
-</ul>
+<div class="page">
+    <ul class="unstyledUl">
+        {{#each articles}}
+        <li>
+            <img src='{{this.image}}' style='width:100px;' />
+            <a href="{{this.path}}">{{this.title}}</a> - {{this.desc}}
+            <hr />
+        </li>
+        {{/each}}
+    </ul>
+</div>
