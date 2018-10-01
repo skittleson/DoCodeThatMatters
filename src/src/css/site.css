@@ -18,12 +18,16 @@ main {
 nav {
     background-color: white;
 }
+
 nav .brand {
     font-size: 2em;
     word-wrap: break-word;
 }
 
-.small-device {display:none;}
+.small-device {
+    display: none;
+}
+
 @media only screen and (max-width: 600px) {
     nav .brand {
         font-size: 1em;
@@ -37,16 +41,48 @@ nav .brand {
 .blackButton {
     background: #333;
 }
+
 main {
     padding: 2%;
 }
 
-section {
+/* article {
     margin: 0 auto;
     max-width: 800px;
-}
+}*/
 
 img {
     max-width: 100%;
     height: auto;
+}
+
+.postMain {
+    float: left;
+    margin: 0 1.5%;
+    width: 63%;
+}
+
+.postAside {
+    padding-top: 3em;
+    float: right;
+    margin: 0 1.5%;
+    width: 30%;
+}
+
+@media (max-width: 800px) {
+    .postMain {
+        float: none !important;
+        width: 100% !important;
+    }
+    .postAside {
+        padding-top: 0 !important;
+        float: none !important;
+        width: 100% !important;
+    }
+}
+
+.unstyledUl {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
 }

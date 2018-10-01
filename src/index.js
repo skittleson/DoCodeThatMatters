@@ -1,54 +1,68 @@
-var Metalsmith = require("metalsmith");
+var metalsmith = require("metalsmith");
 var markdown = require("metalsmith-markdown");
-var layouts = require("metalsmith-layouts");
 var permalinks = require("metalsmith-permalinks");
-var drafts = require("metalsmith-drafts");
-var concat = require("metalsmith-concat");
-var uglify = require("metalsmith-uglify");
-var htmlMinifier = require("metalsmith-html-minifier");
-var cleanCSS = require("metalsmith-clean-css");
-var collections = require('metalsmith-collections');
+var collections = require("metalsmith-collections");
+var assets = require("metalsmith-assets");
+var sitemap = require("metalsmith-mapsite");
+var layouts = require("metalsmith-layouts");
+var inplace = require("metalsmith-in-place");
+var jstransformer = require("metalsmith-jstransformer");
 
-Metalsmith(__dirname)
+const siteMeta = {
+  domain: "https://docodethatmatters.com",
+  name: "Do Code That Matters",
+  description: "Personal blog with code, 3d printing, diy",
+  rootpath: __dirname
+};
+
+metalsmith(__dirname)
   .metadata({
-    company: "Do Code That Matters",
-    description: "",
-    keywords: "",
-    url: "https://docodethatmatters.com"
+    company: siteMeta.name,
+    description: siteMeta.description,
+    keywords: "maker,code,diy",
+    url: siteMeta.domain
   })
-  .use(drafts())  
-  .use(collections({          // group all blog posts by internally
-    posts: 'posts/*.md'       // adding key 'collections':'posts'
-  }))                         // use `collections.posts` in layouts
-  .use(markdown())            // transpile all md into html
-  .use(permalinks({           // change URLs to permalink URLs
-    relative: true           // put css only in /css
-    , pattern: ":title"       //great for blogs
-  }))
+  .clean(true)
+  .source("src")
   .use(
-    layouts({
-      engine: "handlebars"
-    })
-  )
-  .use(collections({
-    posts: {
-      articles: 'posts/*.md',
-      sortBy: 'date',
-      reverse: true
-      },
-    }))
-  .source("./src")
-  .destination("./build")
-  .use(uglify())
-  .use(htmlMinifier())
-  .use(
-    cleanCSS({
-      files: "css/**/*.css",
-      cleanCSS: {
-        rebase: true
+    collections({
+      articles: {
+        pattern: "posts/**/*.md",
+        sortBy: "date",
+        reverse: true
       }
     })
   )
-    .build(function(err, files) {
-    if (err) { throw err; }
+  .use(
+    markdown({
+      gfm: true,
+      tables: true
+    })
+  )
+  .use(
+    assets({
+      source: "src/images/",
+      destination: "./images"
+    })
+  )
+  .use(
+    permalinks({
+      relative: true,
+      pattern: ":title"
+    })
+  )
+  .use(layouts({ engine: "handlebars" }))
+  .use(inplace())
+  .use(
+    sitemap({
+      // generate sitemap.xml
+      hostname: siteMeta.domain + (siteMeta.rootpath || ""),
+      omitIndex: true
+    })
+  )
+  .destination("build")
+  .build(function(err) {
+    if (err) {
+      throw err;
+    }
   });
