@@ -1,43 +1,45 @@
 ---
 layout: post.hbs
 title: Software Engineering Lessons
-keywords: softare engineering,code reviews
-date: 2018-10-1
-desc: In the field notes with lessons learned from a software engineer.
+keywords: software engineering, code reviews
+date: 2018-10-15
+desc: In the field notes and lessons learned from as a software engineer.
 image: https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80
-imageAlt: Fields notes from a software engineer
+imageAlt: Fields notes as a software engineer
 priority: 0.9
 ---
 
-My year's goal was to put the lessons I've learned into a format that is easily referenced and consumed.
+My year's goal was to put the lessons I've learned into a format that is easily referenced and consumed. This is still a work in progress.
+
+## Do Code That Matters
+
+I truly believe in this. **Before you start writing any code, make sure it matters to you, an organization, and/or the community.** Period. Avoid creating useless apps. It can be hard to determine that sometimes.
+
+---
 
 ## Do Code Reviews
 
-Code reviews are important to keep you from making mistakes.  It's also an excellent time to learn from your peers.
+Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show interesting sections. It really comes down to this: "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stackoverflow founder.
+
+Showing your code should be as fun. It's a judgement free zone.
 
 ---
 
 ## Process can be your enemy
 
-Creating process is one of the first notation's that a software engineer wants to do to solve a problem.
+Creating process is one of the first "go to" that a software engineer wants to do to solve a problem. **Okay, but lets ask a few more non-technical questions**
 
-- Is a new process really needed?
-- Are you solving the symptom of a bigger problem?
-- How much resources will it save?
+- Is a new process really needed? Can you do it manually for awhile? It may not need to be automated.
+- Are you solving the symptom of a bigger problem? Address the bigger problem first.
+- How much resources will it save? If it takes 1 day to run a 5 minute task then runs rarely, it's likely not needed. It's about efficient and time resource management.
 
-Give yourself research and discovery time before putting in that process. Look for all the edges cases.  **Creating cogs in the machine should be carefully considered** as it may add a unwanted dependencies.
-
----
-
-## Do Code That Matters
-
-I truly believe in this. Before you start writing any code, make sure it matters to you, an organization, and/or the community.
+Give yourself research and discovery time before creating process. Look for all the edges cases.  **Creating cogs in the machine should be carefully considered**.
 
 ---
 
 ## Customer Provided Solution
 
-A solution is provided to you typically by the customer, stakeholders, or both.  These could be a red-heering solution.  Remember, you are the expert in your domain.  There is a reason why they are giving you the solution. It's for validation. Do the research to determine if it's the correct solution.
+A solution is provided to you typically by the customer, stakeholders, or both.  This could be an entire solution.  Remember, you are the expert in your domain.  There is a reason why they are giving you the solution. It's for validation. Do the research to determine if it's the correct solution. Ask for all the notes on why decisions were made. Be diligent on understanding every detail of given solution.
 
 ---
 
@@ -55,7 +57,7 @@ You can't control the business decisions management has made. Or what a client t
 
 ## Speak Up!
 
-Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! Make it easy by stating a fact pattern; "I would like foo because of the fact of bar".
+Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! Make it easy by stating a fact pattern; "I would like A,B,C because of the fact of X,Y,Z".
 
 ---
 
@@ -188,7 +190,7 @@ Working in a software company with multiple software teams? Try to work for anot
 
 ## A "Not To Do's" List
 
-Empty your mind of what you would like to do.  This will help you keep focus on what needs to be done now.
+Empty your mind of what you would like to do. This will help you keep focus on what needs to be done now.
 
 ---
 

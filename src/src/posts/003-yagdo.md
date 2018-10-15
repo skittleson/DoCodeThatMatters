@@ -13,22 +13,21 @@ Another tutorial for building a garage door opener with a raspberry pi. I've lef
 
 ## Goals
 
-*   Use Docker so it can easily be shared/restored/etc!
-*   A simple web API for control
-    *   Use nodejs as much as possible for the build.
-*   Toggle garage door
-*   Status of garage door
-*   Toggle light switch on the garage door
-*   (optional) cheap camera to see what's going on.
+- Use Docker so it can easily be shared/restored/etc!
+- A simple web API for control
+  - Use nodejs as much as possible for the build.
+- Toggle garage door
+- Status of garage door
+- Toggle light switch on the garage door
+- (optional) cheap camera to see what's going on.
 
 ## What you will need
 
-*   Relay modules. I only needed one - [amazon_link asins='B072BY3KJF' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='6cbde9fe-24eb-11e8-9b42-d982a122532a']
-*   Cheap containers to throw everything into - [amazon_link asins='B0009P67Y4' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='ebd2db78-249d-11e8-8f70-393eeed60487']
-*   A replacement switch for garage door opener - [amazon_link asins='B000F5KF1O' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='a94c37a5-249d-11e8-b6c7-21ed03266eb6']
-*   Using RPi 2 over a RPi 3\. Bluetooth seems to cause communication problems with the garage door openers. [amazon_link asins='B00LPESRUK' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='f67aafc1-24eb-11e8-bf26-9f336d65236e']
-*   Low power wifi to prevent low interference [amazon_link asins='B003MTTJOY' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='0ce9f120-24ec-11e8-934c-23a7bb74c0de']
-*   (optional) great camera for the price! This one has 4 mics and the camera has two zoom modes. [amazon_link asins='B0735KNH2X' template='DCTM-ProductLink' store='dctm-20' marketplace='US' link_id='3abcae4f-2582-11e8-a640-3780fc8261bf']
+- Relay modules. I only needed one - [Channel DC 5V Relay Module for Arduino](https://amzn.to/2RP4zNC)
+- Cheap containers to throw everything into - https://amzn.to/2NEdWwB
+- A replacement switch for garage door opener - [Liftmaster 41A5273-1 Multi-Function Control Panel](https://amzn.to/2pShUrK)
+- [Raspberry Pi 3](https://amzn.to/2RMxQc5)
+- (optional) great camera for the price! This one has 4 mics and the camera has two zoom modes. [Sony Play Station Eye Camera for PS3](https://amzn.to/2CIAmvF)
 
 ## Research & Discover
 
@@ -63,10 +62,10 @@ Test it
 
 Other api commands
 
-*   Status: /api/garage/status
-*   Garage Door Toggle: /api/garage/toggle
-*   Light Toggle: /api/light/toggle
-*   Exit: /api/exit
+- Status: /api/garage/status
+- Garage Door Toggle: /api/garage/toggle
+- Light Toggle: /api/light/toggle
+- Exit: /api/exit
 
 That's it!
 

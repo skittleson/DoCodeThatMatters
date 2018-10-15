@@ -1,15 +1,20 @@
 ---
 layout: index.hbs
 ---
+<header class="hero">
+    <div class="center-content">
+        <h1>Write Code.</h1>
+        <h3>A longer subtitle but still important</h3>
+    </div>
+</header>
+<main>
 
-<div class="page">
-    <ul class="unstyledUl">
+    <div class="page">
         {{#each articles}}
-        <li>
-            <img src='{{this.image}}' style='width:100px;' />
-            <a href="{{this.path}}">{{this.title}}</a> - {{this.desc}}
-            <hr />
-        </li>
+        <a href="{{this.path}}"><img src='{{this.image}}' style='width:100%;' alt="{{this.desc}}" /></a>
+        <h1><a href="{{this.path}}">{{this.title}}</a></h1>
+        Published:<span title='{{this.date}}'>{{formatDate this.date}}</span><br />
+        {{this.desc}} <a href="{{this.path}}">read more...</a>
+        <hr />
         {{/each}}
-    </ul>
-</div>
+    </div>
