@@ -168,7 +168,7 @@ Google Keep, OneNote, markdown files, text doc, or just a notebook. It's an inva
 
 > [Rules of engagement](https://en.wikipedia.org/wiki/Rules_of_engagement)  (ROE) are the internal rules or directives among military forces (including individuals) that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied
 
-This concept of **documenting knowledge to a solution for a likely problem is critical in teams**.  Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
+This concept of **documenting knowledge to a solution for a common problem is critical in teams**.  Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
 
 ---
 
@@ -232,6 +232,6 @@ You only get better this way. Examples:
 - [xkcd - simplewriter](https://xkcd.com/simplewriter/) (Keep content simple)
 - [Working Effectively with Legacy Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=as_li_ss_tl?ie=UTF8&qid=1515774169&sr=8-1&keywords=michael+feathers&linkCode=ll1&tag=dctm-20&linkId=c7138372cb34f5984b7e2d06dcf3d00a)
 - [https://www.kalzumeus.com/greatest-hits/](https://www.kalzumeus.com/greatest-hits/)
--[https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
+- [https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 
 Sources reference may or may not Amazon affiliated (cuz that's where I get my books!). You can also donate to my Ethereum wallet @ 0x497ac7cfB4043931288686de69ca7542f53E5a51
