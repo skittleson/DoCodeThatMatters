@@ -19,13 +19,13 @@ I truly believe in this. **Before you start writing any code, make sure it matte
 
 ## Do Code Reviews
 
-Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show interesting sections. It really comes down to this: "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stackoverflow founder.
+Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show interesting sections. It really comes down to this: "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stack Overflow founder.
 
 Showing your code should be as fun. It's a judgement free zone.
 
 ---
 
-## Process can be your enemy
+## Process can be Your Enemy
 
 Creating process is one of the first "go to" that a software engineer wants to do to solve a problem. **Okay, but lets ask a few more non-technical questions**
 
@@ -34,6 +34,11 @@ Creating process is one of the first "go to" that a software engineer wants to d
 - How much resources will it save? If it takes 1 day to run a 5 minute task then runs rarely, it's likely not needed. It's about efficient and time resource management.
 
 Give yourself research and discovery time before creating process. Look for all the edges cases.  **Creating cogs in the machine should be carefully considered**.
+
+---
+## Automate Routine Trivial Tasks
+
+// TODO examples!
 
 ---
 
@@ -69,7 +74,7 @@ Turn off instant notifications, phone, email and limit distracting websites. Onc
 
 ## Play Music
 
-It may seem like the opposite of "Silence the Distractions" but it seems to work. Find soothing and/or rhythmic music to play while working. It will keep other distractions away. I've used a lot of youtube channels but I like tracks from Carl Franklin @ dot net rocks the most. Here is a link to it: [http://mtcb.pwop.com/](http://mtcb.pwop.com/) .
+It may seem like the opposite of "Silence the Distractions" but it seems to work. Find soothing and/or rhythmic music to play while working. It will keep other distractions away. Spotify has a nice UI for genres & moods. I also like tracks from Carl Franklin @ dot net rocks: [Music To Code By](http://mtcb.pwop.com/) .
 
 ---
 
@@ -93,7 +98,7 @@ Take time to reflect upon your code. Look for improvements to shorten and enhanc
 
 ## Iterate
 
-Code that lasts can take more than one go. **Write code like an essay. First one is sloppy but works. The editing is where the magic comes together.**
+Code that lasts can take more than one go. **Write code like an essay. First one works but the editing is where the magic comes together.** 
 
 ---
 
@@ -123,15 +128,13 @@ Is the code hard to read? Are you stuck? Start fresh. A great benefit of source 
 
 ## Walk away
 
-Another effective strategy for solving a problem is by walking away from it. Go grab a cup of coffee. You will come back with a different point of view on how to solve it. There have been many of times where I've been walked away and the solution just comes to me. It feels magical. Your brain is reflecting on what just happened. It's a rewarding feeling for sure.
+Another effective strategy for solving a problem is by walking away from it. Grab a cup of coffee. You will come back with a different perspective. A little distance from the problem can help get that high level view again.  We've all got stuck in the weeds before.
 
 ---
 
 ## Rubber Duck
 
-Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a rubber duck.  Describe the problem and what the desired outcome is. Reference: https://en.wikipedia.org/wiki/Rubber\_duck\_debugging
-
-Picking up any programming book at this point might give you a different perspective as well. Even thumbing through a book will give you some ideas on how to solve a problem.
+Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a [rubber duck](https://en.wikipedia.org/wiki/Rubber\_duck\_debugging).  Describe the problem and what the desired outcome is.
 
 ---
 
@@ -149,13 +152,23 @@ Your code will have bugs. Projects will be built be and never used. Users won't 
 
 ## Learn from others successes and mistakes
 
-We always read about the successes. Learning how someone made a mistake is more important.
+We always read about the successes. Learning how someone made a mistake is more important.  Know the who was involved, why it was needed, and what was done.  Isolate the mistakes then move add it to your project readme to consider.
 
 ---
 
 ## Personal Resource Center (a well-organized notebook)
 
-Evernote, OneNote, markdown, text doc, or just a notebook. It's an invaluable habit to save blogs links, research, configurations, and a place to dump knowledge. I compared it to my version of StackOverflow answers. **Save the information you don't want to memorize but still need**. To start out, store by topic and subtopic. The organizational structure will follow. One of my favorite published notebooks is a pen testing cheat sheets called [Red Team Field Manual.](https://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&tag=dctm-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1494295504&linkId=7fcd5b4ae321d49ccf19bbf597230a33) Much more from [awesome-cheatsheets](https://github.com/detailyang/awesome-cheatsheet#back-end-development). **Develop your own cheat sheets**.
+Google Keep, OneNote, markdown files, text doc, or just a notebook. It's an invaluable habit to save blogs links, research, configurations, and a place to dump knowledge. I compared it to my version of StackOverflow answers. **Save the information you don't want to memorize but still need**. To start out, store by topic and subtopic. The organizational structure will follow. One of my favorite published notebooks is a pen testing cheat sheets called [Red Team Field Manual.](https://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&tag=dctm-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1494295504&linkId=7fcd5b4ae321d49ccf19bbf597230a33) Much more from [awesome-cheatsheets](https://github.com/detailyang/awesome-cheatsheet#back-end-development). **Develop your own cheat sheets**.
+
+---
+
+## Identify and Document Flight Rules
+
+> [Flight Rules](https://en.wikipedia.org/wiki/Flight_rules) are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why.
+
+> [Rules of engagement](https://en.wikipedia.org/wiki/Rules_of_engagement)  (ROE) are the internal rules or directives among military forces (including individuals) that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied
+
+This concept of **documenting knowledge to a solution for a likely problem is critical in teams**.  Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
 
 ---
 
@@ -173,7 +186,7 @@ That means; a comfortable chair, keyboard, mouse, software, cell phone & desk. *
 
 ## Work with different people
 
-Working in a software company with multiple software teams? Try to work for another one or contribute to open source. **Working with another team can give insight on how teams collaborate differently.**
+Working in a company with multiple software development teams? Try to work for another one or contribute to open source. **Working with other individuals can give insight on how to collaborate differently.**
 
 ---
 
@@ -182,9 +195,9 @@ Working in a software company with multiple software teams? Try to work for anot
 **Success follows people who create and follow a work routine.** Anybody can do this with a little bit of willpower and patience. Here is mine:
 
 - Deep work for the first 2 hours.
-- 1 hr of review and communication follow up.
+- 1 hr of review, communication follow up, and meetings.
 - Lunch. 2 hrs of deep work.
-- 1 hr for review and communication follow up.
+- 1 hr for review, communication follow up, and meetings
 
 ---
 
@@ -219,5 +232,6 @@ You only get better this way. Examples:
 - [xkcd - simplewriter](https://xkcd.com/simplewriter/) (Keep content simple)
 - [Working Effectively with Legacy Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=as_li_ss_tl?ie=UTF8&qid=1515774169&sr=8-1&keywords=michael+feathers&linkCode=ll1&tag=dctm-20&linkId=c7138372cb34f5984b7e2d06dcf3d00a)
 - [https://www.kalzumeus.com/greatest-hits/](https://www.kalzumeus.com/greatest-hits/)
+-[https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 
 Sources reference may or may not Amazon affiliated (cuz that's where I get my books!). You can also donate to my Ethereum wallet @ 0x497ac7cfB4043931288686de69ca7542f53E5a51

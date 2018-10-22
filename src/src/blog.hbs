@@ -1,27 +1,23 @@
 ---
 layout: index.hbs
-title: Home | Do Code That Matters
+title: Blog
+description: Collection of blog posts
 ---
-
 <div class="page">
-
+    <br/>
+    {{#each articles}}
     <div class="container-flex">
         <div>
-            <h1>What's New?</h1>
-            {{#each articlesRecent}}
+            <a href="{{this.path}}"><img src='{{this.image}}' style='max-width:20em;' alt="{{this.desc}}" /></a>
+        </div>
+        <div class="blog-item">
             <p>
                 <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
                 <br />
                 {{this.desc}} <br /> <a class="read-more" href="{{this.path}}">Read More</a>
             </p>
-            {{/each}}
-        </div>
-        <div>
-            <br /><br />
-            <img style="min-width:300px" src="images/agile.jpg" />
-            <br />
-            {{{importFile '\partials\contactInfo.html'}}}
         </div>
     </div>
-
+    <hr />
+    {{/each}}
 </div>

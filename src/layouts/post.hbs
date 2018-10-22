@@ -42,7 +42,7 @@
     <input id="bmenub" type="checkbox" class="show">
     <label for="bmenub" class="burger pseudo button">&#9776; Menu</label>
     <div class="menu">
-      <a href="/about" class="pseudo button">About</a>
+      {{{importFile '\partials\navItems.html'}}}
     </div>
   </nav>
   <main class="postMain">
@@ -60,9 +60,7 @@
   <aside class="postAside">
     <b>Resources</b>
     <br />
-    Twitter: <a href="https://twitter.com/skittleson">@skittleson</a><br />
-    GitHub: <a href="https://github.com/skittleson">skittleson</a><br />
-    <br />
+    {{{importFile '\partials\contactInfo.html'}}}
     <b>Latest Posts</b>
     <ul class="unstyledUl">
       {{#each articles}}

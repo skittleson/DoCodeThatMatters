@@ -6,13 +6,11 @@ var assets = require("metalsmith-assets");
 var sitemap = require("metalsmith-mapsite");
 var layouts = require("metalsmith-layouts");
 var inplace = require("metalsmith-in-place");
-var autotoc = require("metalsmith-autotoc");
-var wordcount = require("metalsmith-word-count");
 var metallic = require("metalsmith-metallic");
-var highlighter = require("highlighter");
-var Handlebars = require("handlebars");
+var handlebars = require("handlebars");
+var fs = require('fs');
 
-Handlebars.registerHelper("json", function(context) {
+handlebars.registerHelper("json", function(context) {
   const cache = new Set();
   return JSON.stringify(context, function(key, value) {
     if (typeof value === "object" && value !== null) {
@@ -42,7 +40,7 @@ const monthNames = [
   "December"
 ];
 
-Handlebars.registerHelper("formatDate", function(date) {
+handlebars.registerHelper("formatDate", function(date) {
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();
@@ -50,10 +48,21 @@ Handlebars.registerHelper("formatDate", function(date) {
   return day + " " + monthNames[monthIndex] + " " + year;
 });
 
+handlebars.registerHelper("importFile", function(file) {
+  let contents;
+  try {
+    contents = fs.readFileSync(__dirname + file, 'utf8');
+  } catch(error) {
+    contents = error.message
+  }  
+  return contents;
+});
+
 const siteMeta = {
   domain: "https://docodethatmatters.com",
   name: "Do Code That Matters",
-  description: "Personal blog with code, 3d printing, diy",
+  description: "Personal blog about software development, 3d printing, diy, and c#",
+  keywords: "maker,code,diy,c#,csharp,3d printing",
   rootpath: __dirname
 };
 
@@ -61,8 +70,8 @@ metalsmith(__dirname)
   .metadata({
     company: siteMeta.name,
     description: siteMeta.description,
-    keywords: "maker,code,diy",
-    url: siteMeta.domain
+    url: siteMeta.domain,
+    keywords: siteMeta.keywords
   })
   .clean(true)
   .source("src")
@@ -72,15 +81,19 @@ metalsmith(__dirname)
         pattern: "posts/**/*.md",
         sortBy: "date",
         reverse: true
+      },
+      articlesRecent: {
+        pattern: "posts/**/*.md",
+        sortBy: "date",
+        reverse: true,
+        limit: 5
       }
     })
   )
-  .use(wordcount())
   .use(
     markdown({
       gfm: true,
-      tables: true,
-      highlight: highlighter()
+      tables: true
     })
   )
   .use(
