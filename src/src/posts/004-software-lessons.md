@@ -233,5 +233,8 @@ You only get better this way. Examples:
 - [Working Effectively with Legacy Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=as_li_ss_tl?ie=UTF8&qid=1515774169&sr=8-1&keywords=michael+feathers&linkCode=ll1&tag=dctm-20&linkId=c7138372cb34f5984b7e2d06dcf3d00a)
 - [https://www.kalzumeus.com/greatest-hits/](https://www.kalzumeus.com/greatest-hits/)
 - [https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
+- [Design patterns](https://sourcemaking.com/design_patterns)
 
 Sources reference may or may not Amazon affiliated (cuz that's where I get my books!). You can also donate to my Ethereum wallet @ 0x497ac7cfB4043931288686de69ca7542f53E5a51
+
+
