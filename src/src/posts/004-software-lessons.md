@@ -24,7 +24,7 @@ Showing your code should be as fun as doing it. It's a judgement free zone.
 ---
 
 ## Process can be Your Enemy
-Creating process is one of the first "go to"s that a software engineer wants to do to solve a problem. **Okay, but lets ask a few more non-technical questions**
+Creating process is one of the first "go to"s that a software engineer wants to do to solve a problem. **Okay, lets ask a few more non-technical questions.**
 
 - Is a new process really needed? Can you do it manually for awhile? It may not need to be automated.
 - Are you solving the symptom of a bigger problem? Address the bigger problem first.
@@ -34,27 +34,27 @@ Give yourself research and discovery time before creating process. Look for all 
 
 ---
 ## Automate Routine Trivial Tasks
-Learn to automated that small stuff tasks.
+Learn to automated the repetitive tasks. Bash scripts, macros, selenium, IFTTT, etc....
 
 ---
 
 ## Know what to do before doing it.
-Write a commit message before coding. Knowing this even before writing code or testing code is super valuable to keep focus. If not that, write some pseudo code with less detail. Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
+Write a commit message before coding. Knowing this even before writing code or testing code is valuable to keep focus. If not that, write some pseudo code with less detail. Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
 
 ---
 
 ## Know what you can't control
-You can't control the business decisions management has made. Or what a client thinks about your work. **Provide your opinion, once.** You can't control everything. The [Daily Stoic](https://www.amazon.com/gp/product/B01HNJIJB2/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01HNJIJB2&linkCode=as2&tag=dctm-20&linkId=b0948f77798dbe8671f04426c2b849f3) is a good source of explaining what you have control of. It's in an easy bite-size daily format.
+You can't control the business decisions management has made. Or what a client thinks about your work. **Provide your opinion, once.** You can't control everything. So don't. The [Daily Stoic](https://www.amazon.com/gp/product/B01HNJIJB2/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01HNJIJB2&linkCode=as2&tag=dctm-20&linkId=b0948f77798dbe8671f04426c2b849f3) is a good source of explaining what you have control of. It's in an easy bite-size daily format.
 
 ---
 
 ## Speak Up!
-Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! Make it easy by stating a fact pattern; "I would like A,B,C because of the fact of X,Y,Z".
+Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! This simpliest way is; "I would like A,B,C because of the fact of X,Y,Z".
 
 ---
 
 ## Silence the Distractions
-Turn off instant notifications, phone, email and limit distracting websites. Once you get into the "Zone" it's hard to get back into it. If a person interrupts me multiple times, I politely ask them to stop or forward this post from [StackOverflow](https://softwareengineering.stackexchange.com/a/46283/290723). "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
+Turn off instant notifications, phone, email and limit distracting websites. **Once you get into the "Zone" it's hard to get back into it.** If a person interrupts me multiple times, I politely ask them to stop or forward this post from [StackOverflow](https://softwareengineering.stackexchange.com/a/46283/290723). "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
 
 ---
 
@@ -64,16 +64,16 @@ It may seem like the opposite of "Silence the Distractions" but it seems to work
 ---
 
 ## Say No
-In order to be successful, you need to say no. That means that "can you take a look", "going to an unscheduled meeting", "using that latest XYZ framework", etc is a NO. You may be considered a bottleneck or not a team player but having less on your mind is absolutely the best way to get more done.
+In order to be successful, you need to say no. That means "can you take a look", "going to an unscheduled meeting", "using that latest XYZ framework", etc is a NO. You may be considered a bottleneck or not a team player but having less on your mind is absolutely the best way to get more done.
 
 ---
 
 ## Deal with Conflict, *Quickly*
-As a developer, you will still need to deal with people (even customers!). Dealing with conflict is part of that.  It's best to deal with it quickly but be prepared for questions.  State the facts and keep answers short and direct.
+As a developer, you will still need to talk with people (even customers!). Dealing with conflict is part of that.  It's best to handle it quickly but be prepared for questions.  State the facts and keep answers short and direct.
 
 ---
 
-## Reflection
+## Reflect upon your code
 Take time to reflect upon your code. Look for improvements to shorten and enhance readability. Consider different ways to rewrite it. Review the strength of code written and other connected code. **Treat dependencies as a liability.** A great book from Michael Feathers gives clear ideas on this. [Working Effectively with Legacy Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=as_li_ss_tl?ie=UTF8&qid=1515774169&sr=8-1&keywords=michael+feathers&linkCode=ll1&tag=dctm-20&linkId=c7138372cb34f5984b7e2d06dcf3d00a)
 
 ---
