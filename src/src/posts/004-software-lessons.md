@@ -1,45 +1,41 @@
 ---
 layout: post.hbs
 title: Software Engineering Lessons
-keywords: software engineering, code reviews
+keywords: software engineering, code reviews, software career
 date: 2018-10-23
-desc: In the field notes and lessons learned from as a software engineer.
+desc: In the field notes and lessons learned as a software engineer.
 image: https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80
 imageAlt: Fields notes as a software engineer
 priority: 0.9
 ---
 
-My year's goal was to put the lessons I've learned into a format that is easily referenced. Keep coming back for updates!
+My year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
 
 ## Do Code That Matters
-I truly believe in this. **Before you start writing any code, make sure it matters to you, an organization, and/or the community.** Period. Avoid creating useless apps.
+I truly believe in this. **Before you start writing any code, make sure it matters to you, an organization, and/or the community.** Avoid creating useless apps.  Tutorials are great but think of practical or functional use cases to apply .
 
 ---
 
 ## Do Code Reviews
-Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show interesting areas of code. It really comes down to this: "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stack Overflow founder.
+Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show anything that was interesting or challenging. Showing your code should be as fun as doing it.
 
-Showing your code should be as fun as doing it. It's a judgement free zone.
+**The act of discussing your code is more important than showing it to someone.** "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stack Overflow founder.
 
 ---
 
 ## Process can be Your Enemy
-Creating process is one of the first "go to"s that a software engineer wants to do to solve a problem. **Okay, lets ask a few more non-technical questions.**
+As a software engineer, creating process is a natural reaction to solve a problem. **That's okay most of the time but let's ask a few non-technical questions.**
 
-- Is a new process really needed? Can you do it manually for awhile? It may not need to be automated.
-- Are you solving the symptom of a bigger problem? Address the bigger problem first.
-- How much resources will it save? If it takes 1 day to run a 5 minute task then runs rarely, it's likely not needed. It's about efficient and time resource management.
+- Is a new process really needed? Can you do it manually for awhile? It may not need to be automated if it only needs to be done for a short time.
+- Are you solving the symptom of a bigger problem? Try addressing the bigger problem first.
+- How much resources will it save? It's about efficient and time resource management.
 
-Give yourself research and discovery time before creating process. Look for all the edges cases.  **Creating cogs in the machine should be carefully considered**.  
-
----
-## Automate Routine Trivial Tasks
-Learn to automated the repetitive tasks. Bash scripts, macros, selenium, IFTTT, etc....
+Give yourself discovery time before creating a new process. Look for all the edge cases. **Creating cogs in the machine should be carefully considered**.  
 
 ---
 
 ## Know what to do before doing it.
-Write a commit message before coding. Knowing this even before writing code or testing code is valuable to keep focus. If not that, write some pseudo code with less detail. Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
+**Have a goal written down before writing code. Knowing this beforehand will keep you focused.** Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
 
 ---
 
@@ -49,7 +45,7 @@ You can't control the business decisions management has made. Or what a client t
 ---
 
 ## Speak Up!
-Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! This simpliest way is; "I would like A,B,C because of the fact of X,Y,Z".
+Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! A simple way to put it is; "I would like A,B,C because of the fact of X,Y,Z".
 
 ---
 
@@ -141,6 +137,10 @@ Google Keep, OneNote, markdown files, text doc, or just a notebook. It's an inva
 This concept of **documenting knowledge to a solution for a common problem is critical in teams**.  Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
 
 ---
+## Automate Routine Trivial Tasks
+Learn to automated the repetitive tasks. Use bash scripts, powershell, macros, selenium, IFTTT, etc.  These will help with context switching.
+
+---
 
 ## Keep Current
 Listen to podcasts, dev blogs, dev news feeds (hackernews, sub reddits) and books are essential to keeping up. It also helps with what developers feel about the current state of technology, companies, and projects. Start here: https://coreskills.mmodrow.rocks/2018/03/14/top-7-podcasts-for-the-modern-software-developer/
@@ -198,6 +198,6 @@ You only get better this way. Examples:
 - [https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 - [Design patterns](https://sourcemaking.com/design_patterns)
 
-Sources reference may or may not Amazon affiliated (cuz that's where I get my books!). You can also donate to my Ethereum wallet @ 0x497ac7cfB4043931288686de69ca7542f53E5a51
+Sources reference may or may not Amazon affiliated (because that's where I get my books!). 
 
 
