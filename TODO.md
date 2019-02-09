@@ -1,2 +1,3 @@
+- [] fix sitemap output
 - [] send to kindle
 - [] polly!
