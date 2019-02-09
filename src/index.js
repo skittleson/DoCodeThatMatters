@@ -113,8 +113,7 @@ metalsmith(__dirname)
   .use(inplace())
   .use(
     sitemap({
-      // generate sitemap.xml
-      hostname: siteMeta.domain + (siteMeta.rootpath || ""),
+      hostname: siteMeta.domain,
       omitIndex: true
     })
   )

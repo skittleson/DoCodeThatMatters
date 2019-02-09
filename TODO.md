@@ -1,3 +1,3 @@
-- [] fix sitemap output
+- [] upgrading packages causes problems with handler bar registrations
 - [] send to kindle
 - [] polly!
