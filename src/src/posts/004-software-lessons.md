@@ -11,11 +11,6 @@ priority: 0.9
 
 My year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
 
-## Do Code That Matters
-I truly believe in this. **Before you start writing any code, make sure it matters to you, an organization, and/or the community.** Avoid creating useless apps.  Tutorials are great but think of practical or functional use cases to apply .
-
----
-
 ## Do Code Reviews
 Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show anything that was interesting or challenging. Showing your code should be as fun as doing it.
 

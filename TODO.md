@@ -1,0 +1,2 @@
+- [] send to kindle
+- [] polly!

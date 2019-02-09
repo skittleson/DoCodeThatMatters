@@ -8,7 +8,7 @@ var layouts = require("metalsmith-layouts");
 var inplace = require("metalsmith-in-place");
 var metallic = require("metalsmith-metallic");
 var handlebars = require("handlebars");
-var fs = require('fs');
+var fs = require("fs");
 
 handlebars.registerHelper("json", function(context) {
   const cache = new Set();
@@ -51,17 +51,18 @@ handlebars.registerHelper("formatDate", function(date) {
 handlebars.registerHelper("importFile", function(file) {
   let contents;
   try {
-    contents = fs.readFileSync(__dirname + file, 'utf8');
-  } catch(error) {
-    contents = error.message
-  }  
+    contents = fs.readFileSync(__dirname + file, "utf8");
+  } catch (error) {
+    contents = error.message;
+  }
   return contents;
 });
 
 const siteMeta = {
   domain: "https://docodethatmatters.com",
   name: "Do Code That Matters",
-  description: "Personal blog about software development, 3d printing, diy, and c#",
+  description:
+    "Personal blog about software development, 3d printing, diy, and c#",
   keywords: "maker,code,diy,c#,csharp,3d printing",
   rootpath: __dirname
 };
@@ -117,10 +118,13 @@ metalsmith(__dirname)
       omitIndex: true
     })
   )
-
   .use(metallic())
   .destination("build")
   .build(function(err) {
+    fs.createReadStream("node_modules/spectre.css/dist/spectre.min.css").pipe(
+      fs.createWriteStream("build/css/spectre.min.css")
+    );
+
     if (err) {
       throw err;
     }

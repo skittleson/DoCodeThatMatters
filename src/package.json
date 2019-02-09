@@ -23,7 +23,8 @@
     "metalsmith-metallic": "^2.0.2",
     "metalsmith-partial": "^0.1.0",
     "metalsmith-permalinks": "^0.5.0",
-    "metalsmith-publish": "^0.1.5"
+    "metalsmith-publish": "^0.1.5",
+    "spectre.css": "^0.5.8"
   },
   "devDependencies": {
     "clean-css": "^4.2.1",

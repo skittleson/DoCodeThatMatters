@@ -73,18 +73,22 @@ That's it!
 
 Simulating the button press for the garage door opener circuit. Relay turns on for 500ms, then off. An interesting issue with the relay. As soon the gpio utility exports, it triggers it on. This code exports then unexports a pin that the relay is on.
 
-<pre class="lang:js decode:true">let relayButtonPressAction = (pin) => {
+<pre class='code' data-lang="javascript">
+<code>
+let relayButtonPressAction = (pin) => {
     gpioExport(pin, 'out');
     gpioWrite(pin, 1);
     setTimeout(() => {
         gpioWrite(pin, 0);
         gpioUnexport(pin);
     }, 500);
-}</pre>
+}</code></pre>
 
 There is one python file that checks the status of the garage door. The configuration was different enough where it needed to be done there. The reed switch should always be true until the door has been opened.
 
-<pre class="lang:python decode:true">import sys
+<pre class='code' data-lang="python">
+<code>
+import sys
 import RPi.GPIO as gpio
 
 pin = int(sys.argv[1])
@@ -95,7 +99,7 @@ gpio.setup(pin, gpio.IN, pull_up_down=gpio.PUD_UP)
 status = gpio.input(pin)
 sys.stdout.write(str(status))
 
-gpio.cleanup()</pre>
+gpio.cleanup()</code></pre>
 
 Open for pull requests! I'm considering on moving all the gpio logic to python then using nodejs as the api router.
 
