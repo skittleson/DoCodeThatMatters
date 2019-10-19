@@ -5,16 +5,16 @@ description: Collection of blog posts
 ---
 <div class="page">
     <br/>
-    {{#each articles}}
+    {{#each posts}}
     <div class="container-flex">
         <div>
-            <a href="{{this.path}}"><img src='{{this.image}}' style='max-width:20em;' alt="{{this.desc}}" /></a>
+            <a href="{{blogPath this.file}}"><img src='{{this.image}}' style='max-width:20em;' alt="{{this.description}}" /></a>
         </div>
         <div class="blog-item">
             <p>
                 <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
                 <br />
-                {{this.desc}} <br /> <a class="read-more" href="{{this.path}}">Read More</a>
+                {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
             </p>
         </div>
     </div>

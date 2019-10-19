@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
+
+<head>
+    <title>Research on Bluetooth Proximity</title>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta itemprop="description" name="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="keywords" content="bluetooth proximity research,bluetooth,hcitool,l2ping" />
+    <meta name="Distribution" content="Global" />
+    <meta name="Rating" content="General" />
+    <meta name="Robots" content="INDEX,FOLLOW" />
+    <meta name="author" content="Do Code That Matters" />
+    <meta name="Revisit-after" content="31 Days" />
+    <meta name="application-name" content="Do Code That Matters">
+    <meta property="og:title" content="Research on Bluetooth Proximity | Do Code That Matters" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:site_name" content="Do Code That Matters" />
+    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <link href="/css/site.css?random=486471746" rel="stylesheet">
+    <link rel='manifest' href='/manifest.webmanifest'>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <section class="navbar-section">
+            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
+            <a href="/blog" class="btn btn-link">Blog</a>
+            <a href="/about" class="btn btn-link">About</a>        </section>
+    </header><main class="postMain">
+  <article itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">Research on Bluetooth Proximity</h1>
+      <small itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</small><br />
+      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80"
+        alt="A bluetooth device that can be discovered with simple scan." /><br />
+    </header>
+    <section itemprop="articleBody">
+      <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt </code>, <code>l2ping</code>, and <code>hcidump</code>.  A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>  blog post.</p>
+
+<h2>Commands</h2>
+
+<p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
+
+<h3>Scan for Bluetooth LE Devices:</h3>
+
+<pre><code>timeout --signal=SIGINT 30 hcitool lescan</code></pre>
+
+<h3>Get Bluetooth LE Devices with RSSI values:</h3>
+
+<pre><code>btmgmt find</code></pre>
+
+<p>Response:</p>
+
+<pre><code>hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
+AD flags 0x1a
+eir_len 14
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
+AD flags 0x1a
+eir_len 18
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
+AD flags 0x06
+name N016Y
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
+AD flags 0x00
+eir_len 28
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000</code></pre>
+
+<h3>Ping bluetooth enable device without pairing:</h3>
+
+<pre><code>`l2ping -c 3 &lt;MAC&gt;`</code></pre>
+
+<p>Response:</p>
+
+<pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
+44 bytes &lt;MAC&gt; id 0 time 6.05ms
+44 bytes &lt;MAC&gt; id 1 time 9.90ms
+♥2 sent, 2 received, 0% loss</code></pre>
+
+<h3>Dump all data of a paired bluetooth device:</h3>
+
+<pre><code>hcidump -a</code></pre>
+
+<h3>To request authorization from device:</h3>
+
+<pre><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></pre>
+
+<h3>Attempt connection then get RSSI value:</h3>
+
+<pre><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></pre>
+
+<p>Response:</p>
+
+<pre><code>Connections:
+        &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
+RSSI return value: -4</code></pre>
+
+<p>This attempts to connect which doesn&#39;t work but the RSSI value is now present for device.</p>
+
+<h3>Attempt to get RSSI value without trying to connect to device:</h3>
+
+<pre><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></pre>
+
+<h2>Some Resources</h2>
+
+<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
+<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
+<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
+<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
+<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
+<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
+<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
+<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
+    </section>
+  </article>
+</main>
+<aside class="postAside">
+  <b>Resources</b>
+  <br />
+  Twitter: <a href="https://twitter.com/skittleson">@skittleson</a><br />
+  GitHub: <a href="https://github.com/skittleson">skittleson</a><br />
+  LinkedIn: <a href="https://www.linkedin.com/in/skittleson/">skittleson</a><br />
+  StackOverflow: <a href=" https://stackoverflow.com/users/2414540/spencer">spencer</a><br />  <b>Latest Posts</b>
+  <ul class="unstyledUl">
+  </ul>
+  <br />
+  <b>Other</b><br />
+  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
+    Request</a> to help me out!
+</aside>
+
+<div id="footer">
+    <div class="container">
+        <div class="row hidden-xs">
+            <div class="col-sm-12 text-right">
+                <p><br />&copy; 2019 Do Code That Matters</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script async src="js/site.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-93963699-1');
+</script>
+</body>
+
+</html>
