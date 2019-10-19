@@ -1,8 +1,6 @@
 {
   "site": {
     "company": "Do Code That Matters",
-    "phone": "",
-    "nicePhone": "",
     "description": "Personal blog about software development, 3d printing, diy, and c#",
     "keywords": "software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3d printing",
     "url": "https://DoCodeThatMatters.com",
@@ -11,9 +9,11 @@
   "js": ["src/javascript/site.js"],
   "css": ["src/css/site.css", "node_modules/spectre.css/dist/spectre.min.css"],
   "partials": ["header.hbs", "footer.hbs", "contactInfo.hbs", "nav.hbs"],
-  "assets": ["CNAME", "robots.txt", "images"],
+  "assets": ["CNAME", "robots.txt", "images", "sw.js", "manifest.webmanifest"],
   "pages": [
     { "file": "index.hbs" },
+    { "file": "offline.hbs" },
+    { "file": "about.hbs" },
     {
       "file": "software-engineering-lessons.md",
       "title": "Software Engineering Lessons",

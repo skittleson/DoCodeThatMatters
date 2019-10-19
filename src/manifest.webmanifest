@@ -1,0 +1,17 @@
+{
+  "dir": "ltr",
+  "lang": "en-US",
+  "name": "Do Code That Matters",
+  "scope": "/",
+  "display": "browser",
+  "start_url": "https://docodethatmatters.com/",
+  "short_name": "DCTM",
+  "theme_color": "transparent",
+  "description": "Personal blog about software development, 3d printing, diy, and c#",
+  "orientation": "any",
+  "background_color": "transparent",
+  "related_applications": "",
+  "prefer_related_applications": "false",
+  "icons": [],
+  "generated": "true"
+}
