@@ -25,21 +25,21 @@
       "priority": 0.9
     },
     {
-      "file": "yet-another-garage-door-opener.md",
-      "title": "Yet Another Garage Door Opener",
-      "keywords": "raspberry pi,bluetooth,garage door opener,liftmaster",
-      "date": "2018-05-11",
-      "description": "Just another garage door opener using a raspberry pi",
-      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
-      "imageAlt": "Raspberry Pi!",
-      "priority": 0.9
-    },
-    {
       "file": "raspberry-pi-bluetooth-proximity.md",
       "title": "Raspberry Pi – Bluetooth Proximity",
       "keywords": "raspberry pi, bluetooth",
       "date": "2017-05-26",
       "description": "Building bluetooth detection with a raspberry pi!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
+      "imageAlt": "Raspberry Pi!",
+      "priority": 0.9
+    },
+    {
+      "file": "yet-another-garage-door-opener.md",
+      "title": "Yet Another Garage Door Opener",
+      "keywords": "raspberry pi,bluetooth,garage door opener,liftmaster",
+      "date": "2018-05-11",
+      "description": "Just another garage door opener using a raspberry pi",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
       "imageAlt": "Raspberry Pi!",
       "priority": 0.9
