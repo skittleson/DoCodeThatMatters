@@ -1,0 +1,58 @@
+{
+  "site": {
+    "company": "Do Code That Matters",
+    "phone": "",
+    "nicePhone": "",
+    "description": "Personal blog about software development, 3d printing, diy, and c#",
+    "keywords": "software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3d printing",
+    "url": "https://DoCodeThatMatters.com",
+    "title": "Do Code That Matters"
+  },
+  "js": ["src/javascript/site.js"],
+  "css": ["src/css/site.css", "node_modules/spectre.css/dist/spectre.min.css"],
+  "partials": ["header.hbs", "footer.hbs", "contactInfo.hbs", "nav.hbs"],
+  "assets": ["CNAME", "robots.txt", "images"],
+  "pages": [
+    { "file": "index.hbs" },
+    {
+      "file": "software-engineering-lessons.md",
+      "title": "Software Engineering Lessons",
+      "keywords": "software engineering, code reviews, software career",
+      "date": "2018-10-23",
+      "description": "In the field notes and lessons learned as a software engineer.",
+      "image": "https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80",
+      "imageAlt": "Fields notes as a software engineer",
+      "priority": 0.9
+    },
+    {
+      "file": "yet-another-garage-door-opener.md",
+      "title": "Yet Another Garage Door Opener",
+      "keywords": "raspberry pi,bluetooth,garage door opener,liftmaster",
+      "date": "2018-05-11",
+      "description": "Just another garage door opener using a raspberry pi",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
+      "imageAlt": "Raspberry Pi!",
+      "priority": 0.9
+    },
+    {
+      "file": "raspberry-pi-bluetooth-proximity.md",
+      "title": "Raspberry Pi – Bluetooth Proximity",
+      "keywords": "raspberry pi, bluetooth",
+      "date": "2017-05-26",
+      "description": "Building bluetooth detection with a raspberry pi!",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
+      "imageAlt": "Raspberry Pi!",
+      "priority": 0.9
+    },
+    {
+      "file": "asp-net-xss-protection.md",
+      "title": "ASP.NET XSS protection",
+      "keywords": "asp.net,xss,config",
+      "date": "2017-09-06",
+      "description": "Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).",
+      "image": "/images/SSL-Featured.png",
+      "imageAlt": "ASP.Net XSS protection",
+      "priority": 0.9
+    }
+  ]
+}

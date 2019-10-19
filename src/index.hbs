@@ -1,26 +1,22 @@
----
-layout: index.hbs
-title: Home | Do Code That Matters
----
-
 <div class="page">
 
     <div class="container-flex">
         <div>
             <h1>What's New?</h1>
-            {{#each articlesRecent}}
+            {{#each posts}}
             <p>
                 <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
                 <br />
-                {{this.desc}} <br /> <a class="read-more" href="{{this.path}}">Read More</a>
+                {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
             </p>
             {{/each}}
+
         </div>
         <div>
             <br /><br />
             <img style="min-width:300px" src="images/agile.jpg" />
             <br />
-            {{{importFile '\partials\contactInfo.html'}}}
+            {{> contactInfo}}
         </div>
     </div>
 

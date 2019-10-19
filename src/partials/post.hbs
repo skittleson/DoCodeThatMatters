@@ -1,0 +1,33 @@
+{{> header}}
+<main class="postMain">
+  <article itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 itemprop="headline">{{title}}</h1>
+      <small itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</small><br />
+      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="{{image}}"
+        alt="{{imageAlt}}" /><br />
+    </header>
+    <section itemprop="articleBody">
+      {{{ contents }}}
+    </section>
+  </article>
+</main>
+<aside class="postAside">
+  <b>Resources</b>
+  <br />
+  {{> contactInfo }}
+  <b>Latest Posts</b>
+  <ul class="unstyledUl">
+    {{#each articles}}
+    <li>
+      <a href="{{this.path}}" title="{{this.description}}">{{this.title}}</a>
+    </li>
+    {{/each}}
+  </ul>
+  <br />
+  <b>Other</b><br />
+  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
+    Request</a> to help me out!
+</aside>
+
+{{>footer}}

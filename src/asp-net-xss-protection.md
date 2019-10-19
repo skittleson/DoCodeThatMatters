@@ -1,20 +1,8 @@
----
-layout: post.hbs
-title: ASP.NET XSS protection
-keywords: asp.net,xss,config
-date: 2017-09-06
-desc: Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
-image: ../../images/SSL-Featured.png
-imageAlt: ASP.Net XSS protection
-priority: 0.9
----
-
 Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
 
-In &lt;system.webServer&gt;, add the following.
+In system.webServer element, add the following:
 
-<pre class='code' data-lang="xml"><xmp>
-  <httpProtocol>
+    <httpProtocol>
       <customHeaders>
         <remove name="Server" />
         <remove name="X-Powered-By" />
@@ -35,8 +23,7 @@ In &lt;system.webServer&gt;, add the following.
         <add name="Content-Security-Policy" value="default-src 'self' 'unsafe-inline' data; font-src *; img-src https://*;" /> <!-- where resources can come from -->
       </customHeaders>
     </httpProtocol>
-</xmp>
-</pre>
+
 
 [Content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) was the only one considered less secure due to outside javascript & CSS resources the app used (Google Analytics, Bootstrap, etc).
 
@@ -63,6 +50,6 @@ Look for open source tools that are commonly used for penetration testing. These
 ## References
 
 - [https://stackoverflow.com/search?q=XSS](https://stackoverflow.com/search?q=XSS) (21k and counting!)
-- [https://www.owasp.org/index.php/Main_Page](https://www.owasp.org/index.php/Main_Page)
+- [OWASP](https://www.owasp.org/index.php/Main_Page)
 - [https://msdn.microsoft.com/en-us/library/ff649310.aspx](https://msdn.microsoft.com/en-us/library/ff649310.aspx)
 - [https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)

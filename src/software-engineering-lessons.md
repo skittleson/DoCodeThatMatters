@@ -1,17 +1,7 @@
----
-layout: post.hbs
-title: Software Engineering Lessons
-keywords: software engineering, code reviews, software career
-date: 2018-10-23
-desc: In the field notes and lessons learned as a software engineer.
-image: https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80
-imageAlt: Fields notes as a software engineer
-priority: 0.9
----
-
-My year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
+My 2018 year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
 
 ## Do Code Reviews
+
 Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show anything that was interesting or challenging. Showing your code should be as fun as doing it.
 
 **The act of discussing your code is more important than showing it to someone.** "the average effectiveness of design and code inspections are 55 and 60 percent" - [Code Complete](https://amzn.to/2Cid8LU). Checkout this [blog post](https://blog.codinghorror.com/code-reviews-just-do-it/) from Jeff Atewood, a Stack Overflow founder.
@@ -19,140 +9,167 @@ Code reviews are critical. Do it. Learn from your peers at the same. Ask them qu
 ---
 
 ## Process can be Your Enemy
+
 As a software engineer, creating process is a natural reaction to solve a problem. **That's okay most of the time but let's ask a few non-technical questions.**
 
 - Is a new process really needed? Can you do it manually for awhile? It may not need to be automated if it only needs to be done for a short time.
 - Are you solving the symptom of a bigger problem? Try addressing the bigger problem first.
-- How much resources will it save? It's about efficient and time resource management.
+- How much resources will it save? It's about efficiency and time resource management.
 
-Give yourself discovery time before creating a new process. Look for all the edge cases. **Creating cogs in the machine should be carefully considered**.  
+Give yourself discovery time before creating a new process. Look for all the edge cases. **Creating cogs in the machine should be carefully considered**.
 
 ---
 
 ## Know what to do before doing it.
+
 **Have a goal written down before writing code. Knowing this beforehand will keep you focused.** Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
 
 ---
 
 ## Know what you can't control
+
 You can't control the business decisions management has made. Or what a client thinks about your work. **Provide your opinion, once.** You can't control everything. So don't. The [Daily Stoic](https://www.amazon.com/gp/product/B01HNJIJB2/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01HNJIJB2&linkCode=as2&tag=dctm-20&linkId=b0948f77798dbe8671f04426c2b849f3) is a good source of explaining what you have control of. It's in an easy bite-size daily format.
 
 ---
 
 ## Speak Up!
+
 Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! A simple way to put it is; "I would like A,B,C because of the fact of X,Y,Z".
 
 ---
 
 ## Silence the Distractions
+
 Turn off instant notifications, phone, email and limit distracting websites. **Once you get into the "Zone" it's hard to get back into it.** If a person interrupts me multiple times, I politely ask them to stop or forward this post from [StackOverflow](https://softwareengineering.stackexchange.com/a/46283/290723). "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
 
 ---
 
 ## Play Music
+
 It may seem like the opposite of "Silence the Distractions" but it seems to work. Find soothing and/or rhythmic music to play while working. It will keep other distractions away. Spotify has a nice UI for genres & moods. I also like tracks from Carl Franklin @ dot net rocks: [Music To Code By](http://mtcb.pwop.com/) .
 
 ---
 
 ## Say No
+
 In order to be successful, you need to say no. That means "can you take a look", "going to an unscheduled meeting", "using that latest XYZ framework", etc is a NO. You may be considered a bottleneck or not a team player but having less on your mind is absolutely the best way to get more done.
 
 ---
 
 ## Deal with Conflict, *Quickly*
+
 As a developer, you will still need to talk with people (even customers!). Dealing with conflict is part of that.  It's best to handle it quickly but be prepared for questions.  State the facts and keep answers short and direct.
 
 ---
 
 ## Reflect upon your code
+
 Take time to reflect upon your code. Look for improvements to shorten and enhance readability. Consider different ways to rewrite it. Review the strength of code written and other connected code. **Treat dependencies as a liability.** A great book from Michael Feathers gives clear ideas on this. [Working Effectively with Legacy Code](https://www.amazon.com/Working-Effectively-Legacy-Michael-Feathers/dp/0131177052/ref=as_li_ss_tl?ie=UTF8&qid=1515774169&sr=8-1&keywords=michael+feathers&linkCode=ll1&tag=dctm-20&linkId=c7138372cb34f5984b7e2d06dcf3d00a)
 
 ---
 
 ## Iterate
-Code that lasts can take more than one go. **Write code like an essay. First one works but the editing is where the magic makes it come together** 
+
+Code that lasts can take more than one go. **Write code like an essay. First one works but the editing is where the magic makes it come together**
 
 ---
 
 ## Know when to stop perfecting
+
 You gotta ship those features some time. So plan the MVP before you start.  Create additional tasks/issues on future improvements.
 
 ---
 
 ## No Working on Breaks
+
 Look at cat pictures, call a friend, go for a walk or anything at all, EXCEPT WORK! This is important. **You must lose focus to stay focused.**
 
 ---
 
 ## Motivation, Willpower & Time are Limited
+
 Your motivation, your willpower and your time are the most important resources. This is not understood when starting out as a dev. Every dev has gone through a day where he/she is putting out fires, responding to emails, or in long meetings. At the end of the day, you don't feel like you've accomplished anything. **That feeling sucks. A schedule will prevent that \*sucking\* feeling.** Some of these events are unavoidable but most can be managed. I plan important programming from 8am to noon. The remaining of the day is code review, bug fixes, responding to emails, meetings etc. What do you want to have done at the end of the day?
 
 ---
 
 ## Throw it out
+
 Is the code hard to read? Are you stuck? Start fresh. A great benefit of source control is to create new branches to test.
 
 ---
 
 ## Walk away
-Another effective strategy for solving a problem is by walking away from it. Grab a cup of coffee. You will come back with a different perspective. A little distance from the problem can help get that high level view again.  We've all got stuck in the weeds before.
+
+Another effective strategy for solving a problem is by walking away from it. Grab a cup of coffee. You will come back with a different perspective. A little distance from the problem can help get that high level view again. We've all got stuck in the weeds before.
 
 ---
 
 ## Rubber Duck
-Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a [rubber duck](https://en.wikipedia.org/wiki/Rubber\_duck\_debugging).  Describe the problem and what the desired outcome is.
+
+Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a [rubber duck](https://en.wikipedia.org/wiki/Rubber_duck_debugging).  Describe the problem and what the desired outcome is.
 
 ---
 
 ## Integration Tests over Unit Tests
+
 Unit tests are great but when crunched for time, [**Do integration tests.**](https://softwareengineering.stackexchange.com/questions/223991/is-it-sufficient-to-use-acceptance-and-integration-tests-instead-of-unit-test) They **take less time to write and give a high code coverage.** Integration tests have more value in the big picture. Tread lightly when offering this advice to your team. Remember to keep integration tests are only testable on the outside in.
 
 ---
 
 ## Failure is Unavoidable
+
 Your code will have bugs. Projects will be built be and never used. Users won't come. You will make mistakes. These events are an insight into what doesn't work. **Ask why. Find ways to prevent wasted effort from occurring. Break those failures into rules.**
 
 ---
 
 ## Learn from others successes and mistakes
-We always read about the successes. Learning how someone made a mistake is more important.  Know the who was involved, why it was needed, and what was done.  Isolate the mistakes then move add it to your project readme to consider.
+
+We always read about the successes. Learning how someone made a mistake is more important. Know the who was involved, why it was needed, and what was done. Isolate the mistakes then move add it to your project readme to consider.
 
 ---
 
 ## Personal Resource Center (a well-organized notebook)
+
 Google Keep, OneNote, markdown files, text doc, or just a notebook. It's an invaluable habit to save blogs links, research, configurations, and a place to dump knowledge. I compared it to my version of StackOverflow answers. **Save the information you don't want to memorize but still need**. To start out, store by topic and subtopic. The organizational structure will follow. One of my favorite published notebooks is a pen testing cheat sheets called [Red Team Field Manual.](https://www.amazon.com/gp/product/1494295504/ref=as_li_tl?ie=UTF8&tag=dctm-20&camp=1789&creative=9325&linkCode=as2&creativeASIN=1494295504&linkId=7fcd5b4ae321d49ccf19bbf597230a33) Much more from [awesome-cheatsheets](https://github.com/detailyang/awesome-cheatsheet#back-end-development). **Develop your own cheat sheets**.
 
 ---
 
 ## Identify and Document Flight Rules
+
 > [Flight Rules](https://en.wikipedia.org/wiki/Flight_rules) are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why.
 
-> [Rules of engagement](https://en.wikipedia.org/wiki/Rules_of_engagement)  (ROE) are the internal rules or directives among military forces (including individuals) that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied
+> [Rules of engagement](https://en.wikipedia.org/wiki/Rules_of_engagement) (ROE) are the internal rules or directives among military forces (including individuals) that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied
 
-This concept of **documenting knowledge to a solution for a common problem is critical in teams**.  Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
+This concept of **documenting knowledge to a solution for a common problem is critical in teams**. Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
 
 ---
+
 ## Automate Routine Trivial Tasks
-Learn to automated the repetitive tasks. Use bash scripts, powershell, macros, selenium, IFTTT, etc.  These will help with context switching.
+
+Learn to automated the repetitive tasks. Use bash scripts, powershell, macros, selenium, IFTTT, etc. These will help with context switching.
 
 ---
 
 ## Keep Current
+
 Listen to podcasts, dev blogs, dev news feeds (hackernews, sub reddits) and books are essential to keeping up. It also helps with what developers feel about the current state of technology, companies, and projects. Start here: https://coreskills.mmodrow.rocks/2018/03/14/top-7-podcasts-for-the-modern-software-developer/
 
 ---
 
 ## Invest in your tools
+
 That means; a comfortable chair, keyboard, mouse, software, cell phone & desk. **Having the right tools increase productivity.**
 
 ---
 
 ## Work with different people
+
 Working in a company with multiple software development teams? Try to work for another one or contribute to open source. **Working with other individuals can give insight on how to collaborate differently.**
 
 ---
 
 ## Work Routine
+
 **Success follows people who create and follow a work routine.** Anybody can do this with a little bit of willpower and patience. Here is mine:
 
 - Deep work for the first 2 hours.
@@ -163,11 +180,13 @@ Working in a company with multiple software development teams? Try to work for a
 ---
 
 ## A "Not To Do's" List
+
 Empty your mind of what you would like to do. This will help you keep focus on what needs to be done now.
 
 ---
 
 ## Stay Uncomfortable
+
 You only get better this way. Examples:
 
 - Learn another language. Then do it again.
@@ -179,6 +198,7 @@ You only get better this way. Examples:
 ---
 
 ## Here are few of my favorite resources I often reference:
+
 - [97 Things Every Programmer Should Know](https://www.amazon.com/gp/product/B0039OVIAK/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0039OVIAK&linkCode=as2&tag=dctm-20&linkId=72e1d5c1fe5f50c0cfadb4c7f0f7722e)
 - [Adaptive Code](https://www.amazon.com/gp/product/B071YC5ML9/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B071YC5ML9&linkCode=as2&tag=dctm-20&linkId=fb880baa1e150e326733ccbd9b55377a)
 - [Daily Stoic](https://www.amazon.com/gp/product/B01HNJIJB2/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01HNJIJB2&linkCode=as2&tag=dctm-20&linkId=b0948f77798dbe8671f04426c2b849f3)
@@ -193,6 +213,4 @@ You only get better this way. Examples:
 - [https://github.com/sdmg15/Best-websites-a-programmer-should-visit](https://github.com/sdmg15/Best-websites-a-programmer-should-visit)
 - [Design patterns](https://sourcemaking.com/design_patterns)
 
-Sources reference may or may not Amazon affiliated (because that's where I get my books!). 
-
-
+Sources reference may or may not be Amazon affiliated. (because that's where I get my books!)
