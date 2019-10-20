@@ -24,8 +24,9 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
     <meta name="twitter:description" content="Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS)." />
-    <link href="/css/site.css?random=486471746" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.webmanifest'>
+    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
 </head>
 
 <body>
@@ -45,9 +46,7 @@
     </header>
     <section itemprop="articleBody">
       <p>Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</p>
-
 <p>In system.webServer element, add the following:</p>
-
 <pre><code>&lt;httpProtocol&gt;
   &lt;customHeaders&gt;
     &lt;remove name=&quot;Server&quot; /&gt;
@@ -66,29 +65,41 @@
     &lt;add name=&quot;Cache-Control&quot; value=&quot;no-cache, no-store, must-revalidate&quot; /&gt; &lt;!-- cache could be altered --&gt;
     &lt;add name=&quot;Pragma&quot; value=&quot;no-cache&quot; /&gt; &lt;!-- cache could be altered --&gt;
     &lt;add name=&quot;Expires&quot; value=&quot;Sun, 1 Jan 1990 00:00:00 UTC&quot; /&gt; &lt;!-- cache could be altered so set far in past and not -1 --&gt;
-    &lt;add name=&quot;Content-Security-Policy&quot; value=&quot;default-src &#39;self&#39; &#39;unsafe-inline&#39; data; font-src *; img-src https://*;&quot; /&gt; &lt;!-- where resources can come from --&gt;
+    &lt;add name=&quot;Content-Security-Policy&quot; value=&quot;default-src 'self' 'unsafe-inline' data; font-src *; img-src https://*;&quot; /&gt; &lt;!-- where resources can come from --&gt;
   &lt;/customHeaders&gt;
-&lt;/httpProtocol&gt;</code></pre>
-
+&lt;/httpProtocol&gt;
+</code></pre>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content security policy</a> was the only one considered less secure due to outside javascript &amp; CSS resources the app used (Google Analytics, Bootstrap, etc).</p>
-
 <h2>Additional Protection</h2>
-
-<ul><li>Applying AntiXss attribute from the <a href="https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute">ASP.Net Web API AntiXss Attribute</a> project. Check it out here: https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute</li><li>Use a Website Application Firewall for your apps.<ul><li>Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, Shadow Daemon</li></ul></li></ul>
-
+<ul>
+<li>Applying AntiXss attribute from the <a href="https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute">ASP.Net Web API AntiXss Attribute</a> project. Check it out here: https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute</li>
+<li>Use a Website Application Firewall for your apps.
+<ul>
+<li>Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, Shadow Daemon</li>
+</ul>
+</li>
+</ul>
 <h2>Tools</h2>
-
 <p>Look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing.</p>
-
-<ul><li><a href="https://cirt.net/Nikto2">nikto2</a></li><li><a href="http://sqlmap.org/">sqlmap</a></li><li><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP Zap</a></li></ul>
-
+<ul>
+<li><a href="https://cirt.net/Nikto2">nikto2</a></li>
+<li><a href="http://sqlmap.org/">sqlmap</a></li>
+<li><a href="https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project">OWASP Zap</a></li>
+</ul>
 <h2>Takeaways</h2>
-
-<ul><li>Don&#39;t rely on just one layer of protection.</li><li>Use established frameworks.</li><li>Use the same tools as the pen testers.</li></ul>
-
+<ul>
+<li>Don't rely on just one layer of protection.</li>
+<li>Use established frameworks.</li>
+<li>Use the same tools as the pen testers.</li>
+</ul>
 <h2>References</h2>
+<ul>
+<li><a href="https://stackoverflow.com/search?q=XSS">https://stackoverflow.com/search?q=XSS</a> (21k and counting!)</li>
+<li><a href="https://www.owasp.org/index.php/Main_Page">OWASP</a></li>
+<li><a href="https://msdn.microsoft.com/en-us/library/ff649310.aspx">https://msdn.microsoft.com/en-us/library/ff649310.aspx</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</a></li>
+</ul>
 
-<ul><li><a href="https://stackoverflow.com/search?q=XSS">https://stackoverflow.com/search?q=XSS</a> (21k and counting!)</li><li><a href="https://www.owasp.org/index.php/Main_Page">OWASP</a></li><li><a href="https://msdn.microsoft.com/en-us/library/ff649310.aspx">https://msdn.microsoft.com/en-us/library/ff649310.aspx</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP</a></li></ul>
     </section>
   </article>
 </main>
@@ -110,7 +121,7 @@
 <div id="footer">
     <div class="container">
         <div class="row hidden-xs">
-            <div class="col-sm-12 text-right">
+            <div class="col-sm-12 text-center">
                 <p><br />&copy; 2019 Do Code That Matters</p>
             </div>
         </div>

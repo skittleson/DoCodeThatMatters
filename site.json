@@ -7,7 +7,12 @@
     "title": "Do Code That Matters"
   },
   "js": ["src/javascript/site.js"],
-  "css": ["src/css/site.css", "node_modules/spectre.css/dist/spectre.min.css"],
+  "css": [
+    "src/css/site.css",
+    "node_modules/spectre.css/dist/spectre.min.css",
+    "node_modules/spectre.css/dist/spectre-exp.min.css",
+    "node_modules/spectre.css/dist/spectre-icons.min.css"
+  ],
   "partials": ["header.hbs", "footer.hbs", "contactInfo.hbs", "nav.hbs"],
   "assets": ["CNAME", "robots.txt", "images", "sw.js", "manifest.webmanifest"],
   "pages": [
@@ -15,6 +20,16 @@
     { "file": "offline.hbs" },
     { "file": "about.hbs" },
     { "file": "blog.hbs" },
+    {
+      "file": "json-to-s3-with-google-recaptcha.md",
+      "title": "Save JSON Objects to AWS S3 with Google Recaptcha",
+      "keywords": "AWS S3,recaptcha,s3,json form",
+      "date": "2019-10-19",
+      "description": "Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.",
+      "image": "https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+      "imageAlt": "Chain fence locked",
+      "priority": 0.9
+    },
     {
       "file": "research-bluetooth-proximity.md",
       "title": "Research on Bluetooth Proximity",

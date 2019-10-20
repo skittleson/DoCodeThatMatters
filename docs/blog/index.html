@@ -24,8 +24,9 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
     <meta name="twitter:description" content="Personal blog about software development, 3d printing, diy, and c#" />
-    <link href="/css/site.css?random=486471746" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.webmanifest'>
+    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
 </head>
 
 <body>
@@ -35,14 +36,23 @@
             <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
             <a href="/blog" class="btn btn-link">Blog</a>
             <a href="/about" class="btn btn-link">About</a>        </section>
-    </header><main>
-  ---
-layout: index.hbs
-title: Blog
-description: Collection of blog posts
----
-<div class="page">
+    </header>
+<main>
+  <div class="page">
     <br/>
+    <div class="container-flex">
+        <div>
+            <a href="json-to-s3-with-google-recaptcha"><img src='https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80' style='max-width:20em;' alt="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." /></a>
+        </div>
+        <div class="blog-item">
+            <p>
+                <span title='2019-10-19'>18 October 2019</span> <br /><b>Save JSON Objects to AWS S3 with Google Recaptcha</b>
+                <br />
+                Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function. <br /> <a class="read-more" href="json-to-s3-with-google-recaptcha">Read More</a>
+            </p>
+        </div>
+    </div>
+    <hr />
     <div class="container-flex">
         <div>
             <a href="research-bluetooth-proximity"><img src='https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80' style='max-width:20em;' alt="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" /></a>
@@ -110,10 +120,11 @@ description: Collection of blog posts
     <hr />
 </div>
 </main>
+
 <div id="footer">
     <div class="container">
         <div class="row hidden-xs">
-            <div class="col-sm-12 text-right">
+            <div class="col-sm-12 text-center">
                 <p><br />&copy; 2019 Do Code That Matters</p>
             </div>
         </div>

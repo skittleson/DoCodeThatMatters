@@ -2,15 +2,18 @@ const handlebars = require("handlebars");
 const path = require("path");
 const fs = require("fs-extra");
 const uglify = require("uglify-js");
-var markdown = require("markdown").markdown;
-var concat = require("concat-files");
+const markdown = require("markdown-it")({
+  html: true,
+  breaks: true
+});
+const concat = require("concat-files");
 
 function saveHandlebarsToHtml(inFile, outFile, data, isMarkdown) {
   let source = fs.readFileSync(inFile, "utf8");
 
   // markdown files can't have handlebar syntax
   data.contents = isMarkdown
-    ? markdown.toHTML(source)
+    ? markdown.render(source)
     : handlebars.compile(source, { strict: true })(data);
   const template = fs.readFileSync(
     isMarkdown ? "src/partials/post.hbs" : "src/partials/standard.hbs",
@@ -40,14 +43,16 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
   });
   registerPartials(partials);
 
+  const posts = store.pages.filter(pageToFilter =>
+    pageToFilter.file.includes(".md")
+  );
+
   // build a site map
   store.pages.forEach(page => {
     const pageKeyValue = Object.assign(store.site, page);
 
     //only posts
-    pageKeyValue.posts = store.pages.filter(pageToFilter =>
-      pageToFilter.file.includes(".md")
-    );
+    pageKeyValue.posts = posts;
     let isMarkdown = false;
     if (page.file.includes(".md")) {
       isMarkdown = true;
@@ -65,6 +70,18 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
     );
   });
 
+  // Create RSS feed
+  let rss = fs.readFileSync(`${src}/rss.hbs`, "utf8");
+  fs.writeFileSync(
+    `${dest}/rss.xml`,
+    handlebars.compile(rss, { strict: true })({
+      site: store.site,
+      posts: posts
+    }),
+    {}
+  );
+
+  // Create site map
   let siteMap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.schema.org/schemas/sitemap/0.9">`;
   store.pages.forEach(page => {
     let folder = page.file.replace(".hbs", "");

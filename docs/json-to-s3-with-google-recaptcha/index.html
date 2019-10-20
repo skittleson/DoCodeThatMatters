@@ -2,28 +2,28 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
-    <title>Raspberry Pi – Bluetooth Proximity</title>
+    <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta itemprop="description" name="description" content="Building bluetooth detection with a raspberry pi!" />
-    <meta name="keywords" content="raspberry pi, bluetooth" />
+    <meta itemprop="description" name="description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
+    <meta name="keywords" content="AWS S3,recaptcha,s3,json form" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Raspberry Pi – Bluetooth Proximity | Do Code That Matters" />
+    <meta property="og:title" content="Save JSON Objects to AWS S3 with Google Recaptcha | Do Code That Matters" />
     <meta property="og:type" content="blog" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta property="og:description" content="Building bluetooth detection with a raspberry pi!" />
+    <meta property="og:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Building bluetooth detection with a raspberry pi!" />
+    <meta name="twitter:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <link href="/css/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.webmanifest'>
     <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
@@ -39,23 +39,42 @@
     </header><main class="postMain">
   <article itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <h1 itemprop="headline">Raspberry Pi – Bluetooth Proximity</h1>
-      <small itemprop="datePublished" content="2017-05-26T00:00:00.000Z">25 May 2017</small><br />
-      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg"
-        alt="Raspberry Pi!" /><br />
+      <h1 itemprop="headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
+      <small itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</small><br />
+      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80"
+        alt="Chain fence locked" /><br />
     </header>
     <section itemprop="articleBody">
-      <p>Let's build a Bluetooth proximity detector! You only need a Raspberry Pi, USB Bluetooth, and a phone with Bluetooth enabled. This tutorial will show how to detect a known Bluetooth device that is within the range of the Raspberry Pi without pairing the devices.</p>
-<p><strong>Step 1. Ensure USB Bluetooth is working on the Raspberry Pi.</strong><br>
-Install <code>sudo apt-get install bluetooth</code><br>
-Check it Bluetooth status with this command: <code>hcitool dev</code><br>
-Should return the device's Bluetooth address: <code>Devices: hci0 00:00:00:00:00:17</code></p>
-<p><strong>Step 2. Getting the MAC address of a device.</strong><br>
-On an Android Phone version 6.0.1, Settings &gt; System &gt; About device &gt; Status &gt; Bluetooth address.</p>
-<p><strong>Step 3. Test Connection to Client Device</strong><br>
-Command: <code>sudo l2ping -c 2 00:11:22:AA:BB:CC</code><br>
-Result:<br>
-<code>Ping: 00:11:22:AA:BB:CC from 00:00:00:00:00:17 (data size 44) ... 0 bytes from 00:11:22:AA:BB:CC id 0 time 7.32ms 0 bytes from 00:11:22:AA:BB:CC id 1 time 22.46ms</code></p>
+      <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
+<p>Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.</p>
+<h2>Request from a frontend source</h2>
+<p>Add this to the frontend index.html (or anywhere a form will be sent from). Replace the <code>_reCAPTCHA_site_key</code> with a real one.</p>
+<pre><code>&lt;script src=&quot;https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+grecaptcha.ready(function() {
+    grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
+    ...
+    });
+});
+&lt;/script&gt;
+</code></pre>
+<p>Docs: <a href="https://developers.google.com/recaptcha/docs/v3">https://developers.google.com/recaptcha/docs/v3</a></p>
+<h2>Backend Setup</h2>
+<p>Start by creating an AWS Lambda function that has access to add items to S3. Using a node.js/javascript lambda function.</p>
+<p>Environment Keys:</p>
+<ul>
+<li>GoogleRecapKey : Get this from <a href="https://developers.google.com/recaptcha">https://developers.google.com/recaptcha</a></li>
+<li>MessageBucket : Create a bucket in AWS S3.</li>
+<li>SnsTopicArn : Create a SNS topic to receive emails or SMS to your phone.</li>
+</ul>
+<script src="https://gist.github.com/skittleson/908481d3b22425ae75657890246006db.js"></script>
+<h3>API Gateway Setup</h3>
+<ul>
+<li>Create an AWS API Gateway API with a resource <code>form</code> with a method <code>POST</code>.</li>
+<li>Integration type <code>Lambda Function</code></li>
+<li>Use Lambda Proxy integration: checked</li>
+<li>Select Lambda function</li>
+</ul>
 
     </section>
   </article>

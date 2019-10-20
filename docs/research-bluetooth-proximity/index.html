@@ -24,8 +24,9 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
     <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
-    <link href="/css/site.css?random=486471746" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.webmanifest'>
+    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
 </head>
 
 <body>
@@ -45,21 +46,15 @@
     </header>
     <section itemprop="articleBody">
       <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt </code>, <code>l2ping</code>, and <code>hcidump</code>.  A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>  blog post.</p>
-
 <h2>Commands</h2>
-
 <p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
-
 <h3>Scan for Bluetooth LE Devices:</h3>
-
-<pre><code>timeout --signal=SIGINT 30 hcitool lescan</code></pre>
-
+<pre><code>timeout --signal=SIGINT 30 hcitool lescan
+</code></pre>
 <h3>Get Bluetooth LE Devices with RSSI values:</h3>
-
-<pre><code>btmgmt find</code></pre>
-
+<pre><code>btmgmt find
+</code></pre>
 <p>Response:</p>
-
 <pre><code>hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
 AD flags 0x1a
 eir_len 14
@@ -72,53 +67,45 @@ name N016Y
 hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
 AD flags 0x00
 eir_len 28
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000</code></pre>
-
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
+</code></pre>
 <h3>Ping bluetooth enable device without pairing:</h3>
-
-<pre><code>`l2ping -c 3 &lt;MAC&gt;`</code></pre>
-
+<pre><code>`l2ping -c 3 &lt;MAC&gt;`
+</code></pre>
 <p>Response:</p>
-
 <pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
 44 bytes &lt;MAC&gt; id 0 time 6.05ms
 44 bytes &lt;MAC&gt; id 1 time 9.90ms
-♥2 sent, 2 received, 0% loss</code></pre>
-
+♥2 sent, 2 received, 0% loss
+</code></pre>
 <h3>Dump all data of a paired bluetooth device:</h3>
-
-<pre><code>hcidump -a</code></pre>
-
+<pre><code>hcidump -a
+</code></pre>
 <h3>To request authorization from device:</h3>
-
-<pre><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></pre>
-
+<pre><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;
+</code></pre>
 <h3>Attempt connection then get RSSI value:</h3>
-
-<pre><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></pre>
-
+<pre><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;
+</code></pre>
 <p>Response:</p>
-
 <pre><code>Connections:
         &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
-RSSI return value: -4</code></pre>
-
-<p>This attempts to connect which doesn&#39;t work but the RSSI value is now present for device.</p>
-
+RSSI return value: -4
+</code></pre>
+<p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
 <h3>Attempt to get RSSI value without trying to connect to device:</h3>
-
-<pre><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></pre>
-
+<pre><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;
+</code></pre>
 <h2>Some Resources</h2>
-
-<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
-<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
-<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
-<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
-<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
-<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
-<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
+<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a><br>
+<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a><br>
+<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a><br>
+<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a><br>
+<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a><br>
+<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a><br>
+<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a><br>
 <a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
+
     </section>
   </article>
 </main>
@@ -140,7 +127,7 @@ RSSI return value: -4</code></pre>
 <div id="footer">
     <div class="container">
         <div class="row hidden-xs">
-            <div class="col-sm-12 text-right">
+            <div class="col-sm-12 text-center">
                 <p><br />&copy; 2019 Do Code That Matters</p>
             </div>
         </div>

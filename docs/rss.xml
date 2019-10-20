@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Do Code That Matters</title>
+        <link>https://DoCodeThatMatters.com</link>
+        <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
+        <item>
+            <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
+            <link>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</link>
+            <guid>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</guid>
+            <pubDate>2019-10-19</pubDate>
+        </item>
+        <item>
+            <title>Research on Bluetooth Proximity</title>
+            <link>https://DoCodeThatMatters.com/research-bluetooth-proximity</link>
+            <guid>https://DoCodeThatMatters.com/research-bluetooth-proximity</guid>
+            <pubDate>2019-10-19</pubDate>
+        </item>
+        <item>
+            <title>Software Engineering Lessons</title>
+            <link>https://DoCodeThatMatters.com/software-engineering-lessons</link>
+            <guid>https://DoCodeThatMatters.com/software-engineering-lessons</guid>
+            <pubDate>2018-10-23</pubDate>
+        </item>
+        <item>
+            <title>Raspberry Pi – Bluetooth Proximity</title>
+            <link>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</link>
+            <guid>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</guid>
+            <pubDate>2017-05-26</pubDate>
+        </item>
+        <item>
+            <title>Yet Another Garage Door Opener</title>
+            <link>https://DoCodeThatMatters.com/yet-another-garage-door-opener</link>
+            <guid>https://DoCodeThatMatters.com/yet-another-garage-door-opener</guid>
+            <pubDate>2018-05-11</pubDate>
+        </item>
+        <item>
+            <title>ASP.NET XSS protection</title>
+            <link>https://DoCodeThatMatters.com/asp-net-xss-protection</link>
+            <guid>https://DoCodeThatMatters.com/asp-net-xss-protection</guid>
+            <pubDate>2017-09-06</pubDate>
+        </item>
+    </channel>
+</rss>
