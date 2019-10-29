@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node .\\index.js",
+    "watch": "watch \"npm run build\" ./src"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +18,7 @@
     "uglify-js": "^3.4.9"
   },
   "dependencies": {
-    "spectre.css": "^0.5.8"
+    "spectre.css": "^0.5.8",
+    "watch": "^1.0.2"
   }
 }

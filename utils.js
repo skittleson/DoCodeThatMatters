@@ -8,17 +8,23 @@ const markdown = require("markdown-it")({
 });
 const concat = require("concat-files");
 
-function saveHandlebarsToHtml(inFile, outFile, data, isMarkdown) {
+function saveHandlebarsToHtml(inFile, outFile, data) {
   let source = fs.readFileSync(inFile, "utf8");
 
   // markdown files can't have handlebar syntax
+  const isMarkdown = data.file.includes(".md");
   data.contents = isMarkdown
     ? markdown.render(source)
     : handlebars.compile(source, { strict: true })(data);
-  const template = fs.readFileSync(
-    isMarkdown ? "src/partials/post.hbs" : "src/partials/standard.hbs",
-    "utf8"
-  );
+
+  let templateHbs = "src/partials/standard.hbs";
+  if (isMarkdown) {
+    templateHbs = "src/partials/post.hbs";
+  }
+  if (data.file.includes("admin.hbs")) {
+    templateHbs = "src/partials/private.hbs";
+  }
+  const template = fs.readFileSync(templateHbs, "utf8");
   ensureDirectoryExistence(outFile);
   fs.writeFileSync(
     outFile,
@@ -53,21 +59,13 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
 
     //only posts
     pageKeyValue.posts = posts;
-    let isMarkdown = false;
-    if (page.file.includes(".md")) {
-      isMarkdown = true;
-    }
     const folder = page.file.replace(".hbs", "").replace(".md", "");
     let saveToPath = `${dest}/${folder}/index.html`;
     if (page.file === "index.hbs") {
       saveToPath = `${dest}/index.html`;
     }
-    saveHandlebarsToHtml(
-      `${src}/${page.file}`,
-      saveToPath,
-      pageKeyValue,
-      isMarkdown
-    );
+   
+    saveHandlebarsToHtml(`${src}/${page.file}`, saveToPath, pageKeyValue);
   });
 
   // Create RSS feed
@@ -83,15 +81,18 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
 
   // Create site map
   let siteMap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.schema.org/schemas/sitemap/0.9">`;
-  store.pages.forEach(page => {
-    let folder = page.file.replace(".hbs", "");
-    let priority = 0.8;
-    if (page.file === "index.hbs") {
-      priority = 1.0;
-      folder = "";
-    }
-    siteMap += `<url><loc>${store.site.url}/${folder}</loc><priority>${priority}</priority></url>`;
-  });
+  store.pages
+    .filter(page => page.file !== 'admin.hbs')
+    .filter(page => page.file !== 'offline.hbs')
+    .forEach(page => {
+      let folder = page.file.replace(".hbs", "").replace(".md", "");
+      let priority = 0.8;
+      if (page.file === "index.hbs") {
+        priority = 1.0;
+        folder = "";
+      }
+      siteMap += `<url><loc>${store.site.url}/${folder}</loc><priority>${priority}</priority></url>`;
+    });
   siteMap += "</urlset>";
   fs.writeFileSync(`${dest}/sitemap.xml`, siteMap);
 

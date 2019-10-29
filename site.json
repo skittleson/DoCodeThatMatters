@@ -20,6 +20,7 @@
     { "file": "offline.hbs" },
     { "file": "about.hbs" },
     { "file": "blog.hbs" },
+    { "file": "admin.hbs" },
     {
       "file": "json-to-s3-with-google-recaptcha.md",
       "title": "Save JSON Objects to AWS S3 with Google Recaptcha",
