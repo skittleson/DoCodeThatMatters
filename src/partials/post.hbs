@@ -2,7 +2,7 @@
 <main class="postMain">
   <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <meta itemprop="mainEntityOfPage" content="{{blogPath file}}">
+      <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
       <h1 itemprop="name headline">{{title}}</h1>
       <small>
         <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
@@ -17,7 +17,7 @@
         <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
           <meta itemprop="name" content="Do Code That Matters">
           <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg">
+            <meta itemprop="url" content="{{url}}/images/agile.jpg">
           </span>
         </span>
       </small>
