@@ -43,7 +43,13 @@
       <small>
         <time itemprop="datePublished" content="2018-05-11T00:00:00.000Z">10 May 2018</time>
         <meta itemprop="dateModified" content="2018-05-11T00:00:00.000Z">
-        by <span itemprop="author">Spencer Kittleson</span>
+        by
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+            <span itemprop="name">Spencer Kittleson</span>
+          </a>
+          <meta itemprop="jobTitle" content="Software Engineer">
+        </span>
       </small>
       <br />
       <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
@@ -135,6 +141,9 @@ gpio.cleanup()
 <p>Hardware side is built and working. The api has enough information to check and toggle the garage door. Going to create a script to watch the door status with <a href="https://nodered.org/">Node-red</a> due to ease of configuration. This project took about 2 days with testing and debugging. Here is a screenshot of the node-red template. Still a work in progress! The <a href="https://github.com/skittleson/garage-pi/blob/master/garage-pi-node-red-flow.json">flow file</a> is in the repo code. <a href="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2.png"><img src="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2-253x300.png" alt=""></a></p>
 
     </section>
+    <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Spencer Kittleson">
+    </span>
   </article>
 </main>
 <aside class="postAside">
@@ -162,9 +171,6 @@ gpio.cleanup()
                         <span itemprop="name">Spencer Kittleson</span>
                     </a>
                     <meta itemprop="jobTitle" content="Software Engineer">
-                </span>
-                <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
-                    <meta itemprop="name" content="Spencer Kittleson">
                 </span>
                 | 
                 &copy; 2019 Do Code That Matters
