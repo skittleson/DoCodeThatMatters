@@ -80,7 +80,7 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
   );
 
   // Create site map
-  let siteMap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.schema.org/schemas/sitemap/0.9">`;
+  let siteMap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.schema.org/schemas/sitemap/0.9">`;
   store.pages
     .filter(page => page.file !== 'admin.hbs')
     .filter(page => page.file !== 'offline.hbs')
