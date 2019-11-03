@@ -36,12 +36,19 @@
 <aside class="postAside">
   <b>Resources</b>
   <br />
+  <div class="kindleWidget"
+    style="display:inline-block;padding:3px;cursor:pointer;font-size:18px;font-family:Arial;white-space:nowrap;line-height:1;border-radius:3px;border:#ccc thin solid;color:black;background:transparent url('https://d1xnn692s7u6t6.cloudfront.net/button-gradient.png') repeat-x;background-size:contain;">
+    <img style="vertical-align:middle;margin:0;padding:0;border:none;"
+      src="https://d1xnn692s7u6t6.cloudfront.net/black-25.png" /><span
+      style="vertical-align:middle;margin-left:3px;">Send to Kindle</span></div>
+      <br/><br />
   {{> contactInfo }}
+  <br />
   <b>Latest Posts</b>
   <ul class="unstyledUl">
-    {{#each articles}}
+    {{#each this.posts}}
     <li>
-      <a href="{{this.path}}" title="{{this.description}}">{{this.title}}</a>
+      <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
     </li>
     {{/each}}
   </ul>
