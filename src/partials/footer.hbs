@@ -2,7 +2,18 @@
     <div class="container">
         <div class="row hidden-xs">
             <div class="col-sm-12 text-center">
-                <p><br />&copy; 2019 {{company}}</p>
+
+                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography">
+                        <span itemprop="name">Spencer Kittleson</span>
+                    </a>
+                    <meta itemprop="jobTitle" content="Software Engineer">
+                </span>
+                <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+                    <meta itemprop="name" content="Spencer Kittleson">
+                </span>
+                | 
+                &copy; 2019 {{company}}
             </div>
         </div>
     </div>

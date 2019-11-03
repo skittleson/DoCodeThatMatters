@@ -2,19 +2,23 @@
 <main class="postMain">
   <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <h1 itemprop="headline">{{title}}</h1>
+      <meta itemprop="mainEntityOfPage" content="{{blogPath file}}">
+      <h1 itemprop="name headline">{{title}}</h1>
       <small>
-        <span itemprop="datePublished" itemprop="dateModified" content={{schemaDate date}}>{{formatDate date}}</span>
+        <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
+        <meta itemprop="dateModified" content={{schemaDate date}}>
         by <span itemprop="author">Spencer Kittleson</span>
       </small>
       <br />
-      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="{{image}}"
-        alt="{{imageAlt}}" /><br />
+      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <img itemprop="url contentUrl" alt="{{imageAlt}}" src="{{image}}">
+        <figcaption itemprop="caption">{{imageAlt}}</figcaption>
+      </figure>
+      <br />
     </header>
     <section itemprop="articleBody">
       {{{ contents }}}
     </section>
-    Article: <a itemprop='url' href="{{blogPath file}}">{{blogPath file}}</a>
   </article>
 </main>
 <aside class="postAside">

@@ -19,7 +19,6 @@
     <meta name="application-name" content="Do Code That Matters">
     <meta property="og:title" content="Research on Bluetooth Proximity | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta itemprop="publisher" property="og:site_name" content="Do Code That Matters" />
     <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
@@ -39,14 +38,19 @@
     </header><main class="postMain">
   <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <h1 itemprop="headline">Research on Bluetooth Proximity</h1>
+      <meta itemprop="mainEntityOfPage" content="research-bluetooth-proximity">
+      <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
       <small>
-        <span itemprop="datePublished" itemprop="dateModified" content="2019-10-19T00:00:00.000Z">18 October 2019</span>
+        <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
+        <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
         by <span itemprop="author">Spencer Kittleson</span>
       </small>
       <br />
-      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80"
-        alt="A bluetooth device that can be discovered with simple scan." /><br />
+      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <img itemprop="url contentUrl" alt="A bluetooth device that can be discovered with simple scan." src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80">
+        <figcaption itemprop="caption">A bluetooth device that can be discovered with simple scan.</figcaption>
+      </figure>
+      <br />
     </header>
     <section itemprop="articleBody">
       <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt </code>, <code>l2ping</code>, and <code>hcidump</code>.  A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>  blog post.</p>
@@ -111,7 +115,6 @@ RSSI return value: -4
 <a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
 
     </section>
-    Article: <a itemprop='url' href="research-bluetooth-proximity">research-bluetooth-proximity</a>
   </article>
 </main>
 <aside class="postAside">
@@ -133,7 +136,18 @@ RSSI return value: -4
     <div class="container">
         <div class="row hidden-xs">
             <div class="col-sm-12 text-center">
-                <p><br />&copy; 2019 Do Code That Matters</p>
+
+                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+                        <span itemprop="name">Spencer Kittleson</span>
+                    </a>
+                    <meta itemprop="jobTitle" content="Software Engineer">
+                </span>
+                <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+                    <meta itemprop="name" content="Spencer Kittleson">
+                </span>
+                | 
+                &copy; 2019 Do Code That Matters
             </div>
         </div>
     </div>

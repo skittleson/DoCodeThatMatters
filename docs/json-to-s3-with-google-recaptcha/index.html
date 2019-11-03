@@ -19,7 +19,6 @@
     <meta name="application-name" content="Do Code That Matters">
     <meta property="og:title" content="Save JSON Objects to AWS S3 with Google Recaptcha | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta itemprop="publisher" property="og:site_name" content="Do Code That Matters" />
     <meta property="og:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
@@ -39,14 +38,19 @@
     </header><main class="postMain">
   <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
-      <h1 itemprop="headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
+      <meta itemprop="mainEntityOfPage" content="json-to-s3-with-google-recaptcha">
+      <h1 itemprop="name headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
       <small>
-        <span itemprop="datePublished" itemprop="dateModified" content="2019-10-19T00:00:00.000Z">18 October 2019</span>
+        <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
+        <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
         by <span itemprop="author">Spencer Kittleson</span>
       </small>
       <br />
-      <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80"
-        alt="Chain fence locked" /><br />
+      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <img itemprop="url contentUrl" alt="Chain fence locked" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80">
+        <figcaption itemprop="caption">Chain fence locked</figcaption>
+      </figure>
+      <br />
     </header>
     <section itemprop="articleBody">
       <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
@@ -81,7 +85,6 @@ grecaptcha.ready(function() {
 </ul>
 
     </section>
-    Article: <a itemprop='url' href="json-to-s3-with-google-recaptcha">json-to-s3-with-google-recaptcha</a>
   </article>
 </main>
 <aside class="postAside">
@@ -103,7 +106,18 @@ grecaptcha.ready(function() {
     <div class="container">
         <div class="row hidden-xs">
             <div class="col-sm-12 text-center">
-                <p><br />&copy; 2019 Do Code That Matters</p>
+
+                <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+                        <span itemprop="name">Spencer Kittleson</span>
+                    </a>
+                    <meta itemprop="jobTitle" content="Software Engineer">
+                </span>
+                <span itemprop="publisher" itemscope itemtype="https://schema.org/Person">
+                    <meta itemprop="name" content="Spencer Kittleson">
+                </span>
+                | 
+                &copy; 2019 Do Code That Matters
             </div>
         </div>
     </div>
