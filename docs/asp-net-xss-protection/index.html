@@ -64,7 +64,7 @@
       </figure>
       <br />
     </header>
-    <section itemprop="articleBody">
+    <section itemprop="articleBody" class="article-body">
       <p>Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</p>
 <p>In system.webServer element, add the following:</p>
 <pre><code>&lt;httpProtocol&gt;
@@ -131,7 +131,7 @@
     <img style="vertical-align:middle;margin:0;padding:0;border:none;"
       src="https://d1xnn692s7u6t6.cloudfront.net/black-25.png" /><span
       style="vertical-align:middle;margin-left:3px;">Send to Kindle</span></div>
-      <br/><br />
+  <br /><br />
   Twitter: <a href="https://twitter.com/skittleson">@skittleson</a><br />
   GitHub: <a href="https://github.com/skittleson">skittleson</a><br />
   LinkedIn: <a href="https://www.linkedin.com/in/skittleson/">skittleson</a><br />
@@ -182,7 +182,8 @@
     gtag('config', 'UA-93963699-1');
 </script>
 <script type="text/javascript" src="https://d1xnn692s7u6t6.cloudfront.net/widget.js"></script>
-<script type="text/javascript">(function k(){window.$SendToKindle&&window.$SendToKindle.Widget?$SendToKindle.Widget.init({}):setTimeout(k,500);})();</script>
+<script
+    type="text/javascript">(function k() { window.$SendToKindle && window.$SendToKindle.Widget ? $SendToKindle.Widget.init({ "content": ".postMain" }) : setTimeout(k, 500); })();</script>
 </body>
 
 </html>
