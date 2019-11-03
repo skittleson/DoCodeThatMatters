@@ -19,7 +19,7 @@
     <meta name="application-name" content="Do Code That Matters">
     <meta property="og:title" content="ASP.NET XSS protection | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:site_name" content="Do Code That Matters" />
+    <meta itemprop="publisher" property="og:site_name" content="Do Code That Matters" />
     <meta property="og:description" content="Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS)." />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Do Code That Matters" />
@@ -37,10 +37,14 @@
             <a href="/blog" class="btn btn-link">Blog</a>
             <a href="/about" class="btn btn-link">About</a>        </section>
     </header><main class="postMain">
-  <article itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting">
+  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 itemprop="headline">ASP.NET XSS protection</h1>
-      <small itemprop="datePublished" content="2017-09-06T00:00:00.000Z">5 September 2017</small><br />
+      <small>
+        <span itemprop="datePublished" itemprop="dateModified" content="2017-09-06T00:00:00.000Z">5 September 2017</span>
+        by <span itemprop="author">Spencer Kittleson</span>
+      </small>
+      <br />
       <img itemprop="image" itemscope itemtype="http://schema.org/ImageObject" src="/images/SSL-Featured.png"
         alt="ASP.Net XSS protection" /><br />
     </header>
@@ -101,6 +105,7 @@
 </ul>
 
     </section>
+    Article: <a itemprop='url' href="asp-net-xss-protection">asp-net-xss-protection</a>
   </article>
 </main>
 <aside class="postAside">
