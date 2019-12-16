@@ -17,6 +17,7 @@
   "assets": [
     "CNAME",
     "robots.txt",
+    "humans.txt",
     "images",
     "sw.js",
     "manifest.json",
