@@ -7,7 +7,7 @@ Build notes for building a safe and inexpensive electric skateboard for commutin
 
 ### Deck and Trucks
 
-The type of board will determine the size of the motor, case, and batteries. I went with a flexible long deck for cruising leisurely.
+The type of board will determine the size of the motor, case, and batteries. I went with a [flexible long deck](https://www.amazon.com/gp/product/B00I4KKPVM/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=89834a15bdf89d0203b903247a23e097&language=en_US)  for cruising leisurely.
 
 The skateboard trucks ended up being the hardest part of the build as most trucks would have not have enough space to mount an electric motor with a gear. After reading a ton of forums, the 10 inch [Caliber Trucks](https://www.amazon.com/gp/product/B00NY3Q5P4/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=b2a59432f37ae7d737c45a2b482b5ecd&language=en_US) have a square hanger (holds the axle). Paired with the [mounting kit](https://www.amazon.com/Motor-Compatible-Electric-Skateboard-Premium/dp/B07JK5VLVK/ref=as_li_ss_tl?crid=2IRK5BLUNQ4IC&dchild=1&keywords=caliber+trucks+motor+mount&qid=1576449000&sprefix=caliber+trucks+mo,sporting,194&sr=8-2&linkCode=ll1&tag=dctm-20&linkId=a4af203c682d290f9b77a573df56f036&language=en_US), it worked perfectly.
 
@@ -20,7 +20,7 @@ The ESK8 [Calculator](http://calc.esk8.it/#{%22batt-type-lipo%22:1,%22batt-cells
 Starting out with 2 x 8S batteries from a previous project, the following calculation was close to the expected top speed I was looking for.
 ![](images/DiySkateboardCalc.png "Motor, batter, and gear ratio calculation")
 
-[Motor](https://www.banggood.com/BRH5055-200KV-Brushless-Motor-For-Electric-Scooter-Skateboard-DIY-Kit-p-1465051.html?rmmds=myorder&cur_warehouse=CN)
+[Electric motor](https://www.banggood.com/BRH5055-200KV-Brushless-Motor-For-Electric-Scooter-Skateboard-DIY-Kit-p-1465051.html?rmmds=myorder&cur_warehouse=CN)
 
 [Gears and belt kit](https://www.amazon.com/Hitommy-17pcs-Pulley-Wheels-Electric/dp/B07RXV6H4L/ref=as_li_ss_tl?keywords=Drive+Kit+Parts+Pulley+And+Motor+Mount+For+80MM+Wheels+Electric+Skate+Board&qid=1576465899&s=sporting-goods&sr=1-1-catcorr&linkCode=ll1&tag=dctm-20&linkId=c8931c50e22ab88fe3879e599dc67805&language=en_US).  48 Teeth Bore (the big gear): 22mm; 16 Teeth Bore: 8mm (the small gear).  The belt also comes with it.
 
