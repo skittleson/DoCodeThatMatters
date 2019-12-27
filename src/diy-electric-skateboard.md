@@ -1,6 +1,6 @@
 This a post for building a safe and inexpensive electric skateboard for commuting. Since this was my first build of a DIY skateboard, tons of research was done. I hope this helps other people with the same project.
 
-This is the electronics layout of electric skateboard. Don't recognize some components? In the rest of this post I hope to clear that up so you can build DIY skateboard without the same trouble I ran into.
+This is the electronics layout of electric skateboard. Don't recognize some components?
 [Diagram from ESK8 forum](https://www.electric-skateboard.builders/t/wiki-a-beginner-guide-to-diy-an-esk8/46844) for the fundamentals.
 ![](images/diagramSkateboard.jpg)
 
