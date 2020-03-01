@@ -8,11 +8,11 @@ This is the electronics layout of electric skateboard. Don't recognize some comp
 
 ### Deck and Trucks
 
-The type of board will determine the size of the motor, case, and batteries. I went with a [flexible long deck](https://www.amazon.com/gp/product/B00I4KKPVM/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=89834a15bdf89d0203b903247a23e097&language=en_US) for cruising leisurely.
+The type of board will determine the size of the motor, case, and batteries. I went with a [flexible long deck](https://www.amazon.com/gp/product/B00I4KKPVM/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=89834a15bdf89d0203b903247a23e097&language=en_US).
 
 ![](images/d-skateboard-truck-anatomy-grande.jpg)
 
-Most skateboard truck hangers are not very long which made it difficult to make this build small. Enough space is needed to mount an electric motor with a gears. Forums pointed to the 10 inch [Caliber Trucks](https://www.amazon.com/gp/product/B00NY3Q5P4/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=b2a59432f37ae7d737c45a2b482b5ecd&language=en_US) that have a square hanger (holds the axle). Paired with the [mounting kit](https://www.amazon.com/Motor-Compatible-Electric-Skateboard-Premium/dp/B07JK5VLVK/ref=as_li_ss_tl?crid=2IRK5BLUNQ4IC&dchild=1&keywords=caliber+trucks+motor+mount&qid=1576449000&sprefix=caliber+trucks+mo,sporting,194&sr=8-2&linkCode=ll1&tag=dctm-20&linkId=a4af203c682d290f9b77a573df56f036&language=en_US), it worked perfectly.
+Most skateboard truck hangers are not very long which made it difficult finding the right type. Space is needed to mount an electric motor with a gear attached to the wheel. Forums pointed to the 10 inch [Caliber Trucks](https://www.amazon.com/gp/product/B00NY3Q5P4/ref=as_li_ss_tl?ie=UTF8&psc=1&linkCode=ll1&tag=dctm-20&linkId=b2a59432f37ae7d737c45a2b482b5ecd&language=en_US) that have a square hanger (holds the axle). Paired with the [mounting kit](https://www.amazon.com/Motor-Compatible-Electric-Skateboard-Premium/dp/B07JK5VLVK/ref=as_li_ss_tl?crid=2IRK5BLUNQ4IC&dchild=1&keywords=caliber+trucks+motor+mount&qid=1576449000&sprefix=caliber+trucks+mo,sporting,194&sr=8-2&linkCode=ll1&tag=dctm-20&linkId=a4af203c682d290f9b77a573df56f036&language=en_US), it worked perfectly.
 
 ### Motor, Gears, and Wheels
 
