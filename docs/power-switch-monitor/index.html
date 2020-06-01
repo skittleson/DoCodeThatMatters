@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
+
+<head>
+    <title>Power Switch Monitor with an Arduino device</title>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta itemprop="description" name="description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
+    <meta name="keywords" content="arduino,wemos,home automation,node red,bme280,smart home,smart light" />
+    <meta name="Distribution" content="Global" />
+    <meta name="Rating" content="General" />
+    <meta name="Robots" content="INDEX,FOLLOW" />
+    <meta name="author" content="Do Code That Matters" />
+    <meta name="Revisit-after" content="31 Days" />
+    <meta name="application-name" content="Do Code That Matters">
+    <meta property="og:title" content="Power Switch Monitor with an Arduino device | Do Code That Matters" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
+    <link href="/css/site.css" rel="stylesheet">
+    <link rel='manifest' href='/manifest.json'>
+    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
+</head>
+
+<body>
+
+    <header class="navbar">
+        <section class="navbar-section">
+            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
+            <a href="/blog" class="btn btn-link">Blog</a>
+            <a href="/about" class="btn btn-link">About</a>        </section>
+    </header><main class="postMain">
+  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/power-switch-monitor">
+      <h1 itemprop="name headline">Power Switch Monitor with an Arduino device</h1>
+      <small>
+        <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">31 May 2020</time>
+        <meta itemprop="dateModified" content="2020-06-01T00:00:00.000Z">
+        by
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+            <span itemprop="name">Spencer Kittleson</span>
+          </a>
+          <meta itemprop="jobTitle" content="Software Engineer">
+        </span>
+        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+          <meta itemprop="name" content="Do Code That Matters">
+          <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+          </span>
+        </span>
+      </small>
+      <br />
+      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+        <img itemprop="url contentUrl" alt="power switch monitor flow" src="images/powerMonitorFlowSetup.png">
+        <figcaption itemprop="caption">power switch monitor flow</figcaption>
+      </figure>
+      <br />
+    </header>
+    <section itemprop="articleBody" class="article-body">
+      <p>The biggest rule about home automation is not to change existing behavior for users that causes inconvenience. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on a light. Now they have to ask Alexa, Google, or use an app on their phone. <strong>This is bad.</strong></p>
+<p><img src="https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif" alt=""></p>
+<p>After awhile the home smart device gets removed because it's causing inconvenience because the user can't flip a switch.</p>
+<h2>Solutions</h2>
+<p>The 2 common solutions presented in this situation:</p>
+<p><strong>1. Blocking the user</strong> with tape or other mechanism. Checkout Thingiverse to see how common this is: <a href="https://www.thingiverse.com/tag:Light_Switch_Cover">https://www.thingiverse.com/tag:Light_Switch_Cover</a>. This changes user behavior so it's a bad idea.</p>
+<p><strong>2. Replacing the light switch</strong> with a smarter one. This is the best option but requires a hardware replacement of the light switch. Which may not be possible, costly and potential dangerous to do-it-yourself!</p>
+<hr>
+<p>I present a third possible solution while with a combination of both solutions.</p>
+<p><strong>3. Trigger the smart device with the existing power wall outlet</strong> using an Arduino type device with WiFi. In this solution, the light switch changes the power state if the outlet that the Arduino based micro controller it's monitoring. The idea here is when the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance (or to the smart bulb on the outlet) to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow of to toggle light state from a user.</p>
+<p><img src="images/powerMonitorFlowSetup.png" alt=""></p>
+<p>The advantages:</p>
+<ul>
+<li>Simple &amp; low effort</li>
+<li>Use existing switches to make them smart</li>
+<li>Ability to control multiple devices with a single switch.</li>
+<li>Open source</li>
+</ul>
+<hr>
+<h2>Step 1: Get the Components and Solder Them</h2>
+<h3>Tools</h3>
+<ul>
+<li>Soldering iron</li>
+<li>Third hand or vise</li>
+</ul>
+<h3>Material</h3>
+<ul>
+<li><a href="https://amzn.to/2zI2nUf">Wemos mini d1 from Amazon</a> or similar esp8266 / esp32 device</li>
+<li>2 x resistors (any two usually works, i used 10k)</li>
+<li>Wire</li>
+<li>2 5v usb wall chargers charger.</li>
+<li>1 male usb plugin</li>
+<li>1 regular usb charging cable for the esp32.</li>
+<li>(optional) <a href="https://amzn.to/2U2qCTM">bme280</a> or <a href="https://amzn.to/2XL2C8U">bme680</a></li>
+<li>led</li>
+<li>solder</li>
+</ul>
+<p>Solder everything together like the following:</p>
+<p><img src="images/PowerMonitor_bb.png" alt="bread board version"></p>
+<p><img src="images/PowerMonitor_schem.png" alt="schema version"></p>
+<p><img src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front"></p>
+<p><img src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back"></p>
+<h2>Step 2: Download and Upload Software</h2>
+<p>Example MQTT message:</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;123456789&quot;,
+  &quot;switch&quot;: true,
+  &quot;temp&quot;: 27,
+  &quot;pressure&quot;: 1013,
+  &quot;humidity&quot;: 47
+}
+</code></pre>
+<p>Source Code:</p>
+<p><a href="https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor">https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor</a></p>
+<h2>Step 3: Add to a Home Assistance</h2>
+<p>So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software. The MQTT message is sent to this device using <code>mDNS</code> discover on the service <code>_mqtt._tcp</code>. The node <code>iot</code> is listening for messages. Using the <code>id</code>, the message is routed to specific to a change node then to a Wemo device to trigger a light in to a state.</p>
+<p><img src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup"></p>
+<h2>Resources</h2>
+<p><a href="https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test">https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test</a><br>
+<a href="https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/">https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/</a><br>
+<a href="https://lastminuteengineers.com/bme280-arduino-tutorial/">https://lastminuteengineers.com/bme280-arduino-tutorial/</a></p>
+
+    </section>
+  </article>
+</main>
+<aside class="postAside">
+  <b>Latest Posts</b>
+  <ul class="unstyledUl">
+    <li>
+      <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+    </li>
+    <li>
+      <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
+    </li>
+    <li>
+      <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
+    </li>
+    <li>
+      <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
+    </li>
+    <li>
+      <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
+    </li>
+    <li>
+      <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
+    </li>
+    <li>
+      <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
+    </li>
+  </ul>
+  <br />
+  <b>Other</b><br />
+  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
+    Request</a> to help me out!
+</aside>
+
+<script async src="js/site.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-93963699-1');
+</script>
+</body>
+
+</html>

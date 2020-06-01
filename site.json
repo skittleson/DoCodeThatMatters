@@ -30,6 +30,16 @@
     { "file": "blog.hbs" },
     { "file": "admin.hbs" },
     {
+      "file": "power-switch-monitor.md",
+      "title": "Power Switch Monitor with an Arduino device",
+      "keywords": "arduino,wemos,home automation,node red,bme280,smart home,smart light",
+      "date": "2020-06-01",
+      "description": "Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.",
+      "image": "images/powerMonitorFlowSetup.png",
+      "imageAlt": "power switch monitor flow",
+      "priority": 0.9
+    },
+    {
       "file": "json-to-s3-with-google-recaptcha.md",
       "title": "Save JSON Objects to AWS S3 with Google Recaptcha",
       "keywords": "AWS S3,recaptcha,s3,json form",

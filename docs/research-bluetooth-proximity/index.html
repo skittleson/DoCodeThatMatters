@@ -26,6 +26,7 @@
     <link href="/css/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
@@ -65,17 +66,18 @@
       <br />
     </header>
     <section itemprop="articleBody" class="article-body">
-      <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt </code>, <code>l2ping</code>, and <code>hcidump</code>.  A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>  blog post.</p>
+      <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt</code>, <code>l2ping</code>, and <code>hcidump</code>. A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a> blog post.</p>
 <h2>Commands</h2>
 <p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
 <h3>Scan for Bluetooth LE Devices:</h3>
-<pre><code>timeout --signal=SIGINT 30 hcitool lescan
+<pre><code>`timeout --signal=SIGINT 30 hcitool lescan`
 </code></pre>
 <h3>Get Bluetooth LE Devices with RSSI values:</h3>
-<pre><code>btmgmt find
+<pre><code>`btmgmt find`
 </code></pre>
 <p>Response:</p>
-<pre><code>hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
+<pre><code>```bash
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
 AD flags 0x1a
 eir_len 14
 hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
@@ -87,7 +89,7 @@ name N016Y
 hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
 AD flags 0x00
 eir_len 28
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
+hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000```
 </code></pre>
 <h3>Ping bluetooth enable device without pairing:</h3>
 <pre><code>`l2ping -c 3 &lt;MAC&gt;`
@@ -99,22 +101,24 @@ hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
 ♥2 sent, 2 received, 0% loss
 </code></pre>
 <h3>Dump all data of a paired bluetooth device:</h3>
-<pre><code>hcidump -a
+<pre><code>`hcidump -a`
 </code></pre>
 <h3>To request authorization from device:</h3>
-<pre><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;
+<pre><code>`hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;`
 </code></pre>
 <h3>Attempt connection then get RSSI value:</h3>
-<pre><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;
+<pre><code>`hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;`
 </code></pre>
 <p>Response:</p>
-<pre><code>Connections:
+<pre><code>```bash
+Connections:
         &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
 RSSI return value: -4
+```
 </code></pre>
 <p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
 <h3>Attempt to get RSSI value without trying to connect to device:</h3>
-<pre><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;
+<pre><code>`hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;`
 </code></pre>
 <h2>Some Resources</h2>
 <p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a><br>
@@ -132,6 +136,9 @@ RSSI return value: -4
 <aside class="postAside">
   <b>Latest Posts</b>
   <ul class="unstyledUl">
+    <li>
+      <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+    </li>
     <li>
       <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
     </li>
@@ -157,15 +164,6 @@ RSSI return value: -4
     Request</a> to help me out!
 </aside>
 
-<div id="footer">
-    <div class="container">
-        <div class="row hidden-xs">
-            <div class="col-sm-12 text-center">
-                &copy; 2019 Do Code That Matters
-            </div>
-        </div>
-    </div>
-</div>
 <script async src="js/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
