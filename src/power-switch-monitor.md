@@ -12,11 +12,7 @@ The 2 common solutions presented in this situation:
 
 **2. Replacing the light switch** with a smarter one. This is the best option but requires a hardware replacement of the light switch. Which may not be possible, costly and potential dangerous to do-it-yourself!
 
----
-
-I present a third possible solution while with a combination of both solutions.
-
-**3. Trigger the smart device with the existing power wall outlet** using an Arduino type device with WiFi. In this solution, the light switch changes the power state if the outlet that the Arduino based micro controller it's monitoring. The idea here is when the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance (or to the smart bulb on the outlet) to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow of to toggle light state from a user.
+**3. A third hybrid solution: Trigger the smart device with the existing light switch using power wall outlet as feedback** using an Arduino device with WiFi. In this solution, the light switch changes the power state of the outlet that the Arduino based micro controller is monitoring. When the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow to toggle the smart bulb state from a user.
 
 ![](images/powerMonitorFlowSetup.png)
 
@@ -24,31 +20,31 @@ The advantages:
 
 - Simple & low effort
 - Use existing switches to make them smart
-- Ability to control multiple devices with a single switch.
+- Ability to control multiple devices with a single switch
 - Open source
 
 ---
 
-## Step 1: Get the Components and Solder Them
+## Building the Device
 
-### Tools
+### Step 1: Get the Components and Solder Them
+
+#### Tools
 
 - Soldering iron
 - Third hand or vise
 
-### Material
+#### Material
 
 - [Wemos mini d1 from Amazon](https://amzn.to/2zI2nUf) or similar esp8266 / esp32 device
 - 2 x resistors (any two usually works, i used 10k)
 - Wire
-- 2 5v usb wall chargers charger.
+- 2 5v usb wall chargers.
 - 1 male usb plugin
 - 1 regular usb charging cable for the esp32.
-- (optional) [bme280](https://amzn.to/2U2qCTM) or [bme680](https://amzn.to/2XL2C8U)
 - led
 - solder
-
-Solder everything together like the following:
+- (optional) [bme280](https://amzn.to/2U2qCTM) or [bme680](https://amzn.to/2XL2C8U)
 
 ![bread board version](images/PowerMonitor_bb.png)
 
@@ -58,7 +54,7 @@ Solder everything together like the following:
 
 ![wemos mini d1 lite with bme680 back](images/PowerMonitorBack.jpg)
 
-## Step 2: Download and Upload Software
+### Step 2: Download and Upload Software
 
 Example MQTT message:
 
@@ -76,7 +72,7 @@ Source Code:
 
 <https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor>
 
-## Step 3: Add to a Home Assistance
+### Step 3: Add to a Home Assistance
 
 So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software. The MQTT message is sent to this device using `mDNS` discover on the service `_mqtt._tcp`. The node `iot` is listening for messages. Using the `id`, the message is routed to specific to a change node then to a Wemo device to trigger a light in to a state.
 
