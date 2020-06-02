@@ -1,8 +1,8 @@
-The biggest rule about home automation is not to change existing behavior for users that causes inconvenience. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on a light. Now they have to ask Alexa, Google, or use an app on their phone. **This is bad.**
+The biggest rule for home automation is not to change existing behavior of users that causes inconvenience or frustration. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. **This is bad.**
 
 ![](https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif)
 
-After awhile the home smart device gets removed because it's causing inconvenience because the user can't flip a switch.
+It's causing an inconvenience because the user can't flip a switch.
 
 ## Solutions
 
