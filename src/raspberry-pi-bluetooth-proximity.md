@@ -12,3 +12,5 @@ On an Android Phone version 6.0.1, Settings > System > About device > Status > B
 Command: `sudo l2ping -c 2 00:11:22:AA:BB:CC`  
 Result:  
 `Ping: 00:11:22:AA:BB:CC from 00:00:00:00:00:17 (data size 44) ... 0 bytes from 00:11:22:AA:BB:CC id 0 time 7.32ms 0 bytes from 00:11:22:AA:BB:CC id 1 time 22.46ms`
+
+**[Checkout some of the additional commands in this blog post](/research-bluetooth-proximity)**

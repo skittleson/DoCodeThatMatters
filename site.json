@@ -21,7 +21,8 @@
     "images",
     "sw.js",
     "manifest.json",
-    "googlef0b8aed37825acd2.html"
+    "googlef0b8aed37825acd2.html",
+    "marlinConfigDiff.html"
   ],
   "pages": [
     { "file": "index.hbs" },
@@ -37,6 +38,16 @@
       "description": "Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.",
       "image": "images/powerMonitorFlowSetup.png",
       "imageAlt": "power switch monitor flow",
+      "priority": 0.9
+    },
+    {
+      "file": "3dprinter-duplicator-i3-upgrade.md",
+      "title": "Duplicator i3 3d printer upgrade",
+      "keywords": "3d printing,diy,mks gen board,auto leveling bed,marlin,Duplicator i3",
+      "date": "2020-06-01",
+      "description": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
+      "image": "images/printer-upgrade/i3.jpg",
+      "imageAlt": "Duplicator i3 3d printer",
       "priority": 0.9
     },
     {
