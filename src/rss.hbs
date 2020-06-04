@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="{{site.url}}">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>{{site.company}}</title>
         <link>{{site.url}}</link>
@@ -14,7 +14,7 @@
             <link>{{../site.url}}/{{blogPath this.file}}</link>
             <guid>{{../site.url}}/{{blogPath this.file}}</guid>
             <pubDate>{{this.date}}</pubDate>
-            <media:content medium="image" url="{{imagePath this.image ../site.url}}" />
+            <enclosure url="{{imagePath this.image ../site.url}}" type="image/jpeg" />
         </item>
         {{/each}}
     </channel>
