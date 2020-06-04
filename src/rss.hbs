@@ -14,6 +14,7 @@
             <link>{{../site.url}}/{{blogPath this.file}}</link>
             <guid>{{../site.url}}/{{blogPath this.file}}</guid>
             <pubDate>{{this.date}}</pubDate>
+            <media:content medium="image" url="{{imagePath this.image ../site.url}}" />
         </item>
         {{/each}}
     </channel>

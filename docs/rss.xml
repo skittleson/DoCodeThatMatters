@@ -13,6 +13,7 @@
             <link>https://DoCodeThatMatters.com/power-switch-monitor</link>
             <guid>https://DoCodeThatMatters.com/power-switch-monitor</guid>
             <pubDate>2020-06-01</pubDate>
+            <media:content medium="image" url="https://DoCodeThatMatters.com/images/powerMonitorFlowSetup.png" />
         </item>
         <item>
             <title>Duplicator i3 3d printer upgrade</title>
@@ -20,6 +21,7 @@
             <link>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</link>
             <guid>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</guid>
             <pubDate>2020-06-01</pubDate>
+            <media:content medium="image" url="https://DoCodeThatMatters.com/images/printer-upgrade/i3.jpg" />
         </item>
         <item>
             <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
@@ -27,6 +29,7 @@
             <link>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</link>
             <guid>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</guid>
             <pubDate>2019-10-19</pubDate>
+            <media:content medium="image" url="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80" />
         </item>
         <item>
             <title>Research on Bluetooth Proximity</title>
@@ -34,6 +37,7 @@
             <link>https://DoCodeThatMatters.com/research-bluetooth-proximity</link>
             <guid>https://DoCodeThatMatters.com/research-bluetooth-proximity</guid>
             <pubDate>2019-10-19</pubDate>
+            <media:content medium="image" url="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80" />
         </item>
         <item>
             <title>Software Engineering Lessons</title>
@@ -41,6 +45,7 @@
             <link>https://DoCodeThatMatters.com/software-engineering-lessons</link>
             <guid>https://DoCodeThatMatters.com/software-engineering-lessons</guid>
             <pubDate>2018-10-23</pubDate>
+            <media:content medium="image" url="https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib&#x3D;rb-0.3.5&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;s&#x3D;680298e4f13a54b9a2b3063590f4d902&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1500&amp;q&#x3D;80" />
         </item>
         <item>
             <title>Raspberry Pi – Bluetooth Proximity</title>
@@ -48,6 +53,7 @@
             <link>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</link>
             <guid>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</guid>
             <pubDate>2017-05-26</pubDate>
+            <media:content medium="image" url="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg" />
         </item>
         <item>
             <title>Yet Another Garage Door Opener</title>
@@ -55,6 +61,7 @@
             <link>https://DoCodeThatMatters.com/yet-another-garage-door-opener</link>
             <guid>https://DoCodeThatMatters.com/yet-another-garage-door-opener</guid>
             <pubDate>2018-05-11</pubDate>
+            <media:content medium="image" url="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg" />
         </item>
         <item>
             <title>ASP.NET XSS protection</title>
@@ -62,6 +69,7 @@
             <link>https://DoCodeThatMatters.com/asp-net-xss-protection</link>
             <guid>https://DoCodeThatMatters.com/asp-net-xss-protection</guid>
             <pubDate>2017-09-06</pubDate>
+            <media:content medium="image" url="https://DoCodeThatMatters.com//images/SSL-Featured.png" />
         </item>
     </channel>
 </rss>

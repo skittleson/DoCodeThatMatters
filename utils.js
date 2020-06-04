@@ -4,7 +4,7 @@ const fs = require("fs-extra");
 const uglify = require("uglify-js");
 const markdown = require("markdown-it")({
   html: true,
-  breaks: true
+  breaks: true,
 });
 const concat = require("concat-files");
 
@@ -43,18 +43,18 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
   }
   store.site.staticRandom = Math.floor(Math.random() * Math.floor(1000000000));
   let partials = [];
-  store.partials.forEach(partial => {
+  store.partials.forEach((partial) => {
     const partialName = partial.split(".")[0];
     partials.push({ name: partialName, path: `${src}/partials/${partial}` });
   });
   registerPartials(partials);
 
-  const posts = store.pages.filter(pageToFilter =>
+  const posts = store.pages.filter((pageToFilter) =>
     pageToFilter.file.includes(".md")
   );
 
   // build a site map
-  store.pages.forEach(page => {
+  store.pages.forEach((page) => {
     const pageKeyValue = Object.assign(store.site, page);
 
     //only posts
@@ -64,7 +64,7 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
     if (page.file === "index.hbs") {
       saveToPath = `${dest}/index.html`;
     }
-   
+
     saveHandlebarsToHtml(`${src}/${page.file}`, saveToPath, pageKeyValue);
   });
 
@@ -74,7 +74,7 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
     `${dest}/rss.xml`,
     handlebars.compile(rss, { strict: true })({
       site: store.site,
-      posts: posts
+      posts: posts,
     }),
     {}
   );
@@ -82,9 +82,9 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
   // Create site map
   let siteMap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">`;
   store.pages
-    .filter(page => page.file !== 'admin.hbs')
-    .filter(page => page.file !== 'offline.hbs')
-    .forEach(page => {
+    .filter((page) => page.file !== "admin.hbs")
+    .filter((page) => page.file !== "offline.hbs")
+    .forEach((page) => {
       let folder = page.file.replace(".hbs", "").replace(".md", "");
       let priority = 0.8;
       if (page.file === "index.hbs") {
@@ -98,21 +98,21 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
 
   // Collect on js files, compress, and push to destination
   let jsc = [];
-  store.js.forEach(file => {
+  store.js.forEach((file) => {
     jsc.push(`${file}.c.js`);
     compressJs(file, `${file}.c.js`);
   });
-  concat(jsc, `${dest}/js/site.js`, function(err) {
+  concat(jsc, `${dest}/js/site.js`, function (err) {
     if (err) throw err;
-    jsc.forEach(file => {
+    jsc.forEach((file) => {
       fs.unlink(file);
     });
   });
   concat(store.css, `${dest}/css/site.css`);
 
   // copy asset files over
-  store.assets.forEach(asset => {
-    fs.copy(`${src}/${asset}`, `${dest}/${asset}`, err => {
+  store.assets.forEach((asset) => {
+    fs.copy(`${src}/${asset}`, `${dest}/${asset}`, (err) => {
       if (err) throw err;
     });
   });
@@ -128,7 +128,7 @@ function ensureDirectoryExistence(filePath) {
 }
 
 function registerPartials(partials) {
-  partials.forEach(partial => {
+  partials.forEach((partial) => {
     handlebars.registerPartial(
       partial.name,
       fs.readFileSync(partial.path, "utf8")
@@ -146,9 +146,9 @@ function compressJs(inFile, outFile) {
   //console.log(result.map);  // source map
 }
 
-handlebars.registerHelper("json", function(context) {
+handlebars.registerHelper("json", function (context) {
   const cache = new Set();
-  return JSON.stringify(context, function(key, value) {
+  return JSON.stringify(context, function (key, value) {
     if (typeof value === "object" && value !== null) {
       if (cache.has(value)) {
         // Circular reference found, discard key
@@ -173,10 +173,10 @@ const monthNames = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];
 
-handlebars.registerHelper("formatDate", function(dateStr) {
+handlebars.registerHelper("formatDate", function (dateStr) {
   let date = new Date(dateStr);
   const day = date.getDate();
   const monthIndex = date.getMonth();
@@ -184,10 +184,17 @@ handlebars.registerHelper("formatDate", function(dateStr) {
   return `${day} ${monthNames[monthIndex]} ${year}`;
 });
 
-handlebars.registerHelper("schemaDate", function(dateStr) {
+handlebars.registerHelper("schemaDate", function (dateStr) {
   return new handlebars.SafeString(JSON.stringify(new Date(dateStr)));
 });
 
-handlebars.registerHelper("blogPath", function(file) {
+handlebars.registerHelper("blogPath", function (file) {
   return file.split(".md")[0];
+});
+
+handlebars.registerHelper("imagePath", function (imagePath, siteUrl) {
+  if (imagePath.indexOf("http") != -1) {
+    return imagePath;
+  }
+  return siteUrl + "/" + imagePath;
 });
