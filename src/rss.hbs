@@ -4,6 +4,7 @@
         <title>{{site.company}}</title>
         <link>{{site.url}}</link>
         <language>en-us</language>
+        <description>Personal blog about software development, 3d printing, diy, and c#</description>
         <copyright>Copyright 2020 Spencer Kittleson</copyright>
         <ttl>30</ttl>
         <atom:link href="{{site.url}}/rss.xml" rel="self" type="application/rss+xml" />
@@ -14,7 +15,7 @@
             <link>{{../site.url}}/{{blogPath this.file}}</link>
             <guid>{{../site.url}}/{{blogPath this.file}}</guid>
             <pubDate>{{this.date}}</pubDate>
-            <enclosure url="{{imagePath this.image ../site.url}}" type="image/jpeg" />
+            {{!-- <enclosure url="{{imagePath this.image ../site.url}}" type="image/jpeg" /> --}}
         </item>
         {{/each}}
     </channel>
