@@ -56,25 +56,47 @@ The advantages:
 
 ### Step 2: Download and Upload Software
 
-Example MQTT message:
+Flash your device with a [Tasmota](https://tasmota.github.io/docs/) firmware.
 
-```json
-{
-  "id": "123456789",
-  "switch": true,
-  "temp": 27,
-  "pressure": 1013,
-  "humidity": 47
-}
+#### Tasmota Module configuration
+
+Set to: `Generic Module` then click `Save`. the device will restart.
+
+- D2 - I2C SDA (6) - BME680
+- D1 - I2C SCL (5) - BME680
+- A0 - Analog (1) - connected to 5V power supply resistor divider
+
+#### Tasmota Console
+
+Send when external light switch power is on, send `1`.
+
+`Rule1 ON analog#a0>1000 DO Backlog Rule1 0; Rule2 1; Publish cmnd/masterlight/SWITCH 1 ENDON`
+
+When external light switch power is off, send `0`.
+
+`Rule2 ON analog#a0<1000 DO Backlog Rule1 1; Rule2 0; Publish cmnd/masterlight/SWITCH 0 ENDON`
+
+Enable rule 1: `Rule1 1`
+
+Ensure you have MQTT enable then look at the console for messages similar to this:
+
+```bash
+01:39:26 MQT: stat/tasmota_A61989/POWER1 = ON
+01:39:26 RUL: POWER1#STATE=1 performs "Backlog Delay 10; Power1 0"
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {"Delay":10}
+01:39:26 RUL: SWITCH2#STATE performs "Publish cmnd/garagedoor/SWITCH 0"
+01:39:26 MQT: cmnd/garagedoor/SWITCH = 0
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {"POWER1":"OFF"}
+01:39:26 MQT: stat/tasmota_A61989/POWER1 = OFF
+1:40:11 MQT: tele/tasmota_A61989/STATE = {"Time":"2020-06-26T01:40:11","Uptime":"6T03:00:30","UptimeSec":529230,"Heap":23,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"MqttCount":1,"POWER1":"OFF","POWER2":"OFF","Wifi":{"AP":1,"SSId":"lucky","BSSId":"4C:ED:FB:7B:4A:98","Channel":4,"RSSI":100,"Signal":-34,"LinkCount":1,"Downtime":"0T00:00:05"}}
+01:40:11 MQT: tele/tasmota_A61989/SENSOR = {"Time":"2020-06-26T01:40:11","Switch2":"OFF"}
 ```
 
-Source Code:
-
-<https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor>
+The MQTT topic is `cmnd/masterlight/SWITCH` with a boolean value of either `1` for open or `0` for close. The topics are for state or the reed switch sensor value `Switch2` that are sent every 5 minutes (configurable) via MQTT.
 
 ### Step 3: Add to a Home Assistance
 
-So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software. The MQTT message is sent to this device using `mDNS` discover on the service `_mqtt._tcp`. The node `iot` is listening for messages. Using the `id`, the message is routed to specific to a change node then to a Wemo device to trigger a light in to a state.
+So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software.  Get the MQTT message then process notifications you would like.
 
 ![NodeRed power monitor setup](images/nodeRedPowerMonitor.png)
 

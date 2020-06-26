@@ -107,19 +107,34 @@
 <p><img src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front"></p>
 <p><img src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back"></p>
 <h3>Step 2: Download and Upload Software</h3>
-<p>Example MQTT message:</p>
-<pre><code class="language-json">{
-  &quot;id&quot;: &quot;123456789&quot;,
-  &quot;switch&quot;: true,
-  &quot;temp&quot;: 27,
-  &quot;pressure&quot;: 1013,
-  &quot;humidity&quot;: 47
-}
+<p>Flash your device with a <a href="https://tasmota.github.io/docs/">Tasmota</a> firmware.</p>
+<h4>Tasmota Module configuration</h4>
+<p>Set to: <code>Generic Module</code> then click <code>Save</code>. the device will restart.</p>
+<ul>
+<li>D2 - I2C SDA (6) - BME680</li>
+<li>D1 - I2C SCL (5) - BME680</li>
+<li>A0 - Analog (1) - connected to 5V power supply resistor divider</li>
+</ul>
+<h4>Tasmota Console</h4>
+<p>Send when external light switch power is on, send <code>1</code>.</p>
+<p><code>Rule1 ON analog#a0&gt;1000 DO Backlog Rule1 0; Rule2 1; Publish cmnd/masterlight/SWITCH 1 ENDON</code></p>
+<p>When external light switch power is off, send <code>0</code>.</p>
+<p><code>Rule2 ON analog#a0&lt;1000 DO Backlog Rule1 1; Rule2 0; Publish cmnd/masterlight/SWITCH 0 ENDON</code></p>
+<p>Enable rule 1: <code>Rule1 1</code></p>
+<p>Ensure you have MQTT enable then look at the console for messages similar to this:</p>
+<pre><code class="language-bash">01:39:26 MQT: stat/tasmota_A61989/POWER1 = ON
+01:39:26 RUL: POWER1#STATE=1 performs &quot;Backlog Delay 10; Power1 0&quot;
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {&quot;Delay&quot;:10}
+01:39:26 RUL: SWITCH2#STATE performs &quot;Publish cmnd/garagedoor/SWITCH 0&quot;
+01:39:26 MQT: cmnd/garagedoor/SWITCH = 0
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {&quot;POWER1&quot;:&quot;OFF&quot;}
+01:39:26 MQT: stat/tasmota_A61989/POWER1 = OFF
+1:40:11 MQT: tele/tasmota_A61989/STATE = {&quot;Time&quot;:&quot;2020-06-26T01:40:11&quot;,&quot;Uptime&quot;:&quot;6T03:00:30&quot;,&quot;UptimeSec&quot;:529230,&quot;Heap&quot;:23,&quot;SleepMode&quot;:&quot;Dynamic&quot;,&quot;Sleep&quot;:50,&quot;LoadAvg&quot;:19,&quot;MqttCount&quot;:1,&quot;POWER1&quot;:&quot;OFF&quot;,&quot;POWER2&quot;:&quot;OFF&quot;,&quot;Wifi&quot;:{&quot;AP&quot;:1,&quot;SSId&quot;:&quot;lucky&quot;,&quot;BSSId&quot;:&quot;4C:ED:FB:7B:4A:98&quot;,&quot;Channel&quot;:4,&quot;RSSI&quot;:100,&quot;Signal&quot;:-34,&quot;LinkCount&quot;:1,&quot;Downtime&quot;:&quot;0T00:00:05&quot;}}
+01:40:11 MQT: tele/tasmota_A61989/SENSOR = {&quot;Time&quot;:&quot;2020-06-26T01:40:11&quot;,&quot;Switch2&quot;:&quot;OFF&quot;}
 </code></pre>
-<p>Source Code:</p>
-<p><a href="https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor">https://github.com/skittleson/ArduinoProjects/tree/master/PowerSwitchMonitor</a></p>
+<p>The MQTT topic is <code>cmnd/masterlight/SWITCH</code> with a boolean value of either <code>1</code> for open or <code>0</code> for close. The topics are for state or the reed switch sensor value <code>Switch2</code> that are sent every 5 minutes (configurable) via MQTT.</p>
 <h3>Step 3: Add to a Home Assistance</h3>
-<p>So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software. The MQTT message is sent to this device using <code>mDNS</code> discover on the service <code>_mqtt._tcp</code>. The node <code>iot</code> is listening for messages. Using the <code>id</code>, the message is routed to specific to a change node then to a Wemo device to trigger a light in to a state.</p>
+<p>So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software.  Get the MQTT message then process notifications you would like.</p>
 <p><img src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup"></p>
 <h2>Resources</h2>
 <p><a href="https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test">https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test</a><br>
