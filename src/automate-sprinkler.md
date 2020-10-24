@@ -94,15 +94,17 @@ Rule3 if mqtt msg is true then disable rule1, rule2, and disable timers
 ## Extending to other Platforms (Optional)
 
 - NodeRed
-- AWS IoT
 - Alexa
+
 
 ## Conclusion
 
 
-## Dwonl
+## UPDATE 
 
-### Lessons
+I took on the challenge of creating PCB with a Esp8266 microcontroller, screen, and a BME280 (temperature, humidity, and pressure) 
+
+
 
 ## Resources
 - https://tasmota.github.io/docs/Commands/
