@@ -119,6 +119,7 @@ Simple tracking the ON/OFF state of tasmota MQTT messages
 
 ![Graphana dashboard from Tasmota MQTT](images/sprinklerGraphana.png)
 
+![Graphana dashboard from Tasmota MQTT 7 days](images/sprinklerGraphana7Days.png)
 ### Setup Rules (Optional)
 
 Here are two more timers (or rules) wanted:
