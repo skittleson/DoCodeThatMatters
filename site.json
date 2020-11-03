@@ -31,6 +31,16 @@
     { "file": "blog.hbs" },
     { "file": "admin.hbs" },
     {
+      "file": "automate-sprinkler-with-tasmota.md",
+      "title": "Sprinklers, like programming on a VCR but worst!",
+      "keywords": "sprinkler,tasmota,bme280,mqtt,arduino,wemos,home automation,node red,pcb,alexa,maker",
+      "date": "2020-11-02",
+      "description": "",
+      "image": "images/sprinklerRunning.jpg",
+      "imageAlt": "sprinkler running",
+      "priority": 0.9
+    },
+    {
       "file": "power-switch-monitor.md",
       "title": "Power Switch Monitor with an Arduino device",
       "keywords": "arduino,wemos,home automation,node red,bme280,smart home,smart light",

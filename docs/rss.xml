@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>Sprinklers, like programming on a VCR but worst!</title>
+            <description></description>
+            <link>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</link>
+            <guid>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</guid>
+            <pubDate>2020-11-02</pubDate>
+        </item>
+        <item>
             <title>Power Switch Monitor with an Arduino device</title>
             <description>Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.</description>
             <link>https://DoCodeThatMatters.com/power-switch-monitor</link>
