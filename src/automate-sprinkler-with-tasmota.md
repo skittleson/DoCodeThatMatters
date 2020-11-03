@@ -2,8 +2,6 @@ I'm frustrated on over-the-shelf sprinkler systems for home owners. They are com
 
 <small>(there is affiliate links on this page for hardware used in this project)</small>
 
-![Sprinkler running](images/sprinklerRunning.jpg)
-
 ## Build a Watering sprinkler for less, better and for low effort
 
 ### Must Haves
@@ -113,20 +111,20 @@ It should look like this:
 
 Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message `tele/tasmota_YOURDEVICE/SENSOR` , the data is formatted and sent to a [local Graphana instance](https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3) on a Raspberry PI. 
 
-![Nodered with Alexa support](images/sprinklerNodeRedWithAlexa.png)
+![Node red with Alexa support](images/sprinklerNodeRedWithAlexa.png)
 
-![Nodered with Alexa support](images/sprinklerNodeRedUI.png)
+![Node red UI](images/sprinklerNodeRedUI.png)
 
 Simple tracking the ON/OFF state of tasmota MQTT messages
 
-![Nodered with Alexa support](images/sprinklerGraphana.png)
+![Graphana dashboard from Tasmota MQTT](images/sprinklerGraphana.png)
 
 ### Setup Rules (Optional)
 
 Here are two more timers (or rules) wanted:
 
-* WIP - before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers
-* WIP - before sunrise, check the humidity, if it's raining then disable timer.
+* 🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers
+* 🚧 before sunrise, check the humidity, if it's raining then disable timer.
 
 <!-- ## UPDATE 
 

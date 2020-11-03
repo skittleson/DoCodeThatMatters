@@ -68,7 +68,6 @@
     <section itemprop="articleBody" class="article-body">
       <p>I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price. The open source community has solved this!  The primary objective is to setup a water sprinkler to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!</p>
 <p><small>(there is affiliate links on this page for hardware used in this project)</small></p>
-<p><img src="images/sprinklerRunning.jpg" alt="Sprinkler running"></p>
 <h2>Build a Watering sprinkler for less, better and for low effort</h2>
 <h3>Must Haves</h3>
 <ul>
@@ -154,15 +153,15 @@
 </code></pre>
 <h2>Extending to other Platforms (Optional)</h2>
 <p>Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
-<p><img src="images/sprinklerNodeRedWithAlexa.png" alt="Nodered with Alexa support"></p>
-<p><img src="images/sprinklerNodeRedUI.png" alt="Nodered with Alexa support"></p>
+<p><img src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support"></p>
+<p><img src="images/sprinklerNodeRedUI.png" alt="Node red UI"></p>
 <p>Simple tracking the ON/OFF state of tasmota MQTT messages</p>
-<p><img src="images/sprinklerGraphana.png" alt="Nodered with Alexa support"></p>
+<p><img src="images/sprinklerGraphana.png" alt="Graphana dashboard from Tasmota MQTT"></p>
 <h3>Setup Rules (Optional)</h3>
 <p>Here are two more timers (or rules) wanted:</p>
 <ul>
-<li>WIP - before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers</li>
-<li>WIP - before sunrise, check the humidity, if it's raining then disable timer.</li>
+<li>🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers</li>
+<li>🚧 before sunrise, check the humidity, if it's raining then disable timer.</li>
 </ul>
 <!-- ## UPDATE 
 
