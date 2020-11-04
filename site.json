@@ -32,7 +32,7 @@
     { "file": "admin.hbs" },
     {
       "file": "automate-sprinkler-with-tasmota.md",
-      "title": "Sprinklers, like programming on a VCR but worst!",
+      "title": "A simple water sprinkler system, for makers!",
       "keywords": "sprinkler,tasmota,bme280,mqtt,arduino,wemos,home automation,node red,pcb,alexa,maker",
       "date": "2020-11-02",
       "description": "Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.",

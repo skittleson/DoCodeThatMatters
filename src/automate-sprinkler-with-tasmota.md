@@ -1,5 +1,13 @@
 I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of "set it and forget" is not efficient for water or power.
 
+## UPDATE 11/01/2020
+
+I took on the challenge of creating PCB with a [Esp8266 microcontroller](https://amzn.to/3oWMCNZ), [oled screen](https://amzn.to/3oTJUZj), and a [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z). I've been running this setup for 6 months with no problems.  See below for more details!
+
+![Sprinkler replacement](images/sprinklerReplacement.png)
+![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
+![Sprinkler PCB](images/sprinklerPcb.png)
+
 ## Research
 
 How to do this for less, better, and low effort? A possible solution is a mix of inexpensive hardware and customized open source software with ability to extend it. The primary objective is to trigger a water sprinkler solenoid to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!
@@ -76,19 +84,17 @@ Using the Tasmota Timer Web UI, 4 timers will be created. Two timers for startin
 
 ⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. Set each day to water (daily, every other day, or just particular days of the week).
 
-Setup a sunrise starting timer for to run for 15 minutes. Be sure to put check in `Enable Timers`, `Arm`, and `Repeat` . 
+Setup a sunrise starting timer. Be sure to put check in `Enable Timers`, `Arm`, and `Repeat` . 
 
 ![Sunrise Starting Timer](images/sprinklerTimer1.png)
 
 Setup the sunset starting timer the same. 
 
-Now to stop the watering. Setup Timer 3 for like this. 
-
-![Sunrise Stopping Timer](images/sprinklerTimer3.png)
-
-A offset is used to stop the watering from occurring because it's sunrise/sunset + 15 minutes. The documentation states the following:
+Now to stop the watering. Setup Timer 3 for like this with a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset.  Per the Tasmota docs:
 
 > When Mode 1 or Mode 2 is used, Latitude and Longitude become available. In that case the Time value is always used as an offset so make sure to set it to 00:00 if no offset is wanted
+
+![Sunrise Stopping Timer](images/sprinklerTimer3.png)
 
 Using the Tasmota Web Console Command line, type in the timers to verify:
 `Timer1` , `Timer2` , `Timer3` and `Timer4` . 
@@ -114,7 +120,7 @@ A secondary way to add a runaway protection was `pulsetime` with Tasmota command
 
 The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.
 
-Using Graphana, I've prototyped using alerts as well.
+Using Graphana, I've prototyped using alerts as well just incase all else fails.
 
 ## Extending to other Platforms (Optional)
 
@@ -129,23 +135,13 @@ Simple tracking the ON/OFF state of tasmota MQTT messages
 ![Graphana dashboard from Tasmota MQTT](images/sprinklerGraphana.png)
 
 ![Graphana dashboard from Tasmota MQTT 7 days](images/sprinklerGraphana7Days.png)
+
 ### Setup Rules (Optional)
 
 Here are two more timers (or rules) wanted:
 
 * 🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers
 * 🚧 before sunrise, check the humidity, if it's raining then disable timer.
-
-## UPDATE 
-
-I took on the challenge of creating PCB with a Esp8266 microcontroller, screen, and a BME280 (temperature, humidity, and pressure).
-
-![Sprinkler replacement](images/sprinklerReplacement.png)
-
-![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
-
-![Sprinkler PCB](images/sprinklerPcb.png)
-
 
 ## Resources
 

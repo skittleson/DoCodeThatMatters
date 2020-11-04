@@ -2,7 +2,7 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
-    <title>Sprinklers, like programming on a VCR but worst!</title>
+    <title>A simple water sprinkler system, for makers!</title>
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -17,7 +17,7 @@
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Sprinklers, like programming on a VCR but worst! | Do Code That Matters" />
+    <meta property="og:title" content="A simple water sprinkler system, for makers! | Do Code That Matters" />
     <meta property="og:type" content="blog" />
     <meta property="og:description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
     <meta name="twitter:card" content="summary" />
@@ -40,7 +40,7 @@
   <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota">
-      <h1 itemprop="name headline">Sprinklers, like programming on a VCR but worst!</h1>
+      <h1 itemprop="name headline">A simple water sprinkler system, for makers!</h1>
       <small>
         <time itemprop="datePublished" content="2020-11-02T00:00:00.000Z">1 November 2020</time>
         <meta itemprop="dateModified" content="2020-11-02T00:00:00.000Z">
@@ -67,6 +67,11 @@
     </header>
     <section itemprop="articleBody" class="article-body">
       <p>I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of &quot;set it and forget&quot; is not efficient for water or power.</p>
+<h2>UPDATE 11/01/2020</h2>
+<p>I took on the challenge of creating PCB with a <a href="https://amzn.to/3oWMCNZ">Esp8266 microcontroller</a>, <a href="https://amzn.to/3oTJUZj">oled screen</a>, and a <a href="https://amzn.to/365HD4Z">BME280 (temperature, humidity, and pressure)</a>. I've been running this setup for 6 months with no problems.  See below for more details!</p>
+<p><img src="images/sprinklerReplacement.png" alt="Sprinkler replacement"><br>
+<img src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D"><br>
+<img src="images/sprinklerPcb.png" alt="Sprinkler PCB"></p>
 <h2>Research</h2>
 <p>How to do this for less, better, and low effort? A possible solution is a mix of inexpensive hardware and customized open source software with ability to extend it. The primary objective is to trigger a water sprinkler solenoid to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!</p>
 <p><small>(there is affiliate links on this page for hardware used in this project)</small></p>
@@ -133,15 +138,14 @@
 <p>Using the Tasmota Timer Web UI, 4 timers will be created. Two timers for starting/stopping the watering at sunrise. Two timers for same at sunset.</p>
 <p>❓ Why use the Web UI when Tasmota can do this via command line?</p>
 <p>⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. Set each day to water (daily, every other day, or just particular days of the week).</p>
-<p>Setup a sunrise starting timer for to run for 15 minutes. Be sure to put check in <code>Enable Timers</code>, <code>Arm</code>, and <code>Repeat</code> .</p>
+<p>Setup a sunrise starting timer. Be sure to put check in <code>Enable Timers</code>, <code>Arm</code>, and <code>Repeat</code> .</p>
 <p><img src="images/sprinklerTimer1.png" alt="Sunrise Starting Timer"></p>
 <p>Setup the sunset starting timer the same.</p>
-<p>Now to stop the watering. Setup Timer 3 for like this.</p>
-<p><img src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer"></p>
-<p>A offset is used to stop the watering from occurring because it's sunrise/sunset + 15 minutes. The documentation states the following:</p>
+<p>Now to stop the watering. Setup Timer 3 for like this with a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset.  Per the Tasmota docs:</p>
 <blockquote>
 <p>When Mode 1 or Mode 2 is used, Latitude and Longitude become available. In that case the Time value is always used as an offset so make sure to set it to 00:00 if no offset is wanted</p>
 </blockquote>
+<p><img src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer"></p>
 <p>Using the Tasmota Web Console Command line, type in the timers to verify:<br>
 <code>Timer1</code> , <code>Timer2</code> , <code>Timer3</code> and <code>Timer4</code> .</p>
 <p>It should look like this:</p>
@@ -158,7 +162,7 @@
 <p>The first runaway protection is the secondary timers 3 and 4.</p>
 <p>A secondary way to add a runaway protection was <code>pulsetime</code> with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.</p>
 <p>The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.</p>
-<p>Using Graphana, I've prototyped using alerts as well.</p>
+<p>Using Graphana, I've prototyped using alerts as well just incase all else fails.</p>
 <h2>Extending to other Platforms (Optional)</h2>
 <p>Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
 <p><img src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support"></p>
@@ -172,11 +176,6 @@
 <li>🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers</li>
 <li>🚧 before sunrise, check the humidity, if it's raining then disable timer.</li>
 </ul>
-<h2>UPDATE</h2>
-<p>I took on the challenge of creating PCB with a Esp8266 microcontroller, screen, and a BME280 (temperature, humidity, and pressure).</p>
-<p><img src="images/sprinklerReplacement.png" alt="Sprinkler replacement"></p>
-<p><img src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D"></p>
-<p><img src="images/sprinklerPcb.png" alt="Sprinkler PCB"></p>
 <h2>Resources</h2>
 <ul>
 <li>https://tasmota.github.io/docs/Commands/</li>
@@ -190,7 +189,7 @@
   <b>Latest Posts</b>
   <ul class="unstyledUl">
     <li>
-      <a class="read-more" href="automate-sprinkler-with-tasmota">Sprinklers, like programming on a VCR but worst!</a>
+      <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
     </li>
     <li>
       <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
