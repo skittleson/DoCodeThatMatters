@@ -1,8 +1,10 @@
-I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price. The open source community has solved this!  The primary objective is to setup a water sprinkler to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!
+I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of "set it and forget" is not efficient for water or power.
+
+## Research
+
+How to do this for less, better, and low effort? A possible solution is a mix of inexpensive hardware and customized open source software with ability to extend it. The primary objective is to trigger a water sprinkler solenoid to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!
 
 <small>(there is affiliate links on this page for hardware used in this project)</small>
-
-## Build a Watering sprinkler for less, better and for low effort
 
 ### Must Haves
 
@@ -10,7 +12,7 @@ I'm frustrated on over-the-shelf sprinkler systems for home owners. They are com
 * ✅ Timer based watering (support for sunrise/sunset as well)
 * ✅ Manual toggling watering state
 * ✅ Backup / Restore settings
-* 🚧 If sunrise/sunset with a temperature restriction then start watering. To prevent freezing
+* 🚧 If sunrise/sunset with a temperature restriction then start watering. To prevent freezing of plant roots.
 
 ### Wants
 
@@ -22,10 +24,6 @@ I'm frustrated on over-the-shelf sprinkler systems for home owners. They are com
 * ⏳ If weather forecast is rainy then skip watering. Notify me when this occurs. (Most off-the-shelf sprinklers can do this sort of)
 * ⏳ Send to notification to any platform I want (AWS, Gmail, IFTTT, Alexa, etc... )
 * ⏳ Moisture sensor
-
-## Research
-
-No over-the-shelf sprinkler system for a reasonable price can do ALL of this! How to do this for less, better, and low effort? The best solution is a mixed of inexpensive hardware and customizable open source software. Yes, there is some learning here but it's only the initial effort that can be a hurdle.
 
 ### Hardware
 
@@ -46,13 +44,13 @@ The easiest way to wire this up is using an existing extension cord, cut into it
 
 ### Software
 
- The device can be flashed with open source software [Tasmota](https://tasmota.github.io/docs/).  I prototyped with the Arduino IDE for awhile but Tasmota seems safer with more features. So I won't go into too much detail but Tasmota  solves the following problems:
+ The device can be flashed with open source software [Tasmota](https://tasmota.github.io/docs/).  I prototyped with the Arduino IDE for awhile but Tasmota seems safer with features needed. So I won't go into too much detail but Tasmota solves the following problems:
 
 * Local network controlled
 * Runs even when the internet is down
 * Highly customizable and battle tested for years. 
 * Simple programming
-* Multiple ways of interacting (command line, mqtt, web ui)
+* Multiple ways of interacting (command line, MQTT, web UI)
 
 Here is a video on how to flash and setup the device when you get it (this is really common with this device). 
 
@@ -62,12 +60,13 @@ Here is a video on how to flash and setup the device when you get it (this is re
 
 Using the Tasmota Web Console Command line
 
-* Set your time zone using standard GMT offset: `Timezone -7` .
+* Set your time zone using standard GMT offset: `Timezone -8` .
+  * This doesn't account for daylight savings time. See docs https://tasmota.github.io/docs/FAQ/
 * Test your time with `time` 
 * Update your location (use can use https://www.latlong.net/)
-    - Run `Latitude 0.00` for latitude
-    - Run `Longitude 0.00` for longitude
-* Run `STATUS 7` to see sunrise / sunset with local time
+    - Run `Latitude 0.0000` for latitude. Replace `0.0000` with proper value.
+    - Run `Longitude 0.0000` for longitude. Replace `0.0000` with proper value.
+* Run `STATUS 7` to see sunrise / sunset with local time. Ensure it's the actual time.
 
 ### Setup Timers
 
@@ -75,7 +74,7 @@ Using the Tasmota Timer Web UI, 4 timers will be created. Two timers for startin
 
 ❓ Why use the Web UI when Tasmota can do this via command line? 
 
-⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. 
+⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. Set each day to water (daily, every other day, or just particular days of the week).
 
 Setup a sunrise starting timer for to run for 15 minutes. Be sure to put check in `Enable Timers`, `Arm`, and `Repeat` . 
 
@@ -107,6 +106,16 @@ It should look like this:
 14:35:52 MQT: stat/tasmota_6A24DE/RESULT = {"Timer4":{"Arm":1,"Mode":2,"Time":"00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}}
 ```
 
+## Runaway Protection
+
+The first runaway protection is the secondary timers 3 and 4.
+
+A secondary way to add a runaway protection was `pulsetime` with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.
+
+The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.
+
+Using Graphana, I've prototyped using alerts as well.
+
 ## Extending to other Platforms (Optional)
 
 Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message `tele/tasmota_YOURDEVICE/SENSOR` , the data is formatted and sent to a [local Graphana instance](https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3) on a Raspberry PI. 
@@ -127,10 +136,15 @@ Here are two more timers (or rules) wanted:
 * 🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers
 * 🚧 before sunrise, check the humidity, if it's raining then disable timer.
 
-<!-- ## UPDATE 
+## UPDATE 
 
-I took on the challenge of creating PCB with a Esp8266 microcontroller, screen, and a BME280 (temperature, humidity, and pressure). -->
+I took on the challenge of creating PCB with a Esp8266 microcontroller, screen, and a BME280 (temperature, humidity, and pressure).
 
+![Sprinkler replacement](images/sprinklerReplacement.png)
+
+![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
+
+![Sprinkler PCB](images/sprinklerPcb.png)
 
 
 ## Resources

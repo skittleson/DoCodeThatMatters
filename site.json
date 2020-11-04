@@ -35,9 +35,9 @@
       "title": "Sprinklers, like programming on a VCR but worst!",
       "keywords": "sprinkler,tasmota,bme280,mqtt,arduino,wemos,home automation,node red,pcb,alexa,maker",
       "date": "2020-11-02",
-      "description": "",
-      "image": "images/sprinklerRunning.jpg",
-      "imageAlt": "sprinkler running",
+      "description": "Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.",
+      "image": "images/sprinklerReplacement.png",
+      "imageAlt": "sprinkler replacment",
       "priority": 0.9
     },
     {
