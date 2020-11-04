@@ -2,13 +2,13 @@ I'm frustrated on over-the-shelf sprinkler systems for home owners. They are com
 
 ## UPDATE 11/01/2020
 
-I took on the challenge of creating PCB with a [Esp8266 microcontroller](https://amzn.to/3oWMCNZ), [oled screen](https://amzn.to/3oTJUZj), and a [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z). I've been running this setup for 6 months with no problems.  See below for more details!
+I took on the challenge of creating PCB with a [Esp8266 microcontroller](https://amzn.to/3oWMCNZ), [oled screen](https://amzn.to/3oTJUZj), [solid state relay](https://amzn.to/2TNYaoe) and a [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z). I've been running this setup for 6 months with no problems.  See below for more details!
 
 ![Sprinkler replacement](images/sprinklerReplacement.png)
 ![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
 ![Sprinkler PCB](images/sprinklerPcb.png)
 
-## Research
+## Project Research
 
 How to do this for less, better, and low effort? A possible solution is a mix of inexpensive hardware and customized open source software with ability to extend it. The primary objective is to trigger a water sprinkler solenoid to toggle based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature. So let's make it!
 
