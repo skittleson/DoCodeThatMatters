@@ -8,6 +8,8 @@ const markdown = require("markdown-it")({
 });
 const concat = require("concat-files");
 
+// TODO process images https://web.dev/use-imagemin-to-compress-images/
+
 function saveHandlebarsToHtml(inFile, outFile, data) {
   let source = fs.readFileSync(inFile, "utf8");
 
