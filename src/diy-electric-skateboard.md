@@ -4,15 +4,31 @@ The post goes through the adventure of building a safe and semi-inexpensive elec
 
 ### Deck and Trucks
 
-The type of board will determine the size of the motor, case, and batteries. Passenger weight should also be a factor. I went with a [flexible long deck](https://amzn.to/2zezUVCS). The bigger the deck gives stability while riding and it's easier to mount components. I weigh 190lbs so having a better deck will be easier to ride.
+The type of board will determine the size of the motor, case, and batteries. Passenger weight should also be a factor. I went with a [flexible longboard deck](https://amzn.to/2zezUVCS). A bigger skateboard deck provides stability while riding and easier to mount the components.
 
-Most skateboard truck hangers are not very long which made it difficult finding the right type. Space is needed to mount an electric motor with a gear attached to the wheel. Esk8 forums pointed to this 10 inch [truck](https://amzn.to/3f2e4DX) that have a square hanger. Paired with the [mounting kit](https://amzn.to/3f3lFlL), it worked perfectly for mounting a motor to it.
+Most skateboard truck hangers are not very long which made it difficult finding the right type. Space is needed to mount an electric motor with a gear attached to the wheel. Esk8 forums pointed to this 10 inch [truck](https://amzn.to/3f2e4DX) that have a square hanger. A solid metal [mounting kit](https://amzn.to/3f3lFlL) is designed to work with this truck and motor.
+
+
+### Batteries
+
+⚠️ Disclaimer!! Batteries are dangerous!⚠️ Be extra careful on handling and wiring them. There are 2 primary choices for batteries: lithium ion and lithium polymer (lipo). Similar in chemistry but used in different applications. Both would work in this project. My first experiment used lipos as they are smaller and had on hand from RC projects. I switch it out with 2 x 10S2P batteries from hoverboards found on ebay. I wanted a battery management systems aka BMS in to each battery pack with a standard charging mechanisms. The batteries are inexpensive with capacity at 4.4ah. Connecting 2 batteries in parallel increases it to 8.8ah which is near perfect for the VESC to push to the motor. Combing the 2 batteries in parallel make it a 10s4p.
+
+![](images/hoverboardBattery.jpg "Hoverboard battery at 4400mah with an XT60 connector")
+![https://amzn.to/2UFvYop](images/charger.jpg "Charging cable")
+
+After awhile I wanted more power. I built 2 x 18650 battery packs in 6s3p configurations. Each 6s battery pack can individually be charged on a hobby grade charger.  Found 18650 batteries on ebay again. Samsung and LG batteries are the safest.  
 
 ### Motor, Gears, and Wheels
 
 This ESK8 [Calculator](http://calc.esk8.it/#{%22batt-type-lipo%22:1,%22batt-cells%22:8,%22motor-kv%22:200,%22system-efficiency%22:70,%22motor-pulley-teeth%22:16,%22wheel-pulley-teeth%22:48,%22wheel-size%22:80}|) was a great find! This will let you figure out the speed you want to achieve with wheels, electric motor, and batteries. 4s batteries are too low from experimenting. I suggest at least 8s at 4ah.
 
 Here is a common [gears and belt kit](https://amzn.to/37jD6Mj). 48 Teeth Bore (the big gear): 22mm; 16 Teeth Bore: 8mm (the small gear). The belt also comes with it. [Replacement belts](https://amzn.to/2YigUy7) are a must as they do burn out!
+
+
+I found those to be limited so 3d printing gears is a great way to experiment as well.  Let me know if you would like the FreeCAD file to be available.
+
+![](images/FreeCAD_5GwuSzs725.png "38 teeth rear gear")
+
 
 [Electric motor](https://amzn.to/30o8rvJ). Lower the KV rating means the more powerful the electric motor. Around 170kv to 230kv is the sweet spot for electric esk8s. It's very important to know much voltage and amps that the motor is rated for. For example, this motor can take 70amps peak current with up to a 12s battery. That's 44.4 nominal voltage (12 batteries x 3.7 volts). The following calculation was close to the expected top speed I was looking for.
 ![](images/DiySkateboardCalc.png "Motor, battery, and gear ratio calculation")
@@ -21,6 +37,9 @@ Here is a common [gears and belt kit](https://amzn.to/37jD6Mj). 48 Teeth Bore (t
 
 ![](images/truckWithMotor02.jpg "Side view of truck with motor mounted.")
 
+
+Z
+
 ### Electric Speed Controller
 
 The foundation to building an esk8 is the electronic parts and layout. Here is a diagram of how it works. [More information here](https://www.electric-skateboard.builders/t/wiki-a-beginner-guide-to-diy-an-esk8/46844).
@@ -28,16 +47,10 @@ The foundation to building an esk8 is the electronic parts and layout. Here is a
 
 A speed controller controls the speed of the electric motor using PWM (pulse width modulation) signal. That will determine the speed the electric motor. I attempted using an inexpensive \$25 120A ESC (electric speed controller) for RC cars from a previous project. After 20 minutes, the ESC and batteries were too hot 🔥🔥🔥.
 
-New solution! [VESC](https://vesc-project.com/), is a software configures electronic speed control that addresses common use cases with ESC made for scooters and skateboards at a reasonable price! The wizard was easy to follow with great documentation. Before buying any parts, checkout the [VESC calculator](https://vesc-project.com/calculators) to help purchase motors and batteries. You can purchase one from Amazon [here](https://amzn.to/2Yd5Nqd).
+An open source hardware and software [VESC](https://vesc-project.com/), is a software controlled electronic speed control made for scooters, skateboards, and bikes for a reasonable price! The wizard was easy to follow with great documentation. Before buying any parts, checkout the [VESC calculator](https://vesc-project.com/calculators) to help purchase motors and batteries. You can purchase one from Amazon [here](https://amzn.to/2Yd5Nqd).  I did burn out on of these so be careful.
 
 ![VESC Hardware](images/vesc.jpg)
 
-### Batteries
-
-⚠️ Disclaimer!! Batteries are dangerous!⚠️ Be extra careful on handling and wiring them. There are 2 primary choices for batteries: lithium ion and lithium polymer (lipo). Similar in chemistry but used in different applications. Both fit the needs of this project. After using lipos for awhile, I switch it out with 2 x 10S2P batteries from hoverboards on ebay as I wanted a battery management systems aka BMS in to each battery pack with a standard charging mechanisms. The batteries are inexpensive with capacity at 4.4ah. Connecting 2 batteries in parallel increases it to 8.8ah which is near perfect for the VESC to push to the motor. Combing the 2 batteries in parallel make it a 10S4P.
-
-![](images/hoverboardBattery.jpg "Hoverboard battery at 4400mah with an XT60 connector")
-![https://amzn.to/2UFvYop](images/charger.jpg "Charging cable")
 
 ### Putting it all together
 
@@ -58,6 +71,10 @@ New solution! [VESC](https://vesc-project.com/), is a software configures electr
 - [XT90](https://amzn.to/2XUEWQE)
 - [Hoverboard battery](https://www.ebay.com/itm/36V-4-4AH-Lithium-Ion-Battery-For-Smart-Self-balancing-Fits-6-5-8-10/362906463304?ssPageName=STRK%3AMEBIDX%3AIT&_trksid=p2057872.m2749.l2648)
 
-## Conclusion
+## States
 
 So how far does this go? How long does the battery last?
+
+## Conclusion
+
+
