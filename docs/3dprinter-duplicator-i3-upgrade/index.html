@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board." />
     <meta name="keywords" content="3d printing,diy,mks gen board,auto leveling bed,marlin,Duplicator i3" />
@@ -30,43 +29,56 @@
 </head>
 
 <body>
-
-    <header class="navbar">
-        <section class="navbar-section">
-            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
-            <a href="/blog" class="btn btn-link">Blog</a>
-            <a href="/about" class="btn btn-link">About</a>        </section>
-    </header><main class="postMain">
-  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade">
-      <h1 itemprop="name headline">Duplicator i3 3d printer upgrade</h1>
-      <small>
-        <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">31 May 2020</time>
-        <meta itemprop="dateModified" content="2020-06-01T00:00:00.000Z">
-        by
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
-            <span itemprop="name">Spencer Kittleson</span>
-          </a>
-          <meta itemprop="jobTitle" content="Software Engineer">
-        </span>
-        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <meta itemprop="name" content="Do Code That Matters">
-          <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><main class="container">
+  <div class="row">
+    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade">
+        <h1 itemprop="name headline">Duplicator i3 3d printer upgrade</h1>
+        <small>
+          <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">31 May 2020</time>
+          <meta itemprop="dateModified" content="2020-06-01T00:00:00.000Z">
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+              <span itemprop="name">Spencer Kittleson</span>
+            </a>
+            <meta itemprop="jobTitle" content="Software Engineer">
           </span>
-        </span>
-      </small>
-      <br />
-      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-        <img itemprop="url contentUrl" alt="Duplicator i3 3d printer" src="images/printer-upgrade/i3.jpg">
-        <figcaption itemprop="caption">Duplicator i3 3d printer</figcaption>
-      </figure>
-      <br />
-    </header>
-    <section itemprop="articleBody" class="article-body">
-      <p>TLDR; A &quot;How To&quot; on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still progress.</p>
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="Do Code That Matters">
+            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+            </span>
+          </span>
+        </small>
+        <br />
+        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <img itemprop="url contentUrl" alt="Duplicator i3 3d printer" src="images/printer-upgrade/i3.jpg">
+          <figcaption itemprop="caption">Duplicator i3 3d printer</figcaption>
+        </figure>
+        <br />
+      </header>
+      <section itemprop="articleBody" class="article-body">
+        <p>TLDR; A &quot;How To&quot; on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still progress.</p>
 <p>The Duplicator i3 is a common 3D printer that many now consider out dated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and/or replacing parts to modernize it. There is also a lot of resources and parts still available.</p>
 <h2>The &quot;To-Do&quot; List</h2>
 <ul>
@@ -210,45 +222,50 @@
 <li><a href="http://www.ti.com/lit/ds/symlink/drv8825.pdf">http://www.ti.com/lit/ds/symlink/drv8825.pdf</a></li>
 </ul>
 
-    </section>
-  </article>
+      </section>
+    </article>
+    <aside class="col-md-4">
+      <b>Latest Posts</b>
+      <ul class="unstyledUl">
+        <li>
+          <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
+        </li>
+        <li>
+          <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+        </li>
+        <li>
+          <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
+        </li>
+        <li>
+          <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
+        </li>
+        <li>
+          <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
+        </li>
+        <li>
+          <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
+        </li>
+        <li>
+          <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
+        </li>
+      </ul>
+      <br />
+      <b>Other</b><br />
+      See something inaccurate or need more detail? Submit a <a
+        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        Request</a> to help me out!
+    </aside>
+  </div>
+
 </main>
-<aside class="postAside">
-  <b>Latest Posts</b>
-  <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
-    </li>
-    <li>
-      <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-    </li>
-    <li>
-      <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
-    </li>
-    <li>
-      <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-    </li>
-    <li>
-      <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-    </li>
-    <li>
-      <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-    </li>
-    <li>
-      <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
-    </li>
-  </ul>
-  <br />
-  <b>Other</b><br />
-  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
-    Request</a> to help me out!
-</aside>
+
+
 
 <script async src="js/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

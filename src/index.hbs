@@ -1,23 +1,19 @@
-<div class="page">
-
-    <div class="container-flex">
-        <div>
-            <h1>What's New?</h1>
-            {{#each posts}}
-            <p>
-                <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><a href="{{blogPath this.file}}"><b>{{this.title}}</b></a>
-                <br />
-                {{this.description}}
-            </p>
-            {{/each}}
-
-        </div>
-        <div>
-            <br /><br />
-            <img style="min-width:300px" src="images/agile.jpg" alt="Agile development" />
+<div class="row">
+    <div class="col-lg-8">
+        <h1>What's New?</h1>
+        {{#each posts}}
+        <p>
+            <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><a
+                href="{{blogPath this.file}}"><b>{{this.title}}</b></a>
             <br />
-            {{> contactInfo}}
-        </div>
-    </div>
+            {{this.description}}
+        </p>
+        {{/each}}
 
+    </div>
+    <div class="col-lg-4">
+        <img src="images/agile.jpg" alt="Agile development" />
+        <br />
+        {{> contactInfo}}
+    </div>
 </div>

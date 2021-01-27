@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
     <meta name="keywords" content="sprinkler,tasmota,bme280,mqtt,arduino,wemos,home automation,node red,pcb,alexa,maker" />
@@ -30,43 +29,56 @@
 </head>
 
 <body>
-
-    <header class="navbar">
-        <section class="navbar-section">
-            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
-            <a href="/blog" class="btn btn-link">Blog</a>
-            <a href="/about" class="btn btn-link">About</a>        </section>
-    </header><main class="postMain">
-  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota">
-      <h1 itemprop="name headline">A simple water sprinkler system, for makers!</h1>
-      <small>
-        <time itemprop="datePublished" content="2020-11-02T00:00:00.000Z">1 November 2020</time>
-        <meta itemprop="dateModified" content="2020-11-02T00:00:00.000Z">
-        by
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
-            <span itemprop="name">Spencer Kittleson</span>
-          </a>
-          <meta itemprop="jobTitle" content="Software Engineer">
-        </span>
-        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <meta itemprop="name" content="Do Code That Matters">
-          <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><main class="container">
+  <div class="row">
+    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota">
+        <h1 itemprop="name headline">A simple water sprinkler system, for makers!</h1>
+        <small>
+          <time itemprop="datePublished" content="2020-11-02T00:00:00.000Z">1 November 2020</time>
+          <meta itemprop="dateModified" content="2020-11-02T00:00:00.000Z">
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+              <span itemprop="name">Spencer Kittleson</span>
+            </a>
+            <meta itemprop="jobTitle" content="Software Engineer">
           </span>
-        </span>
-      </small>
-      <br />
-      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-        <img itemprop="url contentUrl" alt="Sprinkler replacement inside of a previous over the shelf sprinkler system." src="images/sprinklerReplacement.png">
-        <figcaption itemprop="caption">Sprinkler replacement inside of a previous over the shelf sprinkler system.</figcaption>
-      </figure>
-      <br />
-    </header>
-    <section itemprop="articleBody" class="article-body">
-      <p>I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of &quot;set it and forget&quot; is not efficient for water or power.</p>
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="Do Code That Matters">
+            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+            </span>
+          </span>
+        </small>
+        <br />
+        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <img itemprop="url contentUrl" alt="Sprinkler replacement inside of a previous over the shelf sprinkler system." src="images/sprinklerReplacement.png">
+          <figcaption itemprop="caption">Sprinkler replacement inside of a previous over the shelf sprinkler system.</figcaption>
+        </figure>
+        <br />
+      </header>
+      <section itemprop="articleBody" class="article-body">
+        <p>I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of &quot;set it and forget&quot; is not efficient for water or power.</p>
 <h2>UPDATE 11/01/2020</h2>
 <p>I took on the challenge of creating PCB with a <a href="https://amzn.to/3oWMCNZ">Esp8266 microcontroller</a>, <a href="https://amzn.to/3oTJUZj">oled screen</a>, <a href="https://amzn.to/2TNYaoe">solid state relay</a> and a <a href="https://amzn.to/365HD4Z">BME280 (temperature, humidity, and pressure)</a>. I've been running this setup for 6 months with no problems.  See below for more details!</p>
 <p><img src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D"><br>
@@ -181,45 +193,50 @@
 <li>https://tasmota.github.io/docs/Timers/</li>
 </ul>
 
-    </section>
-  </article>
+      </section>
+    </article>
+    <aside class="col-md-4">
+      <b>Latest Posts</b>
+      <ul class="unstyledUl">
+        <li>
+          <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
+        </li>
+        <li>
+          <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+        </li>
+        <li>
+          <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
+        </li>
+        <li>
+          <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
+        </li>
+        <li>
+          <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
+        </li>
+        <li>
+          <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
+        </li>
+        <li>
+          <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
+        </li>
+      </ul>
+      <br />
+      <b>Other</b><br />
+      See something inaccurate or need more detail? Submit a <a
+        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        Request</a> to help me out!
+    </aside>
+  </div>
+
 </main>
-<aside class="postAside">
-  <b>Latest Posts</b>
-  <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
-    </li>
-    <li>
-      <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-    </li>
-    <li>
-      <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
-    </li>
-    <li>
-      <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-    </li>
-    <li>
-      <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-    </li>
-    <li>
-      <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-    </li>
-    <li>
-      <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
-    </li>
-  </ul>
-  <br />
-  <b>Other</b><br />
-  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
-    Request</a> to help me out!
-</aside>
+
+
 
 <script async src="js/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

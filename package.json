@@ -1,6 +1,6 @@
 {
   "name": "doCodeThatMatters",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,8 @@
     "uglify-js": "^3.4.9"
   },
   "dependencies": {
-    "spectre.css": "^0.5.8",
+    "bootstrap": "4.5.3",
+    "jquery": "3.5.1",
     "watch": "^1.0.2"
   }
 }

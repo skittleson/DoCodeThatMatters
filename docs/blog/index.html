@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Personal blog about software development, 3d printing, diy, and c#" />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3d printing" />
@@ -30,14 +29,26 @@
 </head>
 
 <body>
-
-    <header class="navbar">
-        <section class="navbar-section">
-            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
-            <a href="/blog" class="btn btn-link">Blog</a>
-            <a href="/about" class="btn btn-link">About</a>        </section>
-    </header>
-<main>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<main class="container">
   <div class="page">
     <br/>
     <div class="container-flex">
@@ -159,6 +170,7 @@
     <hr />
 </div>
 </main>
+
 
 <script async src="js/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

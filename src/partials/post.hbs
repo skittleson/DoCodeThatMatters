@@ -1,51 +1,56 @@
 {{> header}}
-<main class="postMain">
-  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
-      <h1 itemprop="name headline">{{title}}</h1>
-      <small>
-        <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
-        <meta itemprop="dateModified" content={{schemaDate date}}>
-        by
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography">
-            <span itemprop="name">Spencer Kittleson</span>
-          </a>
-          <meta itemprop="jobTitle" content="Software Engineer">
-        </span>
-        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <meta itemprop="name" content="Do Code That Matters">
-          <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="{{url}}/images/agile.jpg">
+<main class="container">
+  <div class="row">
+    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
+        <h1 itemprop="name headline">{{title}}</h1>
+        <small>
+          <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
+          <meta itemprop="dateModified" content={{schemaDate date}}>
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography">
+              <span itemprop="name">Spencer Kittleson</span>
+            </a>
+            <meta itemprop="jobTitle" content="Software Engineer">
           </span>
-        </span>
-      </small>
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="Do Code That Matters">
+            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+              <meta itemprop="url" content="{{url}}/images/agile.jpg">
+            </span>
+          </span>
+        </small>
+        <br />
+        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <img itemprop="url contentUrl" alt="{{imageAlt}}" src="{{image}}">
+          <figcaption itemprop="caption">{{imageAlt}}</figcaption>
+        </figure>
+        <br />
+      </header>
+      <section itemprop="articleBody" class="article-body">
+        {{{ contents }}}
+      </section>
+    </article>
+    <aside class="col-md-4">
+      <b>Latest Posts</b>
+      <ul class="unstyledUl">
+        {{#each this.posts}}
+        <li>
+          <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
+        </li>
+        {{/each}}
+      </ul>
       <br />
-      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-        <img itemprop="url contentUrl" alt="{{imageAlt}}" src="{{image}}">
-        <figcaption itemprop="caption">{{imageAlt}}</figcaption>
-      </figure>
-      <br />
-    </header>
-    <section itemprop="articleBody" class="article-body">
-      {{{ contents }}}
-    </section>
-  </article>
+      <b>Other</b><br />
+      See something inaccurate or need more detail? Submit a <a
+        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        Request</a> to help me out!
+    </aside>
+  </div>
+
 </main>
-<aside class="postAside">
-  <b>Latest Posts</b>
-  <ul class="unstyledUl">
-    {{#each this.posts}}
-    <li>
-      <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
-    </li>
-    {{/each}}
-  </ul>
-  <br />
-  <b>Other</b><br />
-  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
-    Request</a> to help me out!
-</aside>
+
 
 {{>footer}}

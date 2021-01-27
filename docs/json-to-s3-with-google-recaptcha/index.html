@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <meta name="keywords" content="AWS S3,recaptcha,s3,json form" />
@@ -30,43 +29,56 @@
 </head>
 
 <body>
-
-    <header class="navbar">
-        <section class="navbar-section">
-            <a href="/" class="navbar-brand mr-2">Do Code<div class='small-device'></div> That Matters</a>
-            <a href="/blog" class="btn btn-link">Blog</a>
-            <a href="/about" class="btn btn-link">About</a>        </section>
-    </header><main class="postMain">
-  <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-    <header>
-      <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha">
-      <h1 itemprop="name headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
-      <small>
-        <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
-        <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
-        by
-        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
-            <span itemprop="name">Spencer Kittleson</span>
-          </a>
-          <meta itemprop="jobTitle" content="Software Engineer">
-        </span>
-        <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <meta itemprop="name" content="Do Code That Matters">
-          <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><main class="container">
+  <div class="row">
+    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha">
+        <h1 itemprop="name headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
+        <small>
+          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
+          <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+              <span itemprop="name">Spencer Kittleson</span>
+            </a>
+            <meta itemprop="jobTitle" content="Software Engineer">
           </span>
-        </span>
-      </small>
-      <br />
-      <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-        <img itemprop="url contentUrl" alt="Chain fence locked" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80">
-        <figcaption itemprop="caption">Chain fence locked</figcaption>
-      </figure>
-      <br />
-    </header>
-    <section itemprop="articleBody" class="article-body">
-      <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="Do Code That Matters">
+            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+            </span>
+          </span>
+        </small>
+        <br />
+        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <img itemprop="url contentUrl" alt="Chain fence locked" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80">
+          <figcaption itemprop="caption">Chain fence locked</figcaption>
+        </figure>
+        <br />
+      </header>
+      <section itemprop="articleBody" class="article-body">
+        <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
 <p>Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.</p>
 <h2>Request from a frontend source</h2>
 <p>Add this to the frontend index.html (or anywhere a form will be sent from). Replace the <code>_reCAPTCHA_site_key</code> with a real one.</p>
@@ -97,45 +109,50 @@ grecaptcha.ready(function() {
 <li>Select Lambda function</li>
 </ul>
 
-    </section>
-  </article>
+      </section>
+    </article>
+    <aside class="col-md-4">
+      <b>Latest Posts</b>
+      <ul class="unstyledUl">
+        <li>
+          <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
+        </li>
+        <li>
+          <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+        </li>
+        <li>
+          <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
+        </li>
+        <li>
+          <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
+        </li>
+        <li>
+          <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
+        </li>
+        <li>
+          <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
+        </li>
+        <li>
+          <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
+        </li>
+        <li>
+          <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
+        </li>
+      </ul>
+      <br />
+      <b>Other</b><br />
+      See something inaccurate or need more detail? Submit a <a
+        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        Request</a> to help me out!
+    </aside>
+  </div>
+
 </main>
-<aside class="postAside">
-  <b>Latest Posts</b>
-  <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
-    </li>
-    <li>
-      <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-    </li>
-    <li>
-      <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
-    </li>
-    <li>
-      <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-    </li>
-    <li>
-      <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-    </li>
-    <li>
-      <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-    </li>
-    <li>
-      <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-    </li>
-    <li>
-      <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
-    </li>
-  </ul>
-  <br />
-  <b>Other</b><br />
-  See something inaccurate or need more detail? Submit a <a href="https://github.com/skittleson/DoCodeThatMatters">Pull
-    Request</a> to help me out!
-</aside>
+
+
 
 <script async src="js/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

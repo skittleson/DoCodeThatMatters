@@ -1,128 +1,39 @@
+body {
+    padding-top: 70px;
+}
+
 html,
 body,
 main {
-  display: block;
-  color: #333;
-  background: #fff;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  z-index: 5;
-}
-
-.hero {
-  /*background-image: url('https://unsplash.it/1500?random');*/
-  background-size: cover;
-  background-position: center;
-  width: 100wh;
-  height: 50vh;
-  display: flex;
-  margin-left: -1em;
-  margin-right: -1em;
-  background-color: #333;
-  color: white;
-  border-bottom: 10px solid #666;
-}
-
-main {
-  padding: 1%
-}
-
-.center-content {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
-}
-
-.hidden {
-  display: none;
-}
-
-header {
-  background-color: white;
-  padding-left:  1em;
-  padding-bottom:  1em;
-}
-
-.small-device {
-  display: none;
-}
-
-@media only screen and (max-width: 600px) {
-  nav .brand {
-    font-size: 1em;
-  }
-  .small-device {
     display: block;
-    clear: both;
-  }
-}
-
-.blackButton {
-  background: #333;
-}
-
-.page {
-  margin: 0 auto;
-  max-width: 800px;
+    color: #333;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 5;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
-  max-height: 600px;
-}
-
-.postMain {
-  float: left;
-  margin: 0 1.5%;
-  width: 63%;
-  max-width: 1200px;
-}
-
-.postAside {
-  padding-top: 3em;
-  float: right;
-  margin: 0 1.5%;
-  width: 30%;
-}
-
-@media (max-width: 800px) {
-  .postMain {
-    float: none !important;
-    width: 100% !important;
-  }
-  .postAside {
-    display: none;
-  }
+    max-width: 100%;
+    height: auto;
+    max-height: 600px;
 }
 
 .unstyledUl {
-  margin: 0;
-  padding-left: 0;
-  list-style: none;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
 }
 
-h2 > a {
-  color: #333;
-  padding-top: 0 !important;
-  margin-top: 0 !important;
+h2>a {
+    color: #333;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 small {
-  color: #555555;
-}
-
-.container-flex {
-  display: flex;
-}
-
-@media only screen and (max-width: 600px) {
-  .container-flex {
-    display: block;
-  }
+    color: #555555;
 }
 
 .blog-item {
