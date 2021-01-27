@@ -13,8 +13,7 @@
   ],
   "css": [
     "src/css/site.css",
-    "node_modules/bootstrap/dist/css/bootstrap.min.css",
-    "node_modules/bootstrap/dist/css/bootstrap.min.map"
+    "node_modules/bootstrap/dist/css/bootstrap.min.css"
   ],
   "partials": [
     "header.hbs",
