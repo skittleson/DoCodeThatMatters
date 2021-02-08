@@ -34,16 +34,20 @@
       </section>
     </article>
     <aside class="col-md-4">
-      <b>Latest Posts</b>
-      <ul class="unstyledUl">
-        {{#each this.posts}}
-        <li>
-          <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
-        </li>
-        {{/each}}
-      </ul>
-      <br />
-      <b>Other</b><br />
+
+      <div class="card my-4">
+        <h5 class="card-header">Latest Posts</h5>
+        <div class="card-body">
+          <ul class="unstyledUl">
+            {{#each this.posts}}
+            <li>
+              <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+
       See something inaccurate or need more detail? Submit a <a
         href="https://github.com/skittleson/DoCodeThatMatters">Pull
         Request</a> to help me out!
