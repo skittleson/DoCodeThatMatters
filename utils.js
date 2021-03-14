@@ -200,3 +200,11 @@ handlebars.registerHelper("imagePath", function (imagePath, siteUrl) {
   }
   return siteUrl + "/" + imagePath;
 });
+
+
+function getGitSha() {
+  return require('child_process')
+    .execSync('git rev-parse HEAD')
+    .toString().trim();
+}
+

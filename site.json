@@ -25,6 +25,7 @@
     "CNAME",
     "robots.txt",
     "humans.txt",
+    ".well-known/security.txt",
     "images",
     "sw.js",
     "manifest.json",
