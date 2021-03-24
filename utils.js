@@ -66,7 +66,6 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
     if (page.file === "index.hbs") {
       saveToPath = `${dest}/index.html`;
     }
-
     saveHandlebarsToHtml(`${src}/${page.file}`, saveToPath, pageKeyValue);
   });
 
@@ -97,6 +96,17 @@ module.exports.buildSiteFromJson = function buildSiteFromJson(json, src, dest) {
     });
   siteMap += "</urlset>";
   fs.writeFileSync(`${dest}/sitemap.xml`, siteMap);
+
+  // Create site map
+  let securityTxt = fs.readFileSync(`${src}/.well-known/security.hbs`, "utf8");
+  fs.writeFileSync(
+    `${dest}/.well-known/security.txt`,
+    handlebars.compile(securityTxt, { strict: true })({
+      site: store.site,
+      date: 'random-date',
+    }),
+    {}
+  );
 
   // Collect on js files, compress, and push to destination
   let jsc = [];
@@ -200,11 +210,4 @@ handlebars.registerHelper("imagePath", function (imagePath, siteUrl) {
   }
   return siteUrl + "/" + imagePath;
 });
-
-
-function getGitSha() {
-  return require('child_process')
-    .execSync('git rev-parse HEAD')
-    .toString().trim();
-}
 

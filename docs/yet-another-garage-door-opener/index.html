@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
@@ -9,41 +9,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Just another garage door opener using a raspberry pi" />
-    <meta name="keywords" content="raspberry pi,bluetooth,garage door opener,liftmaster" />
+    <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Yet Another Garage Door Opener | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:description" content="Just another garage door opener using a raspberry pi" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:title" content="Yet Another Garage Door Opener | Do Code That Matters" />
+    <meta property="og:title" content="Yet Another Garage Door Opener | Do Code That Matters" />
+    <meta property="og:description" content="Just another garage door opener using a raspberry pi" />
     <meta name="twitter:description" content="Just another garage door opener using a raspberry pi" />
-    <link href="/css/site.css" rel="stylesheet">
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg" />
+    <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" style="margin-right: 2%;" />
+                Do Code That Matters
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
                 </ul>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/yet-another-garage-door-opener">
         <h1 itemprop="name headline">Yet Another Garage Door Opener</h1>
         <small>
-          <time itemprop="datePublished" content="2018-05-11T00:00:00.000Z">10 May 2018</time>
+          <time itemprop="datePublished" content="2018-05-11T00:00:00.000Z">11 May 2018</time>
           <meta itemprop="dateModified" content="2018-05-11T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -72,14 +77,14 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Raspberry Pi!" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg">
-          <figcaption itemprop="caption">Raspberry Pi!</figcaption>
+          <img itemprop="url contentUrl" alt="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg">
+          <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>Another tutorial for building a garage door opener with a raspberry pi. I've left the garage door opened too many times. Source: <a href="https://github.com/skittleson/garage-pi">https://github.com/skittleson/garage-pi</a> This tutorial assumes you have a raspberry pi with wifi and the ability to ssh in.</p>
-<h2>Goals</h2>
+<h2 id="goals">Goals</h2>
 <ul>
 <li>Use Docker so it can easily be shared/restored/etc!</li>
 <li>A simple web API for control
@@ -92,20 +97,20 @@
 <li>Toggle light switch on the garage door</li>
 <li>(optional) cheap camera to see what's going on.</li>
 </ul>
-<h2>What you will need</h2>
+<h2 id="what-you-will-need">What you will need</h2>
 <ul>
 <li>Relay modules. I only needed one - <a href="https://amzn.to/2RP4zNC">Channel DC 5V Relay Module for Arduino</a></li>
-<li>Cheap containers to throw everything into - https://amzn.to/2NEdWwB</li>
+<li>Cheap containers to throw everything into - <a href="https://amzn.to/2NEdWwB">https://amzn.to/2NEdWwB</a></li>
 <li>A replacement switch for garage door opener - <a href="https://amzn.to/2pShUrK">Liftmaster 41A5273-1 Multi-Function Control Panel</a></li>
 <li><a href="https://amzn.to/2RMxQc5">Raspberry Pi 3</a></li>
 <li>(optional) great camera for the price! This one has 4 mics and the camera has two zoom modes. <a href="https://amzn.to/2CIAmvF">Sony Play Station Eye Camera for PS3</a></li>
 </ul>
-<h2>Research &amp; Discover</h2>
+<h2 id="research-discover">Research &amp; Discover</h2>
 <p>There are a ton of these garage door projects. I was inspired by many of them. The LiftMaster garage door system has anti-tamper hardware measures which almost ended the project before it started. I decided to take a gamble and buy another garage door opener circuit that directly connects to the garage door unit. Bingo! Two circuits can be connected at the same time. Docker permissions and finding a base image for the raspberry pi took a few hours. Lesson learned, hardware interaction with docker can take a few extra steps.</p>
-<h2>Wiring</h2>
+<h2 id="wiring">Wiring</h2>
 <p>The relay module is stacked on top of the LiftMaster module then taped onto the Raspberry Pi. Note the relay connections are wired for normally opened. (click image to see larger version) Sealed up in a glad container (kinda hacky but it's cheap). This is the LiftMaster circuit. The narrower end has the button for opening the garage. The larger end has the button for the garage door light. The middle points are for the circuit to connect to main garage door unit. GPIO pin layout for the relays &amp; reed switch not including power leads.  Reed switch is connected to the part of the garage door (pin 18 and a ground). Once it moves away, then the reed switch is disconnected.</p>
 <p>The entire setup. Messy but it's good enough. Cut some holes with a knife for wires and to hold it in place. The camera has been added with duck tape. Using a standard install of <a href="https://motion-project.github.io/motion_build.html">motion</a> (no dockerfile tho).</p>
-<h2>Install</h2>
+<h2 id="install">Install</h2>
 <p>Install docker on the raspberry pi. <a href="https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/">https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/</a></p>
 <pre><code>curl -sSL https://get.docker.com | sh
 </code></pre>
@@ -130,7 +135,7 @@ cd garage-pi/
 <li>Exit: /api/exit</li>
 </ul>
 <p>That's it!</p>
-<h2>Code</h2>
+<h2 id="code">Code</h2>
 <p>Simulating the button press for the garage door opener circuit. Relay turns on for 500ms, then off. An interesting issue with the relay. As soon the gpio utility exports, it triggers it on. This code exports then unexports a pin that the relay is on.</p>
 <pre><code>let relayButtonPressAction = (pin) =&gt; {
     gpioExport(pin, 'out');
@@ -156,8 +161,8 @@ sys.stdout.write(str(status))
 gpio.cleanup()
 </code></pre>
 <p>Open for pull requests! I'm considering on moving all the gpio logic to python then using nodejs as the api router.</p>
-<h2>Summary</h2>
-<p>Hardware side is built and working. The api has enough information to check and toggle the garage door. Going to create a script to watch the door status with <a href="https://nodered.org/">Node-red</a> due to ease of configuration. This project took about 2 days with testing and debugging. Here is a screenshot of the node-red template. Still a work in progress! The <a href="https://github.com/skittleson/garage-pi/blob/master/garage-pi-node-red-flow.json">flow file</a> is in the repo code. <a href="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2.png"><img src="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2-253x300.png" alt=""></a></p>
+<h2 id="summary">Summary</h2>
+<p>Hardware side is built and working. The api has enough information to check and toggle the garage door. Going to create a script to watch the door status with <a href="https://nodered.org/">Node-red</a> due to ease of configuration. This project took about 2 days with testing and debugging. Here is a screenshot of the node-red template. Still a work in progress! The <a href="https://github.com/skittleson/garage-pi/blob/master/garage-pi-node-red-flow.json">flow file</a> is in the repo code. <a href="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2.png"><img src="https://docodethatmatters.com/wp-content/uploads/2018/03/node-red-template-2-253x300.png" alt="" /></a></p>
 
       </section>
     </article>
@@ -171,35 +176,20 @@ gpio.cleanup()
               <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
             </li>
             <li>
-              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-            </li>
-            <li>
               <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
             </li>
             <li>
+              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+            </li>
+            <li>
               <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-            </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-            </li>
-            <li>
-              <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-            </li>
-            <li>
-              <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
             </li>
           </ul>
         </div>
       </div>
 
       See something inaccurate or need more detail? Submit a <a
-        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Yet Another Garage Door Opener">Submit a Pull
         Request</a> to help me out!
     </aside>
   </div>
@@ -208,7 +198,7 @@ gpio.cleanup()
 
 
 
-<script async src="js/site.js"></script>
+<script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

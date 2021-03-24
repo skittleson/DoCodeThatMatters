@@ -1,3 +1,20 @@
+---
+title: Duplicator i3 3d printer upgrade
+keywords: 
+    - 3d printing
+    - diy
+    - mks gen board
+    - auto leveling bed
+    - marlin
+    - Duplicator i3
+date: 2020-06-01
+description: Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.
+image: images/printer-upgrade/i3.jpg
+imageAlt: Duplicator i3 3d printer
+priority: 0.9
+---
+
+
 TLDR; A "How To" on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still progress.
 
 The Duplicator i3 is a common 3D printer that many now consider out dated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and/or replacing parts to modernize it. There is also a lot of resources and parts still available.

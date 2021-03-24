@@ -1,19 +1,24 @@
-<div class="row">
-    <div class="col-lg-8">
-        <h1>What's New?</h1>
-        {{#each posts}}
-        <p>
-            <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><a
-                href="{{blogPath this.file}}"><b>{{this.title}}</b></a>
-            <br />
-            {{this.description}}
-        </p>
-        {{/each}}
+{{> header}}
 
+<main class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>What's New?</h1>
+            {{#each posts}}
+            <p>
+                <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><a
+                    href="{{blogPath this.file}}"><b>{{this.title}}</b></a>
+                <br />
+                {{this.description}}
+            </p>
+            {{/each}}
+
+        </div>
+        <div class="col-lg-4">
+            <img src="images/agile.jpg" alt="Agile development" />
+            <br />
+            {{> contactInfo}}
+        </div>
     </div>
-    <div class="col-lg-4">
-        <img src="images/agile.jpg" alt="Agile development" />
-        <br />
-        {{> contactInfo}}
-    </div>
-</div>
+</main>
+{{>footer}}

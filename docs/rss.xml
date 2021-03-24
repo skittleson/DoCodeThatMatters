@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Do Code That Matters</title>
         <link>https://DoCodeThatMatters.com</link>
         <language>en-us</language>
         <description>Personal blog about software development, 3d printing, diy, and c#</description>
-        <copyright>Copyright 2020 Spencer Kittleson</copyright>
+        <copyright>Copyright 2021 Spencer Kittleson</copyright>
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
@@ -13,63 +13,63 @@
             <description>Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.</description>
             <link>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</link>
             <guid>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</guid>
-            <pubDate>2020-11-02</pubDate>
-        </item>
-        <item>
-            <title>Power Switch Monitor with an Arduino device</title>
-            <description>Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.</description>
-            <link>https://DoCodeThatMatters.com/power-switch-monitor</link>
-            <guid>https://DoCodeThatMatters.com/power-switch-monitor</guid>
-            <pubDate>2020-06-01</pubDate>
+            <pubDate>2020-11-02T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>Duplicator i3 3d printer upgrade</title>
             <description>Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.</description>
             <link>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</link>
             <guid>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</guid>
-            <pubDate>2020-06-01</pubDate>
+            <pubDate>2020-06-01T00:00:00.0000000</pubDate>
+        </item>
+        <item>
+            <title>Power Switch Monitor with an Arduino device</title>
+            <description>Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.</description>
+            <link>https://DoCodeThatMatters.com/power-switch-monitor</link>
+            <guid>https://DoCodeThatMatters.com/power-switch-monitor</guid>
+            <pubDate>2020-06-01T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
             <description>Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.</description>
             <link>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</link>
             <guid>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</guid>
-            <pubDate>2019-10-19</pubDate>
+            <pubDate>2019-10-19T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>Research on Bluetooth Proximity</title>
             <description>Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump</description>
             <link>https://DoCodeThatMatters.com/research-bluetooth-proximity</link>
             <guid>https://DoCodeThatMatters.com/research-bluetooth-proximity</guid>
-            <pubDate>2019-10-19</pubDate>
+            <pubDate>2019-10-19T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>Software Engineering Lessons</title>
             <description>In the field notes and lessons learned as a software engineer.</description>
             <link>https://DoCodeThatMatters.com/software-engineering-lessons</link>
             <guid>https://DoCodeThatMatters.com/software-engineering-lessons</guid>
-            <pubDate>2018-10-23</pubDate>
-        </item>
-        <item>
-            <title>Raspberry Pi – Bluetooth Proximity</title>
-            <description>Building bluetooth detection with a raspberry pi!</description>
-            <link>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</link>
-            <guid>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</guid>
-            <pubDate>2017-05-26</pubDate>
+            <pubDate>2018-10-23T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>Yet Another Garage Door Opener</title>
             <description>Just another garage door opener using a raspberry pi</description>
             <link>https://DoCodeThatMatters.com/yet-another-garage-door-opener</link>
             <guid>https://DoCodeThatMatters.com/yet-another-garage-door-opener</guid>
-            <pubDate>2018-05-11</pubDate>
+            <pubDate>2018-05-11T00:00:00.0000000</pubDate>
         </item>
         <item>
             <title>ASP.NET XSS protection</title>
-            <description>Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</description>
+            <description>Securing an ASP.NET WebApi for PCI application tests is no trivial matter. &#160;It can take&#160;weeks of planning and the app to be analyzed. &#160;After reviewing&#160;OWASP&#160;and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</description>
             <link>https://DoCodeThatMatters.com/asp-net-xss-protection</link>
             <guid>https://DoCodeThatMatters.com/asp-net-xss-protection</guid>
-            <pubDate>2017-09-06</pubDate>
+            <pubDate>2017-09-06T00:00:00.0000000</pubDate>
+        </item>
+        <item>
+            <title>Raspberry Pi &#8211; Bluetooth Proximity</title>
+            <description>Building bluetooth detection with a raspberry pi!</description>
+            <link>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</link>
+            <guid>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</guid>
+            <pubDate>2017-05-26T00:00:00.0000000</pubDate>
         </item>
     </channel>
 </rss>

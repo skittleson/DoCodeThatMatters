@@ -1,3 +1,14 @@
+---
+title: Raspberry Pi – Bluetooth Proximity
+keywords: 
+    - raspberry pi
+    - bluetooth
+date: 2017-05-26
+description: Building bluetooth detection with a raspberry pi!
+image: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg
+imageAlt: Raspberry Pi!
+priority: 0.9
+---
 Let's build a Bluetooth proximity detector! You only need a Raspberry Pi, USB Bluetooth, and a phone with Bluetooth enabled. This tutorial will show how to detect a known Bluetooth device that is within the range of the Raspberry Pi without pairing the devices.
 
 **Step 1. Ensure USB Bluetooth is working on the Raspberry Pi.**  

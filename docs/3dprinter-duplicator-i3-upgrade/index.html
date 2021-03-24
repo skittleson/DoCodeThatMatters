@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
@@ -9,41 +9,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board." />
-    <meta name="keywords" content="3d printing,diy,mks gen board,auto leveling bed,marlin,Duplicator i3" />
+    <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Duplicator i3 3d printer upgrade | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:description" content="Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board." />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:title" content="Duplicator i3 3d printer upgrade | Do Code That Matters" />
+    <meta property="og:title" content="Duplicator i3 3d printer upgrade | Do Code That Matters" />
+    <meta property="og:description" content="Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board." />
     <meta name="twitter:description" content="Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board." />
-    <link href="/css/site.css" rel="stylesheet">
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="images/printer-upgrade/i3.jpg" />
+    <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" style="margin-right: 2%;" />
+                Do Code That Matters
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
                 </ul>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade">
         <h1 itemprop="name headline">Duplicator i3 3d printer upgrade</h1>
         <small>
-          <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">31 May 2020</time>
+          <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">01 Jun 2020</time>
           <meta itemprop="dateModified" content="2020-06-01T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -72,43 +77,35 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Duplicator i3 3d printer" src="images/printer-upgrade/i3.jpg">
-          <figcaption itemprop="caption">Duplicator i3 3d printer</figcaption>
+          <img itemprop="url contentUrl" alt="" src="images/printer-upgrade/i3.jpg">
+          <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>TLDR; A &quot;How To&quot; on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still progress.</p>
 <p>The Duplicator i3 is a common 3D printer that many now consider out dated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and/or replacing parts to modernize it. There is also a lot of resources and parts still available.</p>
-<h2>The &quot;To-Do&quot; List</h2>
+<h2 id="the-to-do-list">The &quot;To-Do&quot; List</h2>
 <ul>
-<li>
-<p>Glass bed</p>
+<li><p>Glass bed</p>
 </li>
-<li>
-<p>1/16 to 1/32 steps for steppers. This provides cleaner and smoother prints.</p>
+<li><p>1/16 to 1/32 steps for steppers. This provides cleaner and smoother prints.</p>
 </li>
-<li>
-<p>Replace existing Melzi board with a <a href="https://amzn.to/2yT1NlY">MKS Gen 1.4 board</a>. This could have been the standard RepRap Arudino Mega 2560 board as well.</p>
+<li><p>Replace existing Melzi board with a <a href="https://amzn.to/2yT1NlY">MKS Gen 1.4 board</a>. This could have been the standard RepRap Arudino Mega 2560 board as well.</p>
 <ul>
-<li>
-<p>JST 2 pin to 3 pin adapters for end stop connectors.</p>
+<li><p>JST 2 pin to 3 pin adapters for end stop connectors.</p>
 </li>
-<li>
-<p>Add JST connector for extruder stepper</p>
+<li><p>Add JST connector for extruder stepper</p>
 </li>
-<li>
-<p>Marlin Firmware changes</p>
+<li><p>Marlin Firmware changes</p>
 <ul>
-<li>
-<p>Invert End stops</p>
+<li><p>Invert End stops</p>
 <pre><code class="language-cpp">#define X_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 #define Y_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 #define Z_MIN_ENDSTOP_INVERTING true // Set to true to invert the logic of the endstop.
 </code></pre>
 </li>
-<li>
-<p>DRV8825 Driver Types uncomment these and replace with <code>DRV8825</code></p>
+<li><p>DRV8825 Driver Types uncomment these and replace with <code>DRV8825</code></p>
 <pre><code class="language-cpp">  #define X_DRIVER_TYPE  DRV8825
   #define Y_DRIVER_TYPE  DRV8825
   #define Z_DRIVER_TYPE  DRV8825
@@ -117,66 +114,50 @@
   #define E1_DRIVER_TYPE DRV8825
 </code></pre>
 </li>
-<li>
-<p>Double step count <code>DRV8825</code> from 1/16 to 1/32 steps. This comes from the previous Marlin configuration which was <code>#define DEFAULT_AXIS_STEPS_PER_UNIT { 80, 80, 400, 100 }</code>. I've kept the extruder on a <code>A4988</code> chip as the heat was building on too much on it. Calibrate to <code>0.84</code> volts.</p>
+<li><p>Double step count <code>DRV8825</code> from 1/16 to 1/32 steps. This comes from the previous Marlin configuration which was <code>#define DEFAULT_AXIS_STEPS_PER_UNIT { 80, 80, 400, 100 }</code>. I've kept the extruder on a <code>A4988</code> chip as the heat was building on too much on it. Calibrate to <code>0.84</code> volts.</p>
 <pre><code class="language-cpp">  #define DEFAULT_AXIS_STEPS_PER_UNIT   { 160, 160, 800, 100 }
 </code></pre>
 </li>
-<li>
-<p>Invert X and Y directions. Invert extruder direction.</p>
+<li><p>Invert X and Y directions. Invert extruder direction.</p>
 <pre><code class="language-cpp">  #define INVERT_X_DIR true
   #define INVERT_Y_DIR true
   #define INVERT_E0_DIR true
 </code></pre>
 </li>
-<li>
-<p>Set Z travel limit. <code>#define Z_MAX_POS 180</code></p>
+<li><p>Set Z travel limit. <code>#define Z_MAX_POS 180</code></p>
 </li>
-<li>
-<p>SD Card Support <code>#define SDSUPPORT</code>.</p>
+<li><p>SD Card Support <code>#define SDSUPPORT</code>.</p>
 </li>
-<li>
-<p>LCD Support for <a href="https://amzn.to/2JygbSy">RepRap Discount Full Smart Controller</a> <code>#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER</code></p>
+<li><p>LCD Support for <a href="https://amzn.to/2JygbSy">RepRap Discount Full Smart Controller</a> <code>#define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER</code></p>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<p><code>DRV8825</code> calibration. The formula is VREF = Rated motor current / 2 . So a standard NEMA 17 motor is rated at 1.68 amps. Divided by 2 it's .84 volts. I burned out an extruder stepper following this. I dropped it to .6 volts. The steppers were less hot and no performance difference. Checkout</p>
+<li><p><code>DRV8825</code> calibration. The formula is VREF = Rated motor current / 2 . So a standard NEMA 17 motor is rated at 1.68 amps. Divided by 2 it's .84 volts. I burned out an extruder stepper following this. I dropped it to .6 volts. The steppers were less hot and no performance difference. Checkout</p>
 </li>
-<li>
-<p>Replace display. The connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out.</p>
+<li><p>Replace display. The connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out.</p>
 </li>
-<li>
-<p>Replace power supply. <a href="https://amzn.to/2XP8wpz">Found a 30A on Amazon for $20</a>. The current 20A power supply is under powered. It's a known issue with these printers.</p>
+<li><p>Replace power supply. <a href="https://amzn.to/2XP8wpz">Found a 30A on Amazon for $20</a>. The current 20A power supply is under powered. It's a known issue with these printers.</p>
 </li>
-<li>
-<p>Replace Y bracket.</p>
+<li><p>Replace Y bracket.</p>
 </li>
 </ul>
 <!-- - OctoPrint works but there is a bug where you need to set the serial speed to `Auto` otherwise it fails to connect. -->
 <ul>
-<li>
-<p>Easy access case for MKS Gen board</p>
+<li><p>Easy access case for MKS Gen board</p>
 </li>
-<li>
-<p>Filament sensor</p>
+<li><p>Filament sensor</p>
 </li>
-<li>
-<p>Cover and mount for power supply</p>
+<li><p>Cover and mount for power supply</p>
 </li>
-<li>
-<p>(Tested this but ended up reverting it) Manual LCD Bed leveling with <code>#define MESH_BED_LEVELING</code>, <code>#define PROBE_MANUALLY</code> and <code>#define LCD_BED_LEVELING</code>. uncommented <a href="https://marlinfw.org/docs/configuration/probes.html">LCD assisted bed leveling</a></p>
+<li><p>(Tested this but ended up reverting it) Manual LCD Bed leveling with <code>#define MESH_BED_LEVELING</code>, <code>#define PROBE_MANUALLY</code> and <code>#define LCD_BED_LEVELING</code>. uncommented <a href="https://marlinfw.org/docs/configuration/probes.html">LCD assisted bed leveling</a></p>
 </li>
-<li>
-<p>Auto Bed Leveling using Z Probe Servo</p>
+<li><p>Auto Bed Leveling using Z Probe Servo</p>
 <ul>
-<li>
-<p>Wiring</p>
+<li><p>Wiring</p>
 </li>
-<li>
-<p>Marlin Configuration https://www.youtube.com/watch?v=6msLOR_EfKc and https://marlinfw.org/docs/configuration/probes.html. Uncomment the following lines.</p>
+<li><p>Marlin Configuration <a href="https://www.youtube.com/watch?v=6msLOR_EfKc">https://www.youtube.com/watch?v=6msLOR_EfKc</a> and <a href="https://marlinfw.org/docs/configuration/probes.html">https://marlinfw.org/docs/configuration/probes.html</a>. Uncomment the following lines.</p>
 <pre><code class="language-cpp">  #define AUTO_BED_LEVELING_LINEAR
   #define NUM_SERVOS 3
   #define Z_PROBE_SERVO_NR 0
@@ -189,7 +170,7 @@
   #define Z_MIN_PROBE_PIN 19 // Pin 32 is the RAMPS default but we are using a MKS Gen 1.4 Board
 </code></pre>
 <ul>
-<li><code>M280</code> important! This controls the servo. Use this for testing: https://marlinfw.org/docs/gcode/M280.html . Use the values gathered here to set <code>Z_SERVO_ANGLES</code> property.
+<li><code>M280</code> important! This controls the servo. Use this for testing: <a href="https://marlinfw.org/docs/gcode/M280.html">https://marlinfw.org/docs/gcode/M280.html</a> . Use the values gathered here to set <code>Z_SERVO_ANGLES</code> property.
 <ul>
 <li>Get servo 0 angle: <code>M280 P0</code></li>
 <li>Move servo 0 to a 90 degree angle: <code>M280 P0 S90</code></li>
@@ -197,7 +178,7 @@
 </ul>
 </li>
 <li>Set marlin config of zprobe offset <code>#define NOZZLE_TO_PROBE_OFFSET { -1, -40, -7.7 }</code></li>
-<li><code>M420</code> get/set bed level state https://marlinfw.org/docs/gcode/M420.html</li>
+<li><code>M420</code> get/set bed level state <a href="https://marlinfw.org/docs/gcode/M420.html">https://marlinfw.org/docs/gcode/M420.html</a></li>
 <li><code>M119</code> Endstop states</li>
 <li><code>G29</code> start the auto bed leveling routine.</li>
 </ul>
@@ -206,15 +187,15 @@
 </li>
 </ul>
 <p><a href="/marlinConfigDiff.html">Click here for the full Marlin config difference</a>.</p>
-<p><img src="images/printer-upgrade/3pinTo2pinJst.jpg" alt="" title="3 pin jst to 2 pin jst"><br>
-<img src="images/printer-upgrade/boardLayout.jpg" alt="" title="MKS Gen 1.4 board wired up"><br>
-<img src="images/printer-upgrade/zprobeModel.png" alt="" title="Z probe model"></p>
-<h2>Lessons Learned</h2>
+<p><img src="images/printer-upgrade/3pinTo2pinJst.jpg" alt="" title="3 pin jst to 2 pin jst" />
+<img src="images/printer-upgrade/boardLayout.jpg" alt="" title="MKS Gen 1.4 board wired up" />
+<img src="images/printer-upgrade/zprobeModel.png" alt="" title="Z probe model" /></p>
+<h2 id="lessons-learned">Lessons Learned</h2>
 <ul>
 <li>Learned how to configure and almost build a 3d printer using an existing one.</li>
 <li>Spent way more time than expected.</li>
 </ul>
-<h2>Resources</h2>
+<h2 id="resources">Resources</h2>
 <ul>
 <li><a href="https://marlinfw.org/">https://marlinfw.org/</a></li>
 <li><a href="https://3dprinterwiki.info/wanhao/wanhao-duplicator-i3/">https://3dprinterwiki.info/wanhao/wanhao-duplicator-i3/</a></li>
@@ -237,32 +218,14 @@
               <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
             </li>
             <li>
-              <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
-            </li>
-            <li>
               <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-            </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-            </li>
-            <li>
-              <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-            </li>
-            <li>
-              <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
             </li>
           </ul>
         </div>
       </div>
 
       See something inaccurate or need more detail? Submit a <a
-        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Duplicator i3 3d printer upgrade">Submit a Pull
         Request</a> to help me out!
     </aside>
   </div>
@@ -271,7 +234,7 @@
 
 
 
-<script async src="js/site.js"></script>
+<script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

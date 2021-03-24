@@ -1,3 +1,17 @@
+---
+title: Yet Another Garage Door Opener
+keywords: 
+    - raspberry pi
+    - bluetooth
+    - garage door opener
+    - liftmaster
+date: 2018-05-11
+description: Just another garage door opener using a raspberry pi
+image: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg
+imageAlt: Raspberry Pi!
+priority: 0.9
+---
+
 Another tutorial for building a garage door opener with a raspberry pi. I've left the garage door opened too many times. Source: [https://github.com/skittleson/garage-pi](https://github.com/skittleson/garage-pi) This tutorial assumes you have a raspberry pi with wifi and the ability to ssh in.
 
 ## Goals

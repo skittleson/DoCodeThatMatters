@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
@@ -9,41 +9,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
-    <meta name="keywords" content="bluetooth proximity research,bluetooth,hcitool,l2ping" />
+    <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Research on Bluetooth Proximity | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:title" content="Research on Bluetooth Proximity | Do Code That Matters" />
+    <meta property="og:title" content="Research on Bluetooth Proximity | Do Code That Matters" />
+    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
     <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
-    <link href="/css/site.css" rel="stylesheet">
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" />
+    <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" style="margin-right: 2%;" />
+                Do Code That Matters
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
                 </ul>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/research-bluetooth-proximity">
         <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
         <small>
-          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
+          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">19 Oct 2019</time>
           <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -72,19 +77,19 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="A bluetooth device that can be discovered with simple scan." src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;1650&amp;q&#x3D;80">
-          <figcaption itemprop="caption">A bluetooth device that can be discovered with simple scan.</figcaption>
+          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80">
+          <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt</code>, <code>l2ping</code>, and <code>hcidump</code>. A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a> blog post.</p>
-<h2>Commands</h2>
+<h2 id="commands">Commands</h2>
 <p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
-<h3>Scan for Bluetooth LE Devices:</h3>
+<h3 id="scan-for-bluetooth-le-devices">Scan for Bluetooth LE Devices:</h3>
 <pre><code>`timeout --signal=SIGINT 30 hcitool lescan`
 </code></pre>
-<h3>Get Bluetooth LE Devices with RSSI values:</h3>
+<h3 id="get-bluetooth-le-devices-with-rssi-values">Get Bluetooth LE Devices with RSSI values:</h3>
 <pre><code>`btmgmt find`
 </code></pre>
 <p>Response:</p>
@@ -103,7 +108,7 @@ AD flags 0x00
 eir_len 28
 hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000```
 </code></pre>
-<h3>Ping bluetooth enable device without pairing:</h3>
+<h3 id="ping-bluetooth-enable-device-without-pairing">Ping bluetooth enable device without pairing:</h3>
 <pre><code>`l2ping -c 3 &lt;MAC&gt;`
 </code></pre>
 <p>Response:</p>
@@ -112,13 +117,13 @@ hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000```
 44 bytes &lt;MAC&gt; id 1 time 9.90ms
 ♥2 sent, 2 received, 0% loss
 </code></pre>
-<h3>Dump all data of a paired bluetooth device:</h3>
+<h3 id="dump-all-data-of-a-paired-bluetooth-device">Dump all data of a paired bluetooth device:</h3>
 <pre><code>`hcidump -a`
 </code></pre>
-<h3>To request authorization from device:</h3>
+<h3 id="to-request-authorization-from-device">To request authorization from device:</h3>
 <pre><code>`hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;`
 </code></pre>
-<h3>Attempt connection then get RSSI value:</h3>
+<h3 id="attempt-connection-then-get-rssi-value">Attempt connection then get RSSI value:</h3>
 <pre><code>`hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;`
 </code></pre>
 <p>Response:</p>
@@ -129,17 +134,17 @@ RSSI return value: -4
 ```
 </code></pre>
 <p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
-<h3>Attempt to get RSSI value without trying to connect to device:</h3>
+<h3 id="attempt-to-get-rssi-value-without-trying-to-connect-to-device">Attempt to get RSSI value without trying to connect to device:</h3>
 <pre><code>`hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;`
 </code></pre>
-<h2>Some Resources</h2>
-<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a><br>
-<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a><br>
-<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a><br>
-<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a><br>
-<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a><br>
-<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a><br>
-<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a><br>
+<h2 id="some-resources">Some Resources</h2>
+<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
+<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
+<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
+<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
+<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
+<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
+<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
 <a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
 
       </section>
@@ -154,35 +159,20 @@ RSSI return value: -4
               <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
             </li>
             <li>
-              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-            </li>
-            <li>
               <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
             </li>
             <li>
+              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
+            </li>
+            <li>
               <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-            </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-            </li>
-            <li>
-              <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-            </li>
-            <li>
-              <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
             </li>
           </ul>
         </div>
       </div>
 
       See something inaccurate or need more detail? Submit a <a
-        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Research on Bluetooth Proximity">Submit a Pull
         Request</a> to help me out!
     </aside>
   </div>
@@ -191,7 +181,7 @@ RSSI return value: -4
 
 
 
-<script async src="js/site.js"></script>
+<script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

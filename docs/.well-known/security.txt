@@ -1,3 +1,4 @@
-Contact: docodethatmatters@outlook.com
-Expires: Mon, 14 Mar 2022 13:05 -0700Preferred-Languages: en
-Canonical: https://docodethatmatters.com/.well-known/security.txt
+﻿Contact: docodethatmatters@outlook.com
+Expires: 2021-09-24T23:33:02.134Z
+Preferred-Languages: en
+Canonical: https://DoCodeThatMatters.com/.well-known/security.txt

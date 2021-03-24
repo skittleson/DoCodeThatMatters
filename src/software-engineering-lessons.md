@@ -1,3 +1,16 @@
+---
+title: Software Engineering Lessons
+keywords: 
+    - software engineering
+    - code reviews
+    - software career
+date: 2018-10-23
+description: In the field notes and lessons learned as a software engineer.
+image: https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80
+imageAlt: Fields notes as a software engineer
+priority: 0.9
+---
+
 My 2018 year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
 
 ## Do Code Reviews
@@ -40,7 +53,7 @@ Need a tool to make your job easier? Want a raise? Found a way to reduce time or
 
 ## Silence the Distractions
 
-Turn off instant notifications, phone, email and limit distracting websites. **Once you get into the "Zone" it's hard to get back into it.** If a person interrupts me multiple times, I politely ask them to stop or forward this post from [StackOverflow](https://softwareengineering.stackexchange.com/a/46283/290723). "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
+Turn off instant notifications, phone, email and limit distracting websites. **Once you get into the "Zone" it's hard to get back into it when interruption occurs.** If a person interrupts me multiple times, I politely ask them to stop or forward this post from [StackOverflow](https://softwareengineering.stackexchange.com/a/46283/290723). "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
 
 ---
 

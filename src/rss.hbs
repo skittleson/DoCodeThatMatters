@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>{{site.company}}</title>
-        <link>{{site.url}}</link>
+        <title>{{company}}</title>
+        <link>{{url}}</link>
         <language>en-us</language>
         <description>Personal blog about software development, 3d printing, diy, and c#</description>
-        <copyright>Copyright 2020 Spencer Kittleson</copyright>
+        <copyright>Copyright {{year}} {{author}}</copyright>
         <ttl>30</ttl>
-        <atom:link href="{{site.url}}/rss.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="{{url}}/rss.xml" rel="self" type="application/rss+xml" />
         {{#each posts}}
         <item>
             <title>{{this.title}}</title>
             <description>{{this.description}}</description>
-            <link>{{../site.url}}/{{blogPath this.file}}</link>
-            <guid>{{../site.url}}/{{blogPath this.file}}</guid>
-            <pubDate>{{this.date}}</pubDate>
-            {{!-- <enclosure url="{{imagePath this.image ../site.url}}" type="image/jpeg" /> --}}
+            <link>{{../url}}/{{blogPath file}}</link>
+            <guid>{{../url}}/{{blogPath file}}</guid>
+            <pubDate>{{date}}</pubDate>
         </item>
         {{/each}}
     </channel>

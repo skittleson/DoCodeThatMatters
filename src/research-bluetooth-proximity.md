@@ -1,3 +1,17 @@
+---
+title: Research on Bluetooth Proximity
+keywords: 
+    - bluetooth proximity research
+    - bluetooth
+    - hcitool
+    - l2ping
+date: 2019-10-19
+description: Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump
+image: https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80
+imageAlt: A bluetooth device that can be discovered with simple scan.
+priority: 0.9
+---
+
 My research on bluetooth proximity using open tools such as `hcitool`,`btmgmt`, `l2ping`, and `hcidump`. A follow up to [Raspberry Pi – Bluetooth Proximity](raspberry-pi-bluetooth-proximity) blog post.
 
 ## Commands

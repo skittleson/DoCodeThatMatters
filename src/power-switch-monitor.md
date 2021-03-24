@@ -1,3 +1,20 @@
+---
+title: Power Switch Monitor with an Arduino device
+keywords: 
+    - arduino
+    - wemos
+    - home automation
+    - node red
+    - bme280
+    - smart home
+    - smart light
+date: 2020-06-01
+description: Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.
+image: images/powerMonitorFlowSetup.png
+imageAlt: power switch monitor flow
+priority: 0.9
+---
+
 The biggest rule for home automation is not to change existing behavior of users that causes inconvenience or frustration. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. **This is bad.**
 
 ![](https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif)

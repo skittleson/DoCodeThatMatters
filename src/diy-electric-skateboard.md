@@ -57,6 +57,18 @@ I found those to be limited so 3d printing gears is a great way to experiment as
 
 [Electric motor](https://amzn.to/30o8rvJ). Lower the KV rating means the more torque the electric motor can provide. Around 170kv to 230kv is the sweet spot for electric esk8s. It's important to know the voltage and amps that the motor is rated for. For example, this motor can take 70amps peak current with up to a 12s battery. That's 44.4 nominal voltage (12 batteries x 3.7 volts). The following calculation was close to the expected top speed I was looking for.
 
+Optimizing a battery build and charging for a 85amp BDLC motor:
+
+- Two cells (6s4p=12s4p) 
+- Each cell would be 6 cells in series (6x3.7v=22.2v)
+- Each cell is 2500mah to get 20ah I would need 3 in parallel (3x2500=7,500mah)
+- Each cell can do 20amps continuous (3*20=60amp)
+
+
+
+Does this mean the battery pack is capable of producing 160amp continuous? (8x20amps for each group)?
+What is the peak rating?
+
 ![](images/DiySkateboardCalc.png "Motor, battery, and gear ratio calculation")
 
 ![](images/truckWithMotor01.jpg "Top view of truck with motor mounted.")

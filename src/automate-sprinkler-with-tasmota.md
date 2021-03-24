@@ -1,3 +1,24 @@
+---
+title: A simple water sprinkler system, for makers!
+keywords: 
+  - sprinkler
+  - tasmota
+  - bme280
+  - mqtt
+  - arduino
+  - wemos
+  - home automation
+  - node red
+  - pcb
+  - alexa
+  - maker
+date: 2020-11-02
+description: Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.
+image: images/sprinklerReplacement.png
+imageAlt: Sprinkler replacement inside of a previous over the shelf sprinkler system.
+priority: 0.9
+---
+
 I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of "set it and forget" is not efficient for water or power.
 
 ## UPDATE 11/01/2020

@@ -1,18 +1,24 @@
-<div class="page">
-    <br/>
-    {{#each posts}}
-    <div class="container-flex">
-        <div>
-            <a href="{{blogPath this.file}}"><img src='{{this.image}}' style='max-width:20em;' alt="{{this.description}}" /></a>
+{{> header}}
+<main class="container">
+    <div class="page">
+        <br />
+        {{#each posts}}
+        <div class="container-flex">
+            <div>
+                <a href="{{blogPath this.file}}"><img src='{{this.image}}' style='max-width:20em;'
+                        alt="{{this.description}}" /></a>
+            </div>
+            <div class="blog-item">
+                <p>
+                    <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
+                    <br />
+                    {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
+                </p>
+            </div>
         </div>
-        <div class="blog-item">
-            <p>
-                <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
-                <br />
-                {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
-            </p>
-        </div>
+        <hr />
+        {{/each}}
     </div>
-    <hr />
-    {{/each}}
-</div>
+
+</main>
+{{>footer}}

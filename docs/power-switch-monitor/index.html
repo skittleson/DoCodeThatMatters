@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
@@ -9,41 +9,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
-    <meta name="keywords" content="arduino,wemos,home automation,node red,bme280,smart home,smart light" />
+    <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Power Switch Monitor with an Arduino device | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:title" content="Power Switch Monitor with an Arduino device | Do Code That Matters" />
+    <meta property="og:title" content="Power Switch Monitor with an Arduino device | Do Code That Matters" />
+    <meta property="og:description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
     <meta name="twitter:description" content="Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi." />
-    <link href="/css/site.css" rel="stylesheet">
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="images/powerMonitorFlowSetup.png" />
+    <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" style="margin-right: 2%;" />
+                Do Code That Matters
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
                 </ul>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/power-switch-monitor">
         <h1 itemprop="name headline">Power Switch Monitor with an Arduino device</h1>
         <small>
-          <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">31 May 2020</time>
+          <time itemprop="datePublished" content="2020-06-01T00:00:00.000Z">01 Jun 2020</time>
           <meta itemprop="dateModified" content="2020-06-01T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -72,21 +77,21 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="power switch monitor flow" src="images/powerMonitorFlowSetup.png">
-          <figcaption itemprop="caption">power switch monitor flow</figcaption>
+          <img itemprop="url contentUrl" alt="" src="images/powerMonitorFlowSetup.png">
+          <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>The biggest rule for home automation is not to change existing behavior of users that causes inconvenience or frustration. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. <strong>This is bad.</strong></p>
-<p><img src="https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif" alt=""></p>
+<p><img src="https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif" alt="" /></p>
 <p>It's causing an inconvenience because the user can't flip a switch.</p>
-<h2>Solutions</h2>
+<h2 id="solutions">Solutions</h2>
 <p>The 2 common solutions presented in this situation:</p>
 <p><strong>1. Blocking the user</strong> with tape or other mechanism. Checkout Thingiverse to see how common this is: <a href="https://www.thingiverse.com/tag:Light_Switch_Cover">https://www.thingiverse.com/tag:Light_Switch_Cover</a>. This changes user behavior so it's a bad idea.</p>
 <p><strong>2. Replacing the light switch</strong> with a smarter one. This is the best option but requires a hardware replacement of the light switch. Which may not be possible, costly and potential dangerous to do-it-yourself!</p>
 <p><strong>3. A third hybrid solution: Trigger the smart device with the existing light switch using power wall outlet as feedback</strong> using an Arduino device with WiFi. In this solution, the light switch changes the power state of the outlet that the Arduino based micro controller is monitoring. When the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow to toggle the smart bulb state from a user.</p>
-<p><img src="images/powerMonitorFlowSetup.png" alt=""></p>
+<p><img src="images/powerMonitorFlowSetup.png" alt="" /></p>
 <p>The advantages:</p>
 <ul>
 <li>Simple &amp; low effort</li>
@@ -94,15 +99,15 @@
 <li>Ability to control multiple devices with a single switch</li>
 <li>Open source</li>
 </ul>
-<hr>
-<h2>Building the Device</h2>
-<h3>Step 1: Get the Components and Solder Them</h3>
-<h4>Tools</h4>
+<hr />
+<h2 id="building-the-device">Building the Device</h2>
+<h3 id="step-1-get-the-components-and-solder-them">Step 1: Get the Components and Solder Them</h3>
+<h4 id="tools">Tools</h4>
 <ul>
 <li>Soldering iron</li>
 <li>Third hand or vise</li>
 </ul>
-<h4>Material</h4>
+<h4 id="material">Material</h4>
 <ul>
 <li><a href="https://amzn.to/2zI2nUf">Wemos mini d1 from Amazon</a> or similar esp8266 / esp32 device</li>
 <li>2 x resistors (any two usually works, i used 10k)</li>
@@ -114,20 +119,20 @@
 <li>solder</li>
 <li>(optional) <a href="https://amzn.to/2U2qCTM">bme280</a> or <a href="https://amzn.to/2XL2C8U">bme680</a></li>
 </ul>
-<p><img src="images/PowerMonitor_bb.png" alt="bread board version"></p>
-<p><img src="images/PowerMonitor_schem.png" alt="schema version"></p>
-<p><img src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front"></p>
-<p><img src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back"></p>
-<h3>Step 2: Download and Upload Software</h3>
+<p><img src="images/PowerMonitor_bb.png" alt="bread board version" /></p>
+<p><img src="images/PowerMonitor_schem.png" alt="schema version" /></p>
+<p><img src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front" /></p>
+<p><img src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back" /></p>
+<h3 id="step-2-download-and-upload-software">Step 2: Download and Upload Software</h3>
 <p>Flash your device with a <a href="https://tasmota.github.io/docs/">Tasmota</a> firmware.</p>
-<h4>Tasmota Module configuration</h4>
+<h4 id="tasmota-module-configuration">Tasmota Module configuration</h4>
 <p>Set to: <code>Generic Module</code> then click <code>Save</code>. the device will restart.</p>
 <ul>
 <li>D2 - I2C SDA (6) - BME680</li>
 <li>D1 - I2C SCL (5) - BME680</li>
 <li>A0 - Analog (1) - connected to 5V power supply resistor divider</li>
 </ul>
-<h4>Tasmota Console</h4>
+<h4 id="tasmota-console">Tasmota Console</h4>
 <p>Send when external light switch power is on, send <code>1</code>.</p>
 <p><code>Rule1 ON analog#a0&gt;1000 DO Backlog Rule1 0; Rule2 1; Publish cmnd/masterlight/SWITCH 1 ENDON</code></p>
 <p>When external light switch power is off, send <code>0</code>.</p>
@@ -145,12 +150,12 @@
 01:40:11 MQT: tele/tasmota_A61989/SENSOR = {&quot;Time&quot;:&quot;2020-06-26T01:40:11&quot;,&quot;Switch2&quot;:&quot;OFF&quot;}
 </code></pre>
 <p>The MQTT topic is <code>cmnd/masterlight/SWITCH</code> with a boolean value of either <code>1</code> for open or <code>0</code> for close. The topics are for state or the reed switch sensor value <code>Switch2</code> that are sent every 5 minutes (configurable) via MQTT.</p>
-<h3>Step 3: Add to a Home Assistance</h3>
+<h3 id="step-3-add-to-a-home-assistance">Step 3: Add to a Home Assistance</h3>
 <p>So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software.  Get the MQTT message then process notifications you would like.</p>
-<p><img src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup"></p>
-<h2>Resources</h2>
-<p><a href="https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test">https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test</a><br>
-<a href="https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/">https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/</a><br>
+<p><img src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup" /></p>
+<h2 id="resources">Resources</h2>
+<p><a href="https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test">https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test</a>
+<a href="https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/">https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/</a>
 <a href="https://lastminuteengineers.com/bme280-arduino-tutorial/">https://lastminuteengineers.com/bme280-arduino-tutorial/</a></p>
 
       </section>
@@ -165,35 +170,17 @@
               <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
             </li>
             <li>
-              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-            </li>
-            <li>
               <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
             </li>
             <li>
               <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-            </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-            </li>
-            <li>
-              <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-            </li>
-            <li>
-              <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
             </li>
           </ul>
         </div>
       </div>
 
       See something inaccurate or need more detail? Submit a <a
-        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Power Switch Monitor with an Arduino device">Submit a Pull
         Request</a> to help me out!
     </aside>
   </div>
@@ -202,7 +189,7 @@
 
 
 
-<script async src="js/site.js"></script>
+<script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

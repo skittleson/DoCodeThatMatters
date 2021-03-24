@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 
 <head>
@@ -9,41 +9,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
-    <meta name="keywords" content="AWS S3,recaptcha,s3,json form" />
+    <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
     <meta name="author" content="Do Code That Matters" />
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
-    <meta property="og:title" content="Save JSON Objects to AWS S3 with Google Recaptcha | Do Code That Matters" />
     <meta property="og:type" content="blog" />
-    <meta property="og:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Do Code That Matters" />
+    <meta name="twitter:title" content="Save JSON Objects to AWS S3 with Google Recaptcha | Do Code That Matters" />
+    <meta property="og:title" content="Save JSON Objects to AWS S3 with Google Recaptcha | Do Code That Matters" />
+    <meta property="og:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
     <meta name="twitter:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
-    <link href="/css/site.css" rel="stylesheet">
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80" />
+    <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="My Test Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">Do Code That Matters</a>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" style="margin-right: 2%;" />
+                Do Code That Matters
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
                 </ul>
             </div>
         </div>
@@ -54,7 +59,7 @@
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha">
         <h1 itemprop="name headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
         <small>
-          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">18 October 2019</time>
+          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">19 Oct 2019</time>
           <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -72,15 +77,15 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Chain fence locked" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib&#x3D;rb-1.2.1&amp;ixid&#x3D;eyJhcHBfaWQiOjEyMDd9&amp;auto&#x3D;format&amp;fit&#x3D;crop&amp;w&#x3D;668&amp;q&#x3D;80">
-          <figcaption itemprop="caption">Chain fence locked</figcaption>
+          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80">
+          <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
 <p>Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.</p>
-<h2>Request from a frontend source</h2>
+<h2 id="request-from-a-frontend-source">Request from a frontend source</h2>
 <p>Add this to the frontend index.html (or anywhere a form will be sent from). Replace the <code>_reCAPTCHA_site_key</code> with a real one.</p>
 <pre><code>&lt;script src=&quot;https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
@@ -92,7 +97,7 @@ grecaptcha.ready(function() {
 &lt;/script&gt;
 </code></pre>
 <p>Docs: <a href="https://developers.google.com/recaptcha/docs/v3">https://developers.google.com/recaptcha/docs/v3</a></p>
-<h2>Backend Setup</h2>
+<h2 id="backend-setup">Backend Setup</h2>
 <p>Start by creating an AWS Lambda function that has access to add items to S3. Using a node.js/javascript lambda function.</p>
 <p>Environment Keys:</p>
 <ul>
@@ -101,7 +106,7 @@ grecaptcha.ready(function() {
 <li>SnsTopicArn : Create a SNS topic to receive emails or SMS to your phone.</li>
 </ul>
 <script src="https://gist.github.com/skittleson/908481d3b22425ae75657890246006db.js"></script>
-<h3>API Gateway Setup</h3>
+<h3 id="api-gateway-setup">API Gateway Setup</h3>
 <ul>
 <li>Create an AWS API Gateway API with a resource <code>form</code> with a method <code>POST</code>.</li>
 <li>Integration type <code>Lambda Function</code></li>
@@ -121,35 +126,17 @@ grecaptcha.ready(function() {
               <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
             </li>
             <li>
-              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-            </li>
-            <li>
               <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
             </li>
             <li>
-              <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
-            </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="software-engineering-lessons">Software Engineering Lessons</a>
-            </li>
-            <li>
-              <a class="read-more" href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a>
-            </li>
-            <li>
-              <a class="read-more" href="yet-another-garage-door-opener">Yet Another Garage Door Opener</a>
-            </li>
-            <li>
-              <a class="read-more" href="asp-net-xss-protection">ASP.NET XSS protection</a>
+              <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
             </li>
           </ul>
         </div>
       </div>
 
       See something inaccurate or need more detail? Submit a <a
-        href="https://github.com/skittleson/DoCodeThatMatters">Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Save JSON Objects to AWS S3 with Google Recaptcha">Submit a Pull
         Request</a> to help me out!
     </aside>
   </div>
@@ -158,7 +145,7 @@ grecaptcha.ready(function() {
 
 
 
-<script async src="js/site.js"></script>
+<script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

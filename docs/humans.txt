@@ -1,10 +1,10 @@
-/* TEAM */
-	Contact: Spencer Kittleson
-	Twitter: @skittleson
-	From:San Diego, CA
+﻿/* TEAM */
+Contact: Spencer Kittleson
+Site: https://DoCodeThatMatters.com
+Twitter: @skittleson
 
 /* SITE */
-	Last update:2019/12/15
-	Language: English
-	Doctype: HTML5
-	IDE: VS Code
+Last update: 2021/03/24 
+Standards: HTML5, CSS3
+Components: Bootstrap 4, dotnet, c#, js, css,
+Software: Technology blog

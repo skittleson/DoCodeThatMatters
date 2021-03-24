@@ -4,7 +4,8 @@
     "description": "Personal blog about software development, 3d printing, diy, and c#",
     "keywords": "software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3d printing",
     "url": "https://DoCodeThatMatters.com",
-    "title": "Do Code That Matters"
+    "title": "Do Code That Matters",
+    "email": "docodethatmatters@outlook.com"
   },
   "js": [
     "src/javascript/site.js",
@@ -47,6 +48,10 @@
     },
     {
       "file": "admin.hbs"
+    },
+    {
+      "file":"blog-security-matters.md",
+      "title": "How To Security.txt The Right Way"
     },
     {
       "file": "automate-sprinkler-with-tasmota.md",
