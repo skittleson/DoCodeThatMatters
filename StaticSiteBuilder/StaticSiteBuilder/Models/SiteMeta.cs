@@ -41,5 +41,9 @@ namespace StaticSiteBuilder.Models {
         public string[] Keywords {
             get; set;
         }
+
+        public string Title {
+            get; set;
+        }
     }
 }

@@ -2,9 +2,7 @@
 
 namespace StaticSiteBuilder.Models {
     public class BlogPostMeta : SiteMeta {
-        public string Title {
-            get; set;
-        }
+
         public DateTime Date {
             get; set;
         }

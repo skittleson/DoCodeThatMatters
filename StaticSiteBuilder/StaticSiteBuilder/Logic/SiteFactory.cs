@@ -22,6 +22,7 @@ namespace StaticSiteBuilder.Logic {
             DestPath = Path.Combine(RootPath, "docs");
             SiteGlobalMeta = ParseYaml<SiteGlobalMeta>(File.ReadAllText(Path.Combine(RootPath, "index.yml")));
             SiteGlobalMeta.Path = new Uri(SiteGlobalMeta.Url);
+            SiteGlobalMeta.Title = SiteGlobalMeta.Company;
             _pipeline = new MarkdownPipelineBuilder()
                         .UseEmphasisExtras()
                         .UseGridTables()
@@ -259,7 +260,9 @@ namespace StaticSiteBuilder.Logic {
                 var blogMeta = ParseYaml<BlogPostMeta>(yaml);
 
                 // Merge in public wide site meta data
+                var title = blogMeta.Title;
                 Map(SiteGlobalMeta as SiteMeta, ref blogMeta);
+                blogMeta.Title = title;
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);

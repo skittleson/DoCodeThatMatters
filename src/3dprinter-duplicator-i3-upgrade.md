@@ -9,7 +9,7 @@ keywords:
     - Duplicator i3
 date: 2020-06-01
 description: Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.
-image: images/printer-upgrade/i3.jpg
+image: /images/printer-upgrade/i3.jpg
 imageAlt: Duplicator i3 3d printer
 priority: 0.9
 ---
