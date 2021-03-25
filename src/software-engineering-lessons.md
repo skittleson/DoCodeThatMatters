@@ -159,7 +159,7 @@ This concept of **documenting knowledge to a solution for a common problem is cr
 
 ## Automate Routine Trivial Tasks
 
-Learn to automated the repetitive tasks. Use bash scripts, powershell, macros, selenium, IFTTT, etc. These will help with context switching.
+Learn to automated the repetitive tasks. Use bash scripts, autohotkey, powershell, macros, selenium, IFTTT, etc. These will help with context switching.
 
 ---
 
@@ -177,7 +177,7 @@ That means; a comfortable chair, keyboard, mouse, software, cell phone & desk. *
 
 ## Work with different people
 
-Working in a company with multiple software development teams? Try to work for another one or contribute to open source. **Working with other individuals can give insight on how to collaborate differently.**
+Working in a company with multiple software development teams? Try to work for another one or contribute to open source. **Working with other individuals can give insight on how to collaborate differently.**  
 
 ---
 
@@ -195,6 +195,10 @@ Working in a company with multiple software development teams? Try to work for a
 ## A "Not To Do's" List
 
 Empty your mind of what you would like to do. This will help you keep focus on what needs to be done now.
+
+I've been a big fan of the [The Eisenhower Method](https://en.wikipedia.org/wiki/Time_management#:~:text=The%20Eisenhower%20Method%20is%20a%20strategy%20used%20to,this%20management%20as%20%22putting%20on%20the%20game%20face.%22) as it's broken down into 4 categories: Important/Urgent, Important/Not Urgent, Unimportant/Urgent, and Unimportant/Not Urgent. Most task management software can split into groups.
+
+
 
 ---
 
