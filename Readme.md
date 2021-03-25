@@ -1,3 +1,3 @@
-# An updated blog in progress!
+# My Personal Blog
 
-Blog Template: https://startbootstrap.com/previews/blog-post
+Go check it out here: [https://docodethatmatters.com](https://docodethatmatters.com)
