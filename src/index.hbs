@@ -1,18 +1,17 @@
 {{> header}}
-
-<main class="container">
+<main class="container" itemscope="" itemtype="https://schema.org/WebPage">
+    <h1 itemprop="name" style="display: none;">{{company}} - Home Page</h1>
     <div class="row">
-        <div class="col-lg-8">
-            <h1>What's New?</h1>
+        <div class="col-lg-8" itemscope itemtype="http://schema.org/BreadcrumbList">
             {{#each posts}}
-            <span title='{{this.date}}'>{{formatDate this.date}}</span> <br />
-            <h2>
-                <a class="text-primary" href="{{blogPath this.file}}">{{this.title}}</a>
+            <h2 itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                <a itemprop="item" class="text-primary" href="{{blogPath this.file}}"><span
+                        itemprop="name">{{this.title}}</span></a>
+                <meta itemprop="position" content="{{@index}}" />
             </h2>
             <p>
                 {{this.description}}
             </p>
-            <hr />
             {{/each}}
 
         </div>
