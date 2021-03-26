@@ -24,14 +24,12 @@ img {
     list-style: none;
 }
 
-h2>a {
-    color: #333;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
+
 
 h2 .text-primary {
     font-size: medium;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 small {
