@@ -64,7 +64,7 @@ namespace StaticSiteBuilder.Logic {
             File.Move(Path.Combine(DestPath, "security.txt"), Path.Combine(DestPath, ".well-known", "security.txt"));
 
             // Get the latest posts then update all the posts
-            var topPosts = posts.OrderByDescending(x => x.Date).Take(4).ToList();
+            var topPosts = posts.OrderByDescending(x => x.Date).Take(5).ToList();
             foreach (var post in posts) {
                 post.Posts = topPosts.Where(x => x.Path != post.Path).ToList();
             }

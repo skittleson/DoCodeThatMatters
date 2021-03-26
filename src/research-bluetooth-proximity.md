@@ -20,15 +20,15 @@ Replace `<MAC>` with a bluetooth mac address.
 
 ### Scan for Bluetooth LE Devices:
 
-    `timeout --signal=SIGINT 30 hcitool lescan`
+`timeout --signal=SIGINT 30 hcitool lescan`
 
 ### Get Bluetooth LE Devices with RSSI values:
 
-    `btmgmt find`
+`btmgmt find`
 
 Response:
 
-    ```bash
+```bash
     hci0 dev_found: <SOME_MAC> type LE Random rssi -92 flags 0x0000
     AD flags 0x1a
     eir_len 14
@@ -41,11 +41,12 @@ Response:
     hci0 dev_found: <SOME_MAC> type LE Public rssi -100 flags 0x0004
     AD flags 0x00
     eir_len 28
-    hci0 dev_found: <SOME_MAC> type LE Random rssi -94 flags 0x0000```
+    hci0 dev_found: <SOME_MAC> type LE Random rssi -94 flags 0x0000
+```
 
 ### Ping bluetooth enable device without pairing:
 
-    `l2ping -c 3 <MAC>`
+`l2ping -c 3 <MAC>`
 
 Response:
 
@@ -56,29 +57,29 @@ Response:
 
 ### Dump all data of a paired bluetooth device:
 
-    `hcidump -a`
+`hcidump -a`
 
 ### To request authorization from device:
 
-    `hcitool cc <MAC>; hcitool auth <MAC>`
+`hcitool cc <MAC>; hcitool auth <MAC>`
 
 ### Attempt connection then get RSSI value:
 
-    `hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>`
+`hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>`
 
 Response:
 
-    ```bash
-    Connections:
-            < ACL <MAC> handle 12 state 7 lm MASTER
-    RSSI return value: -4
-    ```
+```bash
+Connections:
+        < ACL <MAC> handle 12 state 7 lm MASTER
+RSSI return value: -4
+```
 
 This attempts to connect which doesn't work but the RSSI value is now present for device.
 
 ### Attempt to get RSSI value without trying to connect to device:
 
-    `hcitool cmd 0x05 0x0005 0x00 0x00 <MAC>`
+`hcitool cmd 0x05 0x0005 0x00 0x00 <MAC>`
 
 ## Some Resources
 

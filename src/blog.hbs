@@ -9,10 +9,12 @@
                         alt="{{this.description}}" /></a>
             </div>
             <div class="blog-item">
-                <p>
-                    <span title='{{this.date}}'>{{formatDate this.date}}</span> <br /><b>{{this.title}}</b>
-                    <br />
-                    {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
+                <span title='{{this.date}}'>{{formatDate this.date}}</span>
+                <h2>
+                    <a class="text-primary" href="{{blogPath this.file}}">{{this.title}}</a>
+                </h2>
+                <p></p>
+                {{this.description}} <br /> <a class="read-more" href="{{blogPath this.file}}">Read More</a>
                 </p>
             </div>
         </div>

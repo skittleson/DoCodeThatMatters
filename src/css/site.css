@@ -2,9 +2,7 @@ body {
     padding-top: 70px;
 }
 
-html,
-body,
-main {
+html, body, main {
     display: block;
     color: #333;
     background: #fff;
@@ -30,6 +28,10 @@ h2>a {
     color: #333;
     padding-top: 0 !important;
     margin-top: 0 !important;
+}
+
+h2 .text-primary {
+    font-size: medium;
 }
 
 small {

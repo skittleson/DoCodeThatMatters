@@ -102,30 +102,26 @@
 <h2 id="commands">Commands</h2>
 <p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
 <h3 id="scan-for-bluetooth-le-devices">Scan for Bluetooth LE Devices:</h3>
-<pre><code>`timeout --signal=SIGINT 30 hcitool lescan`
-</code></pre>
+<p><code>timeout --signal=SIGINT 30 hcitool lescan</code></p>
 <h3 id="get-bluetooth-le-devices-with-rssi-values">Get Bluetooth LE Devices with RSSI values:</h3>
-<pre><code>`btmgmt find`
-</code></pre>
+<p><code>btmgmt find</code></p>
 <p>Response:</p>
-<pre><code>```bash
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
-AD flags 0x1a
-eir_len 14
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
-AD flags 0x1a
-eir_len 18
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
-AD flags 0x06
-name N016Y
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
-AD flags 0x00
-eir_len 28
-hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000```
+<pre><code class="language-bash">    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
+    AD flags 0x1a
+    eir_len 14
+    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
+    AD flags 0x1a
+    eir_len 18
+    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
+    AD flags 0x06
+    name N016Y
+    hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
+    AD flags 0x00
+    eir_len 28
+    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
 </code></pre>
 <h3 id="ping-bluetooth-enable-device-without-pairing">Ping bluetooth enable device without pairing:</h3>
-<pre><code>`l2ping -c 3 &lt;MAC&gt;`
-</code></pre>
+<p><code>l2ping -c 3 &lt;MAC&gt;</code></p>
 <p>Response:</p>
 <pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
 44 bytes &lt;MAC&gt; id 0 time 6.05ms
@@ -133,25 +129,19 @@ hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000```
 ♥2 sent, 2 received, 0% loss
 </code></pre>
 <h3 id="dump-all-data-of-a-paired-bluetooth-device">Dump all data of a paired bluetooth device:</h3>
-<pre><code>`hcidump -a`
-</code></pre>
+<p><code>hcidump -a</code></p>
 <h3 id="to-request-authorization-from-device">To request authorization from device:</h3>
-<pre><code>`hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;`
-</code></pre>
+<p><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></p>
 <h3 id="attempt-connection-then-get-rssi-value">Attempt connection then get RSSI value:</h3>
-<pre><code>`hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;`
-</code></pre>
+<p><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></p>
 <p>Response:</p>
-<pre><code>```bash
-Connections:
+<pre><code class="language-bash">Connections:
         &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
 RSSI return value: -4
-```
 </code></pre>
 <p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
 <h3 id="attempt-to-get-rssi-value-without-trying-to-connect-to-device">Attempt to get RSSI value without trying to connect to device:</h3>
-<pre><code>`hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;`
-</code></pre>
+<p><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></p>
 <h2 id="some-resources">Some Resources</h2>
 <p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
 <a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
