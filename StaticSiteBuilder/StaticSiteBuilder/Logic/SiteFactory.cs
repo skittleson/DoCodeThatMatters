@@ -261,8 +261,10 @@ namespace StaticSiteBuilder.Logic {
 
                 // Merge in public wide site meta data
                 var title = blogMeta.Title;
+                var description = blogMeta.Description;
                 Map(SiteGlobalMeta as SiteMeta, ref blogMeta);
                 blogMeta.Title = title;
+                blogMeta.Description = description;
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);
