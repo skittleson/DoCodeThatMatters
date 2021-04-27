@@ -17,13 +17,13 @@ keywords:
     - ESP8266
     - Serial-to-USB Adapter
 date: 2021-04-27
-description: 
+description: Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.
 image: /images/finalResultOfTasmotaUi.png
 imageAlt: Flash MultiSensor with Tasmota
 priority: 0.9
 ---
 
-Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) with tasmota for local first connections.
+Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) with Tasmota for local network first setup.
 
 
 ## Wiring Guide
