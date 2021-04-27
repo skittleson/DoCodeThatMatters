@@ -17,7 +17,8 @@ namespace StaticSiteBuilder.Logic {
     public class SiteFactory {
 
         public SiteFactory() {
-            RootPath = Path.GetFullPath(RunCommandWithResponse("git", "rev-parse --show-toplevel").Trim());
+            var rootPath = RunCommandWithResponse("git", "rev-parse --show-toplevel");
+            RootPath = string.IsNullOrEmpty(rootPath) ? throw new ArgumentNullException("Must be in a directory with git") : Path.GetFullPath(rootPath.Trim());
             SrcPath = Path.Combine(RootPath, "src");
             DestPath = Path.Combine(RootPath, "docs");
             SiteGlobalMeta = ParseYaml<SiteGlobalMeta>(File.ReadAllText(Path.Combine(RootPath, "index.yml")));
@@ -34,6 +35,7 @@ namespace StaticSiteBuilder.Logic {
                         .Build();
         }
 
+        //--- Properties ---
         public string RootPath {
             get;
         }
@@ -51,6 +53,7 @@ namespace StaticSiteBuilder.Logic {
 
         private MarkdownPipeline _pipeline;
 
+        //--- Methods ---
         public void Build() {
 
             // Clear build directory
@@ -98,7 +101,6 @@ namespace StaticSiteBuilder.Logic {
             });
             foreach (var helper in new[] { "blogPath", "imagePath" }) {
                 Handlebars.RegisterHelper(helper, (writer, context, parameters) => {
-                    //if() file then change to Path
                     if (parameters[0].ToString() == "file") {
                         var uriBuilder = new UriBuilder(SiteGlobalMeta.Url) {
                             Path = Path.GetFileNameWithoutExtension(context["path"].ToString()),
@@ -106,14 +108,16 @@ namespace StaticSiteBuilder.Logic {
                         };
                         writer.WriteSafeString(uriBuilder.Path.ToString());
                     }
-
                 });
             }
-
         }
 
         private void RenderBlogPosts(List<BlogPostMeta> posts) {
-            var template = Handlebars.Compile(File.ReadAllText(Path.Combine(SrcPath, "partials", "post.hbs")));
+            var postPath = Path.Combine(SrcPath, "partials", "post.hbs");
+            if (!File.Exists(postPath)) {
+                File.WriteAllText(postPath, "{{> header}}{{contents}}{{>footer}}");
+            }
+            var template = Handlebars.Compile(File.ReadAllText(postPath));
             foreach (var meta in posts) {
 
                 // Create a folder for each file then add the markdown to html as index.html
@@ -272,6 +276,14 @@ namespace StaticSiteBuilder.Logic {
                 result.Add(blogMeta);
             }
             return result.OrderByDescending(x => x.Date).ToList();
+        }
+
+        private void CreateMissingFileWhenMissing(string fileAndPath, string content) {
+            CreateDirectoryWhenMissing("partials");
+            var postPath = Path.Combine(SrcPath, "partials", "post.hbs");
+            if (!File.Exists(postPath)) {
+                File.WriteAllText(postPath, "{{> header}}{{contents}}{{> footer}}");
+            }
         }
     }
 }

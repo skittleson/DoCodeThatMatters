@@ -1,1 +1,5 @@
+- [] bug with not having a subfolder for images
+- [] auto created index.yml when it doesnt exist
+- [] if no git directory then stop
+- [] command to add a post with defaults
 - [] word2vec for keywords or suggested editing

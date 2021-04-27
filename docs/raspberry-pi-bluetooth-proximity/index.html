@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
-
 <head>
+    <meta charset="UTF-8">
     <title>Raspberry Pi &#8211; Bluetooth Proximity</title>
-    <meta charset="utf-8">
     <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta itemprop="description" name="description" content="Building bluetooth detection with a raspberry pi!" />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
@@ -18,15 +17,19 @@
     <meta name="application-name" content="Do Code That Matters">
     <meta property="og:type" content="blog" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Raspberry Pi &#8211; Bluetooth Proximity | Do Code That Matters" />
-    <meta property="og:title" content="Raspberry Pi &#8211; Bluetooth Proximity | Do Code That Matters" />
+    <meta name="twitter:title" content="Raspberry Pi &#8211; Bluetooth Proximity - Do Code That Matters" />
+    <meta property="og:title" content="Raspberry Pi &#8211; Bluetooth Proximity - Do Code That Matters" />
     <meta property="og:description" content="Building bluetooth detection with a raspberry pi!" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://DoCodeThatMatters.com" />
+    <meta property="og:site_name" content="Do Code That Matters" />
     <meta name="twitter:description" content="Building bluetooth detection with a raspberry pi!" />
     <meta name="twitter:creator" content="@skittleson" />
     <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link rel="alternate" type="application/rss+xml" title="Do Code That Matters RSS Feed" href="https://DoCodeThatMatters.com/rss.xml" />
+    <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml" />
     <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
     <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
@@ -44,13 +47,12 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-</head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
         <div class="container">
             <a href="/" class="navbar-brand d-flex align-items-center">
-                <img src="../images/logo.png" alt="Do Code That Matters logo" width="60" height="19"
+                <img src="images/logo.png" alt="Do Code That Matters logo" width="60" height="19"
                     style="margin-right: 2%;" />Do Code That Matters</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,6 +122,9 @@ Result:<br />
         <div class="card-body">
           <ul class="unstyledUl">
             <li>
+              <a class="read-more" href="neosiren-tasmota-local-first-cloud-assisted-iot">Local First &#55356;&#57312; Cloud Assisted &#9729; IoT</a>
+            </li>
+            <li>
               <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
             </li>
             <li>
@@ -131,9 +136,6 @@ Result:<br />
             <li>
               <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
             </li>
-            <li>
-              <a class="read-more" href="research-bluetooth-proximity">Research on Bluetooth Proximity</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -141,12 +143,19 @@ Result:<br />
       See something inaccurate or need more detail? <a
         href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Raspberry Pi &#8211; Bluetooth Proximity">Submit a Pull
         Request</a> to help me out!
+      <br />
+      <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
     </aside>
   </div>
 
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 
 <script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
