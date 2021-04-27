@@ -1,5 +1,5 @@
 ---
-title: Local First 🏠 Cloud Assisted ☁ IoT
+title: Local First, Cloud Assisted ☁ MultiSensor
 keywords: 
     - smart home
     - smart alarm
@@ -19,7 +19,7 @@ keywords:
 date: 2021-04-27
 description: 
 image: /images/finalResultOfTasmotaUi.png
-imageAlt: Flash Multisensor with Tasmota
+imageAlt: Flash MultiSensor with Tasmota
 priority: 0.9
 ---
 
