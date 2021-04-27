@@ -103,8 +103,7 @@
         <p>Guide for flashing a <a href="https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html">NEO Coolcam Siren with Temperature and Humidity Multisensor</a> with Tasmota for local network first setup.</p>
 <h2 id="wiring-guide">Wiring Guide</h2>
 <p>This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official <a href="https://tasmota.github.io/docs/Getting-Started/">documentation</a>.</p>
-<p>In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A Serial-to-USB Adapter like below will be required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.</p>
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=dctm-20&language=en_US&marketplace=amazon&region=US&placement=B00IJXZQ7C&asins=B00IJXZQ7C&linkId=d3d392372bdcef3c1d8895659b4a51a0&show_border=true&link_opens_in_new_window=true"></iframe>
+<p>In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A <a href="https://amzn.to/3sW2QaW">Serial-to-USB Adapter</a> is required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.</p>
 <table>
 <thead>
 <tr>
@@ -141,13 +140,13 @@
 <h2 id="flashing">Flashing</h2>
 <p>Install esptool. PyPi was quick for this: <a href="https://pypi.org/project/esptool/">https://pypi.org/project/esptool/</a></p>
 <p><code>pip install esptool</code></p>
-<p>Time to flash. Run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.</p>
+<p>Time to flash. Change the port then run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.</p>
 <p><code>esptool --port COM3 write_flash -fs 1MB -fm dout 0x0 tasmota-sensors.bin</code></p>
 <p><img src="images/flashwithEspTool.png" alt="Flashing Neo Coolcam Multisensor" /></p>
 <p>Alternative, you can use a GUI version <a href="https://github.com/tasmota/tasmotizer">Tasmotizer</a></p>
-<p>Connect to the access point to configure the default WiFi to connect too.</p>
+<p>Connect to the access point to configure the default WiFi to connect to your local wifi.</p>
 <h2 id="configuration">Configuration</h2>
-<p>Apply Template in &quot;Configure Other&quot;
+<p>Apply Template in &quot;Configure Other&quot; <a href="https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html">found here</a>
 <code>{&quot;NAME&quot;:&quot;Neo Siren 3in1&quot;,&quot;GPIO&quot;:[255,107,255,108,255,255,0,0,255,255,255,255,255],&quot;FLAG&quot;:0,&quot;BASE&quot;:54}</code></p>
 <h3 id="tasmota-console-commands">Tasmota Console Commands</h3>
 <table>
@@ -188,7 +187,7 @@
 </tr>
 </tbody>
 </table>
-<p>All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use <code>SetOption66 0</code>. Optional, ensure dpId states were set by running <code>TuyaSend0</code>. Now that everything is hooked up, the data will be polled and reported every so often.</p>
+<p>All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use <code>SetOption66 0</code>. Optional, ensure dpId states were set by running <code>TuyaSend0</code>. Now that everything is hooked up, the data will be polled and reported every so often.  The caveat is not always temperature and humidity.  This must be accounted for later.</p>
 <pre><code class="language-log">01:42:21.463 MQT: tele/tasmota_111111/SENSOR = {&quot;Time&quot;:&quot;2021-04-08T01:42:21&quot;,&quot;TuyaSNS&quot;:{&quot;Temperature&quot;:28.5,&quot;Humidity&quot;:4.3},&quot;TempUnit&quot;:&quot;C&quot;}
 </code></pre>
 <p><img src="images/finalResultOfTasmotaUi.png" alt="Tasmota Web UI with Tuya temperature, humidity, and siren led power toggle" /></p>

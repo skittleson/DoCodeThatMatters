@@ -30,9 +30,7 @@ Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisenso
 
 This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official [documentation](https://tasmota.github.io/docs/Getting-Started/).
 
-In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A Serial-to-USB Adapter like below will be required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.
-
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ss&ref=as_ss_li_til&ad_type=product_link&tracking_id=dctm-20&language=en_US&marketplace=amazon&region=US&placement=B00IJXZQ7C&asins=B00IJXZQ7C&linkId=d3d392372bdcef3c1d8895659b4a51a0&show_border=true&link_opens_in_new_window=true"></iframe>
+In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A [Serial-to-USB Adapter](https://amzn.to/3sW2QaW) is required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.
 
 | **Device - Neo Coolcam** | **Flasher** |
 | ------------------------ | ----------- |
@@ -54,7 +52,7 @@ Install esptool. PyPi was quick for this: https://pypi.org/project/esptool/
 
 `pip install esptool`
 
-Time to flash. Run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.
+Time to flash. Change the port then run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.
 
 `esptool --port COM3 write_flash -fs 1MB -fm dout 0x0 tasmota-sensors.bin`
 
@@ -62,11 +60,11 @@ Time to flash. Run this command in the terminal. Doesn't matter if your Mac, Lin
 
 Alternative, you can use a GUI version [Tasmotizer](https://github.com/tasmota/tasmotizer)
 
-Connect to the access point to configure the default WiFi to connect too.
+Connect to the access point to configure the default WiFi to connect to your local wifi.
 
 ## Configuration 
 
-Apply Template in "Configure Other"
+Apply Template in "Configure Other" [found here](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html)
 `{"NAME":"Neo Siren 3in1","GPIO":[255,107,255,108,255,255,0,0,255,255,255,255,255],"FLAG":0,"BASE":54}`
 
 ### Tasmota Console Commands
@@ -82,7 +80,7 @@ Apply Template in "Configure Other"
 | `TuyaSend2 114,0`                                 | Disable humidity alarm. Do with a rule instead     |
 
 
-All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use `SetOption66 0`. Optional, ensure dpId states were set by running `TuyaSend0`. Now that everything is hooked up, the data will be polled and reported every so often.
+All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use `SetOption66 0`. Optional, ensure dpId states were set by running `TuyaSend0`. Now that everything is hooked up, the data will be polled and reported every so often.  The caveat is not always temperature and humidity.  This must be accounted for later.
 
 
 ```log
