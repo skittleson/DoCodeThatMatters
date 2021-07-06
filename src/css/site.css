@@ -39,3 +39,7 @@ small {
 .blog-item {
     padding-left: 1em;
 }
+
+.navbar-brand {
+    font-size: 98% !important;
+}

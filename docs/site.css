@@ -38,6 +38,10 @@ small {
 
 .blog-item {
     padding-left: 1em;
+}
+
+.navbar-brand {
+    font-size: 98% !important;
 }/*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors

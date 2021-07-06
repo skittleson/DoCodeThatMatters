@@ -1,6 +1,8 @@
 ---
 title: A simple water sprinkler system, for makers!
 keywords: 
+  - tasmota irrigation
+  - tasmota sunrise sunset
   - sprinkler
   - tasmota
   - bme280
