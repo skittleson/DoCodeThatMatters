@@ -138,7 +138,7 @@ It should look like this:
 
 The first runaway protection is the secondary timers 3 and 4.
 
-A secondary way to add a runaway protection was `pulsetime` with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.
+A secondary way to add a runaway protection was `pulsetime` with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.  This also may be an option https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch
 
 The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.
 
@@ -169,3 +169,4 @@ Here are two more timers (or rules) wanted:
 
 * https://tasmota.github.io/docs/Commands/
 * https://tasmota.github.io/docs/Timers/
+* https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch
