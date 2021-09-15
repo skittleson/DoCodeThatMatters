@@ -262,6 +262,13 @@ namespace StaticSiteBuilder.Logic {
                 // Trim first 3 and last 3.
                 yaml = yaml[3..^3].Trim();
                 var blogMeta = ParseYaml<BlogPostMeta>(yaml);
+                var blogMetaValidator = new BlogPostMetaValidator();
+                var results = blogMetaValidator.Validate(blogMeta);
+                results.Errors.ForEach(x => {
+                    var msg = $"{blogMeta.Title}:{x.PropertyName}:{x.ErrorCode}:{x.ErrorMessage}";
+                    Console.WriteLine(msg);
+                });
+
 
                 // Merge in public wide site meta data
                 var title = blogMeta.Title;
