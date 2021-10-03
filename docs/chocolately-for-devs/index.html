@@ -2,12 +2,12 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Research on Bluetooth Proximity</title>
+    <title>Common Apps for Devs over Chocolatey</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta itemprop="description" name="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta itemprop="description" name="description" content="Automate software install for a software engineer on Windows" />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:title" content="Common Apps for Devs over Chocolatey - Do Code That Matters" />
+    <meta property="og:title" content="Common Apps for Devs over Chocolatey - Do Code That Matters" />
+    <meta property="og:description" content="Automate software install for a software engineer on Windows" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://DoCodeThatMatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:description" content="Automate software install for a software engineer on Windows" />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=774&amp;q=80" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml" />
@@ -72,11 +72,11 @@
   <div class="row">
     <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/research-bluetooth-proximity">
-        <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/chocolately-for-devs">
+        <h1 itemprop="name headline">Common Apps for Devs over Chocolatey</h1>
         <small>
-          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">19 Oct 2019</time>
-          <meta itemprop="dateModified" content="2019-10-19T00:00:00.000Z">
+          <time itemprop="datePublished" content="2021-10-03T00:00:00.000Z">03 Oct 2021</time>
+          <meta itemprop="dateModified" content="2021-10-03T00:00:00.000Z">
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -93,65 +93,20 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80">
+          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=774&amp;q=80">
           <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt</code>, <code>l2ping</code>, and <code>hcidump</code>. A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a> blog post.</p>
-<h2 id="commands">Commands</h2>
-<p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
-<h3 id="scan-for-bluetooth-le-devices">Scan for Bluetooth LE Devices:</h3>
-<p><code>timeout --signal=SIGINT 30 hcitool lescan</code></p>
-<h3 id="get-bluetooth-le-devices-with-rssi-values">Get Bluetooth LE Devices with RSSI values:</h3>
-<p><code>btmgmt find</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
-    AD flags 0x1a
-    eir_len 14
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
-    AD flags 0x1a
-    eir_len 18
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
-    AD flags 0x06
-    name N016Y
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
-    AD flags 0x00
-    eir_len 28
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
+        <p>As a software engineer, starting with a clean slate in an OS is required often.  Usually using containers is the solution to that for development.  After some time even your primary OS suffers from <strong>bit rot</strong>.  For Windows, a factory reset gets that back into a clean state.  I use A LOT of apps and they can take up to day to install everything but no more!  So here is powershell script to get the common apps used on a regular basis.</p>
+<p>Install chocolatey from (<a href="https://chocolatey.org/install">https://chocolatey.org/install</a>)[https://chocolatey.org/install]</p>
+<pre><code class="language-powershell">choco install -y 7zip arduino audacity autohotkey autoruns bleachbit cmder curl cyberduck ditto drawio ffmpeg Ghostscript.app gimp git gitkraken graphviz grep handbrake hwmonitor ilspy imagemagick inkscape jq keepass microsoft-windows-terminal nano nodejs notepadplusplus paint.net powertoys processhacker rainmeter rsync screentogif sharex sharpkeys SQLite sqlitebrowser sysinternals teracopy tortoisegit totalcommander transmission ultradefrag vlc vscode winmerge wireguard wireshark youtube-dl chocolateypackageupdater python dotnet
 </code></pre>
-<h3 id="ping-bluetooth-enable-device-without-pairing">Ping bluetooth enable device without pairing:</h3>
-<p><code>l2ping -c 3 &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
-44 bytes &lt;MAC&gt; id 0 time 6.05ms
-44 bytes &lt;MAC&gt; id 1 time 9.90ms
-♥2 sent, 2 received, 0% loss
+<p>For all available packages</p>
+<pre><code class="language-powershell">choco list --localonly
 </code></pre>
-<h3 id="dump-all-data-of-a-paired-bluetooth-device">Dump all data of a paired bluetooth device:</h3>
-<p><code>hcidump -a</code></p>
-<h3 id="to-request-authorization-from-device">To request authorization from device:</h3>
-<p><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></p>
-<h3 id="attempt-connection-then-get-rssi-value">Attempt connection then get RSSI value:</h3>
-<p><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">Connections:
-        &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
-RSSI return value: -4
-</code></pre>
-<p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
-<h3 id="attempt-to-get-rssi-value-without-trying-to-connect-to-device">Attempt to get RSSI value without trying to connect to device:</h3>
-<p><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></p>
-<h2 id="some-resources">Some Resources</h2>
-<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
-<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
-<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
-<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
-<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
-<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
-<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
-<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
+<p>See more at (<a href="https://chocolatey.org/">https://chocolatey.org/</a>)[https://chocolatey.org/]</p>
 
       </section>
     </article>
@@ -161,9 +116,6 @@ RSSI return value: -4
         <h5 class="card-header">Latest Posts</h5>
         <div class="card-body">
           <ul class="unstyledUl">
-            <li>
-              <a class="read-more" href="chocolately-for-devs">Common Apps for Devs over Chocolatey</a>
-            </li>
             <li>
               <a class="read-more" href="neosiren-tasmota-local-first-cloud-assisted-iot">Local First, Cloud Assisted &#9729; MultiSensor</a>
             </li>
@@ -181,7 +133,7 @@ RSSI return value: -4
       </div>
 
       See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Research on Bluetooth Proximity">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Common Apps for Devs over Chocolatey">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>

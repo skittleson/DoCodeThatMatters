@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>Common Apps for Devs over Chocolatey</title>
+            <description>Automate software install for a software engineer on Windows</description>
+            <link>https://DoCodeThatMatters.com/chocolately-for-devs</link>
+            <guid>https://DoCodeThatMatters.com/chocolately-for-devs</guid>
+            <pubDate>2021-10-03T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>Local First, Cloud Assisted &#9729; MultiSensor</title>
             <description>Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.</description>
             <link>https://DoCodeThatMatters.com/neosiren-tasmota-local-first-cloud-assisted-iot</link>
