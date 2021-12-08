@@ -17,10 +17,10 @@ As a software engineer, starting with a clean slate in an OS is required often. 
 Install chocolatey from [https://chocolatey.org/install](https://chocolatey.org/install)
 
 
-    choco install -y 7zip arduino audacity autohotkey autoruns bleachbit cmder curl cyberduck ditto drawio ffmpeg Ghostscript.app gimp git gitkraken graphviz grep handbrake hwmonitor ilspy imagemagick inkscape jq keepass microsoft-windows-terminal nano nodejs notepadplusplus paint.net powertoys processhacker rainmeter rsync screentogif sharex sharpkeys SQLite sqlitebrowser sysinternals teracopy tortoisegit totalcommander transmission ultradefrag vlc vscode winmerge wireguard wireshark youtube-dl chocolateypackageupdater python dotnet
+    choco install -y 7zip arduino audacity autohotkey autoruns bleachbit cmder curl cyberduck ditto drawio ffmpeg Ghostscript.app gimp git gitkraken graphviz grep handbrake hwmonitor ilspy imagemagick inkscape jq keepass microsoft-windows-terminal nano nodejs notepadplusplus paint.net powertoys processhacker rainmeter rsync screentogif sharex sharpkeys SQLite sqlitebrowser sysinternals teracopy tortoisegit totalcommander transmission ultradefrag vlc vscode winmerge wireguard wireshark youtube-dl chocolateypackageupdater python dotnet visualstudio2019community oh-my-posh
 
 
-For all available packages
+For all available local packages
 
     choco list --localonly
 
