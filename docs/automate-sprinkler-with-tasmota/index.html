@@ -192,7 +192,7 @@
 </code></pre>
 <h2 id="runaway-protection">Runaway Protection</h2>
 <p>The first runaway protection is the secondary timers 3 and 4.</p>
-<p>A secondary way to add a runaway protection was <code>pulsetime</code> with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: <a href="https://github.com/arendst/Tasmota/issues/7810">https://github.com/arendst/Tasmota/issues/7810</a>). Not ideal in our case.</p>
+<p>A secondary way to add a runaway protection was <code>pulsetime</code> with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: <a href="https://github.com/arendst/Tasmota/issues/7810">https://github.com/arendst/Tasmota/issues/7810</a>). Not ideal in our case.  This also may be an option <a href="https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch">https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch</a></p>
 <p>The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.</p>
 <p>Using Graphana, I've prototyped using alerts as well just incase all else fails.</p>
 <h2 id="extending-to-other-platforms-optional">Extending to other Platforms (Optional)</h2>
@@ -212,6 +212,7 @@
 <ul>
 <li><a href="https://tasmota.github.io/docs/Commands/">https://tasmota.github.io/docs/Commands/</a></li>
 <li><a href="https://tasmota.github.io/docs/Timers/">https://tasmota.github.io/docs/Timers/</a></li>
+<li><a href="https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch">https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch</a></li>
 </ul>
 
       </section>
@@ -223,6 +224,9 @@
         <div class="card-body">
           <ul class="unstyledUl">
             <li>
+              <a class="read-more" href="chocolately-for-devs">Common Apps for Devs over Chocolatey</a>
+            </li>
+            <li>
               <a class="read-more" href="neosiren-tasmota-local-first-cloud-assisted-iot">Local First, Cloud Assisted &#9729; MultiSensor</a>
             </li>
             <li>
@@ -230,9 +234,6 @@
             </li>
             <li>
               <a class="read-more" href="power-switch-monitor">Power Switch Monitor with an Arduino device</a>
-            </li>
-            <li>
-              <a class="read-more" href="json-to-s3-with-google-recaptcha">Save JSON Objects to AWS S3 with Google Recaptcha</a>
             </li>
           </ul>
         </div>
