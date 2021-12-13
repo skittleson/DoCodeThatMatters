@@ -20,13 +20,13 @@ Also known as the ESC. The foundation to building an electrical skateboard is th
 
 An electrical speed controller can control the speed of an electric motor using a signal provided by a remote. This signal acts as throttle for the electric motor. First attempt was an inexpensive \$25 120A ESC (electric speed controller) for RC projects.  While it worked the ESC got too hot 🔥🔥🔥.  It wasn't designed for the amount amps pushing through and the motor was over sized.  These RC ESCs have simple configurations.
 
-An open source project, [VESC](https://vesc-project.com/), is a software controlled electronic speed control made for scooters, skateboards, and bikes for a reasonable price!  All the configuration is done through software with a wizard that is easy to follow with great documentation. Before buying any parts, checkout the [VESC calculator](https://vesc-project.com/calculators) to help purchase motors and batteries. You can purchase one from Amazon [here](https://amzn.to/2Yd5Nqd).  I did burn out on of these so be careful.
+An open source project, [VESC](https://vesc-project.com/), is a software controlled electronic speed control made for scooters, skateboards, and bikes all for a reasonable price!  Configuration is done through software with a wizard that is easy to follow with great documentation. Before buying any parts, checkout the [VESC calculator](https://vesc-project.com/calculators) to help purchase motors and batteries. You can purchase one from Amazon [here](https://amzn.to/2Yd5Nqd).  I did burn out on of these so be careful.
 
 ![VESC Hardware](images/vesc.jpg)
 
 ### Batteries
 
-⚠️ Disclaimer!! Batteries are dangerous!⚠️ Be extra careful on handling and wiring them. There are 2 primary choices for batteries: lithium ion and lithium polymer (lipo). Similar in chemistry but used in different applications. Both can work in this project. In earlier experiments, lipos were used since they are smaller and avaliable. In the 2nd prototype, two 10s2p batteries from hoverboards were used. I wanted a battery management systems aka BMS in to each battery pack with a standard charging mechanisms. The batteries are inexpensive with capacity at 4.4ah. Connecting 2 batteries in parallel increases it to 8.8ah which is near perfect for the VESC to push to the motor. Combing the 2 batteries in parallel made it a 10s4p.
+⚠️ Disclaimer!! Batteries are dangerous!⚠️ Be extra careful on handling and wiring them. There are 2 primary choices for batteries: lithium ion and lithium polymer (lipo). Similar in chemistry but used in different applications. Both can work in this project. In earlier experiments, lipos were used since they are smaller and available. In the 2nd prototype, two 10s2p batteries from hover boards were used. I wanted a battery management systems aka BMS in to each battery pack with a standard charging mechanisms. The batteries are inexpensive with capacity at 4.4ah. Connecting 2 batteries in parallel increases it to 8.8ah which is near perfect for the VESC to push to the motor. Combing the 2 batteries in parallel made it a 10s4p.
 
 ![](images/hoverboardBattery.jpg "Hoverboard battery at 4400mah with an XT60 connector")
 ![https://amzn.to/2UFvYop](images/charger.jpg "Charging cable")
@@ -50,7 +50,7 @@ This ESK8 [Calculator](http://calc.esk8.it/#{%22batt-type-lipo%22:1,%22batt-cell
 
 Here is a common [gears and belt kit](https://amzn.to/37jD6Mj). 48 Teeth Bore (the big gear): 22mm; 16 Teeth Bore: 8mm (the small gear). The belt also comes with it. [Replacement belts](https://amzn.to/2YigUy7) are a must as they do burn out!
 
-I found those to be limited so 3d printing gears is a great way to experiment as well.  Let me know if you would like the FreeCAD file to be available.
+I found those to be limited so 3D printing gears is a great way to experiment as well.  Let me know if you would like the FreeCAD file to be available. Use graphite powder (pencil lead) in the gear teeth for a smoother ride.
 
 ![](images/FreeCAD_5GwuSzs725.png "38 teeth rear gear")
 
@@ -63,7 +63,6 @@ Optimizing a battery build and charging for a 85amp BDLC motor:
 - Each cell would be 6 cells in series (6x3.7v=22.2v)
 - Each cell is 2500mah to get 20ah I would need 3 in parallel (3x2500=7,500mah)
 - Each cell can do 20amps continuous (3*20=60amp)
-
 
 
 Does this mean the battery pack is capable of producing 160amp continuous? (8x20amps for each group)?
@@ -100,8 +99,11 @@ What is the peak rating?
 **Q:** So how fast and distance can this go on a single charge?
 **A:** about 20 miles on a single charger. 25m/hr.
 
-**Q:** Your not running a BMS on this version, will it explode?
-**A:** Perhaps but the software is watching the voltage. So am I.
+**Q:** Your not running a BMS, will the batteries explode?
+**A:** Perhaps but the VESC software is watching the voltage. There is also a voltage meter on the side of the case.
+
+**Q:** Why use a 3D printed gear?
+**A:** The advantage is to try different gearing based on different tire sizes.
 
 **Q:** Why not just buy?
 **A:** It's fun to build stuff and I know how it works in case needs repair.
