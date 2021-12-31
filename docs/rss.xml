@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>Automate Cleaning of Air Conditioner Condensate Drain Line</title>
+            <description>Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home mainteance task that is easily forgotten to do each month.</description>
+            <link>https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line</link>
+            <guid>https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line</guid>
+            <pubDate>2021-12-31T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>Common Apps for Devs over Chocolatey</title>
             <description>Automate software install for a software engineer on Windows</description>
             <link>https://DoCodeThatMatters.com/chocolately-for-devs</link>
