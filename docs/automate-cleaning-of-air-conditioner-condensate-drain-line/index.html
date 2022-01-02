@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta itemprop="description" name="description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home mainteance task that is easily forgotten to do each month." />
+    <meta itemprop="description" name="description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
@@ -18,12 +18,12 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Automate Cleaning of Air Conditioner Condensate Drain Line - Do Code That Matters" />
     <meta property="og:title" content="Automate Cleaning of Air Conditioner Condensate Drain Line - Do Code That Matters" />
-    <meta property="og:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home mainteance task that is easily forgotten to do each month." />
+    <meta property="og:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://DoCodeThatMatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home mainteance task that is easily forgotten to do each month." />
+    <meta name="twitter:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta name="twitter:creator" content="@skittleson" />
     <meta property="og:image" content="https://templates.blakadder.com/assets/images/WD-01ADE.jpg" />
     <link href="/site.css" rel="stylesheet">
@@ -76,7 +76,7 @@
         <h1 itemprop="name headline">Automate Cleaning of Air Conditioner Condensate Drain Line</h1>
         <small>
           <time itemprop="datePublished" content="2021-12-31T00:00:00.000Z">31 Dec 2021</time>
-          <meta itemprop="dateModified" content="2021-12-31T00:00:00.000Z">
+          <meta itemprop="dateModified" content="2022-01-02T00:00:00.000Z" />
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -108,11 +108,15 @@
 <li>Add rules to manage water pump timing and notifications.</li>
 </ul>
 <h2 id="water-pump-preparation">Water Pump Preparation</h2>
-<p>I ordered this <a href="https://www.amazon.com/dp/B08T9KLDHD?&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=da5e68dd8503f9f127b2e0c5222d3424&amp;language=en_US&amp;ref_=as_li_ss_tl">wifi dual water pump</a> from Amazon then flashed it following <a href="https://templates.blakadder.com/WD-01ADE.html">this guide</a>d.  The only tricky part here was the soldering wires to those connections shown in the image in the guide. I followed the traces and solder unto those instead.  It gave a bit more room to work with.  Then flash with <a href="https://github.com/tasmota/tasmotizer/releases">Tasmotizer</a>,</p>
-<p>The other change that was to count the amount of times the pump was trigger adding a Tasmota counter.  This needs to be done after the template was set by going to:</p>
-<p><code>Configuration &gt; Configure Template &gt; GPIO16 to Counter</code> with counter drop down selected as <code>1</code>. The value is stored even after a reboot is done!</p>
+<p>I ordered this <a href="https://www.amazon.com/dp/B08T9KLDHD?&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=da5e68dd8503f9f127b2e0c5222d3424&amp;language=en_US&amp;ref_=as_li_ss_tl">wifi dual water pump</a> from Amazon then flashed it using <a href="https://templates.blakadder.com/WD-01ADE.html">this guide</a>.  The only tricky part was soldering wires to those tiny connections shown in the guide's image. I followed the traces for two of them then soldered unto those instead.  More room to work with.</p>
+<p>Flashed it with <a href="https://github.com/tasmota/tasmotizer/releases">Tasmotizer</a>. Send the wifi configuration then grab the IP address.  Make sure to set the template defined in the guide at this point in <code>Configuration &gt; Configure Other</code>.</p>
+<pre><code>{&quot;NAME&quot;:&quot;WD-01ADE&quot;,&quot;GPIO&quot;:[32,0,0,0,0,225,33,0,224,320,0,0,0,0],&quot;FLAG&quot;:0,&quot;BASE&quot;:18}
+</code></pre>
+<p>In order to monitor the pump activations, a counter was added.  This is useful to keep track of the amount water/vinegar mixture is left in the reservoir. This needs to be done after the template was set by going to:</p>
+<p><code>Configuration &gt; Configure Template &gt; GPIO16 to Counter</code> with counter drop down selected as <code>1</code>. The value is stored even after a reboot!</p>
 <h2 id="set-up-a-water-reservoir">Set up a Water Reservoir</h2>
-<p>Take an old vinegar plastic bottle and a poked a hole in it.  After that, hot glue in one of the fittings the came from the water pump supplies.  Be sure to poke a hole in the top so air can enter the bottle.</p>
+<p>Take a vinegar plastic bottle and poked a hole in it about the size of the fitting.  After that, hot glue in one of the fittings the came from the water pump supplies.  Be sure to poke a hole in the top so air can enter the bottle.</p>
+<p><img src="images/plasticBottleHotGlueWaterRes.jpg" alt="Plastic bottle fitting" /></p>
 <h2 id="tasmota-rules">Tasmota Rules</h2>
 <p>Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse abount 1 cup of vinegar/water mixture. Adds one to to Counter 1.</p>
 <pre><code>Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon
@@ -124,11 +128,14 @@ Rule1 on
 
 Timers on
 </code></pre>
+<p>Set the timezone of your location.</p>
+<pre><code>Timezone -8
+</code></pre>
 <p>Now the vinegar/water will fill up with AC condensate line.  My water line is also attached to the water heater excess water line so it will get flushed out usually within a few hours.</p>
-<p>Lastly, if the device restarts then ensure water pump relays are off by default. This is now the default with Tasmota firmware.</p>
+<p>Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware.</p>
 <pre><code>PowerOnState 0
 </code></pre>
-<p>All of it together (use as you will):</p>
+<p>All of it together:</p>
 <script src="https://gist.github.com/skittleson/f6fb022cffb9d296b387681b551a13fd.js"></script>
 <p>Final results for the web ui</p>
 <p><img src="images/waterPumpTasmotaScreenshot.png" alt="Tasmota WebUI" /></p>

@@ -86,8 +86,11 @@ namespace StaticSiteBuilder.Logic {
                 }
             });
             Handlebars.RegisterHelper("schemaDate", (writer, context, parameters) => {
-                if (DateTime.TryParse(context["date"].ToString(), out var date)) {
-                    writer.WriteSafeString("\"" + date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") + "\"");
+                var dateField = parameters[0];
+                if (dateField != null 
+                    && dateField is DateTime dateTimeValidated 
+                    && dateTimeValidated != DateTime.MinValue) {
+                    writer.WriteSafeString($"\"{dateTimeValidated:yyyy-MM-ddTHH:mm:ss.fffZ}\"");
                 }
             });
             Handlebars.RegisterHelper("now", (writer, context, parameters) => {
@@ -141,12 +144,12 @@ namespace StaticSiteBuilder.Logic {
 
         private void CopyAll(string sourcePath, string destinationPath) {
 
-            //Now Create all of the directories
+            // Create all of the directories
             foreach (var dirPath in Directory.GetDirectories(sourcePath, "*",
                 SearchOption.AllDirectories))
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
 
-            //Copy all the files & Replaces any files with the same name
+            // Copy all the files & Replaces any files with the same name
             foreach (var newPath in Directory.GetFiles(sourcePath, "*.*",
                 SearchOption.AllDirectories))
                 File.Copy(newPath, newPath.Replace(sourcePath, destinationPath), true);

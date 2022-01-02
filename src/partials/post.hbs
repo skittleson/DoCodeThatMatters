@@ -7,7 +7,9 @@
         <h1 itemprop="name headline">{{title}}</h1>
         <small>
           <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
-          <meta itemprop="dateModified" content={{schemaDate date}}>
+          {{#if (schemaDate modified)}}
+          <meta itemprop="dateModified" content={{schemaDate modified}} />
+          {{/if}}
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography">
