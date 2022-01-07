@@ -7,7 +7,7 @@ keywords:
     - tasmota timer
     - home maintenance
 date: 2021-12-31
-modified: 2022-01-02
+modified: 2022-01-07
 description: Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.
 image: https://templates.blakadder.com/assets/images/WD-01ADE.jpg
 imageAlt: Water pump WD-01ADE
@@ -43,13 +43,13 @@ Take a vinegar plastic bottle and poked a hole in it about the size of the fitti
 
 ## Tasmota Rules
 
- Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse abount 1 cup of vinegar/water mixture. Adds one to to Counter 1.
+ Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse about 1 cup of vinegar/water mixture. Increments one to Counter 1.
 
     Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon
  
     Rule1 on
 
-Turn on pump one every day at 4am within a 15 minute window.
+Turn on pump one every day at 4am within a 15 minute window. 
 
     Timer1 {"Enable":1,"Time":"4:00","Window":15,"Days":"SMTWTFS","Repeat":1,"Output":1,"Action":1}
 
@@ -59,9 +59,7 @@ Set the timezone of your location.
     
     Timezone -8
 
-Now the vinegar/water will fill up with AC condensate line.  My water line is also attached to the water heater excess water line so it will get flushed out usually within a few hours.
-
-Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware.
+ Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware. 
 
     PowerOnState 0
 
@@ -79,10 +77,9 @@ MQTT Sensor topic
 
     tele/tasmota_XXXXX/SENSOR = {"Time":"2021-12-31T09:39:59","COUNTER":{"C1":3}}
 
-<!-- ## Future Improvements
+## Future Improvements
 
-Based on the counter, send an alert to refill the reservoir tank. -->
-
+- Based on the counter, send an alert to refill the reservoir tank.
 
 ### Resources
 

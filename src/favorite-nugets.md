@@ -5,6 +5,7 @@ keywords:
   - Fluent validation
   - Easy.Common counting lines
   - Microsoft Dependency Injection
+  - Polly
 date: 2021-10-10
 description: Favorite nuget packages 
 image:
@@ -126,10 +127,27 @@ There are other useful extensions. [GitHub reference](https://github.com/NimaAra
 https://www.developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/#:~:text=Moq%20provides%20you%20methods%20to%20confirm%20that%20particular,was%20called%20a%20particular%20number%20of%20times.%20
 
 
-
 ## Polly
 
     Install-Package Polly
+
+<details>
+<summary>Need retry logic?  Exponential back off? This project solves the problems easily with tons of of extensions!</summary>
+
+    var retryPolicy = Policy.Handle<TransientException>()
+	.WaitAndRetry(retryCount: 3, sleepDurationProvider: _ => TimeSpan.FromSeconds(1));
+
+    var attempt = 0;
+    retryPolicy.Execute(() =>
+    {
+        Log($"Attempt {++attempt}");
+        throw new TransientException();
+    });
+
+</details>
+
+ [GitHub reference](https://github.com/App-vNext/Polly)
+
 
 ## PubSub
 
