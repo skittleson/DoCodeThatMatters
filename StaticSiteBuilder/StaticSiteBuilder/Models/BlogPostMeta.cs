@@ -8,6 +8,10 @@ namespace StaticSiteBuilder.Models {
             get; set;
         }
 
+        public DateTime Modified {
+            get; set;
+        }
+
         public string Image {
             get; set;
         }

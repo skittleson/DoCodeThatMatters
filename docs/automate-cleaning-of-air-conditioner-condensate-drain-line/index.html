@@ -2,12 +2,12 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Research on Bluetooth Proximity</title>
+    <title>Automate Cleaning of Air Conditioner Condensate Drain Line</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta itemprop="description" name="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta itemprop="description" name="description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,diy,c#,csharp,3D printing" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:title" content="Automate Cleaning of Air Conditioner Condensate Drain Line - Do Code That Matters" />
+    <meta property="og:title" content="Automate Cleaning of Air Conditioner Condensate Drain Line - Do Code That Matters" />
+    <meta property="og:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://DoCodeThatMatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" />
+    <meta property="og:image" content="https://templates.blakadder.com/assets/images/WD-01ADE.jpg" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml" />
@@ -72,10 +72,11 @@
   <div class="row">
     <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/research-bluetooth-proximity">
-        <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line">
+        <h1 itemprop="name headline">Automate Cleaning of Air Conditioner Condensate Drain Line</h1>
         <small>
-          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">19 Oct 2019</time>
+          <time itemprop="datePublished" content="2021-12-31T00:00:00.000Z">31 Dec 2021</time>
+          <meta itemprop="dateModified" content="2022-01-02T00:00:00.000Z" />
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -92,65 +93,66 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80">
+          <img itemprop="url contentUrl" alt="" src="https://templates.blakadder.com/assets/images/WD-01ADE.jpg">
           <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt</code>, <code>l2ping</code>, and <code>hcidump</code>. A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a> blog post.</p>
-<h2 id="commands">Commands</h2>
-<p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
-<h3 id="scan-for-bluetooth-le-devices">Scan for Bluetooth LE Devices:</h3>
-<p><code>timeout --signal=SIGINT 30 hcitool lescan</code></p>
-<h3 id="get-bluetooth-le-devices-with-rssi-values">Get Bluetooth LE Devices with RSSI values:</h3>
-<p><code>btmgmt find</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
-    AD flags 0x1a
-    eir_len 14
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
-    AD flags 0x1a
-    eir_len 18
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
-    AD flags 0x06
-    name N016Y
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
-    AD flags 0x00
-    eir_len 28
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
+        <p>Ever have your central AC unit turn off all of sudden?  If your a home owner, this is a common source of annoyance. It's the most common reason why service is called for.  <strong>The air conditioner condensate drain line is blocked.</strong> The solution is to clean the AC condensate drain line every month with a 1/4 cup of vinegar then flush with water once a month.  You have to remember to do this tho and it's easily forgotten. Should be done more frequently to prevent any mold or bacteria build up. This post is a how-to-guide to configure an off-the-shelf smart wifi dual water pump to flush out this line on a regular basis.</p>
+<h2 id="plan">Plan</h2>
+<ul>
+<li>Flash the device with Tasmota firmware</li>
+<li>Set up a water reservoir</li>
+<li>Route water line to the AC condensate drain line opening.  Usually near the start of the heating/fan unit.</li>
+<li>Add rules to manage water pump timing and notifications.</li>
+</ul>
+<h2 id="water-pump-preparation">Water Pump Preparation</h2>
+<p>I ordered this <a href="https://www.amazon.com/dp/B08T9KLDHD?&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=da5e68dd8503f9f127b2e0c5222d3424&amp;language=en_US&amp;ref_=as_li_ss_tl">wifi dual water pump</a> from Amazon then flashed it using <a href="https://templates.blakadder.com/WD-01ADE.html">this guide</a>.  The only tricky part was soldering wires to those tiny connections shown in the guide's image. I followed the traces for two of them then soldered unto those instead.  More room to work with.</p>
+<p>Flashed it with <a href="https://github.com/tasmota/tasmotizer/releases">Tasmotizer</a>. Send the wifi configuration then grab the IP address.  Make sure to set the template defined in the guide at this point in <code>Configuration &gt; Configure Other</code>.</p>
+<pre><code>{&quot;NAME&quot;:&quot;WD-01ADE&quot;,&quot;GPIO&quot;:[32,0,0,0,0,225,33,0,224,320,0,0,0,0],&quot;FLAG&quot;:0,&quot;BASE&quot;:18}
 </code></pre>
-<h3 id="ping-bluetooth-enable-device-without-pairing">Ping bluetooth enable device without pairing:</h3>
-<p><code>l2ping -c 3 &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
-44 bytes &lt;MAC&gt; id 0 time 6.05ms
-44 bytes &lt;MAC&gt; id 1 time 9.90ms
-♥2 sent, 2 received, 0% loss
+<p>In order to monitor the pump activations, a counter was added.  This is useful to keep track of the amount water/vinegar mixture is left in the reservoir. This needs to be done after the template was set by going to:</p>
+<p><code>Configuration &gt; Configure Template &gt; GPIO16 to Counter</code> with counter drop down selected as <code>1</code>. The value is stored even after a reboot!</p>
+<h2 id="set-up-a-water-reservoir">Set up a Water Reservoir</h2>
+<p>Take a vinegar plastic bottle and poked a hole in it about the size of the fitting.  After that, hot glue in one of the fittings the came from the water pump supplies.  Be sure to poke a hole in the top so air can enter the bottle.</p>
+<p><img src="images/plasticBottleHotGlueWaterRes.jpg" alt="Plastic bottle fitting" /></p>
+<h2 id="tasmota-rules">Tasmota Rules</h2>
+<p>Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse abount 1 cup of vinegar/water mixture. Adds one to to Counter 1.</p>
+<pre><code>Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon
+
+Rule1 on
 </code></pre>
-<h3 id="dump-all-data-of-a-paired-bluetooth-device">Dump all data of a paired bluetooth device:</h3>
-<p><code>hcidump -a</code></p>
-<h3 id="to-request-authorization-from-device">To request authorization from device:</h3>
-<p><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></p>
-<h3 id="attempt-connection-then-get-rssi-value">Attempt connection then get RSSI value:</h3>
-<p><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">Connections:
-        &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
-RSSI return value: -4
+<p>Turn on pump one every day at 4am within a 15 minute window.</p>
+<pre><code>Timer1 {&quot;Enable&quot;:1,&quot;Time&quot;:&quot;4:00&quot;,&quot;Window&quot;:15,&quot;Days&quot;:&quot;SMTWTFS&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}
+
+Timers on
 </code></pre>
-<p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
-<h3 id="attempt-to-get-rssi-value-without-trying-to-connect-to-device">Attempt to get RSSI value without trying to connect to device:</h3>
-<p><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></p>
-<h2 id="some-resources">Some Resources</h2>
-<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
-<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
-<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
-<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
-<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
-<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
-<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
-<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
+<p>Set the timezone of your location.</p>
+<pre><code>Timezone -8
+</code></pre>
+<p>Now the vinegar/water will fill up with AC condensate line.  My water line is also attached to the water heater excess water line so it will get flushed out usually within a few hours.</p>
+<p>Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware.</p>
+<pre><code>PowerOnState 0
+</code></pre>
+<p>All of it together:</p>
+<script src="https://gist.github.com/skittleson/f6fb022cffb9d296b387681b551a13fd.js"></script>
+<p>Final results for the web ui</p>
+<p><img src="images/waterPumpTasmotaScreenshot.png" alt="Tasmota WebUI" /></p>
+<p>MQTT Sensor topic</p>
+<pre><code>tele/tasmota_XXXXX/SENSOR = {&quot;Time&quot;:&quot;2021-12-31T09:39:59&quot;,&quot;COUNTER&quot;:{&quot;C1&quot;:3}}
+</code></pre>
+<!-- ## Future Improvements
+
+Based on the counter, send an alert to refill the reservoir tank. -->
+<h3 id="resources">Resources</h3>
+<ul>
+<li><a href="https://templates.blakadder.com/WD-01ADE.html">https://templates.blakadder.com/WD-01ADE.html</a></li>
+<li><a href="https://blairsair.com/unclog-ac-condensate-line">https://blairsair.com/unclog-ac-condensate-line</a></li>
+<li><a href="https://github.com/tasmota/tasmotizer/releases">https://github.com/tasmota/tasmotizer/releases</a></li>
+<li><a href="https://tasmota.github.io/docs/Tasmota-Device-Manager/">Tasmota Device Manager</a></li>
+<li><a href="https://tasmota.github.io/docs/PowerOnState/">https://tasmota.github.io/docs/PowerOnState/</a></li>
+</ul>
 
       </section>
     </article>
@@ -160,9 +162,6 @@ RSSI return value: -4
         <h5 class="card-header">Latest Posts</h5>
         <div class="card-body">
           <ul class="unstyledUl">
-            <li>
-              <a class="read-more" href="automate-cleaning-of-air-conditioner-condensate-drain-line">Automate Cleaning of Air Conditioner Condensate Drain Line</a>
-            </li>
             <li>
               <a class="read-more" href="chocolately-for-devs">Common Apps for Devs over Chocolatey</a>
             </li>
@@ -180,7 +179,7 @@ RSSI return value: -4
       </div>
 
       See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Research on Bluetooth Proximity">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Automate Cleaning of Air Conditioner Condensate Drain Line">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
