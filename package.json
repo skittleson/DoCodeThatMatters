@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx http-server ./docs/ -c 0",
+    "start": "npx http-server docs -c 0 --port 8095",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "dotnet run --project StaticSiteBuilder\\StaticSiteBuilder\\StaticSiteBuilder.csproj",
     "watch": "watch \"npm run build\" ./src",
