@@ -30,6 +30,13 @@
             <pubDate>2021-04-27T00:00:00.0000000</pubDate>
         </item>
         <item>
+            <title>Top 5 Nuget Packages</title>
+            <description>Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.</description>
+            <link>https://DoCodeThatMatters.com/top-nuget-packages</link>
+            <guid>https://DoCodeThatMatters.com/top-nuget-packages</guid>
+            <pubDate>2021-03-07T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>A simple water sprinkler system, for makers!</title>
             <description>Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.</description>
             <link>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</link>

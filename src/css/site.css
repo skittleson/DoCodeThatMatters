@@ -66,7 +66,7 @@ h4,
 h5,
 h6,
 ul,
-li {
+li, summary, details {
   font-family: "Inconsolata", monospace;
 }
 
@@ -74,7 +74,7 @@ li {
   background-color: black !important;
 }
 
-a, small,
+a,
 h2, .read-more {
   color: var(--main-highlight-color) !important;
 }
