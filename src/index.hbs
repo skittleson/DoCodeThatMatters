@@ -5,7 +5,7 @@
         <div class="col-lg-8" itemscope itemtype="http://schema.org/BreadcrumbList">
             {{#each posts}}
             <h2 itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-                <a itemprop="item" class="text-primary" href="{{blogPath this.file}}"><span
+                <a itemprop="item" href="{{blogPath this.file}}"><span
                         itemprop="name">{{this.title}}</span></a>
                 <meta itemprop="position" content="{{@index}}" />
             </h2>

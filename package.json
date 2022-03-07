@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npx http-server ./docs/ -c 0",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "dotnet run --project StaticSiteBuilder\\StaticSiteBuilder\\StaticSiteBuilder.csproj",
     "watch": "watch \"npm run build\" ./src",
@@ -16,7 +17,7 @@
     "fs-extra": "^8.1.0",
     "handlebars": "^4.7.7",
     "markdown-it": "^10.0.0",
-    "uglify-js": "^3.4.9", 
+    "uglify-js": "^3.4.9",
     "imagemin": "7.0.1"
   },
   "dependencies": {

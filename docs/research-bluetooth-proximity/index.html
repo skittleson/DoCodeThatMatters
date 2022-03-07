@@ -46,12 +46,18 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
+      rel="stylesheet"
+    />
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar bg-light bg-white border-bottom">
+<body class="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar dark border-bottom">
         <div class="container">
             <a href="/" class="navbar-brand d-flex align-items-center">
-                <img src="images/logo.png" alt="Do Code That Matters logo" width="60" height="19"
+                <img src="images/logoWhiteTrans.png" alt="Do Code That Matters logo" width="60" height="19"
                     style="margin-right: 2%;" />Do Code That Matters</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,9 +74,9 @@
                 </ul>
             </div>
         </div>
-    </nav><main class="container">
+    </nav><main class="container article">
   <div class="row">
-    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/research-bluetooth-proximity">
         <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
@@ -154,40 +160,39 @@ RSSI return value: -4
 
       </section>
     </article>
-    <aside class="col-md-4">
+  </div>
 
-      <div class="card my-4">
-        <h5 class="card-header">Latest Posts</h5>
-        <div class="card-body">
-          <ul class="unstyledUl">
-            <li>
-              <a class="read-more" href="automate-cleaning-of-air-conditioner-condensate-drain-line">Automate Cleaning of Air Conditioner Condensate Drain Line</a>
-            </li>
-            <li>
-              <a class="read-more" href="chocolately-for-devs">Common Apps for Devs over Chocolatey</a>
-            </li>
-            <li>
-              <a class="read-more" href="neosiren-tasmota-local-first-cloud-assisted-iot">Local First, Cloud Assisted &#9729; MultiSensor</a>
-            </li>
-            <li>
-              <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
-            </li>
-            <li>
-              <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
-            </li>
-          </ul>
-        </div>
-      </div>
 
-      See something inaccurate or need more detail? <a
+ See something inaccurate or need more detail? <a
         href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Research on Bluetooth Proximity">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
-    </aside>
-  </div>
+<hr />
 
+<h3>Latest Posts</h3>
+  <ul class="unstyledUl">
+    <li>
+      <a class="read-more" href="automate-cleaning-of-air-conditioner-condensate-drain-line">Automate Cleaning of Air Conditioner Condensate Drain Line</a>
+    </li>
+    <li>
+      <a class="read-more" href="chocolately-for-devs">Common Apps for Devs over Chocolatey</a>
+    </li>
+    <li>
+      <a class="read-more" href="neosiren-tasmota-local-first-cloud-assisted-iot">Local First, Cloud Assisted &#9729; MultiSensor</a>
+    </li>
+    <li>
+      <a class="read-more" href="automate-sprinkler-with-tasmota">A simple water sprinkler system, for makers!</a>
+    </li>
+    <li>
+      <a class="read-more" href="3dprinter-duplicator-i3-upgrade">Duplicator i3 3d printer upgrade</a>
+    </li>
+  </ul>
+
+      
 </main>
+
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
@@ -195,6 +200,9 @@ RSSI return value: -4
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
 <script>hljs.highlightAll();</script>
+
+
+
 
 <script async src="/site.js"></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

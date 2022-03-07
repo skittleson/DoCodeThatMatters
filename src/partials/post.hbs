@@ -1,7 +1,7 @@
 {{> header}}
-<main class="container">
+<main class="container article">
   <div class="row">
-    <article class="col-lg-8" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+    <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
         <h1 itemprop="name headline">{{title}}</h1>
@@ -35,30 +35,29 @@
         {{{ contents }}}
       </section>
     </article>
-    <aside class="col-md-4">
+  </div>
 
-      <div class="card my-4">
-        <h5 class="card-header">Latest Posts</h5>
-        <div class="card-body">
-          <ul class="unstyledUl">
-            {{#each this.posts}}
-            <li>
-              <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
-            </li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
 
-      See something inaccurate or need more detail? <a
+ See something inaccurate or need more detail? <a
         href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - {{title}}">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
-    </aside>
-  </div>
+<hr />
 
+<h3>Latest Posts</h3>
+  <ul class="unstyledUl">
+    {{#each this.posts}}
+    <li>
+      <a class="read-more" href="{{blogPath this.file}}">{{this.title}}</a>
+    </li>
+    {{/each}}
+  </ul>
+
+      
 </main>
+
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
@@ -66,4 +65,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
 <script>hljs.highlightAll();</script>
+
+
+
 {{>footer}}

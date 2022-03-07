@@ -1,48 +1,86 @@
 body {
-    padding-top: 70px;
+  padding-top: 70px;
 }
 
-html, body, main {
-    display: block;
-    color: #333;
-    background: #fff;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    z-index: 5;
+.dark {
+  background-color: #232b32;
+}
+
+.dark h2 a {
+  color: whitesmoke;
+  text-decoration: underline;
+}
+
+html,
+body,
+main {
+  display: block;
+  color: whitesmoke;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  z-index: 5;
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-    max-height: 600px;
+  max-width: 100%;
+  height: auto;
+  max-height: 600px;
 }
 
 .unstyledUl {
-    margin: 0;
-    padding-left: 0;
-    list-style: none;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
 }
-
-
 
 h2 .text-primary {
-    font-size: medium;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+  font-size: medium;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
-small {
-    color: #555555;
+small,
+h2 {
+  color: whitesmoke;
+}
+hr {
+  background-color: whitesmoke;
 }
 
 .blog-item {
-    padding-left: 1em;
+  padding-left: 1em;
 }
 
 .navbar-brand {
-    font-size: 98% !important;
-}/*!
+  font-size: 98% !important;
+}
+
+body,
+html,
+p,
+a,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+li {
+  font-family: "Inconsolata", monospace;
+}
+
+.hljs {
+  background-color: black !important;
+}
+
+.article a {
+  color: #e83e8c !important;
+  text-decoration: underline !important;
+}
+/*!
  * Bootstrap v4.5.3 (https://getbootstrap.com/)
  * Copyright 2011-2020 The Bootstrap Authors
  * Copyright 2011-2020 Twitter, Inc.
