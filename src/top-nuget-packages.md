@@ -7,7 +7,7 @@ keywords:
   - Microsoft Dependency Injection
   - Polly
   - Xunit, Moq, AutoMoq
-date: 2021-3-7
+date: 2022-3-7
 description: Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.
 image: images/logo-header.svg
 imageAlt: Nuget logo
