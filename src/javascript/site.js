@@ -18,14 +18,21 @@ if ("serviceWorker" in navigator) {
   }
 }
 
-async function fetchContactRelay(request, endpoint) {
+async function fetchContactRelay(form, endpoint) {
+  console.log(form);
+  let token = "";
   try {
     const fetchTokenResponse = await fetch(endpoint);
     const tokenResponse = await fetchTokenResponse.json();
-    const token = tokenResponse.token;
-    console.log(token);
+    token = tokenResponse.token;
   } catch (error) {
     alert("Unable to send message");
+  }
+  try {
+    // const fetchTokenResponse = await fetch(endpoint);
+    console.log(token);
+  } catch (error) {
+    console.log(error);
   }
 
   // const response = await fetch(endpoint, {
