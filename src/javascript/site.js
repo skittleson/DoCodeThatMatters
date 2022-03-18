@@ -18,6 +18,14 @@ if ("serviceWorker" in navigator) {
   }
 }
 
+//https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#basic_example
+async function sha256hash(data) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(data);
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return hash;
+}
+
 async function fetchContactRelay(form, endpoint) {
   console.log(form);
   let token = "";
@@ -29,19 +37,25 @@ async function fetchContactRelay(form, endpoint) {
     alert("Unable to send message");
   }
   try {
-    // const fetchTokenResponse = await fetch(endpoint);
-    console.log(token);
+    const email = form.querySelector("#emailFormControlInput").value;
+    const message = form.querySelector("#messageFormControlInput").value;
+    const hash = email + message + token;
+    const request = {
+      email,
+      message,
+      token,
+      hash,
+    };
+    const fetchMessage = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    });
+    const fetchMessageResponse = await fetchMessage.text();
+    console.log(fetchMessageResponse);
   } catch (error) {
     console.log(error);
   }
-
-  // const response = await fetch(endpoint, {
-  //   method: "POST",
-  //   // mode: "no-cors",
-  //   headers: {
-  //     Accept: "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(request),
-  // });
 }
