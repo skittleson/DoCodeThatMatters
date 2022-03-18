@@ -19,9 +19,9 @@ if ("serviceWorker" in navigator) {
 }
 
 //https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#basic_example
-async function sha256hash(data) {
+async function sha256hash(message) {
   const encoder = new TextEncoder();
-  const data = encoder.encode(data);
+  const data = encoder.encode(message);
   const hash = await crypto.subtle.digest("SHA-256", data);
   return hash;
 }
