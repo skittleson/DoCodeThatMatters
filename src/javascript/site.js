@@ -39,7 +39,7 @@ async function fetchContactRelay(form, endpoint) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
-    const hash = email + message + token;
+    const hash = sha256hash(`${email}${message}${token}`);
     const request = {
       email,
       message,
