@@ -101,7 +101,30 @@
   Buy me a coffee:
   <a href="https://www.buymeacoffee.com/skittles">skittles</a><br />
 </div>
+<br />
+<h2>Contact Me</h2>
+<form style="max-width: 600px;" onsubmit="event.preventDefault(); fetchContactRelay(null, 'https://r7ys7at760.execute-api.us-east-1.amazonaws.com/latest/');">
+  <div class="form-group">
+    <label for="exampleFormControlInput">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="messageFormControlInput">Message</label>
+    <textarea class="form-control" id="messageFormControlInput" rows="6"></textarea>
+  </div>
+    <div class="form-group">
+    <input type="submit" class="form-control" value="Send" />
+  </div>
+</form>
+
+<script>
+    
+</script>
+
+
 </main>
+
+
 
 
 <script async src="/site.js"></script>
