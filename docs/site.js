@@ -27,7 +27,6 @@ async function sha256hash(message) {
 }
 
 async function fetchContactRelay(form, endpoint) {
-  console.log(form);
   let token = "";
   try {
     const fetchTokenResponse = await fetch(endpoint, {
@@ -41,7 +40,7 @@ async function fetchContactRelay(form, endpoint) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
-    const hash = sha256hash(`${email}${message}${token}`);
+    const hash = await sha256hash(`${email}${message}${token}`);
     const request = {
       email,
       message,
