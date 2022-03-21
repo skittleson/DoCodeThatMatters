@@ -30,7 +30,9 @@ async function fetchContactRelay(form, endpoint) {
   console.log(form);
   let token = "";
   try {
-    const fetchTokenResponse = await fetch(endpoint);
+    const fetchTokenResponse = await fetch(endpoint, {
+      credentials: "include",
+    });
     const tokenResponse = await fetchTokenResponse.json();
     token = tokenResponse.token;
   } catch (error) {
@@ -48,6 +50,7 @@ async function fetchContactRelay(form, endpoint) {
     };
     const fetchMessage = await fetch(endpoint, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
