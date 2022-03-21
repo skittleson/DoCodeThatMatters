@@ -49,11 +49,12 @@ async function fetchContactRelay(form, endpoint) {
       hash,
     };
     const fetchMessage = await fetch(endpoint, {
-      method: "POST",
-      credentials: "include",
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
+      credentials: "include",
+      method: "POST",
       body: JSON.stringify(request),
     });
     const fetchMessageResponse = await fetchMessage.text();
