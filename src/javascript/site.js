@@ -18,7 +18,7 @@ if ("serviceWorker" in navigator) {
   }
 }
 
-async function fetchContactRelay(form, endpoint) {
+async function fetchContactRelay(form) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
