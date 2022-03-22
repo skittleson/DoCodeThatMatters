@@ -19,11 +19,14 @@ if ("serviceWorker" in navigator) {
 }
 
 //https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest#basic_example
-async function sha256hash(message) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  return hash;
+async function digestMessage(message) {
+  const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8); // hash the message
+  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join(""); // convert bytes to hex string
+  return hashHex;
 }
 
 async function fetchContactRelay(form, endpoint) {
@@ -40,7 +43,7 @@ async function fetchContactRelay(form, endpoint) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
-    const hash = await sha256hash(`${email}${message}${token}`);
+    const hash = await digestMessage(`${email}${message}${token}`);
     const request = {
       email,
       message,
