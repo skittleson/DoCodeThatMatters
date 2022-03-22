@@ -29,17 +29,51 @@ async function digestMessage(message) {
   return hashHex;
 }
 
-async function fetchContactRelay(form, endpoint) {
-  let token = "";
+async function fetchContactRelayCore(request, endpoint) {
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
   try {
     const fetchTokenResponse = await fetch(endpoint, {
       credentials: "include",
+      headers: headers,
     });
+    if (fetchTokenResponse.status !== 200) {
+      throw new Error("Failed to fetch anticsrf token");
+    }
     const tokenResponse = await fetchTokenResponse.json();
-    token = tokenResponse.token;
+    request.token = tokenResponse.token;
   } catch (error) {
-    alert("Unable to send message");
+    return {
+      success: false,
+      errorMsg: "Unable to create session with anticsrf",
+      error,
+    };
   }
+  try {
+    const fetchMessage = await fetch(endpoint, {
+      body: JSON.stringify(request),
+      credentials: "include",
+      headers: headers,
+      method: "POST",
+    });
+    if (fetchMessage.status !== 200) {
+      throw new Error("Failed to fetch anticsrf token");
+    }
+    const fetchMessageResponse = await fetchMessage.text();
+    return {
+      success: true,
+      errorMsg: "",
+      error: null,
+      data: fetchMessageResponse,
+    };
+  } catch (error) {
+    return { success: false, errorMsg: "Unable to send message", error };
+  }
+}
+
+async function fetchContactRelay(form, endpoint) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
@@ -50,18 +84,12 @@ async function fetchContactRelay(form, endpoint) {
       token,
       hash,
     };
-    const fetchMessage = await fetch(endpoint, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify(request),
-    });
-    const fetchMessageResponse = await fetchMessage.text();
-    console.log(fetchMessageResponse);
-    alert("Thank you!");
+    const response = await fetchContactRelayCore(request, endpoint);
+    if (response.success) {
+      alert("Thank you!");
+    } else {
+      alert(response.errorMsg);
+    }
   } catch (error) {
     console.log(error);
   }
