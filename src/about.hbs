@@ -18,7 +18,7 @@
 
 <br />
 <h2>Contact Me</h2>
-<form style="max-width: 600px;" onsubmit="event.preventDefault(); fetchContactRelay(this);">
+<form id="messageForm" style="max-width: 600px;" onsubmit="event.preventDefault(); fetchContactRelay(this);">
   <div class="form-group">
     <label for="emailFormControlInput">Email address</label>
     <input type="email" class="form-control" id="emailFormControlInput" placeholder="name@example.com" required>
@@ -33,4 +33,5 @@
 </form>
 </main>
 <script src="https://0v3d05pmt6.execute-api.us-east-1.amazonaws.com/latest/script" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdTwQEfAAAAANdN9s0deeY5Jzlq3IHa6EIKT6ym"></script> 
 {{> footer}}
