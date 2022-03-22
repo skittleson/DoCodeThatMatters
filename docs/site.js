@@ -80,7 +80,6 @@ async function fetchContactRelay(form, endpoint) {
     const request = {
       email,
       message,
-      hash,
     };
     const response = await fetchContactRelayCore(request, endpoint);
     if (response.success) {
