@@ -58,6 +58,7 @@ async function fetchContactRelay(form, endpoint) {
     });
     const fetchMessageResponse = await fetchMessage.text();
     console.log(fetchMessageResponse);
+    alert("Thank you!");
   } catch (error) {
     console.log(error);
   }
