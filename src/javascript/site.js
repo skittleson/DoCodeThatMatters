@@ -26,7 +26,7 @@ async function fetchContactRelay(form) {
       email,
       message,
     };
-    const response = await fetchContactRelayCore(request, endpoint);
+    const response = await fetchContactRelayCore(request);
     if (response.success) {
       alert("Thank you!");
     } else {
