@@ -77,11 +77,9 @@ async function fetchContactRelay(form, endpoint) {
   try {
     const email = form.querySelector("#emailFormControlInput").value;
     const message = form.querySelector("#messageFormControlInput").value;
-    const hash = await digestMessage(`${email}${message}${token}`);
     const request = {
       email,
       message,
-      token,
       hash,
     };
     const response = await fetchContactRelayCore(request, endpoint);
