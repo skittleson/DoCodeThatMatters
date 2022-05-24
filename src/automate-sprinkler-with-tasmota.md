@@ -9,12 +9,14 @@ keywords:
   - mqtt
   - arduino
   - wemos
+  - wemos d1 mini
   - home automation
   - node red
   - pcb
   - alexa
   - maker
 date: 2020-11-02
+modified: 2022-05-23
 description: Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.
 image: images/sprinklerReplacement.png
 imageAlt: Sprinkler replacement inside of a previous over the shelf sprinkler system.
@@ -23,12 +25,7 @@ priority: 0.9
 
 I'm frustrated on over-the-shelf sprinkler systems for home owners. They are complicated to use, outdated, and can't customize at a good price.  The concept of "set it and forget" is not efficient for water or power.
 
-## UPDATE 11/01/2020
 
-I took on the challenge of creating PCB with a [Esp8266 microcontroller](https://amzn.to/3oWMCNZ), [oled screen](https://amzn.to/3oTJUZj), [solid state relay](https://amzn.to/2TNYaoe) and a [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z). I've been running this setup for 6 months with no problems.  See below for more details!
-
-![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
-![Sprinkler PCB](images/sprinklerPcb.png)
 
 ## Project Research
 
@@ -42,14 +39,14 @@ How to do this for less, better, and low effort? A possible solution is a mix of
 * ✅ Timer based watering (support for sunrise/sunset as well)
 * ✅ Manual toggling watering state
 * ✅ Backup / Restore settings
-* 🚧 If sunrise/sunset with a temperature restriction then start watering. To prevent freezing of plant roots.
+* ⏳ If sunrise/sunset with a temperature restriction then start watering. To prevent freezing of plant roots.
 
 ### Wants
 
 * ✅ Measure water time, humidity, and temperature (All off-the-shelf sprinklers do this with various features)
 * ✅ Local network control with no data submitted to third party
 * ✅ graphing and ability to analyze the data
-* 🚧 Watering runaway protection
+* ✅ Watering runaway protection
 * ⏳ If humidity is at percentage then skip watering today (Most over-the-shelf sprinklers do this)
 * ⏳ If weather forecast is rainy then skip watering. Notify me when this occurs. (Most off-the-shelf sprinklers can do this sort of)
 * ⏳ Send to notification to any platform I want (AWS, Gmail, IFTTT, Alexa, etc... )
@@ -72,6 +69,18 @@ The easiest way to wire this up is using an existing extension cord, cut into it
 
 <a href="https://www.amazon.com/Reliapro-ADU240100D5531-Adapter-Transformer-Straight/dp/B00B8866E2/ref=as_li_ss_il?crid=1ZIS37DPUSEP9&dchild=1&keywords=sprinkler+transformer+24v&qid=1604364226&sprefix=sprinkler+tran,aps,294&sr=8-4&linkCode=li2&tag=dctm-20&linkId=c84c864b9723984df298c2d892724ab9&language=en_US" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00B8866E2&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dctm-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=dctm-20&language=en_US&l=li2&o=1&a=B00B8866E2" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
+
+Alternative hardware that i ended up using:
+
+- [Esp8266 microcontroller](https://amzn.to/3oWMCNZ)
+- [oled screen](https://amzn.to/3oTJUZj)
+- [solid state relay](https://amzn.to/2TNYaoe) 
+- [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z)
+
+![Sprinkler PCB 3D](images/sprinklerPcb3d.jpg)
+![Sprinkler PCB](images/sprinklerPcb.png)
+
+
 ### Software
 
  The device can be flashed with open source software [Tasmota](https://tasmota.github.io/docs/).  I prototyped with the Arduino IDE for awhile but Tasmota seems safer with features needed. So I won't go into too much detail but Tasmota solves the following problems:
@@ -90,6 +99,7 @@ Here is a video on how to flash and setup the device when you get it (this is re
 
 Using the Tasmota Web Console Command line
 
+* `PowerOnState 0` If a power outage/reset, default the power state to off.
 * Set your time zone using standard GMT offset: `Timezone -8` .
   * This doesn't account for daylight savings time. See docs https://tasmota.github.io/docs/FAQ/
 * Test your time with `time` 
@@ -97,6 +107,13 @@ Using the Tasmota Web Console Command line
     - Run `Latitude 0.0000` for latitude. Replace `0.0000` with proper value.
     - Run `Longitude 0.0000` for longitude. Replace `0.0000` with proper value.
 * Run `STATUS 7` to see sunrise / sunset with local time. Ensure it's the actual time.
+
+#### Module Parameters
+
+- D2 GPIO4 -> I2C SDA
+- D1 GPIO5 -> I2C SCL
+- D5 GPIO14 -> Relay 1
+- D0 GPIO16 -> Counter 1
 
 ### Setup Timers
 
@@ -136,11 +153,14 @@ It should look like this:
 
 ## Runaway Protection
 
-The first runaway protection is the secondary timers 3 and 4.
+First method, ensure that a sprinkler never runs more than 750 seconds when power state is on.
 
-A secondary way to add a runaway protection was `pulsetime` with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.  This also may be an option https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch
+`Rule1 on power1#state=1 do backlog RuleTimer5 750; counter1 +1 endon on Rules#Timer=5 do power1 off endon`
+`Rule1 1`
 
-The third way is using NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.
+~~A secondary way to add a runaway protection was `pulsetime` with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: https://github.com/arendst/Tasmota/issues/7810). Not ideal in our case.  This also may be an option https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch~~
+
+Second method, use NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.
 
 Using Graphana, I've prototyped using alerts as well just incase all else fails.
 
@@ -170,3 +190,9 @@ Here are two more timers (or rules) wanted:
 * https://tasmota.github.io/docs/Commands/
 * https://tasmota.github.io/docs/Timers/
 * https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch
+
+
+## History Revisions
+
+- May 23, 2022 - Various updates regarding setup and configurations.
+- November 01, 2020 - PCB designs
