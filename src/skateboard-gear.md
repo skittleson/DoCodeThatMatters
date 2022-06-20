@@ -22,7 +22,7 @@ USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed gear. Let'
 [Downloadable FreeCAD version on GitHub](images/skateboardGearWheel/SkateboardWheelGear.FCStd)
 
 - Printed with ABS at 0.3mm resolution. 
-- 265-5M-9 5M Timing Belt or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
+- [265-5M-9 5M Timing Belt](https://www.amazon.com/BESTORQ-265-5M-9-Timing-Outside-Circumference/dp/B00J9TXEQA?crid=MOIU9VWF3JOJ&keywords=265-5M-9%2B5M%2BTiming%2BBelt&qid=1655757673&sprefix=265-5m-9%2B5m%2Btiming%2Bbelt%2Caps%2C201&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExMlhRVlVONFhPTlk0JmVuY3J5cHRlZElkPUEwMTI5Mzg1MURaWUpDRUNIWFo1RyZlbmNyeXB0ZWRBZElkPUEwMjMxMzA3Mlo5RkxDN1g5WFAzSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=cc15402e422e37ad16e212a4e941dccb&language=en_US&ref_=as_li_ss_tl) or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
 - Graphite powder on belt (pencil lead) to smooth out any noise.
 - Fully parametric on gear sizes, mounting holes, hole sizes, and height
 - 80mm wheel
@@ -46,19 +46,20 @@ All measurements are in millimeters. Adjusted for [190kv BLDC motor with 16 toot
 
 ## Wear and Tear 
 
-This was about 100+ hours of riding.
+This was about 100+ hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. <small>Better image coming soon...</small>
+
+![Inner Gear Side with Belt](images/skateboardGearWheel/20220620_125219.jpg)
 
 - Gear teeth have wore down as expected.
 - It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.
 - The nuts came loose a few times... use lock tight.
-- Belt wear was nominal.  I expected to change it every 500+ hours of riding.
+- Belt wear was nominal.  I expecte to change it every 500+ hours of riding.
+- The [bottom land](https://en.wikipedia.org/wiki/Gear) could be more round to fit the belt.
 - No noticable cracks or layer spliting in the 3D print.
+- Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.
 
-Additional thoughts: Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area.  No concerns as of yet since the wearing has been nominal.
+![Gear nomenclature reference](https://upload.wikimedia.org/wikipedia/commons/2/28/Gear_words.png)
 
-<caption>It's hard to take a picture with it mounted. Here is a side view until I take it off the truck.</caption>
-
-![Inner Gear Side with Belt](images/skateboardGearWheel/20220620_125219.jpg)
 
 
 </br>
