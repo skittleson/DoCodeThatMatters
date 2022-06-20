@@ -54,5 +54,5 @@ This was about 100+ hours of riding.
 - Belt wear was nominal.  I expected to change it every 500+ hours of riding.
 - No noticable cracks or layer spliting in the 3D print.
 
-Additional thoughts: Amount of material the bolt and hold unto (or lack of it).  It could "rip off" the end of the ABS plastic.  Using longer bolts then removing the inner cut out cone could help with that.  As well an additional nut for surface area.  No concerns as of yet since the wearing has been nominal.
+Additional thoughts: Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area.  No concerns as of yet since the wearing has been nominal.
 
