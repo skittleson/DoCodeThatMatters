@@ -63,8 +63,6 @@ namespace StaticSiteBuilder.Logic {
             RegisterHandlebars();
             var posts = GetBlogPosts();
             RenderHandlebarPages(posts);
-            CreateDirectoryWhenMissing(Path.Combine(DestPath, ".well-known"));
-            File.Move(Path.Combine(DestPath, "security.txt"), Path.Combine(DestPath, ".well-known", "security.txt"));
 
             // Get the latest posts then update all the posts
             var topPosts = posts.OrderByDescending(x => x.Date).Take(5).ToList();
