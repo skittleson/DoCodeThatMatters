@@ -24,13 +24,13 @@ USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear.
 - Printed with ABS at 0.3mm resolution. 
 - [265-5M-9 5M Timing Belt](https://www.amazon.com/BESTORQ-265-5M-9-Timing-Outside-Circumference/dp/B00J9TXEQA?crid=MOIU9VWF3JOJ&keywords=265-5M-9%2B5M%2BTiming%2BBelt&qid=1655757673&sprefix=265-5m-9%2B5m%2Btiming%2Bbelt%2Caps%2C201&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExMlhRVlVONFhPTlk0JmVuY3J5cHRlZElkPUEwMTI5Mzg1MURaWUpDRUNIWFo1RyZlbmNyeXB0ZWRBZElkPUEwMjMxMzA3Mlo5RkxDN1g5WFAzSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=cc15402e422e37ad16e212a4e941dccb&language=en_US&ref_=as_li_ss_tl) or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
 - Graphite powder on belt (pencil lead) to smooth out any noise.
-- Fully parametric on gear sizes, mounting holes, hole sizes, and height
+- Fully parametric on gear teeth, mounting holes, inner cut out, and height
 - 80mm wheel
-- Rider is 200lbs. 
 - [Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery](https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&qid=1655749320&s=toys-and-games&sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=00aab9f6e7dde286c70b7c3585039b04&language=en_US&ref_=as_li_ss_tl)
 - Cost to print $1.45
 - Top speed with existing configuration is 25mph
 - Version 47
+- Rider is 200lbs
 
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
