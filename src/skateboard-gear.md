@@ -29,7 +29,6 @@ USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear.
 - [Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery](https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&qid=1655749320&s=toys-and-games&sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=00aab9f6e7dde286c70b7c3585039b04&language=en_US&ref_=as_li_ss_tl)
 - Cost to print $1.45
 - Top speed with existing configuration is 25mph
-- Version 47
 - Rider is 200lbs
 
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
