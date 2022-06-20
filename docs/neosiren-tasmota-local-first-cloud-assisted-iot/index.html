@@ -138,15 +138,15 @@
 </tr>
 </tbody>
 </table>
-<p><img src="images/neo_coolcam-markup.jpg" alt="Soldering points" /></p>
+<p><img loading="lazy" src="images/neo_coolcam-markup.jpg" alt="Soldering points" /></p>
 <p>Finalized soldering</p>
-<p><img src="images/neo_coolcam-wired-to-flasher.jpg" alt="Wired to flasher" /></p>
+<p><img loading="lazy" src="images/neo_coolcam-wired-to-flasher.jpg" alt="Wired to flasher" /></p>
 <h2 id="flashing">Flashing</h2>
 <p>Install esptool. PyPi was quick for this: <a href="https://pypi.org/project/esptool/">https://pypi.org/project/esptool/</a></p>
 <p><code>pip install esptool</code></p>
 <p>Time to flash. Change the port then run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.</p>
 <p><code>esptool --port COM3 write_flash -fs 1MB -fm dout 0x0 tasmota-sensors.bin</code></p>
-<p><img src="images/flashwithEspTool.png" alt="Flashing Neo Coolcam Multisensor" /></p>
+<p><img loading="lazy" src="images/flashwithEspTool.png" alt="Flashing Neo Coolcam Multisensor" /></p>
 <p>Alternative, you can use a GUI version <a href="https://github.com/tasmota/tasmotizer">Tasmotizer</a></p>
 <p>Connect to the access point to configure the default WiFi to connect to your local wifi.</p>
 <h2 id="configuration">Configuration</h2>
@@ -194,7 +194,7 @@
 <p>All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use <code>SetOption66 0</code>. Optional, ensure dpId states were set by running <code>TuyaSend0</code>. Now that everything is hooked up, the data will be polled and reported every so often.  The caveat is not always temperature and humidity.  This must be accounted for later.</p>
 <pre><code class="language-log">01:42:21.463 MQT: tele/tasmota_111111/SENSOR = {&quot;Time&quot;:&quot;2021-04-08T01:42:21&quot;,&quot;TuyaSNS&quot;:{&quot;Temperature&quot;:28.5,&quot;Humidity&quot;:4.3},&quot;TempUnit&quot;:&quot;C&quot;}
 </code></pre>
-<p><img src="images/finalResultOfTasmotaUi.png" alt="Tasmota Web UI with Tuya temperature, humidity, and siren led power toggle" /></p>
+<p><img loading="lazy" src="images/finalResultOfTasmotaUi.png" alt="Tasmota Web UI with Tuya temperature, humidity, and siren led power toggle" /></p>
 <p>I've also considered using rules to catch the Tuya event then publish the MQTT in that rule.</p>
 <h3 id="nodered-and-other-smart-logic">NodeRed and other smart logic</h3>
 <p>Setup a MQTT node with <code>tele/tasmota_REPLACEWITHID/SENSOR</code> in NodeRed. Replace the MQTT ID from the Tasmota information screen (Information &gt; MQTT Full Topic).</p>

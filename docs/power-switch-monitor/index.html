@@ -105,14 +105,14 @@
       </header>
       <section itemprop="articleBody" class="article-body">
         <p>The biggest rule for home automation is not to change existing behavior of users that causes inconvenience or frustration. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. <strong>This is bad.</strong></p>
-<p><img src="https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif" alt="" /></p>
+<p><img loading="lazy" src="https://media.giphy.com/media/1M9fmo1WAFVK0/source.gif" alt="" /></p>
 <p>It's causing an inconvenience because the user can't flip a switch.</p>
 <h2 id="solutions">Solutions</h2>
 <p>The 2 common solutions presented in this situation:</p>
 <p><strong>1. Blocking the user</strong> with tape or other mechanism. Checkout Thingiverse to see how common this is: <a href="https://www.thingiverse.com/tag:Light_Switch_Cover">https://www.thingiverse.com/tag:Light_Switch_Cover</a>. This changes user behavior so it's a bad idea.</p>
 <p><strong>2. Replacing the light switch</strong> with a smarter one. This is the best option but requires a hardware replacement of the light switch. Which may not be possible, costly and potential dangerous to do-it-yourself!</p>
 <p><strong>3. A third hybrid solution: Trigger the smart device with the existing light switch using power wall outlet as feedback</strong> using an Arduino device with WiFi. In this solution, the light switch changes the power state of the outlet that the Arduino based micro controller is monitoring. When the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow to toggle the smart bulb state from a user.</p>
-<p><img src="images/powerMonitorFlowSetup.png" alt="" /></p>
+<p><img loading="lazy" src="images/powerMonitorFlowSetup.png" alt="" /></p>
 <p>The advantages:</p>
 <ul>
 <li>Simple &amp; low effort</li>
@@ -140,10 +140,10 @@
 <li>solder</li>
 <li>(optional) <a href="https://amzn.to/2U2qCTM">bme280</a> or <a href="https://amzn.to/2XL2C8U">bme680</a></li>
 </ul>
-<p><img src="images/PowerMonitor_bb.png" alt="bread board version" /></p>
-<p><img src="images/PowerMonitor_schem.png" alt="schema version" /></p>
-<p><img src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front" /></p>
-<p><img src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back" /></p>
+<p><img loading="lazy" src="images/PowerMonitor_bb.png" alt="bread board version" /></p>
+<p><img loading="lazy" src="images/PowerMonitor_schem.png" alt="schema version" /></p>
+<p><img loading="lazy" src="images/PowerMonitorFront.jpg" alt="wemos mini d1 lite with bme680 front" /></p>
+<p><img loading="lazy" src="images/PowerMonitorBack.jpg" alt="wemos mini d1 lite with bme680 back" /></p>
 <h3 id="step-2-download-and-upload-software">Step 2: Download and Upload Software</h3>
 <p>Flash your device with a <a href="https://tasmota.github.io/docs/">Tasmota</a> firmware.</p>
 <h4 id="tasmota-module-configuration">Tasmota Module configuration</h4>
@@ -173,7 +173,7 @@
 <p>The MQTT topic is <code>cmnd/masterlight/SWITCH</code> with a boolean value of either <code>1</code> for open or <code>0</code> for close. The topics are for state or the reed switch sensor value <code>Switch2</code> that are sent every 5 minutes (configurable) via MQTT.</p>
 <h3 id="step-3-add-to-a-home-assistance">Step 3: Add to a Home Assistance</h3>
 <p>So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software.  Get the MQTT message then process notifications you would like.</p>
-<p><img src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup" /></p>
+<p><img loading="lazy" src="images/nodeRedPowerMonitor.png" alt="NodeRed power monitor setup" /></p>
 <h2 id="resources">Resources</h2>
 <p><a href="https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test">https://learn.adafruit.com/adafruit-bme680-humidity-temperature-barometic-pressure-voc-gas/arduino-wiring-test</a>
 <a href="https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/">https://www.bosch-sensortec.com/products/environmental-sensors/gas-sensors-bme680/</a>

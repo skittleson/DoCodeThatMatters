@@ -56,3 +56,9 @@ This was about 100+ hours of riding.
 
 Additional thoughts: Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area.  No concerns as of yet since the wearing has been nominal.
 
+<caption>It's hard to take a picture with it mounted. Here is a side view until I take it off the truck.</caption>
+
+![Inner Gear Side with Belt](images/skateboardGearWheel/20220620_125219.jpg)
+
+
+</br>

@@ -137,9 +137,9 @@
 <li>Customize power toggling based on special conditions.</li>
 </ul>
 <p>$20 USD over-the-shelf Sonoff hardware that does those 3 out of 4 easily. The 4th point needs to have special programming.  There are multiple options out there but this fulfills the need of an &quot;over-the-shelf&quot; device that can be used with open source software.</p>
-<p><a href="https://amzn.to/3jKFeT8"><img src="images/sonoff_temp.jpg" alt="Sonoff device" /></a></p>
+<p><a href="https://amzn.to/3jKFeT8"><img loading="lazy" src="images/sonoff_temp.jpg" alt="Sonoff device" /></a></p>
 <p>The easiest way to wire this up is using an existing extension cord, cut into it, then follow the directions of wiring Sonoff guide.  Plug one into the power supply of an existing water sprinkler adapter.</p>
-<p><a href="https://www.amazon.com/Reliapro-ADU240100D5531-Adapter-Transformer-Straight/dp/B00B8866E2/ref=as_li_ss_il?crid=1ZIS37DPUSEP9&dchild=1&keywords=sprinkler+transformer+24v&qid=1604364226&sprefix=sprinkler+tran,aps,294&sr=8-4&linkCode=li2&tag=dctm-20&linkId=c84c864b9723984df298c2d892724ab9&language=en_US" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00B8866E2&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dctm-20&language=en_US" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=dctm-20&language=en_US&l=li2&o=1&a=B00B8866E2" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<p><a href="https://www.amazon.com/Reliapro-ADU240100D5531-Adapter-Transformer-Straight/dp/B00B8866E2/ref=as_li_ss_il?crid=1ZIS37DPUSEP9&dchild=1&keywords=sprinkler+transformer+24v&qid=1604364226&sprefix=sprinkler+tran,aps,294&sr=8-4&linkCode=li2&tag=dctm-20&linkId=c84c864b9723984df298c2d892724ab9&language=en_US" target="_blank"><img loading="lazy" border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B00B8866E2&Format=_SL160_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=dctm-20&language=en_US" ></a><img loading="lazy" src="https://ir-na.amazon-adsystem.com/e/ir?t=dctm-20&language=en_US&l=li2&o=1&a=B00B8866E2" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
 <p>Alternative hardware that i ended up using:</p>
 <ul>
 <li><a href="https://amzn.to/3oWMCNZ">Esp8266 microcontroller</a></li>
@@ -147,8 +147,8 @@
 <li><a href="https://amzn.to/2TNYaoe">solid state relay</a></li>
 <li><a href="https://amzn.to/365HD4Z">BME280 (temperature, humidity, and pressure)</a></li>
 </ul>
-<p><img src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D" />
-<img src="images/sprinklerPcb.png" alt="Sprinkler PCB" /></p>
+<p><img loading="lazy" src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D" />
+<img loading="lazy" src="images/sprinklerPcb.png" alt="Sprinkler PCB" /></p>
 <h3 id="software">Software</h3>
 <p>The device can be flashed with open source software <a href="https://tasmota.github.io/docs/">Tasmota</a>.  I prototyped with the Arduino IDE for awhile but Tasmota seems safer with features needed. So I won't go into too much detail but Tasmota solves the following problems:</p>
 <ul>
@@ -190,13 +190,13 @@
 <p>❓ Why use the Web UI when Tasmota can do this via command line?</p>
 <p>⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. Set each day to water (daily, every other day, or just particular days of the week).</p>
 <p>Setup a sunrise starting timer. Be sure to put check in <code>Enable Timers</code>, <code>Arm</code>, and <code>Repeat</code> .</p>
-<p><img src="images/sprinklerTimer1.png" alt="Sunrise Starting Timer" /></p>
+<p><img loading="lazy" src="images/sprinklerTimer1.png" alt="Sunrise Starting Timer" /></p>
 <p>Setup the sunset starting timer the same.</p>
 <p>Now to stop the watering. Setup Timer 3 for like this with a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset.  Per the Tasmota docs:</p>
 <blockquote>
 <p>When Mode 1 or Mode 2 is used, Latitude and Longitude become available. In that case the Time value is always used as an offset so make sure to set it to 00:00 if no offset is wanted</p>
 </blockquote>
-<p><img src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer" /></p>
+<p><img loading="lazy" src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer" /></p>
 <p>Using the Tasmota Web Console Command line, type in the timers to verify:
 <code>Timer1</code> , <code>Timer2</code> , <code>Timer3</code> and <code>Timer4</code> .</p>
 <p>It should look like this:</p>
@@ -218,11 +218,11 @@
 <p>Using Graphana, I've prototyped using alerts as well just incase all else fails.</p>
 <h2 id="extending-to-other-platforms-optional">Extending to other Platforms (Optional)</h2>
 <p>Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
-<p><img src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support" /></p>
-<p><img src="images/sprinklerNodeRedUI.png" alt="Node red UI" /></p>
+<p><img loading="lazy" src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support" /></p>
+<p><img loading="lazy" src="images/sprinklerNodeRedUI.png" alt="Node red UI" /></p>
 <p>Simple tracking the ON/OFF state of tasmota MQTT messages</p>
-<p><img src="images/sprinklerGraphana.png" alt="Graphana dashboard from Tasmota MQTT" /></p>
-<p><img src="images/sprinklerGraphana7Days.png" alt="Graphana dashboard from Tasmota MQTT 7 days" /></p>
+<p><img loading="lazy" src="images/sprinklerGraphana.png" alt="Graphana dashboard from Tasmota MQTT" /></p>
+<p><img loading="lazy" src="images/sprinklerGraphana7Days.png" alt="Graphana dashboard from Tasmota MQTT 7 days" /></p>
 <h3 id="setup-rules-optional">Setup Rules (Optional)</h3>
 <p>Here are two more timers (or rules) wanted:</p>
 <ul>

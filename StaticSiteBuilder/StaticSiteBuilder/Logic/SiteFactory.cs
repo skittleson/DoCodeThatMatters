@@ -280,6 +280,9 @@ namespace StaticSiteBuilder.Logic {
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);
+
+                // HACK: get lazy loading of images by default for blog content
+                blogMeta.Contents = blogMeta.Contents.Replace("<img", "<img loading=\"lazy\"");
                 blogMeta.Path = new Uri(markdownDoc);
                 result.Add(blogMeta);
             }
