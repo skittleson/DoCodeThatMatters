@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>Parametric Belt Driven Gear for Electric Skateboard</title>
+            <description>Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.</description>
+            <link>https://DoCodeThatMatters.com/skateboard-gear</link>
+            <guid>https://DoCodeThatMatters.com/skateboard-gear</guid>
+            <pubDate>2022-06-20T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>Top 5 Nuget Packages</title>
             <description>Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.</description>
             <link>https://DoCodeThatMatters.com/top-nuget-packages</link>

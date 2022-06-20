@@ -2,12 +2,12 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
+    <title>Parametric Belt Driven Gear for Electric Skateboard</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta itemprop="description" name="description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
+    <meta itemprop="description" name="description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,c#,csharp,3D printing,esp32,esp8266,tasmota" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Save JSON Objects to AWS S3 with Google Recaptcha - Do Code That Matters" />
-    <meta property="og:title" content="Save JSON Objects to AWS S3 with Google Recaptcha - Do Code That Matters" />
-    <meta property="og:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
+    <meta name="twitter:title" content="Parametric Belt Driven Gear for Electric Skateboard - Do Code That Matters" />
+    <meta property="og:title" content="Parametric Belt Driven Gear for Electric Skateboard - Do Code That Matters" />
+    <meta property="og:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://DoCodeThatMatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function." />
+    <meta name="twitter:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80" />
+    <meta property="og:image" content="https://preview.redd.it/0zl39s6dcjd51.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=48567f3f2aad79c253526693e60a65888728c953" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml" />
@@ -78,10 +78,10 @@
   <div class="row">
     <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha">
-        <h1 itemprop="name headline">Save JSON Objects to AWS S3 with Google Recaptcha</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/skateboard-gear">
+        <h1 itemprop="name headline">Parametric Belt Driven Gear for Electric Skateboard</h1>
         <small>
-          <time itemprop="datePublished" content="2019-10-19T00:00:00.000Z">19 Oct 2019</time>
+          <time itemprop="datePublished" content="2022-06-20T00:00:00.000Z">20 Jun 2022</time>
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -98,42 +98,41 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="" src="https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=668&amp;q=80">
+          <img itemprop="url contentUrl" alt="" src="https://preview.redd.it/0zl39s6dcjd51.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=48567f3f2aad79c253526693e60a65888728c953">
           <figcaption itemprop="caption"></figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.</p>
-<p>Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.</p>
-<h2 id="request-from-a-frontend-source">Request from a frontend source</h2>
-<p>Add this to the frontend index.html (or anywhere a form will be sent from). Replace the <code>_reCAPTCHA_site_key</code> with a real one.</p>
-<pre><code>&lt;script src=&quot;https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-grecaptcha.ready(function() {
-    grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
-    ...
-    });
-});
-&lt;/script&gt;
-</code></pre>
-<p>Docs: <a href="https://developers.google.com/recaptcha/docs/v3">https://developers.google.com/recaptcha/docs/v3</a></p>
-<h2 id="backend-setup">Backend Setup</h2>
-<p>Start by creating an AWS Lambda function that has access to add items to S3. Using a node.js/javascript lambda function.</p>
-<p>Environment Keys:</p>
+        <p>USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed gear. Let's give an update from this <a href="https://www.reddit.com/r/functionalprint/comments/hz8yn8/parametric_belt_driven_gear_for_diy_esk8/">Reddit post i did few years ago</a>.</p>
+<p><a href="images/skateboardGearWheel/SkateboardWheelGear.FCStd">Downloadable Free CAD version</a></p>
+<h2 id="specs">Specs</h2>
 <ul>
-<li>GoogleRecapKey : Get this from <a href="https://developers.google.com/recaptcha">https://developers.google.com/recaptcha</a></li>
-<li>MessageBucket : Create a bucket in AWS S3.</li>
-<li>SnsTopicArn : Create a SNS topic to receive emails or SMS to your phone.</li>
+<li>Printed with ABS at 0.3mm resolution.</li>
+<li>265-5M-9 5M Timing Belt or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.</li>
+<li>Graphite powder on belt (pencil lead) to smooth out any noise.</li>
+<li>Fully parametric on gear sizes, mounting holes, hole sizes, and height</li>
+<li>80mm wheel</li>
+<li>Rider is 200lbs.</li>
+<li>Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery</li>
+<li>Version 47</li>
+<li>Cost to print $1.45</li>
 </ul>
-<script src="https://gist.github.com/skittleson/908481d3b22425ae75657890246006db.js"></script>
-<h3 id="api-gateway-setup">API Gateway Setup</h3>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<model-viewer style="width: 100%; min-height:300px;" alt="3D Rendering of model" src="images/skateboardGearWheel/SkateboardWheelGear-Body.gltf" ar ar-modes="webxr scene-viewer quick-look" camera-controls enable-pan>
+</model-viewer>
+<h2 id="parametric-adjustments">Parametric Adjustments</h2>
+<p>All measurements are in millimeters. Adjusted for <a href="https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&amp;keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&amp;qid=1655749320&amp;s=toys-and-games&amp;sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&amp;sr=1-1-spons&amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&amp;th=1&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=00aab9f6e7dde286c70b7c3585039b04&amp;language=en_US&amp;ref_=as_li_ss_tl">190kv BLDC motor with 16 tooth gear</a></p>
+<p><img src="images/skateboardGearWheel/wheelSizeSpreadSheet.png" alt="Parametric variables spread sheet" /></p>
+<h2 id="wear-after-100-hours-of-riding">Wear (after 100+ hours of riding)</h2>
 <ul>
-<li>Create an AWS API Gateway API with a resource <code>form</code> with a method <code>POST</code>.</li>
-<li>Integration type <code>Lambda Function</code></li>
-<li>Use Lambda Proxy integration: checked</li>
-<li>Select Lambda function</li>
+<li>Gear teeth have wore down as expected.</li>
+<li>It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.</li>
+<li>The nuts came loose a few times... use lock tight.</li>
+<li>Belt wear was nominal.  I expected to change it every 500+ hours of riding.</li>
+<li>No noticable cracks or layer spliting in the 3D print.</li>
 </ul>
+<p>Additional thoughts: Amount of material the bolt and hold unto (or lack of it).  It could &quot;rip off&quot; the end of the ABS plastic.  Using longer bolts then removing the inner cut out cone could help with that.  As well an additional nut for surface area.  No concerns as of yet since the wearing has been nominal.</p>
 
       </section>
     </article>
@@ -141,7 +140,7 @@ grecaptcha.ready(function() {
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Save JSON Objects to AWS S3 with Google Recaptcha">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - Parametric Belt Driven Gear for Electric Skateboard">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
@@ -149,9 +148,6 @@ grecaptcha.ready(function() {
 
 <h3>Latest Posts</h3>
   <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="skateboard-gear">Parametric Belt Driven Gear for Electric Skateboard</a>
-    </li>
     <li>
       <a class="read-more" href="top-nuget-packages">Top 5 Nuget Packages</a>
     </li>
