@@ -1,5 +1,5 @@
 ---
-title: Parametric Belt Driven Spur Gear for Electric Skateboard
+title: Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
 keywords:
     - Electric Skateboard
     - ESK8
