@@ -42,8 +42,6 @@ All measurements are in millimeters. Adjusted for [190kv BLDC motor with 16 toot
 
 ![Parametric variables spread sheet](images/skateboardGearWheel/wheelSizeSpreadSheet.png)
 
-
-
 ## Wear and Tear 
 
 This was about 100+ hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. <small>Better image coming soon...</small>
@@ -60,6 +58,8 @@ This was about 100+ hours of riding. It's hard to take a picture with it mounted
 
 ![Gear nomenclature reference](https://upload.wikimedia.org/wikipedia/commons/2/28/Gear_words.png)
 
+## Next Possible Experiment 
 
+Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.
 
 </br>
