@@ -16,10 +16,10 @@ priority: 0.9
 
 USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed gear. Let's give an update from this [Reddit post i did few years ago](https://www.reddit.com/r/functionalprint/comments/hz8yn8/parametric_belt_driven_gear_for_diy_esk8/).
 
-[Downloadable Free CAD version](images/skateboardGearWheel/SkateboardWheelGear.FCStd)
-
 
 ## Specs
+
+[Downloadable FreeCAD version on GitHub](images/skateboardGearWheel/SkateboardWheelGear.FCStd)
 
 - Printed with ABS at 0.3mm resolution. 
 - 265-5M-9 5M Timing Belt or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
@@ -42,7 +42,11 @@ All measurements are in millimeters. Adjusted for [190kv BLDC motor with 16 toot
 
 ![Parametric variables spread sheet](images/skateboardGearWheel/wheelSizeSpreadSheet.png)
 
-## Wear (after 100+ hours of riding)
+
+
+## Wear and Tear 
+
+This was about 100+ hours of riding.
 
 - Gear teeth have wore down as expected.
 - It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.
