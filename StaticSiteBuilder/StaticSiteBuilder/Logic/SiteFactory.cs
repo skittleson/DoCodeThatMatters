@@ -270,7 +270,6 @@ namespace StaticSiteBuilder.Logic {
                     Console.WriteLine(msg);
                 });
 
-
                 // Merge in public wide site meta data
                 var title = blogMeta.Title;
                 var description = blogMeta.Description;
