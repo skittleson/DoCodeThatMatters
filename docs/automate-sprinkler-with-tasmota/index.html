@@ -82,7 +82,7 @@
         <h1 itemprop="name headline">A simple water sprinkler system, for makers!</h1>
         <small>
           <time itemprop="datePublished" content="2020-11-02T00:00:00.000Z">02 Nov 2020</time>
-            <meta itemprop="dateModified" content="2022-05-23T00:00:00.000Z" />
+            <meta itemprop="dateModified" content="2022-06-29T00:00:00.000Z" />
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -160,6 +160,13 @@
 </ul>
 <p>Here is a video on how to flash and setup the device when you get it (this is really common with this device).</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LwZltnda4v8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h4 id="wiring-module-parameters">Wiring &amp; Module Parameters</h4>
+<ul>
+<li>D2 GPIO4 -&gt; I2C SDA</li>
+<li>D1 GPIO5 -&gt; I2C SCL</li>
+<li>D5 GPIO14 -&gt; Relay 1</li>
+<li>D0 GPIO16 -&gt; Counter 1</li>
+</ul>
 <h3 id="setup-time">Setup Time</h3>
 <p>Using the Tasmota Web Console Command line</p>
 <ul>
@@ -178,44 +185,36 @@
 </li>
 <li>Run <code>STATUS 7</code> to see sunrise / sunset with local time. Ensure it's the actual time.</li>
 </ul>
-<h4 id="module-parameters">Module Parameters</h4>
-<ul>
-<li>D2 GPIO4 -&gt; I2C SDA</li>
-<li>D1 GPIO5 -&gt; I2C SCL</li>
-<li>D5 GPIO14 -&gt; Relay 1</li>
-<li>D0 GPIO16 -&gt; Counter 1</li>
-</ul>
 <h3 id="setup-timers">Setup Timers</h3>
 <p>Using the Tasmota Timer Web UI, 4 timers will be created. Two timers for starting/stopping the watering at sunrise. Two timers for same at sunset.</p>
-<p>❓ Why use the Web UI when Tasmota can do this via command line?</p>
-<p>⭐ Makes it easily adjustable in Web UI vs using the Tasmota command line. Set each day to water (daily, every other day, or just particular days of the week).</p>
-<p>Setup a sunrise starting timer. Be sure to put check in <code>Enable Timers</code>, <code>Arm</code>, and <code>Repeat</code> .</p>
+<ul>
+<li><code>Timer1 {&quot;Enable&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}</code></li>
+<li><code>Timer2 {&quot;Enable&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}</code></li>
+<li><code>Timer3 {&quot;Enable&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}</code></li>
+<li><code>Timer4 {&quot;Enable&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}</code></li>
+</ul>
+<p><code>Timers on</code></p>
+<p>⭐ It's adjustable in Web UI as well.</p>
 <p><img loading="lazy" src="images/sprinklerTimer1.png" alt="Sunrise Starting Timer" /></p>
-<p>Setup the sunset starting timer the same.</p>
-<p>Now to stop the watering. Setup Timer 3 for like this with a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset.  Per the Tasmota docs:</p>
+<p>To stop the watering. Timer 3 has a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset.  Per the Tasmota docs:</p>
 <blockquote>
 <p>When Mode 1 or Mode 2 is used, Latitude and Longitude become available. In that case the Time value is always used as an offset so make sure to set it to 00:00 if no offset is wanted</p>
 </blockquote>
 <p><img loading="lazy" src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer" /></p>
 <p>Using the Tasmota Web Console Command line, type in the timers to verify:
 <code>Timer1</code> , <code>Timer2</code> , <code>Timer3</code> and <code>Timer4</code> .</p>
-<p>It should look like this:</p>
-<pre><code>14:35:44 CMD: Timer1
-14:35:44 MQT: stat/tasmota_6A24DE/RESULT = {&quot;Timer1&quot;:{&quot;Arm&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}}
-14:35:47 CMD: Timer2
-14:35:47 MQT: stat/tasmota_6A24DE/RESULT = {&quot;Timer2&quot;:{&quot;Arm&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}}
-14:35:50 CMD: Timer3
-14:35:50 MQT: stat/tasmota_6A24DE/RESULT = {&quot;Timer3&quot;:{&quot;Arm&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}}
-14:35:52 CMD: Timer4
-14:35:52 MQT: stat/tasmota_6A24DE/RESULT = {&quot;Timer4&quot;:{&quot;Arm&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}}
-</code></pre>
 <h2 id="runaway-protection">Runaway Protection</h2>
-<p>First method, ensure that a sprinkler never runs more than 750 seconds when power state is on.</p>
-<p><code>Rule1 on power1#state=1 do backlog RuleTimer5 750; counter1 +1 endon on Rules#Timer=5 do power1 off endon</code>
-<code>Rule1 1</code></p>
-<p><del>A secondary way to add a runaway protection was <code>pulsetime</code> with Tasmota commands but their was some certain conditions that would cause it to reset for long running power state (see here: <a href="https://github.com/arendst/Tasmota/issues/7810">https://github.com/arendst/Tasmota/issues/7810</a>). Not ideal in our case.  This also may be an option <a href="https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch">https://tasmota.github.io/docs/Rules/#time-delayed-auto-off-switch</a></del></p>
-<p>Second method, use NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.</p>
-<p>Using Graphana, I've prototyped using alerts as well just incase all else fails.</p>
+<ul>
+<li>First method <code>Timer2</code> and <code>Timer4</code> should stop the sprinkler</li>
+<li>Second method, never runs more than 1,320 seconds (22 mins) when power state is on.
+<ul>
+<li><code>Rule1 on power1#state=1 do backlog RuleTimer5 1320; counter1 +1 endon on Rules#Timer=5 do power1 off endon</code></li>
+<li><code>Rule1 1</code></li>
+</ul>
+</li>
+<li>Third method, use NodeRed to trigger a power state off if receiving MQTT messages.  This could be adapted to turn off timers when the weather is expected to rain.</li>
+<li>Monitor on/off times using Graphana. I've prototyped using alerts with a Telegram integration incase all else fails.</li>
+</ul>
 <h2 id="extending-to-other-platforms-optional">Extending to other Platforms (Optional)</h2>
 <p>Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
 <p><img loading="lazy" src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support" /></p>
@@ -239,6 +238,7 @@
 <ul>
 <li>May 23, 2022 - Various updates regarding setup and configurations.</li>
 <li>November 01, 2020 - PCB designs</li>
+<li>June 27, 2022 - Timers via console</li>
 </ul>
 
       </section>
