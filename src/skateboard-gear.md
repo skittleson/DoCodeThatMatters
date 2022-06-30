@@ -62,5 +62,3 @@ This was about 100+ hours of riding. It's hard to take a picture with it mounted
 ## Next Possible Experiment
 
 Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.
-
-</br>

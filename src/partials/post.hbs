@@ -6,9 +6,9 @@
         <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
         <h1 itemprop="name headline">{{title}}</h1>
         <small>
-          <time itemprop="datePublished" content={{schemaDate date}}>{{formatDate date}}</time>
+          <time itemprop="datePublished" datetime={{schemaDate date}}>{{formatDate date}}</time>
           {{#if (schemaDate modified)}}
-            <meta itemprop="dateModified" content={{schemaDate modified}} />
+            <meta itemprop="dateModified" datetime={{schemaDate modified}} />
           {{/if}}
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -39,7 +39,7 @@
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post - {{title}}">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20{{urlEncode title}}">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>

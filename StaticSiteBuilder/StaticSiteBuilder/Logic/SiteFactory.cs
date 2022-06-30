@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Web;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -80,7 +81,7 @@ namespace StaticSiteBuilder.Logic {
             }
             Handlebars.RegisterHelper("formatDate", (writer, context, parameters) => {
                 if (DateTime.TryParse(context["date"].ToString(), out var date)) {
-                    writer.WriteSafeString(date.ToString("dd MMM yyyy"));
+                    writer.WriteSafeString(date.ToString("MMM dd yyyy"));
                 }
             });
             Handlebars.RegisterHelper("schemaDate", (writer, context, parameters) => {
@@ -99,6 +100,12 @@ namespace StaticSiteBuilder.Logic {
             });
             Handlebars.RegisterHelper("expires", (writer, context, parameters) => {
                 writer.WriteSafeString(DateTime.UtcNow.AddMonths(6).ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            });
+            Handlebars.RegisterHelper("urlEncode", (writer, context, parameters) => {
+                var linkTo = parameters[0] as string;
+                if (!string.IsNullOrEmpty(linkTo)){
+                    writer.WriteSafeString(HttpUtility.UrlEncode(linkTo));
+                }
             });
             foreach (var helper in new[] { "blogPath", "imagePath" }) {
                 Handlebars.RegisterHelper(helper, (writer, context, parameters) => {

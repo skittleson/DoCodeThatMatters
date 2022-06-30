@@ -4,7 +4,7 @@ Site: https://DoCodeThatMatters.com
 Twitter: @skittleson
 
 /* SITE */
-Last update: 2022/06/29 
+Last update: 2022/06/30 
 Standards: HTML5, CSS3
 Components: Bootstrap 4, dotnet, c#, js, css,
 Software: Technology blog
