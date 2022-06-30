@@ -11,7 +11,7 @@ keywords:
 date: 2020-06-01
 description: Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.
 image: /images/powerMonitorFlowSetup.png
-imageAlt: power switch monitor flow
+alt: power switch monitor flow
 priority: 0.9
 ---
 

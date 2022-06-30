@@ -8,7 +8,7 @@ keywords:
 date: 2019-10-19
 description: Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.
 image: https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80
-imageAlt: Chain fence locked
+alt: Chain fence locked
 priority: 0.9
 ---
 

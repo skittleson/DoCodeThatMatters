@@ -7,7 +7,7 @@ keywords:
 date: 2018-10-23
 description: In the field notes and lessons learned as a software engineer.
 image: https://images.unsplash.com/photo-1454166155302-ef4863c27e70?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=680298e4f13a54b9a2b3063590f4d902&auto=format&fit=crop&w=1500&q=80
-imageAlt: Fields notes as a software engineer
+alt: Fields notes as a software engineer
 priority: 0.9
 ---
 

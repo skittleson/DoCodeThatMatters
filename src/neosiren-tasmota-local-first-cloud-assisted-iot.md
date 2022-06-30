@@ -19,7 +19,7 @@ keywords:
 date: 2021-04-27
 description: Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.
 image: /images/finalResultOfTasmotaUi.png
-imageAlt: Flash MultiSensor with Tasmota
+alt: Flash MultiSensor with Tasmota
 priority: 0.9
 ---
 

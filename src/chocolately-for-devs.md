@@ -8,7 +8,7 @@ keywords:
 date: 2021-10-03
 description: Automate software install for a software engineer on Windows
 image: https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80
-imageAlt: Chocolate bar
+alt: Chocolate bar
 priority: 0.9
 ---
 

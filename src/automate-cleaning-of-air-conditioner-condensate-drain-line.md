@@ -10,7 +10,7 @@ date: 2021-12-31
 modified: 2022-01-07
 description: Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.
 image: https://templates.blakadder.com/assets/images/WD-01ADE.jpg
-imageAlt: Water pump WD-01ADE
+alt: Water pump WD-01ADE
 priority: 0.9
 ---
 

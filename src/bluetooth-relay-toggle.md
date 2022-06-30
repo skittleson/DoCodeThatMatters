@@ -11,7 +11,7 @@ keywords:
 date: 2021-04-05
 description: Build a Bluetooth relay toggle with no app included.
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/BluetoothLogo.svg/330px-BluetoothLogo.svg.png
-imageAlt: Bluetooth technology
+alt: Bluetooth technology
 priority: 0.9
 --- -->
 

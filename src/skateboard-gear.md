@@ -10,7 +10,7 @@ keywords:
 date: 2022-06-20
 description: Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.
 image: https://preview.redd.it/0zl39s6dcjd51.png?width=640&crop=smart&auto=webp&s=48567f3f2aad79c253526693e60a65888728c953
-imageAlt: initial print and mount of 3d printed parametric gear
+alt: initial print and mount of 3d printed parametric gear
 priority: 0.9
 ---
 

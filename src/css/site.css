@@ -86,3 +86,7 @@ hr {
 .logo, .nav-link {
   color: var(--main-text-color) !important;
 }
+
+.logo-img {
+  margin-right: 2%;
+}

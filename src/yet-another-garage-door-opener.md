@@ -8,7 +8,7 @@ keywords:
 date: 2018-05-11
 description: Just another garage door opener using a raspberry pi
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg
-imageAlt: Raspberry Pi!
+alt: Raspberry Pi!
 priority: 0.9
 ---
 

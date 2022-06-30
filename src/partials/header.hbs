@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <base href="{{url}}">
+    <base href="{{toLower url}}">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta itemprop="description" content="{{ description }}" />
@@ -21,14 +21,14 @@
     <meta property="og:description" content="{{description}}" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content="{{url}}" />
+    <meta property="og:url" content="{{toLower url}}" />
     <meta property="og:site_name" content="{{company}}" />
     <meta name="twitter:description" content="{{description}}" />
     <meta name="twitter:creator" content="{{twitter}}" />
     <meta property="og:image" content="{{image}}" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
-    <link type="application/rss+xml" rel="alternate" title="{{company}} - {{author}}" href="{{url}}/rss.xml" />
+    <link type="application/rss+xml" rel="alternate" title="{{company}} - {{author}}" href="{{toLower url}}/rss.xml" />
     <link type="text/plain" rel="author" href="{{url}}/humans.txt" />
     <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
@@ -57,8 +57,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar dark border-bottom">
         <div class="container">
             <a href="/" class="navbar-brand d-flex align-items-center logo">
-                <img src="images/logoWhiteTrans.png" alt="{{company}} logo" width="60" height="19"
-                    style="margin-right: 2%;" />{{company}}</a>
+                <img class="logo-img" src="images/logoWhiteTrans.png" alt="{{company}}" width="60" height="19" />{{company}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

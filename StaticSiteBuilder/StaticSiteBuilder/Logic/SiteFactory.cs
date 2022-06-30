@@ -107,6 +107,12 @@ namespace StaticSiteBuilder.Logic {
                     writer.WriteSafeString(HttpUtility.UrlEncode(linkTo));
                 }
             });
+            Handlebars.RegisterHelper("toLower", (writer, context, parameters) => {
+                var data = parameters[0] as string;
+                if (!string.IsNullOrEmpty(data)){
+                    writer.WriteSafeString(data.ToLowerInvariant());
+                }
+            });
             foreach (var helper in new[] { "blogPath", "imagePath" }) {
                 Handlebars.RegisterHelper(helper, (writer, context, parameters) => {
                     if (parameters[0].ToString() == "file") {

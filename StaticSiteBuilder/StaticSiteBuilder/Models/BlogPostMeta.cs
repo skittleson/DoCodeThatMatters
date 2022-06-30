@@ -16,11 +16,11 @@ namespace StaticSiteBuilder.Models {
             get; set;
         }
 
-        public string ImageAlt {
+        public string Alt {
             get; set;
         }
 
-        public string Description {
+        public new string Description {
             get; set;
         }
 
@@ -33,7 +33,7 @@ namespace StaticSiteBuilder.Models {
         public BlogPostMetaValidator() {
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.Image).NotEmpty().WithMessage("Must contain image");
-            RuleFor(x => x.ImageAlt).NotEmpty().WithMessage("Must contain image description");
+            RuleFor(x => x.Alt).NotEmpty().WithMessage("Must contain image description");
             RuleFor(x => x.Title).Length(5, 50);
             RuleFor(x => x.Description).Length(25, 150);
             //RuleFor(x => x.Discount).NotEqual(0).When(x => x.HasDiscount);

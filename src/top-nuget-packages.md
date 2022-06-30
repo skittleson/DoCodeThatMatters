@@ -10,7 +10,7 @@ keywords:
 date: 2022-3-7
 description: Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.
 image: images/logo-header.svg
-imageAlt: Nuget logo
+alt: Nuget logo
 priority: 0.9
 ---
 

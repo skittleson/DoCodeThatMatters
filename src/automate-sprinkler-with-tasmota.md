@@ -19,7 +19,7 @@ date: 2020-11-02
 modified: 2022-06-29
 description: Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.
 image: images/sprinklerReplacement.png
-imageAlt: Sprinkler replacement inside of a previous over the shelf sprinkler system.
+alt: Sprinkler replacement inside of a previous over the shelf sprinkler system.
 priority: 0.9
 ---
 
