@@ -300,13 +300,5 @@ namespace StaticSiteBuilder.Logic {
             }
             return result.OrderByDescending(x => x.Date).ToList();
         }
-
-        private void CreateMissingFileWhenMissing(string fileAndPath, string content) {
-            CreateDirectoryWhenMissing("partials");
-            var postPath = Path.Combine(SrcPath, "partials", "post.hbs");
-            if (!File.Exists(postPath)) {
-                File.WriteAllText(postPath, "{{> header}}{{contents}}{{> footer}}");
-            }
-        }
     }
 }
