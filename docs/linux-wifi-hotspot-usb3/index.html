@@ -2,12 +2,12 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Project Onboarding for New Engineers</title>
+    <title>Linux Wifi Hotspot with PiHole</title>
     <base href="https://docodethatmatters.com">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="General template/guide on how to onboard an engineer to new project." />
-    <meta name="description" content="General template/guide on how to onboard an engineer to new project." />
+    <meta itemprop="description" content="Build a wifi hotspot using hostapd via create_ap project and pihole." />
+    <meta name="description" content="Build a wifi hotspot using hostapd via create_ap project and pihole." />
     <meta name="keywords" content="software engineer blog,code,raspberry pi,arduino,maker,c#,csharp,3D printing,esp32,esp8266,tasmota" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Project Onboarding for New Engineers - Do Code That Matters" />
-    <meta property="og:title" content="Project Onboarding for New Engineers - Do Code That Matters" />
-    <meta property="og:description" content="General template/guide on how to onboard an engineer to new project." />
+    <meta name="twitter:title" content="Linux Wifi Hotspot with PiHole - Do Code That Matters" />
+    <meta property="og:title" content="Linux Wifi Hotspot with PiHole - Do Code That Matters" />
+    <meta property="og:description" content="Build a wifi hotspot using hostapd via create_ap project and pihole." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://docodethatmatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="General template/guide on how to onboard an engineer to new project." />
+    <meta name="twitter:description" content="Build a wifi hotspot using hostapd via create_ap project and pihole." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" />
+    <meta property="og:image" content="/images/powerMonitorFlowSetup.png" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
@@ -77,10 +77,10 @@
   <div class="row">
     <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/onboarding-devs">
-        <h1 itemprop="name headline">Project Onboarding for New Engineers</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3">
+        <h1 itemprop="name headline">Linux Wifi Hotspot with PiHole</h1>
         <small>
-          <time itemprop="datePublished" datetime="2022-07-05T00:00:00.000Z">Jul 05 2022</time>
+          <time itemprop="datePublished" datetime="2022-09-29T00:00:00.000Z">Sep 29 2022</time>
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -97,22 +97,34 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Boarding a ship" src="https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60">
-          <figcaption itemprop="caption">Boarding a ship</figcaption>
+          <img itemprop="url contentUrl" alt="power switch monitor flow" src="/images/powerMonitorFlowSetup.png">
+          <figcaption itemprop="caption">power switch monitor flow</figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>Engineers come and go on projects.  Getting an individual up to speed takes time.  With some experiments and listening to retros, this seems to be a good start.</p>
-<h2 id="ordered-guide">Ordered Guide</h2>
-<ul>
-<li>Explain a high level view of architecture and provide relevant docs.</li>
-<li>Provide the individual a task/ticket but only to implement the business logic.</li>
-<li>Both work on main test cases definitions including a single happy path and possible exceptions.</li>
-<li>Leave all external dependencies as <code>throw new NotImplementedException();</code> to be done once after the business logic.  Using dependency injection and/or dependency provider pattern has worked for me.</li>
-<li>Have the individual do a pull request early to give feedback in an async matter from a senior engineer. No longer than 1 week seems appropriate.</li>
-<li>Provide pair programming / code swarming / office hours in a regular cadence.</li>
-</ul>
+        <p>this post is still a working in progress, come back for updates!</p>
+<h2 id="tldr">TLDR</h2>
+<p>Using a
+<a href="https://www.amazon.com/dp/B01MZD7Z76?amp=&amp;crid=2HY6YU1HZ234Z&amp;amp=&amp;sprefix=alfa+usb&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=e01a9f4013d15a4836acba0234c34c76&amp;language=en_US&amp;ref_=as_li_ss_tl">Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas</a></p>
+<p>starting script: <code>onstart.sh</code></p>
+<pre><code>#!/bin/bash
+/sbin/iw dev wlan0 set power_save off
+/sbin/iw wlan0 set txpower fixed 4500
+echo '1' &gt; /sys/module/8814au/parameters/rtw_switch_usb_mode
+/usr/bin/create_ap --daemon --logfile /home/support/create_ap.log --no-dnsmasq  --dhcp-dns 192.168.12.1 --country US --ieee80211n --ieee80211ac --freq-band 5 --ht_capab '[LDPC][HT40+][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]'  --vht_capab '[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][SU-BEAMFORMEE][MAX-A-MPDU-LEN-EXP3][HTC-VHT][SOUNDING-DIMENSION-3]' wlan0 eth0 TestNetwork testing123
+</code></pre>
+<h3 id="disable-ipv6">Disable IPv6</h3>
+<p><code>sudo nano /etc/sysctl.conf</code></p>
+<pre><code>net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+</code></pre>
+<h3 id="install-and-configure-pihole">Install and Configure Pihole</h3>
+<p><code>curl -sSL https://install.pi-hole.net | PIHOLE_SKIP_OS_CHECK=true sudo -E bash</code></p>
+<p>setup the dhcp server to use 192.168.12.1 range.</p>
+<h2 id="resources">Resources</h2>
+<p><a href="https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md">https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md</a></p>
 
       </section>
     </article>
@@ -120,7 +132,7 @@
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Project+Onboarding+for+New+Engineers">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Linux+Wifi+Hotspot+with+PiHole">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
@@ -129,7 +141,7 @@
 <h3>Latest Posts</h3>
   <ul class="unstyledUl">
     <li>
-      <a class="read-more" href="linux-wifi-hotspot-usb3">Linux Wifi Hotspot with PiHole</a>
+      <a class="read-more" href="onboarding-devs">Project Onboarding for New Engineers</a>
     </li>
     <li>
       <a class="read-more" href="skateboard-gear">Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</a>

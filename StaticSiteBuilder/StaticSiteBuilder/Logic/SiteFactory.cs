@@ -73,6 +73,7 @@ namespace StaticSiteBuilder.Logic {
             RenderBlogPosts(posts);
             CopyFiles(SrcPath, DestPath);
             CopyAll(Path.Combine(SrcPath, "images"), Path.Combine(DestPath, "images"));
+            CopyAll(Path.Combine(SrcPath, ".well-known"), Path.Combine(DestPath, ".well-known"));
         }
 
         private void RegisterHandlebars() {
@@ -87,7 +88,7 @@ namespace StaticSiteBuilder.Logic {
             Handlebars.RegisterHelper("schemaDate", (writer, context, parameters) => {
                 var dateField = parameters[0];
                 if (dateField != null 
-                    && dateField is DateTime dateTimeValidated 
+                    && dateField is DateTime dateTimeValidated  
                     && dateTimeValidated != DateTime.MinValue) {
                     writer.WriteSafeString($"\"{dateTimeValidated:yyyy-MM-ddTHH:mm:ss.fffZ}\"");
                 }
@@ -156,9 +157,10 @@ namespace StaticSiteBuilder.Logic {
         private void CopyAll(string sourcePath, string destinationPath) {
 
             // Create all of the directories
-            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*",
-                SearchOption.AllDirectories))
+            CreateDirectoryWhenMissing(destinationPath);
+            foreach (var dirPath in Directory.GetDirectories(sourcePath, "*.*", SearchOption.AllDirectories)) {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
+            }   
 
             // Copy all the files & Replaces any files with the same name
             foreach (var newPath in Directory.GetFiles(sourcePath, "*.*",
@@ -221,7 +223,7 @@ namespace StaticSiteBuilder.Logic {
             return standardOutput;
         }
 
-        private T ParseYaml<T>(string yml) {
+        private static T ParseYaml<T>(string yml) {
             var deserializer = new DeserializerBuilder()
                 .IgnoreUnmatchedProperties()
                 .WithNamingConvention(UnderscoredNamingConvention.Instance)
@@ -292,6 +294,7 @@ namespace StaticSiteBuilder.Logic {
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);
+                // blogMeta.PlainText = Markdown.ToPlainText(markdownFileContent, _pipeline);
 
                 // HACK: get lazy loading of images by default for blog content
                 blogMeta.Contents = blogMeta.Contents.Replace("<img", "<img loading=\"lazy\"");

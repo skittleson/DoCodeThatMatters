@@ -2,9 +2,10 @@
 Contact: Spencer Kittleson
 Site: https://DoCodeThatMatters.com
 Twitter: @skittleson
+Location: California
 
 /* SITE */
-Last update: 2022/07/05 
+Last update: 2022/09/30 
 Standards: HTML5, CSS3
-Components: Bootstrap 4, dotnet, c#, js, css,
-Software: Technology blog
+Components: dotnet, c#, js, css
+Software: Blog on all things in software engineering

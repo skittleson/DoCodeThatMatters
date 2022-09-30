@@ -1,0 +1,51 @@
+---
+title: Linux Wifi Hotspot with PiHole
+keywords: 
+    - wifi hotspot
+    - pihole
+    - hostapd
+date: 2022-09-29
+description: Build a wifi hotspot using hostapd via create_ap project and pihole.
+image: /images/powerMonitorFlowSetup.png
+alt: power switch monitor flow
+priority: 0.9
+---
+
+this post is still a working in progress, come back for updates!
+
+## TLDR
+
+Using a 
+[Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas](https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl)
+
+
+starting script: `onstart.sh`
+
+```
+#!/bin/bash
+/sbin/iw dev wlan0 set power_save off
+/sbin/iw wlan0 set txpower fixed 4500
+echo '1' > /sys/module/8814au/parameters/rtw_switch_usb_mode
+/usr/bin/create_ap --daemon --logfile /home/support/create_ap.log --no-dnsmasq  --dhcp-dns 192.168.12.1 --country US --ieee80211n --ieee80211ac --freq-band 5 --ht_capab '[LDPC][HT40+][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]'  --vht_capab '[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][SU-BEAMFORMEE][MAX-A-MPDU-LEN-EXP3][HTC-VHT][SOUNDING-DIMENSION-3]' wlan0 eth0 TestNetwork testing123
+```
+
+### Disable IPv6
+
+`sudo nano /etc/sysctl.conf`
+
+```
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+```
+
+### Install and Configure Pihole
+
+`curl -sSL https://install.pi-hole.net | PIHOLE_SKIP_OS_CHECK=true sudo -E bash`
+
+setup the dhcp server to use 192.168.12.1 range.
+
+
+## Resources
+
+<https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md>

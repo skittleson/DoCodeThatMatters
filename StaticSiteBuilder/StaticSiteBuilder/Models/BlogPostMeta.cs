@@ -36,8 +36,7 @@ namespace StaticSiteBuilder.Models {
             RuleFor(x => x.Alt).NotEmpty().WithMessage("Must contain image description");
             RuleFor(x => x.Title).Length(5, 50);
             RuleFor(x => x.Description).Length(25, 150);
-            //RuleFor(x => x.Discount).NotEqual(0).When(x => x.HasDiscount);
-            //RuleFor(x => x.Postcode).Must(BeAValidPostcode).WithMessage("Please specify a valid postcode");
+            RuleFor(x => x.Keywords).Must(k => k != null && k.Length > 0);
         }
     }
 }

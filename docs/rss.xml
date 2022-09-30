@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>Linux Wifi Hotspot with PiHole</title>
+            <description>Build a wifi hotspot using hostapd via create_ap project and pihole.</description>
+            <link>https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3</link>
+            <guid>https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3</guid>
+            <pubDate>2022-09-29T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>Project Onboarding for New Engineers</title>
             <description>General template/guide on how to onboard an engineer to new project.</description>
             <link>https://DoCodeThatMatters.com/onboarding-devs</link>
