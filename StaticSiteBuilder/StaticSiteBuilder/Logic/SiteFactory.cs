@@ -88,7 +88,9 @@ namespace StaticSiteBuilder.Logic {
                 Description = site.Description,
                 HomePageUrl = site.Url,
                 FeedUrl = $"{site.Url}/feed.json",
-                Authors = new[] { author }, 
+                Authors = new[] { author },
+                Language = "en-us", 
+                FavIcon = $"{site.Url}/favicon.ico", 
                 Items = new List<JsonFeedItem>()
             };
             foreach (var post in posts) {
@@ -96,14 +98,21 @@ namespace StaticSiteBuilder.Logic {
                     Path = Path.GetFileNameWithoutExtension(post.Path.ToString()),
                     Port = -1
                 };
+                var imageUri = post.Image;
+                if (!imageUri.StartsWith("http")) {
+                    var imagePathBuilder = new UriBuilder(site.Url);
+                    imagePathBuilder.Path = imageUri;
+                    imageUri = imagePathBuilder.Uri.ToString();
+                }
                 var item = new JsonFeedItem {
                     Id = uriBuilder.Uri.ToString(),
                     Title = post.Title,
                     DatePublished = post.Date,
                     Tags = post.Keywords.ToList(),
-                    Language = "en-us",
+                    Authors = new[] { author },
                     Summary = post.Description,
-                    Url = uriBuilder.Uri.ToString()
+                    Url = uriBuilder.Uri.ToString(),
+                    Image = imageUri
                 };
                 if (post.Modified != DateTime.MinValue) { 
                     item.DateModified = post.Modified;

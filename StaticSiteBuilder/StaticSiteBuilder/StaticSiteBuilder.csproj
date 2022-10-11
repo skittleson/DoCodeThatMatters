@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="11.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.1.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="Handlebars.Net" Version="2.1.2" />
     <PackageReference Include="JsonFeed.NET" Version="1.1.0" />
-    <PackageReference Include="Markdig" Version="0.30.2" />
-    <PackageReference Include="YamlDotNet" Version="12.0.0" />
+    <PackageReference Include="Markdig" Version="0.30.4" />
+    <PackageReference Include="YamlDotNet" Version="12.0.2" />
   </ItemGroup>
 
 
