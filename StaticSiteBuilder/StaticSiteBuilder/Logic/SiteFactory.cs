@@ -72,13 +72,13 @@ namespace StaticSiteBuilder.Logic {
                 post.Posts = topPosts.Where(x => x.Path != post.Path).ToList();
             }
             RenderBlogPosts(posts);
+            GenerateJsonRssFeed(SrcPath, SiteGlobalMeta, posts);
             CopyFiles(SrcPath, DestPath);
-            GenerateJsonRssFeed(SiteGlobalMeta, posts);
             CopyAll(Path.Combine(SrcPath, "images"), Path.Combine(DestPath, "images"));
             CopyAll(Path.Combine(SrcPath, ".well-known"), Path.Combine(DestPath, ".well-known"));
         }
 
-        private void GenerateJsonRssFeed(SiteGlobalMeta site, List<BlogPostMeta> posts) {
+        private void GenerateJsonRssFeed(string srcPath, SiteGlobalMeta site, List<BlogPostMeta> posts) {
             var author = new JsonFeedAuthor {
                 Name = site.Author,
                 Url = site.Twitter,
@@ -112,7 +112,7 @@ namespace StaticSiteBuilder.Logic {
 
             }
             var jsonFeedString = jsonFeed.Write();
-            File.WriteAllText(Path.Combine(DestPath, "feed.json"), jsonFeedString);
+            File.WriteAllText(Path.Combine(srcPath, "feed.json"), jsonFeedString);
         }
 
         private void RegisterHandlebars() {

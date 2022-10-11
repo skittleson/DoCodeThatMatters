@@ -1,0 +1,266 @@
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": "Do Code That Matters",
+  "home_page_url": "https://DoCodeThatMatters.com",
+  "feed_url": "https://DoCodeThatMatters.com/feed.json",
+  "description": "Personal blog about software development, 3d printing, diy, dotnet, raspberry pis, and c#",
+  "authors": [
+    {
+      "name": "Spencer Kittleson",
+      "url": "@skittleson"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3",
+      "url": "https://docodethatmatters.com/linux-wifi-hotspot-usb3",
+      "title": "Linux Wifi Hotspot with PiHole",
+      "summary": "Build a wifi hotspot using hostapd via create_ap project and pihole.",
+      "date_published": "2022-09-29T00:00:00-07:00",
+      "date_modified": "2022-10-11T00:00:00-07:00",
+      "tags": [
+        "wifi hotspot",
+        "pihole",
+        "hostapd"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/onboarding-devs",
+      "url": "https://docodethatmatters.com/onboarding-devs",
+      "title": "Project Onboarding for New Engineers",
+      "summary": "General template/guide on how to onboard an engineer to new project.",
+      "date_published": "2022-07-05T00:00:00-07:00",
+      "tags": [
+        "engineer training",
+        "guideline"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/skateboard-gear",
+      "url": "https://docodethatmatters.com/skateboard-gear",
+      "title": "Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards",
+      "summary": "Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.",
+      "date_published": "2022-06-20T00:00:00-07:00",
+      "tags": [
+        "Electric Skateboard",
+        "ESK8",
+        "DIY ESK8",
+        "3D printed parametric spur gear",
+        "3D printing",
+        "FreeCAD design"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/top-nuget-packages",
+      "url": "https://docodethatmatters.com/top-nuget-packages",
+      "title": "Top 5 Nuget Packages",
+      "summary": "Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.",
+      "date_published": "2022-03-07T00:00:00-08:00",
+      "tags": [
+        "Nuget",
+        "Fluent validation",
+        "Easy.Common counting lines",
+        "Microsoft Dependency Injection",
+        "Polly",
+        "Xunit, Moq, AutoMoq"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line",
+      "url": "https://docodethatmatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line",
+      "title": "Automate Cleaning of Air Conditioner Condensate Drain Line",
+      "summary": "Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.",
+      "date_published": "2021-12-31T00:00:00-08:00",
+      "date_modified": "2022-01-07T00:00:00-08:00",
+      "tags": [
+        "tasmota water pump",
+        "AC condensate drain line",
+        "smart wifi water pump",
+        "tasmota timer",
+        "home maintenance"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/chocolately-for-devs",
+      "url": "https://docodethatmatters.com/chocolately-for-devs",
+      "title": "Common Apps for Devs over Chocolatey",
+      "summary": "Automate software install for a software engineer on Windows",
+      "date_published": "2021-10-03T00:00:00-07:00",
+      "tags": [
+        "choco",
+        "Chocolatey",
+        "Automate software installs",
+        "Software Engineer on Windows"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/neosiren-tasmota-local-first-cloud-assisted-iot",
+      "url": "https://docodethatmatters.com/neosiren-tasmota-local-first-cloud-assisted-iot",
+      "title": "Local First, Cloud Assisted ☁ MultiSensor",
+      "summary": "Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.",
+      "date_published": "2021-04-27T00:00:00-07:00",
+      "tags": [
+        "smart home",
+        "smart alarm",
+        "neo coolcam siren multisensor",
+        "nodered",
+        "node red",
+        "Tuya",
+        "TuyaMCU",
+        "Amazon Alexa",
+        "Alexa",
+        "Tasmota",
+        "local iot",
+        "low code",
+        "flashing",
+        "ESP8266",
+        "Serial-to-USB Adapter"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/automate-sprinkler-with-tasmota",
+      "url": "https://docodethatmatters.com/automate-sprinkler-with-tasmota",
+      "title": "A simple water sprinkler system, for makers!",
+      "summary": "Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.",
+      "date_published": "2020-11-02T00:00:00-08:00",
+      "date_modified": "2022-06-29T00:00:00-07:00",
+      "tags": [
+        "tasmota irrigation",
+        "tasmota sunrise sunset",
+        "sprinkler",
+        "tasmota",
+        "bme280",
+        "mqtt",
+        "arduino",
+        "wemos",
+        "wemos d1 mini",
+        "home automation",
+        "node red",
+        "pcb",
+        "alexa",
+        "maker"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
+      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
+      "title": "Duplicator i3 3d printer upgrade",
+      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
+      "date_published": "2020-06-01T00:00:00-07:00",
+      "tags": [
+        "3d printing",
+        "diy",
+        "mks gen board",
+        "auto leveling bed",
+        "marlin",
+        "Duplicator i3"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/power-switch-monitor",
+      "url": "https://docodethatmatters.com/power-switch-monitor",
+      "title": "Power Switch Monitor with an Arduino device",
+      "summary": "Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.",
+      "date_published": "2020-06-01T00:00:00-07:00",
+      "tags": [
+        "arduino",
+        "wemos",
+        "home automation",
+        "node red",
+        "bme280",
+        "smart home",
+        "smart light"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/json-to-s3-with-google-recaptcha",
+      "url": "https://docodethatmatters.com/json-to-s3-with-google-recaptcha",
+      "title": "Save JSON Objects to AWS S3 with Google Recaptcha",
+      "summary": "Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.",
+      "date_published": "2019-10-19T00:00:00-07:00",
+      "tags": [
+        "AWS S3",
+        "Google Recaptcha",
+        "s3",
+        "json form"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/research-bluetooth-proximity",
+      "url": "https://docodethatmatters.com/research-bluetooth-proximity",
+      "title": "Research on Bluetooth Proximity",
+      "summary": "Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump",
+      "date_published": "2019-10-19T00:00:00-07:00",
+      "tags": [
+        "bluetooth proximity research",
+        "bluetooth",
+        "hcitool",
+        "l2ping"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/software-engineering-lessons",
+      "url": "https://docodethatmatters.com/software-engineering-lessons",
+      "title": "Software Engineering Lessons",
+      "summary": "In the field notes and lessons learned as a software engineer.",
+      "date_published": "2018-10-23T00:00:00-07:00",
+      "tags": [
+        "software engineering",
+        "code reviews",
+        "software career"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/yet-another-garage-door-opener",
+      "url": "https://docodethatmatters.com/yet-another-garage-door-opener",
+      "title": "Yet Another Garage Door Opener",
+      "summary": "Just another garage door opener using a raspberry pi",
+      "date_published": "2018-05-11T00:00:00-07:00",
+      "tags": [
+        "raspberry pi",
+        "bluetooth",
+        "garage door opener",
+        "liftmaster"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/asp-net-xss-protection",
+      "url": "https://docodethatmatters.com/asp-net-xss-protection",
+      "title": "ASP.NET XSS protection",
+      "summary": "Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).",
+      "date_published": "2017-09-06T00:00:00-07:00",
+      "tags": [
+        "asp.net",
+        "xss",
+        "config"
+      ],
+      "language": "en-us"
+    },
+    {
+      "id": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity",
+      "url": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity",
+      "title": "Raspberry Pi – Bluetooth Proximity",
+      "summary": "Building bluetooth detection with a raspberry pi!",
+      "date_published": "2017-05-26T00:00:00-07:00",
+      "tags": [
+        "raspberry pi",
+        "bluetooth"
+      ],
+      "language": "en-us"
+    }
+  ]
+}
