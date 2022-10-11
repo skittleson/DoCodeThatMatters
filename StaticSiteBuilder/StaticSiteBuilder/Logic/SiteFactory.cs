@@ -81,7 +81,7 @@ namespace StaticSiteBuilder.Logic {
         private void GenerateJsonRssFeed(string srcPath, SiteGlobalMeta site, List<BlogPostMeta> posts) {
             var author = new JsonFeedAuthor {
                 Name = site.Author,
-                Url = site.Twitter,
+                Url = $"https://twitter.com/{site.Twitter}",
             };
             var jsonFeed = new JsonFeed {
                 Title = site.Company,
