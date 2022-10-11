@@ -16,6 +16,8 @@
     "imagemin": "7.0.1"
   },
   "dependencies": {
+    "bootstrap": "4.5.3",
+    "jquery": "3.5.1",
     "watch": "^1.0.2"
   }
 }

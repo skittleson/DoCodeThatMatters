@@ -18,6 +18,8 @@ email: docodethatmatters@outlook.com
 twitter: "@skittleson"
 js:
   - src/javascript/site.js
+  - node_modules/jquery/dist/jquery.min.js
+  - node_modules/bootstrap/dist/js/bootstrap.bundle.min.js
 css:
   - src/css/site.css
-  
+  - node_modules/bootstrap/dist/css/bootstrap.min.css
