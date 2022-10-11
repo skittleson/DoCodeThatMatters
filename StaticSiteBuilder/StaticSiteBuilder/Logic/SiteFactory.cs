@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HandlebarsDotNet;
+using JsonFeedNet;
 using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
@@ -48,6 +49,7 @@ namespace StaticSiteBuilder.Logic {
         public string DestPath {
             get;
         }
+
         public SiteGlobalMeta SiteGlobalMeta {
             get;
         }
@@ -56,7 +58,6 @@ namespace StaticSiteBuilder.Logic {
 
         //--- Methods ---
         public void Build() {
-
             // Clear build directory
             DeleteSubDirectoriesAndFilesInRoot(DestPath);
             Concat(SiteGlobalMeta.Css, "site.css");
@@ -72,8 +73,46 @@ namespace StaticSiteBuilder.Logic {
             }
             RenderBlogPosts(posts);
             CopyFiles(SrcPath, DestPath);
+            GenerateJsonRssFeed(SiteGlobalMeta, posts);
             CopyAll(Path.Combine(SrcPath, "images"), Path.Combine(DestPath, "images"));
             CopyAll(Path.Combine(SrcPath, ".well-known"), Path.Combine(DestPath, ".well-known"));
+        }
+
+        private void GenerateJsonRssFeed(SiteGlobalMeta site, List<BlogPostMeta> posts) {
+            var author = new JsonFeedAuthor {
+                Name = site.Author,
+                Url = site.Twitter,
+            };
+            var jsonFeed = new JsonFeed {
+                Title = site.Company,
+                Description = site.Description,
+                HomePageUrl = site.Url,
+                FeedUrl = $"{site.Url}/feed.json",
+                Authors = new[] { author }, 
+                Items = new List<JsonFeedItem>()
+            };
+            foreach (var post in posts) {
+                var uriBuilder = new UriBuilder(site.Url) {
+                    Path = Path.GetFileNameWithoutExtension(post.Path.ToString()),
+                    Port = -1
+                };
+                var item = new JsonFeedItem {
+                    Id = uriBuilder.Uri.ToString(),
+                    Title = post.Title,
+                    DatePublished = post.Date,
+                    Tags = post.Keywords.ToList(),
+                    Language = "en-us",
+                    Summary = post.Description,
+                    Url = uriBuilder.Uri.ToString()
+                };
+                if (post.Modified != DateTime.MinValue) { 
+                    item.DateModified = post.Modified;
+                }
+                jsonFeed.Items.Add(item);
+
+            }
+            var jsonFeedString = jsonFeed.Write();
+            File.WriteAllText(Path.Combine(DestPath, "feed.json"), jsonFeedString);
         }
 
         private void RegisterHandlebars() {
@@ -87,8 +126,8 @@ namespace StaticSiteBuilder.Logic {
             });
             Handlebars.RegisterHelper("schemaDate", (writer, context, parameters) => {
                 var dateField = parameters[0];
-                if (dateField != null 
-                    && dateField is DateTime dateTimeValidated  
+                if (dateField != null
+                    && dateField is DateTime dateTimeValidated
                     && dateTimeValidated != DateTime.MinValue) {
                     writer.WriteSafeString($"\"{dateTimeValidated:yyyy-MM-ddTHH:mm:ss.fffZ}\"");
                 }
@@ -104,13 +143,13 @@ namespace StaticSiteBuilder.Logic {
             });
             Handlebars.RegisterHelper("urlEncode", (writer, context, parameters) => {
                 var linkTo = parameters[0] as string;
-                if (!string.IsNullOrEmpty(linkTo)){
+                if (!string.IsNullOrEmpty(linkTo)) {
                     writer.WriteSafeString(HttpUtility.UrlEncode(linkTo));
                 }
             });
             Handlebars.RegisterHelper("toLower", (writer, context, parameters) => {
                 var data = parameters[0] as string;
-                if (!string.IsNullOrEmpty(data)){
+                if (!string.IsNullOrEmpty(data)) {
                     writer.WriteSafeString(data.ToLowerInvariant());
                 }
             });
@@ -134,7 +173,6 @@ namespace StaticSiteBuilder.Logic {
             }
             var template = Handlebars.Compile(File.ReadAllText(postPath));
             foreach (var meta in posts) {
-
                 // Create a folder for each file then add the markdown to html as index.html
                 var blogPostDestFolder = Path.Combine(DestPath, Path.GetFileNameWithoutExtension(meta.Path.ToString()));
                 CreateDirectoryWhenMissing(blogPostDestFolder);
@@ -155,12 +193,11 @@ namespace StaticSiteBuilder.Logic {
         }
 
         private void CopyAll(string sourcePath, string destinationPath) {
-
             // Create all of the directories
             CreateDirectoryWhenMissing(destinationPath);
             foreach (var dirPath in Directory.GetDirectories(sourcePath, "*.*", SearchOption.AllDirectories)) {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, destinationPath));
-            }   
+            }
 
             // Copy all the files & Replaces any files with the same name
             foreach (var newPath in Directory.GetFiles(sourcePath, "*.*",
@@ -262,7 +299,6 @@ namespace StaticSiteBuilder.Logic {
         }
 
         private List<BlogPostMeta> GetBlogPosts() {
-
             //TODO: This wont scale!
             var result = new List<BlogPostMeta>();
             var markdownFiles = Directory.GetFiles(SrcPath).Where(x => x.Contains(".md")).ToArray();
@@ -288,9 +324,13 @@ namespace StaticSiteBuilder.Logic {
                 // Merge in public wide site meta data
                 var title = blogMeta.Title;
                 var description = blogMeta.Description;
+                var keywords = blogMeta.Keywords;
                 Map(SiteGlobalMeta as SiteMeta, ref blogMeta);
                 blogMeta.Title = title;
                 blogMeta.Description = description;
+                if (keywords.Any()) {
+                    blogMeta.Keywords = keywords;
+                }               
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);

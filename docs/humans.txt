@@ -5,7 +5,7 @@ Twitter: @skittleson
 Location: California
 
 /* SITE */
-Last update: 2022/09/30 
+Last update: 2022/10/11 
 Standards: HTML5, CSS3
 Components: dotnet, c#, js, css
 Software: Blog on all things in software engineering

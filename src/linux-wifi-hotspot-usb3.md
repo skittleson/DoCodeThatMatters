@@ -5,9 +5,10 @@ keywords:
     - pihole
     - hostapd
 date: 2022-09-29
+modified: 2022-10-11
 description: Build a wifi hotspot using hostapd via create_ap project and pihole.
-image: /images/powerMonitorFlowSetup.png
-alt: power switch monitor flow
+image: https://wp-cdn.pi-hole.net/wp-content/uploads/2016/12/Vortex-R.webp
+alt: Pihole
 priority: 0.9
 ---
 
