@@ -4,12 +4,15 @@ using JsonFeedNet;
 using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
 using StaticSiteBuilder.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -36,6 +39,7 @@ namespace StaticSiteBuilder.Logic {
                         .UseAdvancedExtensions()
                         .Build();
         }
+        private static HttpClient GetHttpClient = new ();
 
         //--- Properties ---
         public string RootPath {
@@ -178,10 +182,16 @@ namespace StaticSiteBuilder.Logic {
         private void RenderBlogPosts(List<BlogPostMeta> posts) {
             var postPath = Path.Combine(SrcPath, "partials", "post.hbs");
             if (!File.Exists(postPath)) {
-                File.WriteAllText(postPath, "{{> header}}{{contents}}{{>footer}}");
+                File.WriteAllText(postPath, "{{>header}}{{contents}}{{>footer}}");
             }
-            var template = Handlebars.Compile(File.ReadAllText(postPath));
+            var handleBarsPost = File.ReadAllText(postPath);
             foreach (var meta in posts) {
+                var inlineTemplate = handleBarsPost;
+                if (meta.IsCodePresent) {
+                    inlineTemplate = inlineTemplate.Replace("{{>footer}}", "{{>code}}{{>footer}}");
+                }
+                var template = Handlebars.Compile(inlineTemplate);
+
                 // Create a folder for each file then add the markdown to html as index.html
                 var blogPostDestFolder = Path.Combine(DestPath, Path.GetFileNameWithoutExtension(meta.Path.ToString()));
                 CreateDirectoryWhenMissing(blogPostDestFolder);
@@ -339,7 +349,12 @@ namespace StaticSiteBuilder.Logic {
                 blogMeta.Description = description;
                 if (keywords.Any()) {
                     blogMeta.Keywords = keywords;
-                }               
+                }
+                blogMeta.IsCodePresent = IsCodeBlock(document);
+                Console.WriteLine(blogMeta.Url + " " + blogMeta.IsCodePresent);
+                var srcs = GetImageSrcs(document, new List<Uri>())
+                    .Where(x => (new[] { "jpg", "bmp", "gif", "png", "webp" }).Contains(Path.GetExtension(x.Segments.LastOrDefault()).Trim('.')))
+                    .DistinctBy(x => x.ToString());
 
                 //TODO: double parsing markdown is inefficient
                 blogMeta.Contents = Markdown.ToHtml(markdownFileContent, _pipeline);
@@ -347,10 +362,60 @@ namespace StaticSiteBuilder.Logic {
 
                 // HACK: get lazy loading of images by default for blog content
                 blogMeta.Contents = blogMeta.Contents.Replace("<img", "<img loading=\"lazy\"");
+                var imgDownloads = srcs.Select(x => GetImageAsync(x.ToString())).ToList();
+                var imgs = Task.WhenAll(imgDownloads).GetAwaiter().GetResult();
+                foreach (var (height, width, url) in imgs) {
+
+                    //var queryString = HttpUtility.ParseQueryString(src.Query);
+                    //uint.TryParse(queryString["height"], out var height);
+                    //uint.TryParse(queryString["width"], out var width);
+                    var imgSrc = "src=\"" + url.ToString() + "\"";
+                    blogMeta.Contents = blogMeta.Contents.Replace(imgSrc, $"{imgSrc} width='{width}' height='{height}' ");
+                }
                 blogMeta.Path = new Uri(markdownDoc);
                 result.Add(blogMeta);
             }
             return result.OrderByDescending(x => x.Date).ToList();
+        }
+
+        private IList<Uri> GetImageSrcs(IEnumerable<MarkdownObject> markdowns, IList<Uri> srcs) {
+            foreach (var block in markdowns) {
+                if (block.Descendants().Count() > 0) {
+                    GetImageSrcs(block.Descendants(), srcs);
+                }
+                if (block is LinkInline) {
+                    var data = ((LinkInline)block).Url;
+                    if (!data.StartsWith("http")) {
+                        data = SiteGlobalMeta.Url + "/" + data;
+                    }
+                    srcs.Add(new Uri(data));
+                }
+            }
+            return srcs;
+        }
+
+        private bool IsCodeBlock(IEnumerable<MarkdownObject> markdowns) {
+            foreach (var block in markdowns) {
+                if (block is FencedCodeBlock) {
+                    return true;
+                }
+                if (block.Descendants().Any()) {
+                    IsCodeBlock(block.Descendants());
+                }
+            }
+            return false;
+        }
+
+        private async Task<(int height, int width, string url)> GetImageAsync(string url) {
+            var result = (-1, -1, "");
+            try {
+                using var s = await GetHttpClient.GetStreamAsync(url);
+                using var img = System.Drawing.Image.FromStream(s);
+                result = (img.Height, img.Width, url);
+            } catch (Exception ex) {
+                Console.WriteLine(url + ex.Message);
+            }
+            return result;
         }
     }
 }

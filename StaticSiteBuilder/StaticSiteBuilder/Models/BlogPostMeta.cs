@@ -27,6 +27,10 @@ namespace StaticSiteBuilder.Models {
         public double Priority {
             get; set;
         }
+
+        public bool IsCodePresent {
+            get;set;
+        }
     }
 
     public class BlogPostMetaValidator : AbstractValidator<BlogPostMeta> {

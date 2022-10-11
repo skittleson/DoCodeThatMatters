@@ -90,3 +90,7 @@ hr {
 .logo-img {
   margin-right: 2%;
 }
+
+img {
+  aspect-ratio: attr(width) / attr(height);
+}
