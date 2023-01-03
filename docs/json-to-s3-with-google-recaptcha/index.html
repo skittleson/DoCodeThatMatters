@@ -108,13 +108,13 @@
 <p>Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.</p>
 <h2 id="request-from-a-frontend-source">Request from a frontend source</h2>
 <p>Add this to the frontend index.html (or anywhere a form will be sent from). Replace the <code>_reCAPTCHA_site_key</code> with a real one.</p>
-<pre><code>&lt;script src=&quot;https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key&quot;&gt;&lt;/script&gt;
+<pre><code class="language-html">&lt;script src=&quot;https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
-grecaptcha.ready(function() {
-    grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
-    ...
-    });
-});
+  grecaptcha.ready(function() {
+      grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
+      ...
+      });
+  });
 &lt;/script&gt;
 </code></pre>
 <p>Docs: <a href="https://developers.google.com/recaptcha/docs/v3">https://developers.google.com/recaptcha/docs/v3</a></p>
@@ -169,7 +169,11 @@ grecaptcha.ready(function() {
       
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

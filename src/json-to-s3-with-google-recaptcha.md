@@ -1,6 +1,6 @@
 ---
 title: Save JSON Objects to AWS S3 with Google Recaptcha
-keywords: 
+keywords:
   - AWS S3
   - Google Recaptcha
   - s3
@@ -12,7 +12,6 @@ alt: Chain fence locked
 priority: 0.9
 ---
 
-
 This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.
 
 Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.
@@ -21,14 +20,16 @@ Wrote the GIST for myself but I had enough requests to share it in a blog post. 
 
 Add this to the frontend index.html (or anywhere a form will be sent from). Replace the `_reCAPTCHA_site_key` with a real one.
 
-    <script src="https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key"></script>
-    <script>
-    grecaptcha.ready(function() {
-        grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
-        ...
-        });
-    });
-    </script>
+```html
+<script src="https://www.google.com/recaptcha/api.js?render=_reCAPTCHA_site_key"></script>
+<script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('_reCAPTCHA_site_key_', {action: 'homepage'}).then(function(token) {
+      ...
+      });
+  });
+</script>
+```
 
 Docs: <https://developers.google.com/recaptcha/docs/v3>
 
