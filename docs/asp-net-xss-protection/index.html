@@ -106,7 +106,7 @@
       <section itemprop="articleBody" class="article-body">
         <p>Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</p>
 <p>In system.webServer element, add the following:</p>
-<pre><code>&lt;httpProtocol&gt;
+<pre><code class="language-xml">&lt;httpProtocol&gt;
   &lt;customHeaders&gt;
     &lt;remove name=&quot;Server&quot; /&gt;
     &lt;remove name=&quot;X-Powered-By&quot; /&gt;
@@ -193,7 +193,11 @@
       
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

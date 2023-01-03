@@ -1,38 +1,40 @@
 ---
 title: ASP.NET XSS protection
-keywords: ["asp.net", "xss","config"]
+keywords: ["asp.net", "xss", "config"]
 date: 2017-09-06
 description: Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
 image: /images/SSL-Featured.png
 alt: ASP.Net XSS protection
 priority: 0.9
 ---
+
 Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
 
 In system.webServer element, add the following:
 
-    <httpProtocol>
-      <customHeaders>
-        <remove name="Server" />
-        <remove name="X-Powered-By" />
-        <remove name="X-Frame-Options" />
-        <remove name="X-XSS-Protection" />
-        <remove name="X-Content-Type-Options" />
-        <remove name="Cache-Control" />
-        <remove name="Pragma" />
-        <remove name="Expires" />
-        <remove name="Content-Security-Policy" />
-        <clear /> <!-- removing anything set by IIS -->
-        <add name="X-Frame-Options" value="DENY" />
-        <add name="X-XSS-Protection" value="1; mode=block" />
-        <add name="X-Content-Type-Options" value="nosniff" />
-        <add name="Cache-Control" value="no-cache, no-store, must-revalidate" /> <!-- cache could be altered -->
-        <add name="Pragma" value="no-cache" /> <!-- cache could be altered -->
-        <add name="Expires" value="Sun, 1 Jan 1990 00:00:00 UTC" /> <!-- cache could be altered so set far in past and not -1 -->
-        <add name="Content-Security-Policy" value="default-src 'self' 'unsafe-inline' data; font-src *; img-src https://*;" /> <!-- where resources can come from -->
-      </customHeaders>
-    </httpProtocol>
-
+```xml
+<httpProtocol>
+  <customHeaders>
+    <remove name="Server" />
+    <remove name="X-Powered-By" />
+    <remove name="X-Frame-Options" />
+    <remove name="X-XSS-Protection" />
+    <remove name="X-Content-Type-Options" />
+    <remove name="Cache-Control" />
+    <remove name="Pragma" />
+    <remove name="Expires" />
+    <remove name="Content-Security-Policy" />
+    <clear /> <!-- removing anything set by IIS -->
+    <add name="X-Frame-Options" value="DENY" />
+    <add name="X-XSS-Protection" value="1; mode=block" />
+    <add name="X-Content-Type-Options" value="nosniff" />
+    <add name="Cache-Control" value="no-cache, no-store, must-revalidate" /> <!-- cache could be altered -->
+    <add name="Pragma" value="no-cache" /> <!-- cache could be altered -->
+    <add name="Expires" value="Sun, 1 Jan 1990 00:00:00 UTC" /> <!-- cache could be altered so set far in past and not -1 -->
+    <add name="Content-Security-Policy" value="default-src 'self' 'unsafe-inline' data; font-src *; img-src https://*;" /> <!-- where resources can come from -->
+  </customHeaders>
+</httpProtocol>
+```
 
 [Content security policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) was the only one considered less secure due to outside javascript & CSS resources the app used (Google Analytics, Bootstrap, etc).
 

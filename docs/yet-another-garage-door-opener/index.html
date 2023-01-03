@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta itemprop="description" content="Just another garage door opener using a raspberry pi" />
     <meta name="description" content="Just another garage door opener using a raspberry pi" />
-    <meta name="keywords" content="raspberry pi,bluetooth,garage door opener,liftmaster" />
+    <meta name="keywords" content="garage door opener,raspberry pi,bluetooth,lift master" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
@@ -129,25 +129,22 @@
 <h2 id="research-discover">Research &amp; Discover</h2>
 <p>There are a ton of these garage door projects. I was inspired by many of them. The LiftMaster garage door system has anti-tamper hardware measures which almost ended the project before it started. I decided to take a gamble and buy another garage door opener circuit that directly connects to the garage door unit. Bingo! Two circuits can be connected at the same time. Docker permissions and finding a base image for the raspberry pi took a few hours. Lesson learned, hardware interaction with docker can take a few extra steps.</p>
 <h2 id="wiring">Wiring</h2>
-<p>The relay module is stacked on top of the LiftMaster module then taped onto the Raspberry Pi. Note the relay connections are wired for normally opened. (click image to see larger version) Sealed up in a glad container (kinda hacky but it's cheap). This is the LiftMaster circuit. The narrower end has the button for opening the garage. The larger end has the button for the garage door light. The middle points are for the circuit to connect to main garage door unit. GPIO pin layout for the relays &amp; reed switch not including power leads.  Reed switch is connected to the part of the garage door (pin 18 and a ground). Once it moves away, then the reed switch is disconnected.</p>
+<p>The relay module is stacked on top of the LiftMaster module then taped onto the Raspberry Pi. Note the relay connections are wired for normally opened. (click image to see larger version) Sealed up in a glad container (kinda hacky but it's cheap). This is the LiftMaster circuit. The narrower end has the button for opening the garage. The larger end has the button for the garage door light. The middle points are for the circuit to connect to main garage door unit. GPIO pin layout for the relays &amp; reed switch not including power leads. Reed switch is connected to the part of the garage door (pin 18 and a ground). Once it moves away, then the reed switch is disconnected.</p>
 <p>The entire setup. Messy but it's good enough. Cut some holes with a knife for wires and to hold it in place. The camera has been added with duck tape. Using a standard install of <a href="https://motion-project.github.io/motion_build.html">motion</a> (no dockerfile tho).</p>
 <h2 id="install">Install</h2>
 <p>Install docker on the raspberry pi. <a href="https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/">https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/</a></p>
-<pre><code>curl -sSL https://get.docker.com | sh
-</code></pre>
-<p>Clone the repo</p>
-<pre><code>git clone https://github.com/skittleson/garage-pi
+<p><code>curl -sSL <a href="https://get.docker.com">https://get.docker.com</a> | sh</code></p>
+<p>Clone the repo
+<code>
+git clone <a href="https://github.com/skittleson/garage-pi">https://github.com/skittleson/garage-pi</a>
 cd garage-pi/
-</code></pre>
+</code></p>
 <p>Run docker build for the image</p>
-<pre><code>docker build -t garage-pi .
-</code></pre>
+<p><code>docker build -t garage-pi .</code></p>
 <p>Start the docker image in privileged mode. This will expose port 8090 for web access.</p>
-<pre><code>docker run -d --privileged -p 8090:8090 --name gpi garage-pi
-</code></pre>
+<p><code>docker run -d --privileged -p 8090:8090 --name gpi garage-pi</code></p>
 <p>Test it</p>
-<pre><code>curl http://localhost:8090/api
-</code></pre>
+<p><code>curl http://localhost:8090/api</code></p>
 <p>Other api commands</p>
 <ul>
 <li>Status: /api/garage/status</li>
@@ -158,17 +155,17 @@ cd garage-pi/
 <p>That's it!</p>
 <h2 id="code">Code</h2>
 <p>Simulating the button press for the garage door opener circuit. Relay turns on for 500ms, then off. An interesting issue with the relay. As soon the gpio utility exports, it triggers it on. This code exports then unexports a pin that the relay is on.</p>
-<pre><code>let relayButtonPressAction = (pin) =&gt; {
-    gpioExport(pin, 'out');
-    gpioWrite(pin, 1);
-    setTimeout(() =&gt; {
-        gpioWrite(pin, 0);
-        gpioUnexport(pin);
-    }, 500);
-}
+<pre><code class="language-javascript">let relayButtonPressAction = (pin) =&gt; {
+  gpioExport(pin, &quot;out&quot;);
+  gpioWrite(pin, 1);
+  setTimeout(() =&gt; {
+    gpioWrite(pin, 0);
+    gpioUnexport(pin);
+  }, 500);
+};
 </code></pre>
 <p>There is one python file that checks the status of the garage door. The configuration was different enough where it needed to be done there. The reed switch should always be true until the door has been opened.</p>
-<pre><code>import sys
+<pre><code class="language-python">import sys
 import RPi.GPIO as gpio
 
 pin = int(sys.argv[1])
@@ -219,7 +216,11 @@ gpio.cleanup()
       
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>
