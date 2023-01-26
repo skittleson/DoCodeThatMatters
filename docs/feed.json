@@ -351,9 +351,10 @@
       "id": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity",
       "url": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity",
       "title": "Raspberry Pi – Bluetooth Proximity",
-      "summary": "Building bluetooth detection with a raspberry pi!",
+      "summary": "Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
       "date_published": "2017-05-26T00:00:00-07:00",
+      "date_modified": "2023-01-25T00:00:00-08:00",
       "authors": [
         {
           "name": "Spencer Kittleson",
@@ -361,8 +362,11 @@
         }
       ],
       "tags": [
-        "raspberry pi",
-        "bluetooth"
+        "Bluetooth proximity detector",
+        "Raspberry Pi",
+        "USB Bluetooth adapter",
+        "Bluetooth device detection",
+        "MAC address"
       ]
     }
   ]
