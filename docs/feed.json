@@ -180,7 +180,7 @@
       "summary": "Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.",
       "image": "https://docodethatmatters.com/images/sprinklerReplacement.png",
       "date_published": "2020-11-02T00:00:00-08:00",
-      "date_modified": "2022-06-29T00:00:00-07:00",
+      "date_modified": "2023-01-25T00:00:00-08:00",
       "authors": [
         {
           "name": "Spencer Kittleson",
