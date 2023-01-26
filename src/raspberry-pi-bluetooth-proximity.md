@@ -1,5 +1,5 @@
 ---
-title: Raspberry Pi – Bluetooth Proximity
+title: Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
 keywords:
   - Bluetooth proximity detector
   - Raspberry Pi
