@@ -1,25 +1,29 @@
 ---
-title: Project Onboarding for New Engineers
-keywords: 
-    - engineer training
-    - guideline
+title: Effective Onboarding for New Engineers
+keywords:
+  - engineer training
+  - guideline
+  - Onboarding
+  - New engineers
+  - Project productivity
+  - Structure engineer training
 date: 2022-07-05
-description: General template/guide on how to onboard an engineer to new project.
+modified: 2023-01-25
+description: Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.
 image: https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60
-alt: Boarding a ship
+alt: Onboarding
 priority: 0.9
 ---
 
-Engineers come and go on projects.  Getting an individual up to speed takes time.  With some experiments and listening to retros, this seems to be a good start.  
+Onboarding new engineers on a project can be a time-consuming process. However, by implementing a structured approach, the transition can be made smoother.
 
+## An effective onboarding strategy includes:
 
-## Ordered Guide
+- Providing a comprehensive overview of the project's architecture and making relevant documentation easily accessible.
+- Assigning tasks or tickets that focus on the implementation of business logic, giving the new engineer a clear understanding of the project's objectives.
+- Collaborating on the definition of main test cases, including the happy path and potential exceptions.
+- Delaying the implementation of external dependencies by using techniques such as dependency injection or the dependency provider pattern. This approach allows the new engineer to focus on the core functionality of the project.
+- Encouraging the new engineer to submit a pull request early, allowing for timely feedback from senior engineers.
+- Scheduling regular pair programming, code swarming or office hours sessions to provide additional support and guidance.
 
-- Explain a high level view of architecture and provide relevant docs. 
-- Provide the individual a task/ticket but only to implement the business logic. 
-- Both work on main test cases definitions including a single happy path and possible exceptions.
-- Leave all external dependencies as `throw new NotImplementedException();` to be done once after the business logic.  Using dependency injection and/or dependency provider pattern has worked for me.
-- Have the individual do a pull request early to give feedback in an async matter from a senior engineer. No longer than 1 week seems appropriate.
-- Provide pair programming / code swarming / office hours in a regular cadence.
-
- 
+By following this approach, a new engineer can quickly become productive, and contribute to the success of the project.

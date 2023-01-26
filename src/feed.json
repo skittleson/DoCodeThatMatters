@@ -36,10 +36,11 @@
     {
       "id": "https://docodethatmatters.com/onboarding-devs",
       "url": "https://docodethatmatters.com/onboarding-devs",
-      "title": "Project Onboarding for New Engineers",
-      "summary": "General template/guide on how to onboard an engineer to new project.",
+      "title": "Effective Onboarding for New Engineers",
+      "summary": "Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.",
       "image": "https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
       "date_published": "2022-07-05T00:00:00-07:00",
+      "date_modified": "2023-01-25T00:00:00-08:00",
       "authors": [
         {
           "name": "Spencer Kittleson",
@@ -48,7 +49,11 @@
       ],
       "tags": [
         "engineer training",
-        "guideline"
+        "guideline",
+        "Onboarding",
+        "New engineers",
+        "Project productivity",
+        "Structure engineer training"
       ]
     },
     {

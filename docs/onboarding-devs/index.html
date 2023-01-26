@@ -2,13 +2,13 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Project Onboarding for New Engineers</title>
+    <title>Effective Onboarding for New Engineers</title>
     <base href="https://docodethatmatters.com">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="General template/guide on how to onboard an engineer to new project." />
-    <meta name="description" content="General template/guide on how to onboard an engineer to new project." />
-    <meta name="keywords" content="engineer training,guideline" />
+    <meta itemprop="description" content="Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach." />
+    <meta name="description" content="Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach." />
+    <meta name="keywords" content="engineer training,guideline,Onboarding,New engineers,Project productivity,Structure engineer training" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
@@ -16,14 +16,14 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Project Onboarding for New Engineers - Do Code That Matters" />
-    <meta property="og:title" content="Project Onboarding for New Engineers - Do Code That Matters" />
-    <meta property="og:description" content="General template/guide on how to onboard an engineer to new project." />
+    <meta name="twitter:title" content="Effective Onboarding for New Engineers - Do Code That Matters" />
+    <meta property="og:title" content="Effective Onboarding for New Engineers - Do Code That Matters" />
+    <meta property="og:description" content="Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://docodethatmatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="General template/guide on how to onboard an engineer to new project." />
+    <meta name="twitter:description" content="Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach." />
     <meta name="twitter:creator" content="@skittleson" />
     <meta property="og:image" content="https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60" />
     <link href="/site.css" rel="stylesheet">
@@ -79,9 +79,10 @@
     <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
         <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/onboarding-devs">
-        <h1 itemprop="name headline">Project Onboarding for New Engineers</h1>
+        <h1 itemprop="name headline">Effective Onboarding for New Engineers</h1>
         <small>
           <time itemprop="datePublished" datetime="2022-07-05T00:00:00.000Z">Jul 05 2022</time>
+            <meta itemprop="dateModified" datetime="2023-01-25T00:00:00.000Z" />
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -98,22 +99,23 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Boarding a ship" src="https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60">
-          <figcaption itemprop="caption">Boarding a ship</figcaption>
+          <img itemprop="url contentUrl" alt="Onboarding" src="https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60">
+          <figcaption itemprop="caption">Onboarding</figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>Engineers come and go on projects.  Getting an individual up to speed takes time.  With some experiments and listening to retros, this seems to be a good start.</p>
-<h2 id="ordered-guide">Ordered Guide</h2>
+        <p>Onboarding new engineers on a project can be a time-consuming process. However, by implementing a structured approach, the transition can be made smoother.</p>
+<h2 id="an-effective-onboarding-strategy-includes">An effective onboarding strategy includes:</h2>
 <ul>
-<li>Explain a high level view of architecture and provide relevant docs.</li>
-<li>Provide the individual a task/ticket but only to implement the business logic.</li>
-<li>Both work on main test cases definitions including a single happy path and possible exceptions.</li>
-<li>Leave all external dependencies as <code>throw new NotImplementedException();</code> to be done once after the business logic.  Using dependency injection and/or dependency provider pattern has worked for me.</li>
-<li>Have the individual do a pull request early to give feedback in an async matter from a senior engineer. No longer than 1 week seems appropriate.</li>
-<li>Provide pair programming / code swarming / office hours in a regular cadence.</li>
+<li>Providing a comprehensive overview of the project's architecture and making relevant documentation easily accessible.</li>
+<li>Assigning tasks or tickets that focus on the implementation of business logic, giving the new engineer a clear understanding of the project's objectives.</li>
+<li>Collaborating on the definition of main test cases, including the happy path and potential exceptions.</li>
+<li>Delaying the implementation of external dependencies by using techniques such as dependency injection or the dependency provider pattern. This approach allows the new engineer to focus on the core functionality of the project.</li>
+<li>Encouraging the new engineer to submit a pull request early, allowing for timely feedback from senior engineers.</li>
+<li>Scheduling regular pair programming, code swarming or office hours sessions to provide additional support and guidance.</li>
 </ul>
+<p>By following this approach, a new engineer can quickly become productive, and contribute to the success of the project.</p>
 
       </section>
     </article>
@@ -121,7 +123,7 @@
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Project+Onboarding+for+New+Engineers">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Effective+Onboarding+for+New+Engineers">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
