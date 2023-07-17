@@ -25,7 +25,7 @@
     <meta property="og:site_name" content="Do Code That Matters" />
     <meta name="twitter:description" content="Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="Sony-A6000-Sony-16-50mm.jpg" />
+    <meta property="og:image" content="/images/Sony-A6000-Sony-16-50mm.jpg" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
@@ -98,7 +98,7 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Sony a6000" src="Sony-A6000-Sony-16-50mm.jpg">
+          <img itemprop="url contentUrl" alt="Sony a6000" src="/images/Sony-A6000-Sony-16-50mm.jpg">
           <figcaption itemprop="caption">Sony a6000</figcaption>
         </figure>
         <br />
@@ -249,7 +249,7 @@ print(result)
 <li>Resize images by 200%</li>
 <li>Align similar features images</li>
 <li>Blend with transparency of 50%</li>
-<li>Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version.</li>
+<li>Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version.  <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/image_utils.py">See the super resolution code on GitHub</a></li>
 </ul>
 <pre><code class="language-python">img1 = cv2.imread(img1_path)
 img2 = cv2.imread(img2_path)
@@ -264,7 +264,7 @@ tmp_jpg = tempfile.NamedTemporaryFile(suffix='.JPG').name
 cv2.imwrite(tmp_jpg, higher_resolution_img)
 </code></pre>
 <h2 id="conclusion">Conclusion</h2>
-<p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era. So part 2 is coming!</p>
+<p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/">See the full code on GitHub</a>  Part 2 is coming!</p>
 
       </section>
     </article>

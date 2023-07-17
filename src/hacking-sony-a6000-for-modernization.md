@@ -8,7 +8,7 @@ keywords:
   - Second-hand purchase
 date: 2023-07-17
 description: Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.
-image: Sony-A6000-Sony-16-50mm.jpg
+image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6000
 priority: 0.9
 ---
@@ -208,7 +208,7 @@ Doubling the camera's 24 megapixels output is possible by using a burst of pictu
 - Resize images by 200%
 - Align similar features images 
 - Blend with transparency of 50%
-- Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version. 
+- Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version.  [See the super resolution code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/image_utils.py)
 
 ```python
 img1 = cv2.imread(img1_path)
@@ -227,6 +227,6 @@ cv2.imwrite(tmp_jpg, higher_resolution_img)
 
 ## Conclusion
 
-In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era. So part 2 is coming!
+In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  Part 2 is coming!
 
 
