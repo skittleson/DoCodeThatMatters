@@ -14,6 +14,27 @@
   "language": "en-us",
   "items": [
     {
+      "id": "https://docodethatmatters.com/hacking-sony-a6000-for-modernization",
+      "url": "https://docodethatmatters.com/hacking-sony-a6000-for-modernization",
+      "title": "Hacking my Sony A6000 Camera Adding Modern Features",
+      "summary": "Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.",
+      "image": "https://docodethatmatters.com/Sony-A6000-Sony-16-50mm.jpg",
+      "date_published": "2023-07-17T00:00:00-07:00",
+      "authors": [
+        {
+          "name": "Spencer Kittleson",
+          "url": "https://twitter.com/@skittleson"
+        }
+      ],
+      "tags": [
+        "Sony A6000",
+        "Camera hacking",
+        "libsonyapi",
+        "super resolution image",
+        "Second-hand purchase"
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3",
       "url": "https://docodethatmatters.com/linux-wifi-hotspot-usb3",
       "title": "Linux Wifi Hotspot with PiHole",

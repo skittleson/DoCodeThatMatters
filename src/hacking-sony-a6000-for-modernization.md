@@ -1,0 +1,232 @@
+---
+title: Hacking my Sony A6000 Camera Adding Modern Features
+keywords:
+  - Sony A6000
+  - Camera hacking
+  - libsonyapi
+  - super resolution image
+  - Second-hand purchase
+date: 2023-07-17
+description: Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.
+image: Sony-A6000-Sony-16-50mm.jpg
+alt: Sony a6000
+priority: 0.9
+---
+
+
+## Introduction
+Hey there! In this blog post, I'm diving into a fun project: bringing my Sony A6000 camera into the modern era. This camera is a gem, even though it was made way back in 2013/3014. I snagged it on eBay as a second-hand purchase, and now I want to give it a modern makeover by improving its data transfer capabilities, increasing resolution and possibly even adding GPS functionality.
+
+There are a few hurdles I've come across. The main challenge is finding a way to directly connect and communicate with the camera. It has Wi-Fi hotspot, which sounds great, but unfortunately, it enters a "dumb mode" when I try to use it for data transfer. It also limits a cell phone to no internet. Another option is the USB mass storage mode, but it turns out to be a bit problematic. Whenever pulling data too quickly, it just freezes up. Plus, it's pretty sluggish with its USB 2.0 connection which can take hours to download data.
+
+Luckily, I've discovered the PC remote feature, which can be quite handy when the camera is connected to a computer. There's this fantastic library called GPhoto2 that works wonders in this scenario, especially if I'm running Linux. It allows me to perform various actions on the camera remotely, like capturing images. However, I'm not keen on attaching a Raspberry Pi to my camera unless it's absolutely necessary. Alternatively, I'm considering a microcontroller with an OTG port as a potential solution.
+
+Join me on this hacking journey as I explore ways to modernize my Sony A6000 camera! Let's get started!
+
+## Getting Data Fast
+
+## Hurdles
+
+These files are large.  24.3 megapixels averages around 7-10mb per photo.    
+
+- Downloading the data from the disk is mandatory as the USB transfer rate is to slow. Using the SD card seems to be the best way.
+- The files names are really ugly.  They have a format of `DSC0XXXX` .  It iterates +1,  This is meaningless to understand.  I adopted the format `%Y%m%d_%H%M%S` using the image's timestamp.  While I could save as timestamp via the camera settings but i choose opt out of that behavior which I will explain later.
+- DSLR cameras can take multiple pictures in a second. Appending the image count to the end of that format i.e `%Y%m%d_%H%M%S_{COUNT}` 
+- Offloading to external storage... using OneDrive since it's available in the web, mobile, and desktop experiences.
+
+A [quick python script](https://github.com/skittleson/dslrCameraPowerRename/blob/main/process_files.py) to solve these problems,  this scripts solves it in 3 part process, download, rename, and then transfer to a storage.  Each step requires pauses for verification but could be altered in the future for more post process work.  My thought would be to use Darktable more frequently but this works for most cases.
+
+
+```
+Found Disk. Files 14. Press Enter to copy...
+D:\DCIM\100MSDCF to C:\Users\spenc\a6000Temp
+Copied 14. Press Enter to rename...
+Move DSC08808.JPG to 20230612_151432.JPG
+Move DSC08809.JPG to 20230612_151436.JPG
+Move DSC08810.JPG to 20230612_151440.JPG
+Move DSC08811.JPG to 20230612_151502.JPG
+Move DSC08812.JPG to 20230612_151510.JPG
+Move DSC08813.JPG to 20230612_151520.JPG
+Move DSC08814.JPG to 20230612_152200.JPG
+Move DSC08815.JPG to 20230612_152208.JPG
+Move DSC08816.JPG to 20230612_152210.JPG
+Move DSC08817.JPG to 20230612_152250.JPG
+Move DSC08818.JPG to 20230612_190546.JPG
+Move DSC08819.JPG to 20230612_190550.JPG
+Move DSC08820.JPG to 20230612_190556.JPG
+Move DSC08821.JPG to 20230612_190600.JPG
+Copied 14. Press Enter to move...
+Done
+```
+
+
+## Exploring 
+
+### 📷 Web camera usage
+
+Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then a HDMI Video capture device.  It shows up as a web camera device on the computer.  The output is 1080p but good enough for most meetings.   [Scott Hanselman's Blog has a good write up. ](https://www.hanselman.com/blog/good-better-best-creating-the-ultimate-remote-worker-webcam-setup-on-a-budget)
+
+To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu > page 2 > subpage 3 > FINDER/MONITOR > FINDER.  
+
+- [Sony A6000 but get it used on ebay](https://amzn.to/3oW4qO1)
+- [Powerline adapter](https://amzn.to/3oW4qO1)
+- [HDMI to USB3 Adapter](https://amzn.to/3P84lBr)
+- [How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling](https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link)
+
+
+### 🔌 USB Connection: PC Remote
+
+The PC Remote of the camera could be used in conjunction with the above approach to get and control aspects of the camera (menu > last tab > 4th sub tab > first option).  For example, information about the battery level or configuration settings.  I used [the gphoto2 cli](http://gphoto.org/doc/manual/using-gphoto2.html) tool to extract this information.   It works great on Linux systems. It doesn't support Windows directly [however, this worked wonderfully with Windows by doing a USB pass through to WSL](https://learn.microsoft.com/en-us/windows/wsl/connect-usb) . One minor annoyance is a command must be sent otherwise it will stay in "Connecting" which makes the camera useless until done.
+
+Useful commands:
+
+**Get Summary** tells you what you can do with device.
+`sudo gphoto2 --summary`
+
+```
+Camera summary:
+Manufacturer: Sony Corporation
+Model: ILCE-6000
+  Version: 3.0
+  Serial Number: 0000000000000000xxxxxxxxxxxxxxxxx
+Vendor Extension ID: 0x11 (1.0)
+Vendor Extension Description: Sony PTP Extensions
+
+Capture Formats:
+Display Formats: JPEG, Unknown(b301), ARW
+
+Device Capabilities:
+        File Download, No File Deletion, No File Upload
+        No Image Capture, No Open Capture, Sony Capture
+
+Storage Devices Summary:
+
+Device Property Summary:
+Compression Setting(0x5004):(read only) (type=0x2) Enumeration [2,3,16,19] value: 3
+....
+```
+
+**Get battery level**
+`gphoto2 --get-config=batterylevel | grep Current: | cut -d ' ' -f2`
+
+**Capture image and download image with timestamp**
+`gphoto2 --capture-image-and-download --filename %Y%m%d%H%M%S.jpg -q
+
+
+### 🧑‍💻 Sony's Camera SDK
+
+Sony's SDK is kind of bad/good. [petabite/libsonyapi: Python binding for the Sony Camera API (github.com)](https://github.com/petabite/libsonyapi)  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab > Application List  > Smart Remote Embedded.
+
+A quick NMAP scan when connected to the camera.  
+```
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-06-13 16:42 Pacific Daylight Time
+NSE: Loaded 156 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating ARP Ping Scan at 16:42
+Scanning 192.168.122.1 [1 port]
+Completed ARP Ping Scan at 16:42, 0.04s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 16:42
+Completed Parallel DNS resolution of 1 host. at 16:42, 13.02s elapsed
+Initiating SYN Stealth Scan at 16:42
+Scanning 192.168.122.1 [65535 ports]
+Discovered open port 8080/tcp on 192.168.122.1
+Discovered open port 61000/tcp on 192.168.122.1
+Completed SYN Stealth Scan at 16:43, 46.95s elapsed (65535 total ports)
+Initiating Service scan at 16:43
+
+```
+
+Just the 2 services it needs to allow the mobile app to make it's calls.  Using their SDK, this works!
+
+```python
+from libsonyapi.camera import Camera
+from libsonyapi.actions import Actions
+
+camera = Camera()  # create camera instance
+camera_info = camera.info()  # get camera camera_info
+print(camera_info)
+print(camera.name)  # print name of camera
+print(camera.api_version)  # print api version of camera
+result = camera.do(Actions.actTakePicture)
+print(result)
+```
+
+Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.
+
+```json
+{'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'awaitTakePicture', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getSupportedFlashMode']]}
+```
+
+
+When taking the picture the response gives back an image! Yay! but it's odd looking for the original ones that are downloaded.
+```json
+{'id': 1, 'result': [['http://192.168.122.1:8080/postview/pict20230614_080830_0.JPG']]}
+```
+
+The exfil data shows the dimensions of that image is 1616x1080. So it's a thumbnail. the real image is 4000x6000.  Only identification is the datetime stamp which  is useless. 😔
+```json
+{'ResolutionUnit': 2, 'ExifOffset': 246, 'ImageDescription': '                               ', 'Make': 'SONY', 'Model': 'ILCE-6000', 'Software': 'ILCE-6000 v3.21', 'Orientation': 1, 'DateTime': '2023:06:14 13:36:06', 'YCbCrPositioning': 2, 'XResolution': 350.0, 'YResolution': 350.0, 'ExifVersion': b'0230', 'ComponentsConfiguration': b'\x01\x02\x03\x00', 'CompressedBitsPerPixel': 1.0, 'DateTimeOriginal': '2023:06:14 13:36:06', 'DateTimeDigitized': '2023:06:14 13:36:06', 'BrightnessValue': -4.975, 'ExposureBiasValue': 0.0, 'MaxApertureValue': 2.96875, 'MeteringMode': 5, 'LightSource': 0, 'Flash': 16, 'FocalLength': 20.0, 'UserComment': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'ColorSpace': 1, 'ExifImageWidth': 1616, 'SceneCaptureType': 0, 'ExifImageHeight': 1080, 'Contrast': 0, 'Saturation': 0, 'Sharpness': 0, 'FileSource': b'\x03', 'ExposureTime': 0.625, 'ExifInteroperabilityOffset': 908, 'FNumber': 2.8, 'SceneType': b'\x01', 'ExposureProgram': 2, 'CustomRendered': 0, 'ISOSpeedRatings': 3200, 'ExposureMode': 0, 'FlashPixVersion': b'0100', 'SensitivityType': 2, 'WhiteBalance': 0, 'RecommendedExposureIndex': 3200, 'LensSpecification': (20.0, 20.0, 2.8, 2.8), 'LensModel': 'E 20mm F2.8', 'DigitalZoomRatio': 1.0, 'FocalLengthIn35mmFilm': 30}
+```
+
+My last effort was to update the app.  It looks like its possible to do that still. The Smart Remote Control: https://www.playmemoriescameraapps.com/  app was updated and a ton new features showed up!  [Smart Remote Control Specifications | PlayMemories Camera Apps](https://www.playmemoriescameraapps.com/portal/usbspec.php?eid=IS9104-NPIA09014_00-F00002)  
+
+```json
+{'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'startLiveviewWithSize', 'actHalfPressShutter', 'cancelHalfPressShutter', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getSupportedContShootingMode', 'getSupportedContShootingSpeed', 'getExposureMode', 'getSupportedExposureMode', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'getFNumber', 'getAvailableFNumber', 'getSupportedFNumber', 'getIsoSpeedRate', 'getAvailableIsoSpeedRate', 'getSupportedIsoSpeedRate', 'getLiveviewSize', 'getAvailableLiveviewSize', 'getSupportedLiveviewSize', 'setPostviewImageSize', 'getPostviewImageSize', 'getAvailablePostviewImageSize', 'getSupportedPostviewImageSize', 'getSupportedProgramShift', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getShutterSpeed', 'getAvailableShutterSpeed', 'getSupportedShutterSpeed', 'getWhiteBalance', 'getSupportedWhiteBalance', 'getAvailableWhiteBalance', 'getSupportedFlashMode', 'setFocusMode', 'getFocusMode', 'getAvailableFocusMode', 'getSupportedFocusMode', 'setZoomSetting', 'getAvailableZoomSetting', 'getZoomSetting', 'getSupportedZoomSetting', 'getStorageInformation', 'setLiveviewFrameInfo', 'getLiveviewFrameInfo']]}
+```
+
+After digging around, the post view image size could be changed to the **Original** file! Since taking a picture is the only way to get to that url.  Indeed it gave the FULL path on disk!  
+
+`http://192.168.122.1:8080/postview/memory/1000/DCIM/100MSDCF/DSC08843.JPG`
+
+Here is the quick script to capture and download.
+```python
+def capture_and_download():
+    camera = Camera()
+    camera.do("setPostviewImageSize", ["Original"])
+    response = camera.do(Actions.actTakePicture)
+    image_uri = response['result'][0][0]
+    img_data = requests.get(image_uri).content
+    with open('img.jpg', 'wb') as handler:
+        handler.write(img_data)
+```
+
+Could I do some URL hacking to get other files?  Yup! 🥳  I took a photo manually then tried the updated URL.  I now can download all the files by iterating backwards from the last known photo!  When the bytes of the images end, it's over. I'm sure Sony didn't want this for a reason... likely it would kill the camera so use it AT YOUR OWN RISK!
+
+
+### 🧙‍♂️ Super High Resolution Images
+
+Doubling the camera's 24 megapixels output is possible by using a burst of pictures!  It took a few days of hacking:
+
+- Take pictures with smart remote API (4 seem to be the max at 10 seconds)
+- Read images into memory
+- Resize images by 200%
+- Align similar features images 
+- Blend with transparency of 50%
+- Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version. 
+
+```python
+img1 = cv2.imread(img1_path)
+img2 = cv2.imread(img2_path)
+interpolation = cv2.INTER_LANCZOS4  # cv2.INTER_CUBIC
+scale = 2
+upscaled1 = cv2.resize(
+	img1, (img1.shape[1] * scale, img1.shape[0] * scale),   interpolation=interpolation)
+upscaled2 = cv2.resize(
+	img2, (img2.shape[1] * scale, img2.shape[0] * scale),   interpolation=interpolation)
+higher_resolution_img = align_images(upscaled1, upscaled2, debug=False)
+tmp_jpg = tempfile.NamedTemporaryFile(suffix='.JPG').name
+cv2.imwrite(tmp_jpg, higher_resolution_img)
+```
+
+
+## Conclusion
+
+In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era. So part 2 is coming!
+
+

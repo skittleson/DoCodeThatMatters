@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <title>Hacking my Sony A6000 Camera Adding Modern Features</title>
+    <base href="https://docodethatmatters.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta itemprop="description" content="Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post." />
+    <meta name="description" content="Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post." />
+    <meta name="keywords" content="Sony A6000,Camera hacking,libsonyapi,super resolution image,Second-hand purchase" />
+    <meta name="Distribution" content="Global" />
+    <meta name="Rating" content="General" />
+    <meta name="Robots" content="INDEX,FOLLOW" />
+    <meta name="author" content="Do Code That Matters" />
+    <meta name="Revisit-after" content="31 Days" />
+    <meta name="application-name" content="Do Code That Matters">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Hacking my Sony A6000 Camera Adding Modern Features - Do Code That Matters" />
+    <meta property="og:title" content="Hacking my Sony A6000 Camera Adding Modern Features - Do Code That Matters" />
+    <meta property="og:description" content="Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post." />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://docodethatmatters.com" />
+    <meta property="og:site_name" content="Do Code That Matters" />
+    <meta name="twitter:description" content="Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post." />
+    <meta name="twitter:creator" content="@skittleson" />
+    <meta property="og:image" content="Sony-A6000-Sony-16-50mm.jpg" />
+    <link href="/site.css" rel="stylesheet">
+    <link rel='manifest' href='/manifest.json'>
+    <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
+    <link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/feed.json" />
+    <link type="text/plain" rel="author" href="https://DoCodeThatMatters.com/humans.txt" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
+      rel="stylesheet"
+    />
+
+<body class="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar dark border-bottom">
+        <div class="container">
+            <a href="/" class="navbar-brand d-flex align-items-center logo">
+                <img class="logo-img" src="images/logoWhiteTrans.png" alt="Do Code That Matters" width="60" height="19" />Do Code That Matters</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+<li class="nav-item">
+    <a class="nav-link" href="/blog">Blog</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/about">About</a>
+</li>
+                </ul>
+            </div>
+        </div>
+    </nav><main class="container article">
+  <div class="row">
+    <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/hacking-sony-a6000-for-modernization">
+        <h1 itemprop="name headline">Hacking my Sony A6000 Camera Adding Modern Features</h1>
+        <small>
+          <time itemprop="datePublished" datetime="2023-07-17T00:00:00.000Z">Jul 17 2023</time>
+          by
+          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
+              <span itemprop="name">Spencer Kittleson</span>
+            </a>
+            <meta itemprop="jobTitle" content="Software Engineer">
+          </span>
+          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+            <meta itemprop="name" content="Do Code That Matters">
+            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
+            </span>
+          </span>
+        </small>
+        <br />
+        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <img itemprop="url contentUrl" alt="Sony a6000" src="Sony-A6000-Sony-16-50mm.jpg">
+          <figcaption itemprop="caption">Sony a6000</figcaption>
+        </figure>
+        <br />
+      </header>
+      <section itemprop="articleBody" class="article-body">
+        <h2 id="introduction">Introduction</h2>
+<p>Hey there! In this blog post, I'm diving into a fun project: bringing my Sony A6000 camera into the modern era. This camera is a gem, even though it was made way back in 2013/3014. I snagged it on eBay as a second-hand purchase, and now I want to give it a modern makeover by improving its data transfer capabilities, increasing resolution and possibly even adding GPS functionality.</p>
+<p>There are a few hurdles I've come across. The main challenge is finding a way to directly connect and communicate with the camera. It has Wi-Fi hotspot, which sounds great, but unfortunately, it enters a &quot;dumb mode&quot; when I try to use it for data transfer. It also limits a cell phone to no internet. Another option is the USB mass storage mode, but it turns out to be a bit problematic. Whenever pulling data too quickly, it just freezes up. Plus, it's pretty sluggish with its USB 2.0 connection which can take hours to download data.</p>
+<p>Luckily, I've discovered the PC remote feature, which can be quite handy when the camera is connected to a computer. There's this fantastic library called GPhoto2 that works wonders in this scenario, especially if I'm running Linux. It allows me to perform various actions on the camera remotely, like capturing images. However, I'm not keen on attaching a Raspberry Pi to my camera unless it's absolutely necessary. Alternatively, I'm considering a microcontroller with an OTG port as a potential solution.</p>
+<p>Join me on this hacking journey as I explore ways to modernize my Sony A6000 camera! Let's get started!</p>
+<h2 id="getting-data-fast">Getting Data Fast</h2>
+<h2 id="hurdles">Hurdles</h2>
+<p>These files are large.  24.3 megapixels averages around 7-10mb per photo.</p>
+<ul>
+<li>Downloading the data from the disk is mandatory as the USB transfer rate is to slow. Using the SD card seems to be the best way.</li>
+<li>The files names are really ugly.  They have a format of <code>DSC0XXXX</code> .  It iterates +1,  This is meaningless to understand.  I adopted the format <code>%Y%m%d_%H%M%S</code> using the image's timestamp.  While I could save as timestamp via the camera settings but i choose opt out of that behavior which I will explain later.</li>
+<li>DSLR cameras can take multiple pictures in a second. Appending the image count to the end of that format i.e <code>%Y%m%d_%H%M%S_{COUNT}</code></li>
+<li>Offloading to external storage... using OneDrive since it's available in the web, mobile, and desktop experiences.</li>
+</ul>
+<p>A <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/process_files.py">quick python script</a> to solve these problems,  this scripts solves it in 3 part process, download, rename, and then transfer to a storage.  Each step requires pauses for verification but could be altered in the future for more post process work.  My thought would be to use Darktable more frequently but this works for most cases.</p>
+<pre><code>Found Disk. Files 14. Press Enter to copy...
+D:\DCIM\100MSDCF to C:\Users\spenc\a6000Temp
+Copied 14. Press Enter to rename...
+Move DSC08808.JPG to 20230612_151432.JPG
+Move DSC08809.JPG to 20230612_151436.JPG
+Move DSC08810.JPG to 20230612_151440.JPG
+Move DSC08811.JPG to 20230612_151502.JPG
+Move DSC08812.JPG to 20230612_151510.JPG
+Move DSC08813.JPG to 20230612_151520.JPG
+Move DSC08814.JPG to 20230612_152200.JPG
+Move DSC08815.JPG to 20230612_152208.JPG
+Move DSC08816.JPG to 20230612_152210.JPG
+Move DSC08817.JPG to 20230612_152250.JPG
+Move DSC08818.JPG to 20230612_190546.JPG
+Move DSC08819.JPG to 20230612_190550.JPG
+Move DSC08820.JPG to 20230612_190556.JPG
+Move DSC08821.JPG to 20230612_190600.JPG
+Copied 14. Press Enter to move...
+Done
+</code></pre>
+<h2 id="exploring">Exploring</h2>
+<h3 id="web-camera-usage">📷 Web camera usage</h3>
+<p>Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then a HDMI Video capture device.  It shows up as a web camera device on the computer.  The output is 1080p but good enough for most meetings.   <a href="https://www.hanselman.com/blog/good-better-best-creating-the-ultimate-remote-worker-webcam-setup-on-a-budget">Scott Hanselman's Blog has a good write up. </a></p>
+<p>To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu &gt; page 2 &gt; subpage 3 &gt; FINDER/MONITOR &gt; FINDER.</p>
+<ul>
+<li><a href="https://amzn.to/3oW4qO1">Sony A6000 but get it used on ebay</a></li>
+<li><a href="https://amzn.to/3oW4qO1">Powerline adapter</a></li>
+<li><a href="https://amzn.to/3P84lBr">HDMI to USB3 Adapter</a></li>
+<li><a href="https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link">How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling</a></li>
+</ul>
+<h3 id="usb-connection-pc-remote">🔌 USB Connection: PC Remote</h3>
+<p>The PC Remote of the camera could be used in conjunction with the above approach to get and control aspects of the camera (menu &gt; last tab &gt; 4th sub tab &gt; first option).  For example, information about the battery level or configuration settings.  I used <a href="http://gphoto.org/doc/manual/using-gphoto2.html">the gphoto2 cli</a> tool to extract this information.   It works great on Linux systems. It doesn't support Windows directly <a href="https://learn.microsoft.com/en-us/windows/wsl/connect-usb">however, this worked wonderfully with Windows by doing a USB pass through to WSL</a> . One minor annoyance is a command must be sent otherwise it will stay in &quot;Connecting&quot; which makes the camera useless until done.</p>
+<p>Useful commands:</p>
+<p><strong>Get Summary</strong> tells you what you can do with device.
+<code>sudo gphoto2 --summary</code></p>
+<pre><code>Camera summary:
+Manufacturer: Sony Corporation
+Model: ILCE-6000
+  Version: 3.0
+  Serial Number: 0000000000000000xxxxxxxxxxxxxxxxx
+Vendor Extension ID: 0x11 (1.0)
+Vendor Extension Description: Sony PTP Extensions
+
+Capture Formats:
+Display Formats: JPEG, Unknown(b301), ARW
+
+Device Capabilities:
+        File Download, No File Deletion, No File Upload
+        No Image Capture, No Open Capture, Sony Capture
+
+Storage Devices Summary:
+
+Device Property Summary:
+Compression Setting(0x5004):(read only) (type=0x2) Enumeration [2,3,16,19] value: 3
+....
+</code></pre>
+<p><strong>Get battery level</strong>
+<code>gphoto2 --get-config=batterylevel | grep Current: | cut -d ' ' -f2</code></p>
+<p><strong>Capture image and download image with timestamp</strong>
+`gphoto2 --capture-image-and-download --filename %Y%m%d%H%M%S.jpg -q</p>
+<h3 id="sonys-camera-sdk">🧑‍💻 Sony's Camera SDK</h3>
+<p>Sony's SDK is kind of bad/good. <a href="https://github.com/petabite/libsonyapi">petabite/libsonyapi: Python binding for the Sony Camera API (github.com)</a>  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab &gt; Application List  &gt; Smart Remote Embedded.</p>
+<p>A quick NMAP scan when connected to the camera.</p>
+<pre><code>Starting Nmap 7.94 ( https://nmap.org ) at 2023-06-13 16:42 Pacific Daylight Time
+NSE: Loaded 156 scripts for scanning.
+NSE: Script Pre-scanning.
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating NSE at 16:42
+Completed NSE at 16:42, 0.00s elapsed
+Initiating ARP Ping Scan at 16:42
+Scanning 192.168.122.1 [1 port]
+Completed ARP Ping Scan at 16:42, 0.04s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 16:42
+Completed Parallel DNS resolution of 1 host. at 16:42, 13.02s elapsed
+Initiating SYN Stealth Scan at 16:42
+Scanning 192.168.122.1 [65535 ports]
+Discovered open port 8080/tcp on 192.168.122.1
+Discovered open port 61000/tcp on 192.168.122.1
+Completed SYN Stealth Scan at 16:43, 46.95s elapsed (65535 total ports)
+Initiating Service scan at 16:43
+
+</code></pre>
+<p>Just the 2 services it needs to allow the mobile app to make it's calls.  Using their SDK, this works!</p>
+<pre><code class="language-python">from libsonyapi.camera import Camera
+from libsonyapi.actions import Actions
+
+camera = Camera()  # create camera instance
+camera_info = camera.info()  # get camera camera_info
+print(camera_info)
+print(camera.name)  # print name of camera
+print(camera.api_version)  # print api version of camera
+result = camera.do(Actions.actTakePicture)
+print(result)
+</code></pre>
+<p>Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.</p>
+<pre><code class="language-json">{'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'awaitTakePicture', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getSupportedFlashMode']]}
+</code></pre>
+<p>When taking the picture the response gives back an image! Yay! but it's odd looking for the original ones that are downloaded.</p>
+<pre><code class="language-json">{'id': 1, 'result': [['http://192.168.122.1:8080/postview/pict20230614_080830_0.JPG']]}
+</code></pre>
+<p>The exfil data shows the dimensions of that image is 1616x1080. So it's a thumbnail. the real image is 4000x6000.  Only identification is the datetime stamp which  is useless. 😔</p>
+<pre><code class="language-json">{'ResolutionUnit': 2, 'ExifOffset': 246, 'ImageDescription': '                               ', 'Make': 'SONY', 'Model': 'ILCE-6000', 'Software': 'ILCE-6000 v3.21', 'Orientation': 1, 'DateTime': '2023:06:14 13:36:06', 'YCbCrPositioning': 2, 'XResolution': 350.0, 'YResolution': 350.0, 'ExifVersion': b'0230', 'ComponentsConfiguration': b'\x01\x02\x03\x00', 'CompressedBitsPerPixel': 1.0, 'DateTimeOriginal': '2023:06:14 13:36:06', 'DateTimeDigitized': '2023:06:14 13:36:06', 'BrightnessValue': -4.975, 'ExposureBiasValue': 0.0, 'MaxApertureValue': 2.96875, 'MeteringMode': 5, 'LightSource': 0, 'Flash': 16, 'FocalLength': 20.0, 'UserComment': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00', 'ColorSpace': 1, 'ExifImageWidth': 1616, 'SceneCaptureType': 0, 'ExifImageHeight': 1080, 'Contrast': 0, 'Saturation': 0, 'Sharpness': 0, 'FileSource': b'\x03', 'ExposureTime': 0.625, 'ExifInteroperabilityOffset': 908, 'FNumber': 2.8, 'SceneType': b'\x01', 'ExposureProgram': 2, 'CustomRendered': 0, 'ISOSpeedRatings': 3200, 'ExposureMode': 0, 'FlashPixVersion': b'0100', 'SensitivityType': 2, 'WhiteBalance': 0, 'RecommendedExposureIndex': 3200, 'LensSpecification': (20.0, 20.0, 2.8, 2.8), 'LensModel': 'E 20mm F2.8', 'DigitalZoomRatio': 1.0, 'FocalLengthIn35mmFilm': 30}
+</code></pre>
+<p>My last effort was to update the app.  It looks like its possible to do that still. The Smart Remote Control: <a href="https://www.playmemoriescameraapps.com/">https://www.playmemoriescameraapps.com/</a>  app was updated and a ton new features showed up!  <a href="https://www.playmemoriescameraapps.com/portal/usbspec.php?eid=IS9104-NPIA09014_00-F00002">Smart Remote Control Specifications | PlayMemories Camera Apps</a></p>
+<pre><code class="language-json">{'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'startLiveviewWithSize', 'actHalfPressShutter', 'cancelHalfPressShutter', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getSupportedContShootingMode', 'getSupportedContShootingSpeed', 'getExposureMode', 'getSupportedExposureMode', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'getFNumber', 'getAvailableFNumber', 'getSupportedFNumber', 'getIsoSpeedRate', 'getAvailableIsoSpeedRate', 'getSupportedIsoSpeedRate', 'getLiveviewSize', 'getAvailableLiveviewSize', 'getSupportedLiveviewSize', 'setPostviewImageSize', 'getPostviewImageSize', 'getAvailablePostviewImageSize', 'getSupportedPostviewImageSize', 'getSupportedProgramShift', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getShutterSpeed', 'getAvailableShutterSpeed', 'getSupportedShutterSpeed', 'getWhiteBalance', 'getSupportedWhiteBalance', 'getAvailableWhiteBalance', 'getSupportedFlashMode', 'setFocusMode', 'getFocusMode', 'getAvailableFocusMode', 'getSupportedFocusMode', 'setZoomSetting', 'getAvailableZoomSetting', 'getZoomSetting', 'getSupportedZoomSetting', 'getStorageInformation', 'setLiveviewFrameInfo', 'getLiveviewFrameInfo']]}
+</code></pre>
+<p>After digging around, the post view image size could be changed to the <strong>Original</strong> file! Since taking a picture is the only way to get to that url.  Indeed it gave the FULL path on disk!</p>
+<p><code>http://192.168.122.1:8080/postview/memory/1000/DCIM/100MSDCF/DSC08843.JPG</code></p>
+<p>Here is the quick script to capture and download.</p>
+<pre><code class="language-python">def capture_and_download():
+    camera = Camera()
+    camera.do(&quot;setPostviewImageSize&quot;, [&quot;Original&quot;])
+    response = camera.do(Actions.actTakePicture)
+    image_uri = response['result'][0][0]
+    img_data = requests.get(image_uri).content
+    with open('img.jpg', 'wb') as handler:
+        handler.write(img_data)
+</code></pre>
+<p>Could I do some URL hacking to get other files?  Yup! 🥳  I took a photo manually then tried the updated URL.  I now can download all the files by iterating backwards from the last known photo!  When the bytes of the images end, it's over. I'm sure Sony didn't want this for a reason... likely it would kill the camera so use it AT YOUR OWN RISK!</p>
+<h3 id="super-high-resolution-images">🧙‍♂️ Super High Resolution Images</h3>
+<p>Doubling the camera's 24 megapixels output is possible by using a burst of pictures!  It took a few days of hacking:</p>
+<ul>
+<li>Take pictures with smart remote API (4 seem to be the max at 10 seconds)</li>
+<li>Read images into memory</li>
+<li>Resize images by 200%</li>
+<li>Align similar features images</li>
+<li>Blend with transparency of 50%</li>
+<li>Repeat 3 times since it would be the first two super images then last two super super images to one.  (24.3 * 2) * 2 = 97.2 megapixels?!  It looks more like a 48.6 megapixel version.</li>
+</ul>
+<pre><code class="language-python">img1 = cv2.imread(img1_path)
+img2 = cv2.imread(img2_path)
+interpolation = cv2.INTER_LANCZOS4  # cv2.INTER_CUBIC
+scale = 2
+upscaled1 = cv2.resize(
+	img1, (img1.shape[1] * scale, img1.shape[0] * scale),   interpolation=interpolation)
+upscaled2 = cv2.resize(
+	img2, (img2.shape[1] * scale, img2.shape[0] * scale),   interpolation=interpolation)
+higher_resolution_img = align_images(upscaled1, upscaled2, debug=False)
+tmp_jpg = tempfile.NamedTemporaryFile(suffix='.JPG').name
+cv2.imwrite(tmp_jpg, higher_resolution_img)
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era. So part 2 is coming!</p>
+
+      </section>
+    </article>
+  </div>
+
+
+ See something inaccurate or need more detail? <a
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Hacking+my+Sony+A6000+Camera+Adding+Modern+Features">Submit a Pull
+        Request</a> to help me out!
+      <br />
+      <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
+<hr />
+
+<h3>Latest Posts</h3>
+  <ul class="unstyledUl">
+    <li>
+      <a class="read-more" href="linux-wifi-hotspot-usb3">Linux Wifi Hotspot with PiHole</a>
+    </li>
+    <li>
+      <a class="read-more" href="onboarding-devs">Effective Onboarding for New Engineers</a>
+    </li>
+    <li>
+      <a class="read-more" href="skateboard-gear">Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</a>
+    </li>
+    <li>
+      <a class="read-more" href="top-nuget-packages">Top 5 Nuget Packages</a>
+    </li>
+  </ul>
+
+      
+</main>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script async src="/site.js"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-93963699-1');
+</script>
+</body>
+
+</html>
