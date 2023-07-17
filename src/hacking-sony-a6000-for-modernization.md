@@ -224,6 +224,33 @@ tmp_jpg = tempfile.NamedTemporaryFile(suffix='.JPG').name
 cv2.imwrite(tmp_jpg, higher_resolution_img)
 ```
 
+## 🗺️ GPS
+
+A GPS module doesn't exist for this camera.  I've done a few proof of concepts but they have pros/cons. There are multiple ways to solve this
+
+- Use your phone to generate a QR code then take a picture of it in the camera. It can be posted processed.
+- Use something like google maps history to match images times with GPS location
+- Use hardware device like [Neo 6m](https://amzn.to/44Mfexf) hooked up to a raspberry pi/microcontroller to collect time/location then post process.
+- My favorite is a combination of methods. Is to add a [super small GPS device](https://amzn.to/3X2tOOF) that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I've tried.   The other major issue is something like a Raspberry Zero W 2 has a limit of 64GB of storage.  So it should be offloaded quickly.
+
+Quick python script to collect GPS data off the GPS serial device.
+```python
+# pip install pynmea2 pyserial
+import serial
+import pynmea2
+
+ser = serial.Serial("COM4", baudrate=9600, timeout=1.0)
+dataout = pynmea2.NMEAStreamReader()
+while True:
+    newdata = ser.readline().decode("utf-8")
+    if newdata[0:6] == "$GPRMC":
+        newmsg = pynmea2.parse(newdata)
+        lat = newmsg.latitude
+        lng = newmsg.longitude
+        print(f'Latitude {lat} Longitude {lng}')
+```
+
+
 
 ## Conclusion
 

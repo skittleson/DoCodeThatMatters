@@ -263,6 +263,29 @@ higher_resolution_img = align_images(upscaled1, upscaled2, debug=False)
 tmp_jpg = tempfile.NamedTemporaryFile(suffix='.JPG').name
 cv2.imwrite(tmp_jpg, higher_resolution_img)
 </code></pre>
+<h2 id="gps">🗺️ GPS</h2>
+<p>A GPS module doesn't exist for this camera.  I've done a few proof of concepts but they have pros/cons. There are multiple ways to solve this</p>
+<ul>
+<li>Use your phone to generate a QR code then take a picture of it in the camera. It can be posted processed.</li>
+<li>Use something like google maps history to match images times with GPS location</li>
+<li>Use hardware device like <a href="https://amzn.to/44Mfexf">Neo 6m</a> hooked up to a raspberry pi/microcontroller to collect time/location then post process.</li>
+<li>My favorite is a combination of methods. Is to add a <a href="https://amzn.to/3X2tOOF">super small GPS device</a> that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I've tried.   The other major issue is something like a Raspberry Zero W 2 has a limit of 64GB of storage.  So it should be offloaded quickly.</li>
+</ul>
+<p>Quick python script to collect GPS data off the GPS serial device.</p>
+<pre><code class="language-python"># pip install pynmea2 pyserial
+import serial
+import pynmea2
+
+ser = serial.Serial(&quot;COM4&quot;, baudrate=9600, timeout=1.0)
+dataout = pynmea2.NMEAStreamReader()
+while True:
+    newdata = ser.readline().decode(&quot;utf-8&quot;)
+    if newdata[0:6] == &quot;$GPRMC&quot;:
+        newmsg = pynmea2.parse(newdata)
+        lat = newmsg.latitude
+        lng = newmsg.longitude
+        print(f'Latitude {lat} Longitude {lng}')
+</code></pre>
 <h2 id="conclusion">Conclusion</h2>
 <p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/">See the full code on GitHub</a>  Part 2 is coming!</p>
 
