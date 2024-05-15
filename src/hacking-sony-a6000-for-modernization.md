@@ -68,8 +68,8 @@ Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then 
 
 To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu > page 2 > subpage 3 > FINDER/MONITOR > FINDER.  
 
-- [Sony A6000 but get it used on ebay](https://amzn.to/3oW4qO1)
-- [Powerline adapter](https://amzn.to/3oW4qO1)
+- [Sony A6000 but get it used on ebay](https://amzn.to/3oW4qO1) [or on Amazon](https://amzn.to/3oW4qO1)
+- [Power adapter](https://amzn.to/4afC0jy)
 - [HDMI to USB3 Adapter](https://amzn.to/3P84lBr)
 - [How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling](https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link)
 
@@ -115,7 +115,7 @@ Compression Setting(0x5004):(read only) (type=0x2) Enumeration [2,3,16,19] value
 
 ### 🧑‍💻 Sony's Camera SDK
 
-Sony's SDK is kind of bad/good. [petabite/libsonyapi: Python binding for the Sony Camera API (github.com)](https://github.com/petabite/libsonyapi)  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab > Application List  > Smart Remote Embedded.
+Sony's SDK is kind of bad/good. [petabite/libsonyapi: Python binding for the Sony Camera API (github.com)](https://github.com/petabite/libsonyapi)  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab > Application List  > Smart Remote Control ~Embedded~. It will stay in this mode until connected to it.
 
 A quick NMAP scan when connected to the camera.  
 ```
@@ -147,6 +147,7 @@ Just the 2 services it needs to allow the mobile app to make it's calls.  Using 
 ```python
 from libsonyapi.camera import Camera
 from libsonyapi.actions import Actions
+from pprint import pprint
 
 camera = Camera()  # create camera instance
 camera_info = camera.info()  # get camera camera_info
@@ -154,10 +155,9 @@ print(camera_info)
 print(camera.name)  # print name of camera
 print(camera.api_version)  # print api version of camera
 result = camera.do(Actions.actTakePicture)
-print(result)
+pprint(result)
 ```
-
-Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.
+This will take the camera out ot the app screen.  The camera kind of goes into dumb mode. Only the basic modes can be used.  I set it to "Intelligent Auto" to keep taking regular photos. Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.
 
 ```json
 {'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'awaitTakePicture', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getSupportedFlashMode']]}
@@ -186,6 +186,10 @@ After digging around, the post view image size could be changed to the **Origina
 
 Here is the quick script to capture and download.
 ```python
+import requests
+from libsonyapi.camera import Camera
+from libsonyapi.actions import Actions
+
 def capture_and_download():
     camera = Camera()
     camera.do("setPostviewImageSize", ["Original"])
@@ -194,6 +198,9 @@ def capture_and_download():
     img_data = requests.get(image_uri).content
     with open('img.jpg', 'wb') as handler:
         handler.write(img_data)
+
+if __name__ == '__main__':
+        capture_and_download()
 ```
 
 Could I do some URL hacking to get other files?  Yup! 🥳  I took a photo manually then tried the updated URL.  I now can download all the files by iterating backwards from the last known photo!  When the bytes of the images end, it's over. I'm sure Sony didn't want this for a reason... likely it would kill the camera so use it AT YOUR OWN RISK!
@@ -254,6 +261,6 @@ while True:
 
 ## Conclusion
 
-In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  Part 2 is coming!
+In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  Part 2 has been published.
 
 

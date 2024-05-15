@@ -1,0 +1,56 @@
+---
+title: Part 2 of Hacking my Sony A6000 Camera 
+keywords:
+  - Sony A6000
+  - Camera hacking
+  - time-lapse
+  - time lapse
+  - ftp uploader
+  - Second-hand purchase
+  - usb-c battery hack
+date: 2024-05-14
+description: Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.
+image: /images/Sony-A6000-Sony-16-50mm.jpg
+alt: Sony a6000
+priority: 0.9
+---
+
+
+## Introduction
+
+This is a smaller continuation of the previous blog post on hacking the Sony A6000 camera (come back for more updates).
+
+## Free Apps
+
+To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome https://github.com/ma1co/Sony-PMCA-RE. Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.
+
+
+## USB-C Battery Hack
+
+Batteries drain very quickly with this camera. The stock battery is around 1020mAh.  Swapping out batteries is common and tedious.  Getting [usb-c versions](https://amzn.to/4bBDFBc) of them helps with charging on the go but it's still annoying with cables.
+
+After a bit of hacking the [power adapter](https://amzn.to/4afC0jy) version of this, I bundled everything up into a single battery shell with a [usb-c](https://amzn.to/44Kd0jk) female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a [usb-c](https://amzn.to/44Kd0jk) input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the [power adapter](https://amzn.to/4afC0jy).
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uRE7KQktJBk?si=iQUhHBQ98gUw4M6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+## Data Transfers Hurdles
+
+A follow up from my previous post.
+
+### Using a Card Reader
+
+On the go, I keep this [card reader](https://amzn.to/3UJHEVi) near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.
+
+### Using the FTP uploader within the camera
+
+This idea of using the FTP uploader is great but it's very slow...  70 files in 13 minutes at full resolution JPEG files. If there is not a lot pictures this makes sense but typically taking the sd card out and data dumping is going to be much quicker still.
+
+Using the FTP uploader app mentioned above, i use this bit of python code to dump it into directory that i care about.
+
+`python -m pyftpdlib -u USER -P PASS -w`
+
+Reference to this command. https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python
+
+
+
+

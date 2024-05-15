@@ -2,13 +2,13 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Research on Bluetooth Proximity</title>
+    <title>Part 2 of Hacking my Sony A6000 Camera</title>
     <base href="https://docodethatmatters.com">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
-    <meta name="description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
-    <meta name="keywords" content="bluetooth proximity research,bluetooth,hcitool,l2ping" />
+    <meta itemprop="description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
+    <meta name="description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
+    <meta name="keywords" content="Sony A6000,Camera hacking,time-lapse,time lapse,ftp uploader,Second-hand purchase,usb-c battery hack" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:title" content="Research on Bluetooth Proximity - Do Code That Matters" />
-    <meta property="og:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:title" content="Part 2 of Hacking my Sony A6000 Camera - Do Code That Matters" />
+    <meta property="og:title" content="Part 2 of Hacking my Sony A6000 Camera - Do Code That Matters" />
+    <meta property="og:description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://docodethatmatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump" />
+    <meta name="twitter:description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80" />
+    <meta property="og:image" content="/images/Sony-A6000-Sony-16-50mm.jpg" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
@@ -78,10 +78,10 @@
   <div class="row">
     <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/research-bluetooth-proximity">
-        <h1 itemprop="name headline">Research on Bluetooth Proximity</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/hacking-sony-a6000-more">
+        <h1 itemprop="name headline">Part 2 of Hacking my Sony A6000 Camera</h1>
         <small>
-          <time itemprop="datePublished" datetime="2019-10-19T00:00:00.000Z">Oct 19 2019</time>
+          <time itemprop="datePublished" datetime="2024-05-14T00:00:00.000Z">May 14 2024</time>
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -98,65 +98,29 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="A bluetooth device that can be discovered with simple scan." src="https://images.unsplash.com/photo-1570993492891-ac6f259ce777?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1650&amp;q=80">
-          <figcaption itemprop="caption">A bluetooth device that can be discovered with simple scan.</figcaption>
+          <img itemprop="url contentUrl" alt="Sony a6000" src="/images/Sony-A6000-Sony-16-50mm.jpg">
+          <figcaption itemprop="caption">Sony a6000</figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <p>My research on bluetooth proximity using open tools such as <code>hcitool</code>,<code>btmgmt</code>, <code>l2ping</code>, and <code>hcidump</code>. A follow up to <a href="raspberry-pi-bluetooth-proximity">Raspberry Pi – Bluetooth Proximity</a> blog post.</p>
-<h2 id="commands">Commands</h2>
-<p>Replace <code>&lt;MAC&gt;</code> with a bluetooth mac address.</p>
-<h3 id="scan-for-bluetooth-le-devices">Scan for Bluetooth LE Devices:</h3>
-<p><code>timeout --signal=SIGINT 30 hcitool lescan</code></p>
-<h3 id="get-bluetooth-le-devices-with-rssi-values">Get Bluetooth LE Devices with RSSI values:</h3>
-<p><code>btmgmt find</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -92 flags 0x0000
-    AD flags 0x1a
-    eir_len 14
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -97 flags 0x0000
-    AD flags 0x1a
-    eir_len 18
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -77 flags 0x0000
-    AD flags 0x06
-    name N016Y
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Public rssi -100 flags 0x0004
-    AD flags 0x00
-    eir_len 28
-    hci0 dev_found: &lt;SOME_MAC&gt; type LE Random rssi -94 flags 0x0000
-</code></pre>
-<h3 id="ping-bluetooth-enable-device-without-pairing">Ping bluetooth enable device without pairing:</h3>
-<p><code>l2ping -c 3 &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code>Ping: &lt;MAC&gt; from &lt;THIS DEVICE&gt; (data size 44) ...
-44 bytes &lt;MAC&gt; id 0 time 6.05ms
-44 bytes &lt;MAC&gt; id 1 time 9.90ms
-♥2 sent, 2 received, 0% loss
-</code></pre>
-<h3 id="dump-all-data-of-a-paired-bluetooth-device">Dump all data of a paired bluetooth device:</h3>
-<p><code>hcidump -a</code></p>
-<h3 id="to-request-authorization-from-device">To request authorization from device:</h3>
-<p><code>hcitool cc &lt;MAC&gt;; hcitool auth &lt;MAC&gt;</code></p>
-<h3 id="attempt-connection-then-get-rssi-value">Attempt connection then get RSSI value:</h3>
-<p><code>hcitool cc &lt;MAC&gt; &amp;&amp; hcitool con &amp;&amp; hcitool rssi &lt;MAC&gt;</code></p>
-<p>Response:</p>
-<pre><code class="language-bash">Connections:
-        &lt; ACL &lt;MAC&gt; handle 12 state 7 lm MASTER
-RSSI return value: -4
-</code></pre>
-<p>This attempts to connect which doesn't work but the RSSI value is now present for device.</p>
-<h3 id="attempt-to-get-rssi-value-without-trying-to-connect-to-device">Attempt to get RSSI value without trying to connect to device:</h3>
-<p><code>hcitool cmd 0x05 0x0005 0x00 0x00 &lt;MAC&gt;</code></p>
-<h2 id="some-resources">Some Resources</h2>
-<p><a href="http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/">http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/</a>
-<a href="https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1">https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1</a>
-<a href="https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands">https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands</a>
-<a href="https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection">access terminal over bluetooth</a>
-<a href="https://ieeexplore.ieee.org/document/7124822">https://ieeexplore.ieee.org/document/7124822</a>
-<a href="https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf">https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf</a>
-<a href="https://stackoverflow.com/a/56522568/2414540">https://stackoverflow.com/a/56522568/2414540</a>
-<a href="https://www.raspberrypi.org/forums/viewtopic.php?t=47466">https://www.raspberrypi.org/forums/viewtopic.php?t=47466</a></p>
+        <h2 id="introduction">Introduction</h2>
+<p>This is a smaller continuation of the previous blog post on hacking the Sony A6000 camera (come back for more updates).</p>
+<h2 id="free-apps">Free Apps</h2>
+<p>To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome <a href="https://github.com/ma1co/Sony-PMCA-RE">https://github.com/ma1co/Sony-PMCA-RE</a>. Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.</p>
+<h2 id="usb-c-battery-hack">USB-C Battery Hack</h2>
+<p>Batteries drain very quickly with this camera. The stock battery is around 1020mAh.  Swapping out batteries is common and tedious.  Getting <a href="https://amzn.to/4bBDFBc">usb-c versions</a> of them helps with charging on the go but it's still annoying with cables.</p>
+<p>After a bit of hacking the <a href="https://amzn.to/4afC0jy">power adapter</a> version of this, I bundled everything up into a single battery shell with a <a href="https://amzn.to/44Kd0jk">usb-c</a> female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a <a href="https://amzn.to/44Kd0jk">usb-c</a> input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the <a href="https://amzn.to/4afC0jy">power adapter</a>.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uRE7KQktJBk?si=iQUhHBQ98gUw4M6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<h2 id="data-transfers-hurdles">Data Transfers Hurdles</h2>
+<p>A follow up from my previous post.</p>
+<h3 id="using-a-card-reader">Using a Card Reader</h3>
+<p>On the go, I keep this <a href="https://amzn.to/3UJHEVi">card reader</a> near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.</p>
+<h3 id="using-the-ftp-uploader-within-the-camera">Using the FTP uploader within the camera</h3>
+<p>This idea of using the FTP uploader is great but it's very slow...  70 files in 13 minutes at full resolution JPEG files. If there is not a lot pictures this makes sense but typically taking the sd card out and data dumping is going to be much quicker still.</p>
+<p>Using the FTP uploader app mentioned above, i use this bit of python code to dump it into directory that i care about.</p>
+<p><code>python -m pyftpdlib -u USER -P PASS -w</code></p>
+<p>Reference to this command. <a href="https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python">https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python</a></p>
 
       </section>
     </article>
@@ -164,7 +128,7 @@ RSSI return value: -4
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Research+on+Bluetooth+Proximity">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Part+2+of+Hacking+my+Sony+A6000+Camera">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
@@ -172,9 +136,6 @@ RSSI return value: -4
 
 <h3>Latest Posts</h3>
   <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="hacking-sony-a6000-more">Part 2 of Hacking my Sony A6000 Camera</a>
-    </li>
     <li>
       <a class="read-more" href="hacking-sony-a6000-for-modernization">Hacking my Sony A6000 Camera Adding Modern Features</a>
     </li>
@@ -192,11 +153,7 @@ RSSI return value: -4
       
 </main>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
-<script>hljs.highlightAll();</script>
+
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>

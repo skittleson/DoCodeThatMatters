@@ -144,8 +144,8 @@ Done
 <p>Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then a HDMI Video capture device.  It shows up as a web camera device on the computer.  The output is 1080p but good enough for most meetings.   <a href="https://www.hanselman.com/blog/good-better-best-creating-the-ultimate-remote-worker-webcam-setup-on-a-budget">Scott Hanselman's Blog has a good write up. </a></p>
 <p>To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu &gt; page 2 &gt; subpage 3 &gt; FINDER/MONITOR &gt; FINDER.</p>
 <ul>
-<li><a href="https://amzn.to/3oW4qO1">Sony A6000 but get it used on ebay</a></li>
-<li><a href="https://amzn.to/3oW4qO1">Powerline adapter</a></li>
+<li><a href="https://amzn.to/3oW4qO1">Sony A6000 but get it used on ebay</a> <a href="https://amzn.to/3oW4qO1">or on Amazon</a></li>
+<li><a href="https://amzn.to/4afC0jy">Power adapter</a></li>
 <li><a href="https://amzn.to/3P84lBr">HDMI to USB3 Adapter</a></li>
 <li><a href="https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link">How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling</a></li>
 </ul>
@@ -180,7 +180,7 @@ Compression Setting(0x5004):(read only) (type=0x2) Enumeration [2,3,16,19] value
 <p><strong>Capture image and download image with timestamp</strong>
 `gphoto2 --capture-image-and-download --filename %Y%m%d%H%M%S.jpg -q</p>
 <h3 id="sonys-camera-sdk">🧑‍💻 Sony's Camera SDK</h3>
-<p>Sony's SDK is kind of bad/good. <a href="https://github.com/petabite/libsonyapi">petabite/libsonyapi: Python binding for the Sony Camera API (github.com)</a>  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab &gt; Application List  &gt; Smart Remote Embedded.</p>
+<p>Sony's SDK is kind of bad/good. <a href="https://github.com/petabite/libsonyapi">petabite/libsonyapi: Python binding for the Sony Camera API (github.com)</a>  It gave some helpful hints here about the API endpoints but still a no go.   Put the camera in smart remote mode Apps tab &gt; Application List  &gt; Smart Remote Control <sub>Embedded</sub>. It will stay in this mode until connected to it.</p>
 <p>A quick NMAP scan when connected to the camera.</p>
 <pre><code>Starting Nmap 7.94 ( https://nmap.org ) at 2023-06-13 16:42 Pacific Daylight Time
 NSE: Loaded 156 scripts for scanning.
@@ -207,6 +207,7 @@ Initiating Service scan at 16:43
 <p>Just the 2 services it needs to allow the mobile app to make it's calls.  Using their SDK, this works!</p>
 <pre><code class="language-python">from libsonyapi.camera import Camera
 from libsonyapi.actions import Actions
+from pprint import pprint
 
 camera = Camera()  # create camera instance
 camera_info = camera.info()  # get camera camera_info
@@ -214,9 +215,9 @@ print(camera_info)
 print(camera.name)  # print name of camera
 print(camera.api_version)  # print api version of camera
 result = camera.do(Actions.actTakePicture)
-print(result)
+pprint(result)
 </code></pre>
-<p>Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.</p>
+<p>This will take the camera out ot the app screen.  The camera kind of goes into dumb mode. Only the basic modes can be used.  I set it to &quot;Intelligent Auto&quot; to keep taking regular photos. Only a few API calls!  Which means this camera wont be able to download any files via the API restful endpoints. 😔  It least it's not supported.</p>
 <pre><code class="language-json">{'name': 'GOODENERGYGAINS', 'api version': '1.0', 'supported services': ['guide', 'accessControl', 'camera'], 'available apis': [['getVersions', 'getMethodTypes', 'getApplicationInfo', 'getAvailableApiList', 'getEvent', 'actTakePicture', 'stopRecMode', 'startLiveview', 'stopLiveview', 'awaitTakePicture', 'setSelfTimer', 'getSelfTimer', 'getAvailableSelfTimer', 'getSupportedSelfTimer', 'getExposureCompensation', 'getAvailableExposureCompensation', 'getSupportedExposureCompensation', 'setShootMode', 'getShootMode', 'getAvailableShootMode', 'getSupportedShootMode', 'getSupportedFlashMode']]}
 </code></pre>
 <p>When taking the picture the response gives back an image! Yay! but it's odd looking for the original ones that are downloaded.</p>
@@ -231,7 +232,11 @@ print(result)
 <p>After digging around, the post view image size could be changed to the <strong>Original</strong> file! Since taking a picture is the only way to get to that url.  Indeed it gave the FULL path on disk!</p>
 <p><code>http://192.168.122.1:8080/postview/memory/1000/DCIM/100MSDCF/DSC08843.JPG</code></p>
 <p>Here is the quick script to capture and download.</p>
-<pre><code class="language-python">def capture_and_download():
+<pre><code class="language-python">import requests
+from libsonyapi.camera import Camera
+from libsonyapi.actions import Actions
+
+def capture_and_download():
     camera = Camera()
     camera.do(&quot;setPostviewImageSize&quot;, [&quot;Original&quot;])
     response = camera.do(Actions.actTakePicture)
@@ -239,6 +244,9 @@ print(result)
     img_data = requests.get(image_uri).content
     with open('img.jpg', 'wb') as handler:
         handler.write(img_data)
+
+if __name__ == '__main__':
+        capture_and_download()
 </code></pre>
 <p>Could I do some URL hacking to get other files?  Yup! 🥳  I took a photo manually then tried the updated URL.  I now can download all the files by iterating backwards from the last known photo!  When the bytes of the images end, it's over. I'm sure Sony didn't want this for a reason... likely it would kill the camera so use it AT YOUR OWN RISK!</p>
 <h3 id="super-high-resolution-images">🧙‍♂️ Super High Resolution Images</h3>
@@ -287,7 +295,7 @@ while True:
         print(f'Latitude {lat} Longitude {lng}')
 </code></pre>
 <h2 id="conclusion">Conclusion</h2>
-<p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/">See the full code on GitHub</a>  Part 2 is coming!</p>
+<p>In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  <a href="https://github.com/skittleson/dslrCameraPowerRename/blob/main/">See the full code on GitHub</a>  Part 2 has been published.</p>
 
       </section>
     </article>
@@ -304,6 +312,9 @@ while True:
 <h3>Latest Posts</h3>
   <ul class="unstyledUl">
     <li>
+      <a class="read-more" href="hacking-sony-a6000-more">Part 2 of Hacking my Sony A6000 Camera</a>
+    </li>
+    <li>
       <a class="read-more" href="linux-wifi-hotspot-usb3">Linux Wifi Hotspot with PiHole</a>
     </li>
     <li>
@@ -311,9 +322,6 @@ while True:
     </li>
     <li>
       <a class="read-more" href="skateboard-gear">Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</a>
-    </li>
-    <li>
-      <a class="read-more" href="top-nuget-packages">Top 5 Nuget Packages</a>
     </li>
   </ul>
 
