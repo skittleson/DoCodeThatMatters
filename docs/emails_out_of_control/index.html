@@ -104,10 +104,51 @@
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
-        <h2 id="introduction">Introduction</h2>
+        <style>
+  body .gist .gist-file {
+    margin-bottom: 0;
+    border: 1px dashed #adb5bd;
+    border-radius: 0;
+  }
+  body .gist .gist-data {
+    border-bottom: none;
+    border-radius: 0;
+    background-color: #2e2e2e;
+    color: #f8f8f2;
+  }
+  body .gist .blob-wrapper {
+    border-radius: 0;
+  }
+  body .gist .highlight {
+    background-color: transparent;
+    font-family: 'Droid Sans Mono', monospace;
+    font-size: 14px;
+  }
+  body .gist .highlight td {
+    padding: 5px 15px !important;
+    line-height: 1;
+    font-family: inherit;
+    font-size: inherit;
+  }
+  body .gist tr:first-child td {
+    padding-top: 15px !important;
+  }
+  body .gist tr:last-child td {
+    padding-bottom: 15px !important;
+  }
+  body .gist .blob-num {
+    color: #ced4da;
+    background-color: #495057;
+    pointer-events: none;
+  }
+  body .gist .gist-meta {
+    display: none;
+  }
+</style>
+<h2 id="introduction">Introduction</h2>
 <p>My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  Email is here to stay and i have chose not to commit to a zero inbox game.  So this is my attempt to using some code to analyze and clean up existing messages.  Let's get some control back.</p>
 <h2 id="code">Code</h2>
-<p><strong>TLDR;</strong>  the script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a &quot;top FROM&quot; emails then displays it.  The second script handles removing a single from email address at a time.</p>
+<p><strong>TLDR;</strong>  the <code>who_has_email_the_most.py</code> script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a &quot;top FROM&quot; emails then displays it.  The <code>delete_by_email_address.py</code> script handles removing a single from email address at a time.</p>
 <script src="https://gist.github.com/skittleson/2c6e7a436229f558c86f3c67cefb2ee3.js"></script>
 <h3 id="data">Data</h3>
 <p>Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion.</p>
