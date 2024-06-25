@@ -53,8 +53,8 @@ Mostly newsletters, some transactional.  Having a time-to-live on some of these 
 
 - Unsubscribe from the top offenders
 - Using a script, delete the top offending emails.
-- Created some rules to archive emails via the web portal. Doesnt seem like it worth optimizing.
-- Run the script top offenders monthly to evaluate who is wasting my time
+- Created some rules to archive emails via the web portal.
+- Run the script top offenders monthly to evaluate who is wasting my time the most
 
 ## Conclusion
 
