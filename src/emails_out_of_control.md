@@ -10,47 +10,6 @@ image: /images/email-running.png
 alt: An email running away from being cleaned up.
 priority: 0.9
 ---
-<style>
-  body .gist .gist-file {
-    margin-bottom: 0;
-    border: 1px dashed #adb5bd;
-    border-radius: 0;
-  }
-  body .gist .gist-data {
-    border-bottom: none;
-    border-radius: 0;
-    background-color: #2e2e2e;
-    color: #f8f8f2;
-  }
-  body .gist .blob-wrapper {
-    border-radius: 0;
-  }
-  body .gist .highlight {
-    background-color: transparent;
-    font-family: 'Droid Sans Mono', monospace;
-    font-size: 14px;
-  }
-  body .gist .highlight td {
-    padding: 5px 15px !important;
-    line-height: 1;
-    font-family: inherit;
-    font-size: inherit;
-  }
-  body .gist tr:first-child td {
-    padding-top: 15px !important;
-  }
-  body .gist tr:last-child td {
-    padding-bottom: 15px !important;
-  }
-  body .gist .blob-num {
-    color: #ced4da;
-    background-color: #495057;
-    pointer-events: none;
-  }
-  body .gist .gist-meta {
-    display: none;
-  }
-</style>
 
 ## Introduction
 
@@ -58,7 +17,7 @@ My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  
 
 ## Code
 
-**TLDR;**  the `who_has_email_the_most.py` script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a "top FROM" emails then displays it.  The `delete_by_email_address.py` script handles removing a single from email address at a time.
+**TLDR;**  the `who_has_email_the_most` script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a "top FROM" emails then displays it.  The `mark_for_deletions` script handles removing a single from email address at a time.
 
 <script src="https://gist.github.com/skittleson/2c6e7a436229f558c86f3c67cefb2ee3.js"></script>
 
