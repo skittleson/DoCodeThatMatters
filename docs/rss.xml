@@ -9,6 +9,13 @@
         <ttl>30</ttl>
         <atom:link href="https://DoCodeThatMatters.com/rss.xml" rel="self" type="application/rss+xml" />
         <item>
+            <title>My Emails Are Out Of Control</title>
+            <description>My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.</description>
+            <link>https://DoCodeThatMatters.com/emails_out_of_control</link>
+            <guid>https://DoCodeThatMatters.com/emails_out_of_control</guid>
+            <pubDate>2024-06-25T00:00:00.0000000</pubDate>
+        </item>
+        <item>
             <title>Part 2 of Hacking my Sony A6000 Camera</title>
             <description>Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.</description>
             <link>https://DoCodeThatMatters.com/hacking-sony-a6000-more</link>

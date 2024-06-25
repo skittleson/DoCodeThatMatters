@@ -14,6 +14,25 @@
   "language": "en-us",
   "items": [
     {
+      "id": "https://docodethatmatters.com/emails_out_of_control",
+      "url": "https://docodethatmatters.com/emails_out_of_control",
+      "title": "My Emails Are Out Of Control",
+      "summary": "My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.",
+      "image": "https://docodethatmatters.com/images/email-running.png",
+      "date_published": "2024-06-25T00:00:00-07:00",
+      "authors": [
+        {
+          "name": "Spencer Kittleson",
+          "url": "https://twitter.com/@skittleson"
+        }
+      ],
+      "tags": [
+        "personal email",
+        "python email automation",
+        "analyze email offenders"
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/hacking-sony-a6000-more",
       "url": "https://docodethatmatters.com/hacking-sony-a6000-more",
       "title": "Part 2 of Hacking my Sony A6000 Camera",

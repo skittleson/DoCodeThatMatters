@@ -2,13 +2,13 @@
 <html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
 <head>
     <meta charset="UTF-8">
-    <title>Part 2 of Hacking my Sony A6000 Camera</title>
+    <title>My Emails Are Out Of Control</title>
     <base href="https://docodethatmatters.com">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
-    <meta name="description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
-    <meta name="keywords" content="Sony A6000,Camera hacking,time-lapse,time lapse,ftp uploader,Second-hand purchase,usb-c battery hack" />
+    <meta itemprop="description" content="My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out." />
+    <meta name="description" content="My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out." />
+    <meta name="keywords" content="personal email,python email automation,analyze email offenders" />
     <meta name="Distribution" content="Global" />
     <meta name="Rating" content="General" />
     <meta name="Robots" content="INDEX,FOLLOW" />
@@ -16,16 +16,16 @@
     <meta name="Revisit-after" content="31 Days" />
     <meta name="application-name" content="Do Code That Matters">
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Part 2 of Hacking my Sony A6000 Camera - Do Code That Matters" />
-    <meta property="og:title" content="Part 2 of Hacking my Sony A6000 Camera - Do Code That Matters" />
-    <meta property="og:description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
+    <meta name="twitter:title" content="My Emails Are Out Of Control - Do Code That Matters" />
+    <meta property="og:title" content="My Emails Are Out Of Control - Do Code That Matters" />
+    <meta property="og:description" content="My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out." />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://docodethatmatters.com" />
     <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go." />
+    <meta name="twitter:description" content="My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="/images/Sony-A6000-Sony-16-50mm.jpg" />
+    <meta property="og:image" content="/images/email-running.png" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
@@ -78,10 +78,10 @@
   <div class="row">
     <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/hacking-sony-a6000-more">
-        <h1 itemprop="name headline">Part 2 of Hacking my Sony A6000 Camera</h1>
+        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/emails_out_of_control">
+        <h1 itemprop="name headline">My Emails Are Out Of Control</h1>
         <small>
-          <time itemprop="datePublished" datetime="2024-05-14T00:00:00.000Z">May 14 2024</time>
+          <time itemprop="datePublished" datetime="2024-06-25T00:00:00.000Z">Jun 25 2024</time>
           by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
             <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography">
@@ -98,29 +98,49 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Sony a6000" src="/images/Sony-A6000-Sony-16-50mm.jpg">
-          <figcaption itemprop="caption">Sony a6000</figcaption>
+          <img itemprop="url contentUrl" alt="An email running away from being cleaned up." src="/images/email-running.png">
+          <figcaption itemprop="caption">An email running away from being cleaned up.</figcaption>
         </figure>
         <br />
       </header>
       <section itemprop="articleBody" class="article-body">
         <h2 id="introduction">Introduction</h2>
-<p>This is a smaller continuation of the previous blog post on hacking the Sony A6000 camera (come back for more updates).</p>
-<h2 id="free-apps">Free Apps</h2>
-<p>To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome <a href="https://github.com/ma1co/Sony-PMCA-RE">https://github.com/ma1co/Sony-PMCA-RE</a>. Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.</p>
-<h2 id="usb-c-battery-hack">USB-C Battery Hack</h2>
-<p>Batteries drain very quickly with this camera. The stock battery is around 1020mAh.  Swapping out batteries is common and tedious.  Getting <a href="https://amzn.to/4bBDFBc">usb-c versions</a> of them helps with charging on the go but it's still annoying with cables.</p>
-<p>After a bit of hacking the <a href="https://amzn.to/4afC0jy">power adapter</a> version of this, I bundled everything up into a single battery shell with a <a href="https://amzn.to/44Kd0jk">usb-c</a> female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a <a href="https://amzn.to/44Kd0jk">usb-c</a> input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the <a href="https://amzn.to/4afC0jy">power adapter</a>.</p>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/uRE7KQktJBk?si=iQUhHBQ98gUw4M6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-<h2 id="data-transfers-hurdles">Data Transfers Hurdles</h2>
-<p>A follow up from my previous post.</p>
-<h3 id="using-a-card-reader">Using a Card Reader</h3>
-<p>On the go, I keep this <a href="https://amzn.to/3UJHEVi">card reader</a> near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.</p>
-<h3 id="using-the-ftp-uploader-within-the-camera">Using the FTP uploader within the camera</h3>
-<p>This idea of using the FTP uploader is great but it's very slow...  70 files in 13 minutes at full resolution JPEG files. If there is not a lot pictures this makes sense but typically taking the sd card out and data dumping is going to be much quicker still.</p>
-<p>Using the FTP uploader app mentioned above, i use this bit of python code to dump it into directory that i care about.</p>
-<p><code>python -m pyftpdlib -u USER -P PASS -w</code></p>
-<p>Reference to this command. <a href="https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python">https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python</a></p>
+<p>My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  Email is here to stay and i have chose not to commit to a zero inbox game.  So this is my attempt to using some code to analyze and clean up existing messages.  Let's get some control back.</p>
+<h2 id="code">Code</h2>
+<p><strong>TLDR;</strong>  the script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a &quot;top FROM&quot; emails then displays it.  The second script handles removing a single from email address at a time.</p>
+<script src="https://gist.github.com/skittleson/2c6e7a436229f558c86f3c67cefb2ee3.js"></script>
+<h3 id="data">Data</h3>
+<p>Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion.</p>
+<pre><code class="language-json">[('news@e.eyebuydirect.com', 290),
+ ('shipment-tracking@amazon.com', 218),
+ ('friendupdates@facebookmail.com', 215),
+ ('express@em.express.com', 211),
+ ('Costco@digital.costco.com', 207),
+ ('photos@onedrive.com', 195),
+ ('noreply@redditmail.com', 179),
+ ('order-update@amazon.com', 178),
+ ('Shutterfly@em.shutterfly.com', 159),
+ ('REDACTED01@REDACTED01.com', 157),
+ ('ProFlowers@news.proflowers.com', 151),
+ ('USPSInformeddelivery@email.informeddelivery.usps.com', 149),
+ ('marketplace-messages@amazon.com', 122),
+ ('microsoft.start@email2.microsoft.com', 114),
+ ('redcross@theamericanredcross.org', 112),
+ ('REDACTED02@REDACTED02', 106),
+ ('newsmax@latest.newsmax.com', 101),
+ ('noreply@email.amctheatres.com', 95),
+ ('jobs-listings@linkedin.com', 95),
+ ('reply@rs.email.nextdoor.com', 93)]
+</code></pre>
+<h2 id="solutions">Solutions</h2>
+<ul>
+<li>Unsubscribe from the top offenders</li>
+<li>Using a script, delete the top offending emails.</li>
+<li>Created some rules to archive emails via the web portal. Doesnt seem like it worth optimizing.</li>
+<li>Run the script top offenders monthly to evaluate who is wasting my time</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>A bit of house cleaning will keep some sanity to my inbox.  With the addition of automation, it should get better over time.</p>
 
       </section>
     </article>
@@ -128,7 +148,7 @@
 
 
  See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Part+2+of+Hacking+my+Sony+A6000+Camera">Submit a Pull
+        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20My+Emails+Are+Out+Of+Control">Submit a Pull
         Request</a> to help me out!
       <br />
       <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
@@ -137,7 +157,7 @@
 <h3>Latest Posts</h3>
   <ul class="unstyledUl">
     <li>
-      <a class="read-more" href="emails_out_of_control">My Emails Are Out Of Control</a>
+      <a class="read-more" href="hacking-sony-a6000-more">Part 2 of Hacking my Sony A6000 Camera</a>
     </li>
     <li>
       <a class="read-more" href="hacking-sony-a6000-for-modernization">Hacking my Sony A6000 Camera Adding Modern Features</a>
@@ -153,7 +173,11 @@
       
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>
