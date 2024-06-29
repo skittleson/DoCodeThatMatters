@@ -7,6 +7,7 @@ keywords:
   - super resolution image
   - Second-hand purchase
 date: 2023-07-17
+modified: 2024-06-28
 description: Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.
 image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6000
@@ -15,13 +16,13 @@ priority: 0.9
 
 
 ## Introduction
-Hey there! In this blog post, I'm diving into a fun project: bringing my Sony A6000 camera into the modern era. This camera is a gem, even though it was made way back in 2013/3014. I snagged it on eBay as a second-hand purchase, and now I want to give it a modern makeover by improving its data transfer capabilities, increasing resolution and possibly even adding GPS functionality.
+Hey there! In this blog post, I'm diving into a fun project: bringing my Sony A6000 camera into the modern era. This camera is a gem, even though it was made way back in 2013/3014. I snagged it on eBay as a second-hand purchase, and now I want to give it a modern makeover by improving its data transfer capabilities, increasing resolution and possibly even adding GPS functionality. 
 
 There are a few hurdles I've come across. The main challenge is finding a way to directly connect and communicate with the camera. It has Wi-Fi hotspot, which sounds great, but unfortunately, it enters a "dumb mode" when I try to use it for data transfer. It also limits a cell phone to no internet. Another option is the USB mass storage mode, but it turns out to be a bit problematic. Whenever pulling data too quickly, it just freezes up. Plus, it's pretty sluggish with its USB 2.0 connection which can take hours to download data.
 
 Luckily, I've discovered the PC remote feature, which can be quite handy when the camera is connected to a computer. There's this fantastic library called GPhoto2 that works wonders in this scenario, especially if I'm running Linux. It allows me to perform various actions on the camera remotely, like capturing images. However, I'm not keen on attaching a Raspberry Pi to my camera unless it's absolutely necessary. Alternatively, I'm considering a microcontroller with an OTG port as a potential solution.
 
-Join me on this hacking journey as I explore ways to modernize my Sony A6000 camera! Let's get started!
+Join me on this hacking journey as I explore ways to modernize my Sony A6000 camera! Let's get started! [🚀 Part 2 micro version has been published. 🎉](/hacking-sony-a6000-more/)
 
 ## Getting Data Fast
 
@@ -261,6 +262,8 @@ while True:
 
 ## Conclusion
 
-In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  Part 2 has been published.
+In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  
+
+[🚀 Part 2 micro version has been published. 🎉](/hacking-sony-a6000-more/)
 
 

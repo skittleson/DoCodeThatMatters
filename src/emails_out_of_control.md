@@ -23,7 +23,7 @@ My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  
 
 ### Data
 
-Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion.
+Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion. EDIT: there is a feature called Sweep in Outlook.com that does this.
 
 ```json
 [('news@e.eyebuydirect.com', 290),
@@ -58,5 +58,5 @@ Mostly newsletters, some transactional.  Having a time-to-live on some of these 
 
 ## Conclusion
 
-A bit of house cleaning will keep some sanity to my inbox.  With the addition of automation, it should get better over time.
+A bit of house cleaning will keep some sanity in my inbox.  With the addition of automation, it should get better over time.
 
