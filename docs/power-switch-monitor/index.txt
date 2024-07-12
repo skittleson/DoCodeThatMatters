@@ -1,4 +1,4 @@
-﻿
+
 Power Switch Monitor with an Arduino device
 Do Code That Matters
 Blog

@@ -1,4 +1,4 @@
-﻿
+
 Software Engineering Lessons
 Do Code That Matters
 Blog

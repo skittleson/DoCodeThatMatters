@@ -14,7 +14,7 @@ def convert_html_to_text():
         if '.' not in folder and os.path.exists(index_html_root):
             with open(index_html_root,'r', encoding='utf-8') as r:
                 html_content = r.read()           
-                soup = BeautifulSoup(html_content)
+                soup = BeautifulSoup(html_content, 'html.parser')
                 with open(index_text_root,'w', encoding='utf-8') as f:
                     plain_text = soup.get_text()
                     plain_text = re.sub(r'\n{3,}', '\n', plain_text)

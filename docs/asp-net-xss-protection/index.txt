@@ -1,4 +1,4 @@
-﻿
+
 ASP.NET XSS protection
 Do Code That Matters
 Blog

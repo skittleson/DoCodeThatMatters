@@ -160,7 +160,7 @@ namespace StaticSiteBuilder.Logic {
                 if (dateField != null
                     && dateField is DateTime dateTimeValidated
                     && dateTimeValidated != DateTime.MinValue) {
-                    writer.WriteSafeString($"\"{dateTimeValidated:ddd, dd MMM yyyy HH:mm:ss zzz}\"");
+                    writer.WriteSafeString($"{dateTimeValidated:ddd, dd MMM yyyy HH:mm:ss zzz}");
                 }
             });
             Handlebars.RegisterHelper("urlEncode", (writer, context, parameters) => {
@@ -182,7 +182,7 @@ namespace StaticSiteBuilder.Logic {
                             Path = Path.GetFileNameWithoutExtension(context["path"].ToString()),
                             Port = -1
                         };
-                        writer.WriteSafeString(uriBuilder.Path.ToString());
+                        writer.WriteSafeString(HttpUtility.UrlEncode(uriBuilder.Path.ToString()));
                     }
                 });
             }

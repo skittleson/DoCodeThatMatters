@@ -1,4 +1,4 @@
-﻿
+
 Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
 Do Code That Matters
 Blog

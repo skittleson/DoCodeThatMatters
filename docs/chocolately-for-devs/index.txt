@@ -1,4 +1,4 @@
-﻿
+
 Common Apps for Devs over Chocolatey
 Do Code That Matters
 Blog
