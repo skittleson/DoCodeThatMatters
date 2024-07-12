@@ -15,10 +15,51 @@ def convert_html_to_text():
             with open(index_html_root,'r', encoding='utf-8') as r:
                 html_content = r.read()           
                 soup = BeautifulSoup(html_content, 'html.parser')
+                for a in soup.find_all('a'):
+                    a.replace_with(f"{a.get_text()}({a['href']}) ")
                 with open(index_text_root,'w', encoding='utf-8') as f:
                     plain_text = soup.get_text()
                     plain_text = re.sub(r'\n{3,}', '\n', plain_text)
                     f.write(plain_text)
+
+def update_rss_feed_text_version_lengths():
+
+    import xml.etree.ElementTree as ET
+    # Save the updated RSS feed to a file
+    updated_rss_feed = ""
+    ET.register_namespace("atom", "http://www.w3.org/2005/Atom")
+    tree = ET.parse('docs/rss.xml')
+    root = tree.getroot()
+    # with open('docs/rss.xml', 'r', encoding='utf-8') as f:
+        # Parse the RSS feed
+        # root = ET.fromstring(f.read())
+        # root.attrib['xmlns:atom'] = 'http://www.w3.org/2005/Atom' 
+        # namespace = {'atom': 'http://www.w3.org/2005/Atom'}
+
+        # Iterate through each item in the RSS feed
+    for item in root.findall('.//item'):
+        enclosure = item.find('enclosure')
+        if enclosure is not None:
+            enclosure_url = enclosure.attrib['url']
+            
+            # Fetch the content from the enclosure URL
+            response = requests.get(enclosure_url)
+            content = response.text
+            
+            # Determine the length of the text
+            text_length = len(content)
+            
+            # Create a new element for the text length
+            enclosure.attrib['length'] = str(text_length)
+
+    # Write the updated RSS feed back to a string
+    updated_rss_feed = ET.tostring(root, encoding='utf-8').decode("utf-8")
+
+    with open('docs/rss.xml', 'w', encoding='utf-8') as f:
+        f.write(f'<?xml version="1.0" encoding="utf-8" ?>\n{updated_rss_feed}')
+
+    
+
 
 def is_absolute(url):
     return bool(requests.utils.urlparse(url).netloc)
@@ -66,4 +107,5 @@ def check_all_pages_for_broken_links():
 
 if __name__ == '__main__':
     convert_html_to_text()
-    check_all_pages_for_broken_links()
+    update_rss_feed_text_version_lengths()
+    # check_all_pages_for_broken_links()
