@@ -1,0 +1,150 @@
+﻿
+Software Engineering Lessons
+Do Code That Matters
+Blog
+About
+Software Engineering Lessons
+
+Oct 23 2018
+          by
+          
+
+Spencer Kittleson
+Fields notes as a software engineer
+My 2018 year's goal was to put the lessons I've learned in the field of as software engineer into a format that is easily referenced. Keep coming back for updates!
+Do Code Reviews
+Code reviews are critical. Do it. Learn from your peers at the same. Ask them questions about your code. Show anything that was interesting or challenging. Showing your code should be as fun as doing it.
+The act of discussing your code is more important than showing it to someone. "the average effectiveness of design and code inspections are 55 and 60 percent" - Code Complete. Checkout this blog post from Jeff Atewood, a Stack Overflow founder.
+
+Process can be Your Enemy
+As a software engineer, creating process is a natural reaction to solve a problem. That's okay most of the time but let's ask a few non-technical questions.
+
+Is a new process really needed? Can you do it manually for awhile? It may not need to be automated if it only needs to be done for a short time.
+Are you solving the symptom of a bigger problem? Try addressing the bigger problem first.
+How much resources will it save? It's about efficiency and time resource management.
+
+Give yourself discovery time before creating a new process. Look for all the edge cases. Creating cogs in the machine should be carefully considered.
+
+Know what to do before doing it.
+Have a goal written down before writing code. Knowing this beforehand will keep you focused. Large tasks that require research, should be broken down into smaller tasks. Unclear why the task needs to be completed? Speak with the stakeholder on why it's needed and what it will do for the business.
+
+Know what you can't control
+You can't control the business decisions management has made. Or what a client thinks about your work. Provide your opinion, once. You can't control everything. So don't. The Daily Stoic is a good source of explaining what you have control of. It's in an easy bite-size daily format.
+
+Speak Up!
+Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! A simple way to put it is; "I would like A,B,C because of the fact of X,Y,Z".
+
+Silence the Distractions
+Turn off instant notifications, phone, email and limit distracting websites. Once you get into the "Zone" it's hard to get back into it when interruption occurs. If a person interrupts me multiple times, I politely ask them to stop or forward this post from StackOverflow. "How long does it take for you to fall asleep?" "X minutes" "Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to 'sink back' to where you were?" "I'll have to start again" "Great. Same thing. Just like falling asleep, it takes me a while to 'sink' into focus mode, and it takes me a while to get back to it once I'm interrupted, except that I also forget half of what I was doing." by EpsilonVector
+
+Play Music
+It may seem like the opposite of "Silence the Distractions" but it seems to work. Find soothing and/or rhythmic music to play while working. It will keep other distractions away. Spotify has a nice UI for genres & moods. I also like tracks from Carl Franklin @ dot net rocks: Music To Code By .
+
+Say No
+In order to be successful, you need to say no. That means "can you take a look", "going to an unscheduled meeting", "using that latest XYZ framework", etc is a NO. You may be considered a bottleneck or not a team player but having less on your mind is absolutely the best way to get more done.
+
+Deal with Conflict, Quickly
+As a developer, you will still need to talk with people (even customers!). Dealing with conflict is part of that.  It's best to handle it quickly but be prepared for questions.  State the facts and keep answers short and direct.
+
+Reflect upon your code
+Take time to reflect upon your code. Look for improvements to shorten and enhance readability. Consider different ways to rewrite it. Review the strength of code written and other connected code. Treat dependencies as a liability. A great book from Michael Feathers gives clear ideas on this. Working Effectively with Legacy Code
+
+Iterate
+Code that lasts can take more than one go. Write code like an essay. First one works but the editing is where the magic makes it come together
+
+Know when to stop perfecting
+You gotta ship those features some time. So plan the MVP before you start.  Create additional tasks/issues on future improvements.
+
+No Working on Breaks
+Look at cat pictures, call a friend, go for a walk or anything at all, EXCEPT WORK! This is important. You must lose focus to stay focused.
+
+Motivation, Willpower & Time are Limited
+Your motivation, your willpower and your time are the most important resources. This is not understood when starting out as a dev. Every dev has gone through a day where he/she is putting out fires, responding to emails, or in long meetings. At the end of the day, you don't feel like you've accomplished anything. That feeling sucks. A schedule will prevent that *sucking* feeling. Some of these events are unavoidable but most can be managed. I plan important programming from 8am to noon. The remaining of the day is code review, bug fixes, responding to emails, meetings etc. What do you want to have done at the end of the day?
+
+Throw it out
+Is the code hard to read? Are you stuck? Start fresh. A great benefit of source control is to create new branches to test.
+
+Walk away
+Another effective strategy for solving a problem is by walking away from it. Grab a cup of coffee. You will come back with a different perspective. A little distance from the problem can help get that high level view again. We've all got stuck in the weeds before.
+
+Rubber Duck
+Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a rubber duck.  Describe the problem and what the desired outcome is.
+
+Integration Tests over Unit Tests
+Unit tests are great but when crunched for time, Do integration tests. They take less time to write and give a high code coverage. Integration tests have more value in the big picture. Tread lightly when offering this advice to your team. Remember to keep integration tests are only testable on the outside in.
+
+Failure is Unavoidable
+Your code will have bugs. Projects will be built be and never used. Users won't come. You will make mistakes. These events are an insight into what doesn't work. Ask why. Find ways to prevent wasted effort from occurring. Break those failures into rules.
+
+Learn from others successes and mistakes
+We always read about the successes. Learning how someone made a mistake is more important. Know the who was involved, why it was needed, and what was done. Isolate the mistakes then move add it to your project readme to consider.
+
+Personal Resource Center (a well-organized notebook)
+Google Keep, OneNote, markdown files, text doc, or just a notebook. It's an invaluable habit to save blogs links, research, configurations, and a place to dump knowledge. I compared it to my version of StackOverflow answers. Save the information you don't want to memorize but still need. To start out, store by topic and subtopic. The organizational structure will follow. One of my favorite published notebooks is a pen testing cheat sheets called Red Team Field Manual. Much more from awesome-cheatsheets. Develop your own cheat sheets.
+
+Identify and Document Flight Rules
+
+Flight Rules are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why.
+Rules of engagement (ROE) are the internal rules or directives among military forces (including individuals) that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied
+
+This concept of documenting knowledge to a solution for a common problem is critical in teams. Learn to do it well. Great git example: https://github.com/k88hudson/git-flight-rules
+
+Automate Routine Trivial Tasks
+Learn to automated the repetitive tasks. Use bash scripts, autohotkey, powershell, macros, selenium, IFTTT, etc. These will help with context switching.
+
+Keep Current
+Listen to podcasts, dev blogs, dev news feeds (hackernews, sub reddits) and books are essential to keeping up. It also helps with what developers feel about the current state of technology, companies, and projects. Start here: https://coreskills.mmodrow.rocks/2018/03/14/top-7-podcasts-for-the-modern-software-developer/
+
+Invest in your tools
+That means; a comfortable chair, keyboard, mouse, software, cell phone & desk. Having the right tools increase productivity.
+
+Work with different people
+Working in a company with multiple software development teams? Try to work for another one or contribute to open source. Working with other individuals can give insight on how to collaborate differently.
+
+Work Routine
+Success follows people who create and follow a work routine. Anybody can do this with a little bit of willpower and patience. Here is mine:
+
+Deep work for the first 2 hours.
+1 hr of review, communication follow up, and meetings.
+Lunch. 2 hrs of deep work.
+1 hr for review, communication follow up, and meetings
+A "Not To Do's" List
+Empty your mind of what you would like to do. This will help you keep focus on what needs to be done now.
+I've been a big fan of the The Eisenhower Method as it's broken down into 4 categories: Important/Urgent, Important/Not Urgent, Unimportant/Urgent, and Unimportant/Not Urgent. Most task management software can split into groups.
+
+Stay Uncomfortable
+You only get better this way. Examples:
+
+Learn another language. Then do it again.
+Give talks
+Write tutorials and/or blog posts
+Put together challenges
+Teach or mentor
+Here are few of my favorite resources I often reference:
+
+97 Things Every Programmer Should Know
+Adaptive Code
+Daily Stoic
+Functional Programming in C# (No Kindle sadly but great use of LINQ with generics)
+The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win (In story form and was a pleasure to read.)
+GoodUi.org (Landing page UI/UX ideas)
+The Design of Everyday Things
+Don't Make Me Think
+xkcd - simplewriter (Keep content simple)
+Working Effectively with Legacy Code
+https://www.kalzumeus.com/greatest-hits/
+https://github.com/sdmg15/Best-websites-a-programmer-should-visit
+Design patterns
+
+Sources reference may or may not be Amazon affiliated. (because that's where I get my books!)
+ See something inaccurate or need more detail? Submit a Pull
+        Request to help me out!
+      
+Buy me a ☕ to support!
+
+Latest Posts
+My Emails Are Out Of Control
+Part 2 of Hacking my Sony A6000 Camera
+Hacking my Sony A6000 Camera Adding Modern Features
+Linux Wifi Hotspot with PiHole
+Effective Onboarding for New Engineers

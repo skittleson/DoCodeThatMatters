@@ -104,8 +104,9 @@ namespace StaticSiteBuilder.Logic {
                 };
                 var imageUri = post.Image;
                 if (!imageUri.StartsWith("http")) {
-                    var imagePathBuilder = new UriBuilder(site.Url);
-                    imagePathBuilder.Path = imageUri;
+                    var imagePathBuilder = new UriBuilder(site.Url) {
+                        Path = imageUri
+                    };
                     imageUri = imagePathBuilder.Uri.ToString();
                 }
                 var item = new JsonFeedItem {
@@ -116,7 +117,7 @@ namespace StaticSiteBuilder.Logic {
                     Authors = new[] { author },
                     Summary = post.Description,
                     Url = uriBuilder.Uri.ToString(),
-                    Image = imageUri
+                    Image = imageUri,
                 };
                 if (post.Modified != DateTime.MinValue) { 
                     item.DateModified = post.Modified;
@@ -153,6 +154,14 @@ namespace StaticSiteBuilder.Logic {
             });
             Handlebars.RegisterHelper("expires", (writer, context, parameters) => {
                 writer.WriteSafeString(DateTime.UtcNow.AddMonths(6).ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+            });
+            Handlebars.RegisterHelper("rfc822", (writer, context, parameters) => {
+                var dateField = parameters[0];
+                if (dateField != null
+                    && dateField is DateTime dateTimeValidated
+                    && dateTimeValidated != DateTime.MinValue) {
+                    writer.WriteSafeString($"\"{dateTimeValidated:ddd, dd MMM yyyy HH:mm:ss zzz}\"");
+                }
             });
             Handlebars.RegisterHelper("urlEncode", (writer, context, parameters) => {
                 var linkTo = parameters[0] as string;
@@ -207,7 +216,6 @@ namespace StaticSiteBuilder.Logic {
             foreach (var asset in assets) {
                 var assetToCopy = Path.Combine(dest, Path.GetFileName(asset));
                 File.Copy(asset, assetToCopy);
-                Console.WriteLine($"File Copy: {assetToCopy}");
             }
         }
 

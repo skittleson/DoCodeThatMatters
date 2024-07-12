@@ -4,3 +4,6 @@ src/node_modules/
 bin/
 obj/
 oldDocs/
+venv
+.sqlite
+reports

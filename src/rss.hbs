@@ -14,7 +14,8 @@
             <description>{{this.description}}</description>
             <link>{{../url}}/{{blogPath file}}</link>
             <guid>{{../url}}/{{blogPath file}}</guid>
-            <pubDate>{{date}}</pubDate>
+            <pubDate>{{rfc822 date}}</pubDate>
+            <enclosure url="{{../url}}/{{blogPath file}}/index.txt" type="text/plain" />
         </item>
         {{/each}}
     </channel>

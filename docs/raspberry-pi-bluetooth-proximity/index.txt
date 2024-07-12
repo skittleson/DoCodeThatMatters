@@ -1,0 +1,37 @@
+﻿
+Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
+Do Code That Matters
+Blog
+About
+Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
+
+May 26 2017
+
+          by
+          
+
+Spencer Kittleson
+Raspberry Pi!
+Let's create a Bluetooth proximity detector using a Raspberry Pi, USB Bluetooth adapter, and a phone with Bluetooth enabled. This tutorial will guide you through the process of detecting a known Bluetooth device within range of the Raspberry Pi, without the need for pairing the devices.
+Step 1. Ensure USB Bluetooth is working on the Raspberry Pi.
+Install sudo apt-get install bluetooth
+Check it Bluetooth status with this command: hcitool dev
+Should return the device's Bluetooth address: Devices: hci0 00:00:00:00:00:17
+Step 2. Getting the MAC address of a device.
+On an Android Phone version 6.0.1, Settings > System > About device > Status > Bluetooth address.
+Step 3. Test Connection to Client Device
+Command: sudo l2ping -c 2 00:11:22:AA:BB:CC
+Result:
+Ping: 00:11:22:AA:BB:CC from 00:00:00:00:00:17 (data size 44) ... 0 bytes from 00:11:22:AA:BB:CC id 0 time 7.32ms 0 bytes from 00:11:22:AA:BB:CC id 1 time 22.46ms
+Checkout some of the additional commands in this blog post
+ See something inaccurate or need more detail? Submit a Pull
+        Request to help me out!
+      
+Buy me a ☕ to support!
+
+Latest Posts
+My Emails Are Out Of Control
+Part 2 of Hacking my Sony A6000 Camera
+Hacking my Sony A6000 Camera Adding Modern Features
+Linux Wifi Hotspot with PiHole
+Effective Onboarding for New Engineers

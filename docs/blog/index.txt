@@ -1,0 +1,81 @@
+﻿
+Do Code That Matters
+Do Code That Matters
+Blog
+About
+Jun 25 2024
+
+My Emails Are Out Of Control
+                My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.  Read More
+May 14 2024
+
+Part 2 of Hacking my Sony A6000 Camera
+                Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.  Read More
+Jul 17 2023
+
+Hacking my Sony A6000 Camera Adding Modern Features
+                Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.  Read More
+Sep 29 2022
+
+Linux Wifi Hotspot with PiHole
+                Build a wifi hotspot using hostapd via create_ap project and pihole.  Read More
+Jul 05 2022
+
+Effective Onboarding for New Engineers
+                Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.  Read More
+Jun 20 2022
+
+Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
+                Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.  Read More
+Mar 07 2022
+
+Top 5 Nuget Packages
+                Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.  Read More
+Dec 31 2021
+
+Automate Cleaning of Air Conditioner Condensate Drain Line
+                Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.  Read More
+Oct 03 2021
+
+Common Apps for Devs over Chocolatey
+                Automate software install for a software engineer on Windows  Read More
+Apr 27 2021
+
+Local First, Cloud Assisted ☁ MultiSensor
+                Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.  Read More
+Nov 02 2020
+
+A simple water sprinkler system, for makers!
+                Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.  Read More
+Jun 01 2020
+
+Duplicator i3 3d printer upgrade
+                Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.  Read More
+Jun 01 2020
+
+Power Switch Monitor with an Arduino device
+                Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.  Read More
+Oct 19 2019
+
+Save JSON Objects to AWS S3 with Google Recaptcha
+                Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.  Read More
+Oct 19 2019
+
+Research on Bluetooth Proximity
+                Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump  Read More
+Oct 23 2018
+
+Software Engineering Lessons
+                In the field notes and lessons learned as a software engineer.  Read More
+May 11 2018
+
+Yet Another Garage Door Opener
+                Just another garage door opener using a raspberry pi  Read More
+Sep 06 2017
+
+ASP.NET XSS protection
+                Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).  Read More
+May 26 2017
+
+Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
+                Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.  Read More

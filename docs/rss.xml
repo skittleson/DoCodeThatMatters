@@ -13,133 +13,152 @@
             <description>My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.</description>
             <link>https://DoCodeThatMatters.com/emails_out_of_control</link>
             <guid>https://DoCodeThatMatters.com/emails_out_of_control</guid>
-            <pubDate>2024-06-25T00:00:00.0000000</pubDate>
+            <pubDate>"Tue, 25 Jun 2024 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/emails_out_of_control/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Part 2 of Hacking my Sony A6000 Camera</title>
             <description>Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.</description>
             <link>https://DoCodeThatMatters.com/hacking-sony-a6000-more</link>
             <guid>https://DoCodeThatMatters.com/hacking-sony-a6000-more</guid>
-            <pubDate>2024-05-14T00:00:00.0000000</pubDate>
+            <pubDate>"Tue, 14 May 2024 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/hacking-sony-a6000-more/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Hacking my Sony A6000 Camera Adding Modern Features</title>
             <description>Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.</description>
             <link>https://DoCodeThatMatters.com/hacking-sony-a6000-for-modernization</link>
             <guid>https://DoCodeThatMatters.com/hacking-sony-a6000-for-modernization</guid>
-            <pubDate>2023-07-17T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 17 Jul 2023 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/hacking-sony-a6000-for-modernization/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Linux Wifi Hotspot with PiHole</title>
             <description>Build a wifi hotspot using hostapd via create_ap project and pihole.</description>
             <link>https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3</link>
             <guid>https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3</guid>
-            <pubDate>2022-09-29T00:00:00.0000000</pubDate>
+            <pubDate>"Thu, 29 Sep 2022 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/linux-wifi-hotspot-usb3/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Effective Onboarding for New Engineers</title>
             <description>Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.</description>
             <link>https://DoCodeThatMatters.com/onboarding-devs</link>
             <guid>https://DoCodeThatMatters.com/onboarding-devs</guid>
-            <pubDate>2022-07-05T00:00:00.0000000</pubDate>
+            <pubDate>"Tue, 05 Jul 2022 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/onboarding-devs/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</title>
             <description>Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.</description>
             <link>https://DoCodeThatMatters.com/skateboard-gear</link>
             <guid>https://DoCodeThatMatters.com/skateboard-gear</guid>
-            <pubDate>2022-06-20T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 20 Jun 2022 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/skateboard-gear/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Top 5 Nuget Packages</title>
             <description>Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.</description>
             <link>https://DoCodeThatMatters.com/top-nuget-packages</link>
             <guid>https://DoCodeThatMatters.com/top-nuget-packages</guid>
-            <pubDate>2022-03-07T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 07 Mar 2022 00:00:00 -08:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/top-nuget-packages/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Automate Cleaning of Air Conditioner Condensate Drain Line</title>
             <description>Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.</description>
             <link>https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line</link>
             <guid>https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line</guid>
-            <pubDate>2021-12-31T00:00:00.0000000</pubDate>
+            <pubDate>"Fri, 31 Dec 2021 00:00:00 -08:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Common Apps for Devs over Chocolatey</title>
             <description>Automate software install for a software engineer on Windows</description>
             <link>https://DoCodeThatMatters.com/chocolately-for-devs</link>
             <guid>https://DoCodeThatMatters.com/chocolately-for-devs</guid>
-            <pubDate>2021-10-03T00:00:00.0000000</pubDate>
+            <pubDate>"Sun, 03 Oct 2021 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/chocolately-for-devs/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Local First, Cloud Assisted &#9729; MultiSensor</title>
             <description>Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.</description>
             <link>https://DoCodeThatMatters.com/neosiren-tasmota-local-first-cloud-assisted-iot</link>
             <guid>https://DoCodeThatMatters.com/neosiren-tasmota-local-first-cloud-assisted-iot</guid>
-            <pubDate>2021-04-27T00:00:00.0000000</pubDate>
+            <pubDate>"Tue, 27 Apr 2021 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/neosiren-tasmota-local-first-cloud-assisted-iot/index.txt" type="text/plain" />
         </item>
         <item>
             <title>A simple water sprinkler system, for makers!</title>
             <description>Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.</description>
             <link>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</link>
             <guid>https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota</guid>
-            <pubDate>2020-11-02T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 02 Nov 2020 00:00:00 -08:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Duplicator i3 3d printer upgrade</title>
             <description>Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.</description>
             <link>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</link>
             <guid>https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade</guid>
-            <pubDate>2020-06-01T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 01 Jun 2020 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/3dprinter-duplicator-i3-upgrade/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Power Switch Monitor with an Arduino device</title>
             <description>Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.</description>
             <link>https://DoCodeThatMatters.com/power-switch-monitor</link>
             <guid>https://DoCodeThatMatters.com/power-switch-monitor</guid>
-            <pubDate>2020-06-01T00:00:00.0000000</pubDate>
+            <pubDate>"Mon, 01 Jun 2020 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/power-switch-monitor/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Save JSON Objects to AWS S3 with Google Recaptcha</title>
             <description>Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.</description>
             <link>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</link>
             <guid>https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha</guid>
-            <pubDate>2019-10-19T00:00:00.0000000</pubDate>
+            <pubDate>"Sat, 19 Oct 2019 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/json-to-s3-with-google-recaptcha/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Research on Bluetooth Proximity</title>
             <description>Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump</description>
             <link>https://DoCodeThatMatters.com/research-bluetooth-proximity</link>
             <guid>https://DoCodeThatMatters.com/research-bluetooth-proximity</guid>
-            <pubDate>2019-10-19T00:00:00.0000000</pubDate>
+            <pubDate>"Sat, 19 Oct 2019 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/research-bluetooth-proximity/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Software Engineering Lessons</title>
             <description>In the field notes and lessons learned as a software engineer.</description>
             <link>https://DoCodeThatMatters.com/software-engineering-lessons</link>
             <guid>https://DoCodeThatMatters.com/software-engineering-lessons</guid>
-            <pubDate>2018-10-23T00:00:00.0000000</pubDate>
+            <pubDate>"Tue, 23 Oct 2018 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/software-engineering-lessons/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Yet Another Garage Door Opener</title>
             <description>Just another garage door opener using a raspberry pi</description>
             <link>https://DoCodeThatMatters.com/yet-another-garage-door-opener</link>
             <guid>https://DoCodeThatMatters.com/yet-another-garage-door-opener</guid>
-            <pubDate>2018-05-11T00:00:00.0000000</pubDate>
+            <pubDate>"Fri, 11 May 2018 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/yet-another-garage-door-opener/index.txt" type="text/plain" />
         </item>
         <item>
             <title>ASP.NET XSS protection</title>
             <description>Securing an ASP.NET WebApi for PCI application tests is no trivial matter. &#160;It can take&#160;weeks of planning and the app to be analyzed. &#160;After reviewing&#160;OWASP&#160;and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM &amp; XSS).</description>
             <link>https://DoCodeThatMatters.com/asp-net-xss-protection</link>
             <guid>https://DoCodeThatMatters.com/asp-net-xss-protection</guid>
-            <pubDate>2017-09-06T00:00:00.0000000</pubDate>
+            <pubDate>"Wed, 06 Sep 2017 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/asp-net-xss-protection/index.txt" type="text/plain" />
         </item>
         <item>
             <title>Raspberry Pi Bluetooth Proximity Detector - A Simple Guide</title>
             <description>Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.</description>
             <link>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</link>
             <guid>https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity</guid>
-            <pubDate>2017-05-26T00:00:00.0000000</pubDate>
+            <pubDate>"Fri, 26 May 2017 00:00:00 -07:00"</pubDate>
+            <enclosure url="https://DoCodeThatMatters.com/raspberry-pi-bluetooth-proximity/index.txt" type="text/plain" />
         </item>
     </channel>
 </rss>

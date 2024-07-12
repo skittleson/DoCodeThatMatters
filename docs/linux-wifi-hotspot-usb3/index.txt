@@ -1,0 +1,46 @@
+﻿
+Linux Wifi Hotspot with PiHole
+Do Code That Matters
+Blog
+About
+Linux Wifi Hotspot with PiHole
+
+Sep 29 2022
+
+          by
+          
+
+Spencer Kittleson
+Pihole
+this post is still a working in progress, come back for updates!
+TLDR
+Using a
+Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas
+starting script: onstart.sh
+#!/bin/bash
+/sbin/iw dev wlan0 set power_save off
+/sbin/iw wlan0 set txpower fixed 4500
+echo '1' > /sys/module/8814au/parameters/rtw_switch_usb_mode
+/usr/bin/create_ap --daemon --logfile /home/support/create_ap.log --no-dnsmasq  --dhcp-dns 192.168.12.1 --country US --ieee80211n --ieee80211ac --freq-band 5 --ht_capab '[LDPC][HT40+][SHORT-GI-20][SHORT-GI-40][MAX-AMSDU-7935]'  --vht_capab '[MAX-MPDU-11454][RXLDPC][SHORT-GI-80][TX-STBC-2BY1][RX-STBC-1][SU-BEAMFORMEE][MAX-A-MPDU-LEN-EXP3][HTC-VHT][SOUNDING-DIMENSION-3]' wlan0 eth0 TestNetwork testing123
+
+Disable IPv6
+sudo nano /etc/sysctl.conf
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+net.ipv6.conf.lo.disable_ipv6=1
+
+Install and Configure Pihole
+curl -sSL https://install.pi-hole.net | PIHOLE_SKIP_OS_CHECK=true sudo -E bash
+setup the dhcp server to use 192.168.12.1 range.
+Resources
+https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md
+ See something inaccurate or need more detail? Submit a Pull
+        Request to help me out!
+      
+Buy me a ☕ to support!
+
+Latest Posts
+My Emails Are Out Of Control
+Part 2 of Hacking my Sony A6000 Camera
+Hacking my Sony A6000 Camera Adding Modern Features
+Effective Onboarding for New Engineers

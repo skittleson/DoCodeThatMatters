@@ -1,0 +1,52 @@
+﻿
+Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
+Do Code That Matters
+Blog
+About
+Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
+
+Jun 20 2022
+          by
+          
+
+Spencer Kittleson
+initial print and mount of 3d printed parametric gear
+USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear. Let's give an update from this Reddit post i did few years ago.
+Specs
+Downloadable FreeCAD version on GitHub
+
+Printed with ABS at 0.3mm resolution.
+265-5M-9 5M Timing Belt or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
+Graphite powder on belt (pencil lead) to smooth out any noise.
+Fully parametric on gear teeth, mounting holes, inner cut out, and height
+80mm wheel
+Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery
+Cost to print $1.45
+Top speed with existing configuration is 25mph
+Rider is 200lbs
+Parametric Adjustments
+All measurements are in millimeters. Adjusted for 190kv BLDC motor with 16 tooth gear
+
+Wear and Tear
+This was about 100+ hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. Better image coming soon...
+Gear teeth have wore down as expected.
+It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.
+The nuts came loose a few times... use lock tight.
+Belt wear was nominal.  I expect to change it every 500+ hours of riding.
+The bottom land could be more round to fit the belt.
+No noticable cracks or layer spliting in the 3D print.
+Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.
+Use double wall bearings. Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥
+Next Possible Experiment
+Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.
+ See something inaccurate or need more detail? Submit a Pull
+        Request to help me out!
+      
+Buy me a ☕ to support!
+
+Latest Posts
+My Emails Are Out Of Control
+Part 2 of Hacking my Sony A6000 Camera
+Hacking my Sony A6000 Camera Adding Modern Features
+Linux Wifi Hotspot with PiHole
+Effective Onboarding for New Engineers
