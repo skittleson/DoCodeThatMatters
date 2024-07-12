@@ -1,8 +1,8 @@
-
+﻿
 Research on Bluetooth Proximity
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Research on Bluetooth Proximity
 
 Oct 19 2019
@@ -10,8 +10,9 @@ Oct 19 2019
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 A bluetooth device that can be discovered with simple scan.
-My research on bluetooth proximity using open tools such as hcitool,btmgmt, l2ping, and hcidump. A follow up to Raspberry Pi – Bluetooth Proximity blog post.
+My research on bluetooth proximity using open tools such as hcitool,btmgmt, l2ping, and hcidump. A follow up to Raspberry Pi – Bluetooth Proximity(raspberry-pi-bluetooth-proximity)  blog post.
 Commands
 Replace <MAC> with a bluetooth mac address.
 Scan for Bluetooth LE Devices:
@@ -56,22 +57,22 @@ This attempts to connect which doesn't work but the RSSI value is now present fo
 Attempt to get RSSI value without trying to connect to device:
 hcitool cmd 0x05 0x0005 0x00 0x00 <MAC>
 Some Resources
-http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/
-https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1
-https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands
-access terminal over bluetooth
-https://ieeexplore.ieee.org/document/7124822
-https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf
-https://stackoverflow.com/a/56522568/2414540
-https://www.raspberrypi.org/forums/viewtopic.php?t=47466
+http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/(http://techiesanswer.com/ubuntu-command-line/unix-bluetoothctl-and-bluetooth-sendto-tools-to-send-file/) 
+https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1(https://www.jaredwolff.com/get-started-with-bluetooth-low-energy/#show1) 
+https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands(https://raspberry-projects.com/pi/pi-operating-systems/raspbian/bluetooth/bluetooth-commands) 
+access terminal over bluetooth(https://askubuntu.com/questions/248817/how-to-i-connect-a-raw-serial-terminal-to-a-bluetooth-connection) 
+https://ieeexplore.ieee.org/document/7124822(https://ieeexplore.ieee.org/document/7124822) 
+https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf(https://pdfs.semanticscholar.org/a0b3/67e1ade049f80ff787e1c1b2e9bbc7de6795.pdf) 
+https://stackoverflow.com/a/56522568/2414540(https://stackoverflow.com/a/56522568/2414540) 
+https://www.raspberrypi.org/forums/viewtopic.php?t=47466(https://www.raspberrypi.org/forums/viewtopic.php?t=47466) 
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Research+on+Bluetooth+Proximity)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

@@ -1,8 +1,8 @@
-
+﻿
 Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
 
 Jun 20 2022
@@ -10,22 +10,23 @@ Jun 20 2022
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 initial print and mount of 3d printed parametric gear
-USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear. Let's give an update from this Reddit post i did few years ago.
+USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear. Let's give an update from this Reddit post i did few years ago(https://www.reddit.com/r/functionalprint/comments/hz8yn8/parametric_belt_driven_gear_for_diy_esk8/) .
 Specs
-Downloadable FreeCAD version on GitHub
+Downloadable FreeCAD version on GitHub(images/skateboardGearWheel/SkateboardWheelGear.FCStd) 
 
 Printed with ABS at 0.3mm resolution.
-265-5M-9 5M Timing Belt or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
+265-5M-9 5M Timing Belt(https://www.amazon.com/BESTORQ-265-5M-9-Timing-Outside-Circumference/dp/B00J9TXEQA?crid=MOIU9VWF3JOJ&keywords=265-5M-9%2B5M%2BTiming%2BBelt&qid=1655757673&sprefix=265-5m-9%2B5m%2Btiming%2Bbelt%2Caps%2C201&sr=8-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExMlhRVlVONFhPTlk0JmVuY3J5cHRlZElkPUEwMTI5Mzg1MURaWUpDRUNIWFo1RyZlbmNyeXB0ZWRBZElkPUEwMjMxMzA3Mlo5RkxDN1g5WFAzSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=cc15402e422e37ad16e212a4e941dccb&language=en_US&ref_=as_li_ss_tl)  or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.
 Graphite powder on belt (pencil lead) to smooth out any noise.
 Fully parametric on gear teeth, mounting holes, inner cut out, and height
 80mm wheel
-Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery
+Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery(https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&qid=1655749320&s=toys-and-games&sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=00aab9f6e7dde286c70b7c3585039b04&language=en_US&ref_=as_li_ss_tl) 
 Cost to print $1.45
 Top speed with existing configuration is 25mph
 Rider is 200lbs
 Parametric Adjustments
-All measurements are in millimeters. Adjusted for 190kv BLDC motor with 16 tooth gear
+All measurements are in millimeters. Adjusted for 190kv BLDC motor with 16 tooth gear(https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&qid=1655749320&s=toys-and-games&sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&sr=1-1-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1&linkCode=ll1&tag=dctm-20&linkId=00aab9f6e7dde286c70b7c3585039b04&language=en_US&ref_=as_li_ss_tl) 
 
 Wear and Tear
 This was about 100+ hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. Better image coming soon...
@@ -33,20 +34,20 @@ Gear teeth have wore down as expected.
 It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.
 The nuts came loose a few times... use lock tight.
 Belt wear was nominal.  I expect to change it every 500+ hours of riding.
-The bottom land could be more round to fit the belt.
+The bottom land(https://en.wikipedia.org/wiki/Gear)  could be more round to fit the belt.
 No noticable cracks or layer spliting in the 3D print.
 Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.
-Use double wall bearings. Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥
+Use double wall bearings.(https://www.amazon.com/Bearings-Skateboard-Shielded-Miniature-Skateboards/dp/B07R7PR72H?crid=NKG7B4O4BVEI&keywords=double+wall+skateboard+bearing&qid=1655758884&sprefix=double+wall+skateboard+bearing%2Caps%2C130&sr=8-4&linkCode=ll1&tag=dctm-20&linkId=2cbdc66d04d6f268439ba46e61195716&language=en_US&ref_=as_li_ss_tl)  Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥
 Next Possible Experiment
 Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Parametric+Belt+Driven+3D+Printed+Spur+Gear+for+Electric+Skateboards)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

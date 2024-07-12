@@ -1,8 +1,8 @@
-
+﻿
 Do Code That Matters
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Hi, I'm Spencer 👋
 As a software engineer with a wealth of experience in software development and database design, I am well-versed in a wide range of modern computer languages, with a particular focus on .NET technologies. My expertise extends to building and scaling systems to work seamlessly across multiple platforms, with a strong emphasis on testing and ensuring the success of my fellow developers.
 In addition to my professional pursuits, I am also deeply passionate about a variety of technology-related hobbies. I enjoy experimenting with 3D printing, working with Raspberry Pi and Arduino microcontrollers, and exploring the world of home automation. I also enjoy organizing and hosting hackathons, providing an opportunity for others to share in my passion for technology. 
@@ -10,15 +10,15 @@ My ultimate goal is to develop software that is efficient, reliable, and user-fr
 Interested in consulting?
 
   Twitter:
-  @skittleson
+  @skittleson(https://twitter.com/skittleson) 
   GitHub:
-  skittleson
+  skittleson(https://github.com/skittleson) 
   LinkedIn:
-  skittleson
+  skittleson(https://www.linkedin.com/in/skittleson/) 
   StackOverflow:
-  spencer
+  spencer( https://stackoverflow.com/users/2414540/spencer) 
   Buy me a coffee:
-  skittles
+  skittles(https://www.buymeacoffee.com/skittles) 
 Contact Me
 Email address
 Message

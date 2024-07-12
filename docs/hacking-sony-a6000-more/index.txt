@@ -1,8 +1,8 @@
-
+﻿
 Part 2 of Hacking my Sony A6000 Camera
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Part 2 of Hacking my Sony A6000 Camera
 
 May 14 2024
@@ -10,31 +10,32 @@ May 14 2024
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Sony a6000
 Introduction
 This is a smaller continuation of the previous blog post on hacking the Sony A6000 camera (come back for more updates).
 Free Apps
-To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome https://github.com/ma1co/Sony-PMCA-RE. Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.
+To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome https://github.com/ma1co/Sony-PMCA-RE(https://github.com/ma1co/Sony-PMCA-RE) . Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.
 USB-C Battery Hack
-Batteries drain very quickly with this camera. The stock battery is around 1020mAh.  Swapping out batteries is common and tedious.  Getting usb-c versions of them helps with charging on the go but it's still annoying with cables.
-After a bit of hacking the power adapter version of this, I bundled everything up into a single battery shell with a usb-c female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a usb-c input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the power adapter.
+Batteries drain very quickly with this camera. The stock battery is around 1020mAh.  Swapping out batteries is common and tedious.  Getting usb-c versions(https://amzn.to/4bBDFBc)  of them helps with charging on the go but it's still annoying with cables.
+After a bit of hacking the power adapter(https://amzn.to/4afC0jy)  version of this, I bundled everything up into a single battery shell with a usb-c(https://amzn.to/44Kd0jk)  female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a usb-c(https://amzn.to/44Kd0jk)  input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the power adapter(https://amzn.to/4afC0jy) .
 
 Data Transfers Hurdles
 A follow up from my previous post.
 Using a Card Reader
-On the go, I keep this card reader near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.
+On the go, I keep this card reader(https://amzn.to/3UJHEVi)  near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.
 Using the FTP uploader within the camera
 This idea of using the FTP uploader is great but it's very slow...  70 files in 13 minutes at full resolution JPEG files. If there is not a lot pictures this makes sense but typically taking the sd card out and data dumping is going to be much quicker still.
 Using the FTP uploader app mentioned above, i use this bit of python code to dump it into directory that i care about.
 python -m pyftpdlib -u USER -P PASS -w
-Reference to this command. https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python
+Reference to this command. https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python(https://stackoverflow.com/questions/4994638/one-line-ftp-server-in-python) 
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Part+2+of+Hacking+my+Sony+A6000+Camera)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

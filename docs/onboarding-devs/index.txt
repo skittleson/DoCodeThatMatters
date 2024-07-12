@@ -1,8 +1,8 @@
-
+﻿
 Effective Onboarding for New Engineers
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Effective Onboarding for New Engineers
 
 Jul 05 2022
@@ -11,6 +11,7 @@ Jul 05 2022
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Onboarding
 Onboarding new engineers on a project can be a time-consuming process. However, by implementing a structured approach, the transition can be made smoother.
 An effective onboarding strategy includes:
@@ -24,12 +25,12 @@ Scheduling regular pair programming, code swarming or office hours sessions to p
 
 By following this approach, a new engineer can quickly become productive, and contribute to the success of the project.
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Effective+Onboarding+for+New+Engineers)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 

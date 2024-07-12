@@ -1,8 +1,8 @@
-
+﻿
 Linux Wifi Hotspot with PiHole
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Linux Wifi Hotspot with PiHole
 
 Sep 29 2022
@@ -11,11 +11,12 @@ Sep 29 2022
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Pihole
 this post is still a working in progress, come back for updates!
 TLDR
 Using a
-Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas
+Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas(https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl) 
 starting script: onstart.sh
 #!/bin/bash
 /sbin/iw dev wlan0 set power_save off
@@ -33,14 +34,14 @@ Install and Configure Pihole
 curl -sSL https://install.pi-hole.net | PIHOLE_SKIP_OS_CHECK=true sudo -E bash
 setup the dhcp server to use 192.168.12.1 range.
 Resources
-https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md
+https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md(https://github.com/lakinduakash/linux-wifi-hotspot/blob/master/src/scripts/README.md) 
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Linux+Wifi+Hotspot+with+PiHole)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Effective Onboarding for New Engineers(onboarding-devs) 

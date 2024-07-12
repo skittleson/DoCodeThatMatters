@@ -1,8 +1,8 @@
-
+﻿
 Save JSON Objects to AWS S3 with Google Recaptcha
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Save JSON Objects to AWS S3 with Google Recaptcha
 
 Oct 19 2019
@@ -10,6 +10,7 @@ Oct 19 2019
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Chain fence locked
 This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.
 Wrote the GIST for myself but I had enough requests to share it in a blog post. Copy/paste what you want.
@@ -24,12 +25,12 @@ Add this to the frontend index.html (or anywhere a form will be sent from). Repl
   });
 </script>
 
-Docs: https://developers.google.com/recaptcha/docs/v3
+Docs: https://developers.google.com/recaptcha/docs/v3(https://developers.google.com/recaptcha/docs/v3) 
 Backend Setup
 Start by creating an AWS Lambda function that has access to add items to S3. Using a node.js/javascript lambda function.
 Environment Keys:
 
-GoogleRecapKey : Get this from https://developers.google.com/recaptcha
+GoogleRecapKey : Get this from https://developers.google.com/recaptcha(https://developers.google.com/recaptcha) 
 MessageBucket : Create a bucket in AWS S3.
 SnsTopicArn : Create a SNS topic to receive emails or SMS to your phone.
 API Gateway Setup
@@ -39,13 +40,13 @@ Integration type Lambda Function
 Use Lambda Proxy integration: checked
 Select Lambda function
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Save+JSON+Objects+to+AWS+S3+with+Google+Recaptcha)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

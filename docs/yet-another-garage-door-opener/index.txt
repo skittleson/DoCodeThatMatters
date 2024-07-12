@@ -1,8 +1,8 @@
-
+﻿
 Yet Another Garage Door Opener
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Yet Another Garage Door Opener
 
 May 11 2018
@@ -10,8 +10,9 @@ May 11 2018
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Raspberry Pi!
-Another tutorial for building a garage door opener with a raspberry pi. I've left the garage door opened too many times. Source: https://github.com/skittleson/garage-pi This tutorial assumes you have a raspberry pi with wifi and the ability to ssh in.
+Another tutorial for building a garage door opener with a raspberry pi. I've left the garage door opened too many times. Source: https://github.com/skittleson/garage-pi(https://github.com/skittleson/garage-pi)  This tutorial assumes you have a raspberry pi with wifi and the ability to ssh in.
 Goals
 
 Use Docker so it can easily be shared/restored/etc!
@@ -25,23 +26,23 @@ Toggle light switch on the garage door
 
 What you will need
 
-Relay modules. I only needed one - Channel DC 5V Relay Module for Arduino
-Cheap containers to throw everything into - https://amzn.to/2NEdWwB
-A replacement switch for garage door opener - Liftmaster 41A5273-1 Multi-Function Control Panel
-Raspberry Pi 3
-(optional) great camera for the price! This one has 4 mics and the camera has two zoom modes. Sony Play Station Eye Camera for PS3
+Relay modules. I only needed one - Channel DC 5V Relay Module for Arduino(https://amzn.to/2RP4zNC) 
+Cheap containers to throw everything into - https://amzn.to/2NEdWwB(https://amzn.to/2NEdWwB) 
+A replacement switch for garage door opener - Liftmaster 41A5273-1 Multi-Function Control Panel(https://amzn.to/2pShUrK) 
+Raspberry Pi 3(https://amzn.to/2RMxQc5) 
+(optional) great camera for the price! This one has 4 mics and the camera has two zoom modes. Sony Play Station Eye Camera for PS3(https://amzn.to/2CIAmvF) 
 
 Research & Discover
 There are a ton of these garage door projects. I was inspired by many of them. The LiftMaster garage door system has anti-tamper hardware measures which almost ended the project before it started. I decided to take a gamble and buy another garage door opener circuit that directly connects to the garage door unit. Bingo! Two circuits can be connected at the same time. Docker permissions and finding a base image for the raspberry pi took a few hours. Lesson learned, hardware interaction with docker can take a few extra steps.
 Wiring
 The relay module is stacked on top of the LiftMaster module then taped onto the Raspberry Pi. Note the relay connections are wired for normally opened. (click image to see larger version) Sealed up in a glad container (kinda hacky but it's cheap). This is the LiftMaster circuit. The narrower end has the button for opening the garage. The larger end has the button for the garage door light. The middle points are for the circuit to connect to main garage door unit. GPIO pin layout for the relays & reed switch not including power leads. Reed switch is connected to the part of the garage door (pin 18 and a ground). Once it moves away, then the reed switch is disconnected.
-The entire setup. Messy but it's good enough. Cut some holes with a knife for wires and to hold it in place. The camera has been added with duck tape. Using a standard install of motion (no dockerfile tho).
+The entire setup. Messy but it's good enough. Cut some holes with a knife for wires and to hold it in place. The camera has been added with duck tape. Using a standard install of motion(https://motion-project.github.io/motion_build.html)  (no dockerfile tho).
 Install
-Install docker on the raspberry pi. https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/
-curl -sSL https://get.docker.com | sh
+Install docker on the raspberry pi. https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/(https://www.raspberrypi.org/blog/docker-comes-to-raspberry-pi/) 
+curl -sSL https://get.docker.com(https://get.docker.com)  | sh
 Clone the repo
 
-git clone https://github.com/skittleson/garage-pi
+git clone https://github.com/skittleson/garage-pi(https://github.com/skittleson/garage-pi) 
 cd garage-pi/
 
 Run docker build for the image
@@ -85,15 +86,15 @@ gpio.cleanup()
 
 Open for pull requests! I'm considering on moving all the gpio logic to python then using nodejs as the api router.
 Summary
-Hardware side is built and working. The api has enough information to check and toggle the garage door. Going to create a script to watch the door status with Node-red due to ease of configuration. This project took about 2 days with testing and debugging. Here is a screenshot of the node-red template. Still a work in progress! The flow file is in the repo code.
+Hardware side is built and working. The api has enough information to check and toggle the garage door. Going to create a script to watch the door status with Node-red(https://nodered.org/)  due to ease of configuration. This project took about 2 days with testing and debugging. Here is a screenshot of the node-red template. Still a work in progress! The flow file(https://github.com/skittleson/garage-pi/blob/master/garage-pi-node-red-flow.json)  is in the repo code.
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Yet+Another+Garage+Door+Opener)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

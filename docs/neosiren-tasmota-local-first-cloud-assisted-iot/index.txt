@@ -1,8 +1,8 @@
-
+﻿
 Local First, Cloud Assisted ☁ MultiSensor
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Local First, Cloud Assisted ☁ MultiSensor
 
 Apr 27 2021
@@ -10,11 +10,12 @@ Apr 27 2021
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Flash MultiSensor with Tasmota
-Guide for flashing a NEO Coolcam Siren with Temperature and Humidity Multisensor with Tasmota for local network first setup.
+Guide for flashing a NEO Coolcam Siren with Temperature and Humidity Multisensor(https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html)  with Tasmota for local network first setup.
 Wiring Guide
-This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official documentation.
-In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A Serial-to-USB Adapter is required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.
+This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official documentation(https://tasmota.github.io/docs/Getting-Started/) .
+In order to flash this device, soldering onto the PCB will be required. There is a plate in the back that needs to be rotated to expose the battery holder.  Once that is open, go ahead and remove the three screws.  The tricky part is soldering onto the all connections. A Serial-to-USB Adapter(https://amzn.to/3sW2QaW)  is required. All connections must be made. GPIO0 must be connected to ground (GND) in order to on boot in flash mode.
 Device - Neo Coolcam
 Flasher
 GPIO0
@@ -30,15 +31,15 @@ TX
 Finalized soldering
 
 Flashing
-Install esptool. PyPi was quick for this: https://pypi.org/project/esptool/
+Install esptool. PyPi was quick for this: https://pypi.org/project/esptool/(https://pypi.org/project/esptool/) 
 pip install esptool
 Time to flash. Change the port then run this command in the terminal. Doesn't matter if your Mac, Linux, or Windows when using PyPi.
 esptool --port COM3 write_flash -fs 1MB -fm dout 0x0 tasmota-sensors.bin
 
-Alternative, you can use a GUI version Tasmotizer
+Alternative, you can use a GUI version Tasmotizer(https://github.com/tasmota/tasmotizer) 
 Connect to the access point to configure the default WiFi to connect to your local wifi.
 Configuration
-Apply Template in "Configure Other" found here
+Apply Template in "Configure Other" found here(https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) 
 {"NAME":"Neo Siren 3in1","GPIO":[255,107,255,108,255,255,0,0,255,255,255,255,255],"FLAG":0,"BASE":54}
 Tasmota Console Commands
 Command
@@ -84,17 +85,17 @@ return msg;
 To turn on the siren remotely. Send either ON or OFF to the MQTT topic cmnd/tasmota_REPLACEWITHID/POWER A return MQTT message returns with stat/tasmota_REPLACEWITHID/POWER
 Resources
 
-https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html
-https://gist.github.com/patrickdk77/b687448fecff68d8572ac79a27d07862
-https://tasmota.github.io/docs/TuyaMCU/#tuyasend-command-
+https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html(https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) 
+https://gist.github.com/patrickdk77/b687448fecff68d8572ac79a27d07862(https://gist.github.com/patrickdk77/b687448fecff68d8572ac79a27d07862) 
+https://tasmota.github.io/docs/TuyaMCU/#tuyasend-command-(https://tasmota.github.io/docs/TuyaMCU/#tuyasend-command-) 
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Local+First%2c+Cloud+Assisted+%e2%98%81+MultiSensor)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 

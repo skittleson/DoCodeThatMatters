@@ -1,8 +1,8 @@
-
+﻿
 Top 5 Nuget Packages
-Do Code That Matters
-Blog
-About
+Do Code That Matters(/) 
+Blog(/blog) 
+About(/about) 
 Top 5 Nuget Packages
 
 Mar 07 2022
@@ -10,6 +10,7 @@ Mar 07 2022
           
 
 Spencer Kittleson
+(https://DoCodeThatMatters.com/about) 
 Nuget logo
 Using these nuget projects consistently in most projects I'm building.  See the examples in the details for usage.
 FluentValidation
@@ -36,7 +37,7 @@ ValidationResult results = validator.Validate(customer);
 
 bool success = results.IsValid;
 IList<ValidationFailure> failures = results.Errors;
-GitHub reference
+GitHub reference(https://github.com/FluentValidation/FluentValidation) 
 Microsoft.Extensions.DependencyInjection
 Install-Package Microsoft.Extensions.DependencyInjection
 Dependency injection aka inversion of control is a popular pattern.  Lately I've stuck with the Microsoft version as it integrates nicely with ASP.net and fairly simple. Unit testing becomes easier since the interfaces can be mocked.
@@ -49,14 +50,14 @@ var provider = services.BuildServiceProvider();
 // usage
 using var scope = _provider.CreateScope();
 var instance = scope.ServiceProvider.GetService<IBar>();
-Usage reference
+Usage reference(https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage) 
 Easy.Common
 Install-Package Easy.Common
 Have you ever tried counting lines of a very large file? If not, it can get complicated quick.
 var file = new FileInfo("veryLargerFile.csv");
 using var stream = file.OpenRead(); 
 var lines = stream.CountLines();
-There are other useful extensions. GitHub reference
+There are other useful extensions. GitHub reference(https://github.com/NimaAra/Easy.Common) 
 Xunit, Moq, AutoMoq
 Install-Package xunit
 Install-Package Moq 
@@ -79,8 +80,8 @@ Example of mocking
         // Assert
         Assert.Equal(expected, uint.Parse(message.Headers["UID"]));
     }
-Xunit getting started
-https://www.developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/#:~:text=Moq%20provides%20you%20methods%20to%20confirm%20that%20particular,was%20called%20a%20particular%20number%20of%20times.%20
+Xunit getting started(https://xunit.net/docs/getting-started/netcore/cmdline) 
+https://www.developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/#:~:text=Moq%20provides%20you%20methods%20to%20confirm%20that%20particular,was%20called%20a%20particular%20number%20of%20times.%20(https://www.developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/#:%7E:text=Moq%20provides%20you%20methods%20to%20confirm%20that%20particular,was%20called%20a%20particular%20number%20of%20times.%20) 
 Polly
 Install-Package Polly
 Need retry logic?  Exponential back off? This project solves the problems easily with tons of of extensions!
@@ -93,28 +94,28 @@ retryPolicy.Execute(() =>
     Log($"Attempt {++attempt}");
     throw new TransientException();
 });
-GitHub reference
+GitHub reference(https://github.com/App-vNext/Polly) 
 Honorable mentions
 
-LambdaSharp - deploy to AWS lambda and resources easier and safer.
-PubSub - publish and subscribe pattern
-M2MqttDotnetCore - MQTT client
-SynthesizerAudio - Synthesize text to speech
-Microsoft.OpenApi - like swagger but better
-Microsoft.IdentityModel.Tokens / System.IdentityModel.Tokens.Jwt  Working with JWTs.  Not easiest to read but essential for understanding how to use them.
-Refit - safe type REST library
-S22.Imap.Core - Interacting with email via IMAP.  The library is simple and ease to use.
-Microsoft.Extensions.Caching.Memory - caching safely
-EmbedIO - Cross platform HTTP / WebSocket server.
-Watson - Cross platform HTTP server.  Has attribute routing as well.
+LambdaSharp(https://lambdasharp.net)  - deploy to AWS lambda and resources easier and safer.
+PubSub(https://github.com/upta/pubsub)  - publish and subscribe pattern
+M2MqttDotnetCore(https://github.com/mohaqeq/paho.mqtt.m2mqtt)  - MQTT client
+SynthesizerAudio(https://www.nuget.org/packages/SynthesizerAudio/)  - Synthesize text to speech
+Microsoft.OpenApi(https://github.com/Microsoft/OpenAPI.NET)  - like swagger but better
+Microsoft.IdentityModel.Tokens / System.IdentityModel.Tokens.Jwt(https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.tokens.jwt?view=azure-dotnet)   Working with JWTs.  Not easiest to read but essential for understanding how to use them.
+Refit(https://github.com/reactiveui/refit)  - safe type REST library
+S22.Imap.Core(https://www.nuget.org/packages/S22.Imap.Core/)  - Interacting with email via IMAP.  The library is simple and ease to use.
+Microsoft.Extensions.Caching.Memory(https://docs.microsoft.com/en-us/dotnet/core/extensions/caching)  - caching safely
+EmbedIO(https://github.com/unosquare/embedio)  - Cross platform HTTP / WebSocket server.
+Watson(https://github.com/jchristn/WatsonWebserver)  - Cross platform HTTP server.  Has attribute routing as well.
  See something inaccurate or need more detail? Submit a Pull
-        Request to help me out!
+        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Top+5+Nuget+Packages)  to help me out!
       
-Buy me a ☕ to support!
+Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
 
 Latest Posts
-My Emails Are Out Of Control
-Part 2 of Hacking my Sony A6000 Camera
-Hacking my Sony A6000 Camera Adding Modern Features
-Linux Wifi Hotspot with PiHole
-Effective Onboarding for New Engineers
+My Emails Are Out Of Control(emails_out_of_control) 
+Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
+Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
+Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
+Effective Onboarding for New Engineers(onboarding-devs) 
