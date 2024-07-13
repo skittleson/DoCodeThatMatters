@@ -1,100 +1,103 @@
 ﻿
 Do Code That Matters
-Do Code That Matters(/) 
-Blog(/blog) 
-About(/about) 
-(emails_out_of_control) 
+Do Code That Matters (/) 
+- 
+Blog (/blog) 
+
+- 
+About (/about) 
+ (emails_out_of_control) 
 Jun 25 2024
 
-My Emails Are Out Of Control(emails_out_of_control) 
-                My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.  Read More(emails_out_of_control) 
-(hacking-sony-a6000-more) 
+My Emails Are Out Of Control (emails_out_of_control) 
+                My emails are out of control. In order to take some of it back, i decided to write some python scripts to help out.  Read More (emails_out_of_control) 
+ (hacking-sony-a6000-more) 
 May 14 2024
 
-Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
-                Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.  Read More(hacking-sony-a6000-more) 
-(hacking-sony-a6000-for-modernization) 
+Part 2 of Hacking my Sony A6000 Camera (hacking-sony-a6000-more) 
+                Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.  Read More (hacking-sony-a6000-more) 
+ (hacking-sony-a6000-for-modernization) 
 Jul 17 2023
 
-Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
-                Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.  Read More(hacking-sony-a6000-for-modernization) 
-(linux-wifi-hotspot-usb3) 
+Hacking my Sony A6000 Camera Adding Modern Features (hacking-sony-a6000-for-modernization) 
+                Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.  Read More (hacking-sony-a6000-for-modernization) 
+ (linux-wifi-hotspot-usb3) 
 Sep 29 2022
 
-Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
-                Build a wifi hotspot using hostapd via create_ap project and pihole.  Read More(linux-wifi-hotspot-usb3) 
-(onboarding-devs) 
+Linux Wifi Hotspot with PiHole (linux-wifi-hotspot-usb3) 
+                Build a wifi hotspot using hostapd via create_ap project and pihole.  Read More (linux-wifi-hotspot-usb3) 
+ (onboarding-devs) 
 Jul 05 2022
 
-Effective Onboarding for New Engineers(onboarding-devs) 
-                Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.  Read More(onboarding-devs) 
-(skateboard-gear) 
+Effective Onboarding for New Engineers (onboarding-devs) 
+                Learn an effective onboarding strategy for new engineers on a project. Streamline the transition and boost productivity with our structured approach.  Read More (onboarding-devs) 
+ (skateboard-gear) 
 Jun 20 2022
 
-Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards(skateboard-gear) 
-                Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.  Read More(skateboard-gear) 
-(top-nuget-packages) 
+Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards (skateboard-gear) 
+                Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.  Read More (skateboard-gear) 
+ (top-nuget-packages) 
 Mar 07 2022
 
-Top 5 Nuget Packages(top-nuget-packages) 
-                Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.  Read More(top-nuget-packages) 
-(automate-cleaning-of-air-conditioner-condensate-drain-line) 
+Top 5 Nuget Packages (top-nuget-packages) 
+                Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.  Read More (top-nuget-packages) 
+ (automate-cleaning-of-air-conditioner-condensate-drain-line) 
 Dec 31 2021
 
-Automate Cleaning of Air Conditioner Condensate Drain Line(automate-cleaning-of-air-conditioner-condensate-drain-line) 
-                Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.  Read More(automate-cleaning-of-air-conditioner-condensate-drain-line) 
-(chocolately-for-devs) 
+Automate Cleaning of Air Conditioner Condensate Drain Line (automate-cleaning-of-air-conditioner-condensate-drain-line) 
+                Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.  Read More (automate-cleaning-of-air-conditioner-condensate-drain-line) 
+ (chocolately-for-devs) 
 Oct 03 2021
 
-Common Apps for Devs over Chocolatey(chocolately-for-devs) 
-                Automate software install for a software engineer on Windows  Read More(chocolately-for-devs) 
-(neosiren-tasmota-local-first-cloud-assisted-iot) 
+Common Apps for Devs over Chocolatey (chocolately-for-devs) 
+                Automate software install for a software engineer on Windows  Read More (chocolately-for-devs) 
+ (neosiren-tasmota-local-first-cloud-assisted-iot) 
 Apr 27 2021
 
-Local First, Cloud Assisted ☁ MultiSensor(neosiren-tasmota-local-first-cloud-assisted-iot) 
-                Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.  Read More(neosiren-tasmota-local-first-cloud-assisted-iot) 
-(automate-sprinkler-with-tasmota) 
+Local First, Cloud Assisted ☁ MultiSensor (neosiren-tasmota-local-first-cloud-assisted-iot) 
+                Guide for flashing a temperature and humidity multisensor with Tasmota for local network first setup.  Read More (neosiren-tasmota-local-first-cloud-assisted-iot) 
+ (automate-sprinkler-with-tasmota) 
 Nov 02 2020
 
-A simple water sprinkler system, for makers!(automate-sprinkler-with-tasmota) 
-                Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.  Read More(automate-sprinkler-with-tasmota) 
-(3dprinter-duplicator-i3-upgrade) 
+A simple water sprinkler system, for makers! (automate-sprinkler-with-tasmota) 
+                Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.  Read More (automate-sprinkler-with-tasmota) 
+ (3dprinter-duplicator-i3-upgrade) 
 Jun 01 2020
 
-Duplicator i3 3d printer upgrade(3dprinter-duplicator-i3-upgrade) 
-                Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.  Read More(3dprinter-duplicator-i3-upgrade) 
-(power-switch-monitor) 
+Duplicator i3 3d printer upgrade (3dprinter-duplicator-i3-upgrade) 
+                Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.  Read More (3dprinter-duplicator-i3-upgrade) 
+ (power-switch-monitor) 
 Jun 01 2020
 
-Power Switch Monitor with an Arduino device(power-switch-monitor) 
-                Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.  Read More(power-switch-monitor) 
-(json-to-s3-with-google-recaptcha) 
+Power Switch Monitor with an Arduino device (power-switch-monitor) 
+                Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.  Read More (power-switch-monitor) 
+ (json-to-s3-with-google-recaptcha) 
 Oct 19 2019
 
-Save JSON Objects to AWS S3 with Google Recaptcha(json-to-s3-with-google-recaptcha) 
-                Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.  Read More(json-to-s3-with-google-recaptcha) 
-(research-bluetooth-proximity) 
+Save JSON Objects to AWS S3 with Google Recaptcha (json-to-s3-with-google-recaptcha) 
+                Save JSON objects to AWS S3 using Google Recaptcha in a AWS Lambda function.  Read More (json-to-s3-with-google-recaptcha) 
+ (research-bluetooth-proximity) 
 Oct 19 2019
 
-Research on Bluetooth Proximity(research-bluetooth-proximity) 
-                Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump  Read More(research-bluetooth-proximity) 
-(software-engineering-lessons) 
+Research on Bluetooth Proximity (research-bluetooth-proximity) 
+                Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump  Read More (research-bluetooth-proximity) 
+ (software-engineering-lessons) 
 Oct 23 2018
 
-Software Engineering Lessons(software-engineering-lessons) 
-                In the field notes and lessons learned as a software engineer.  Read More(software-engineering-lessons) 
-(yet-another-garage-door-opener) 
+Software Engineering Lessons (software-engineering-lessons) 
+                In the field notes and lessons learned as a software engineer.  Read More (software-engineering-lessons) 
+ (yet-another-garage-door-opener) 
 May 11 2018
 
-Yet Another Garage Door Opener(yet-another-garage-door-opener) 
-                Just another garage door opener using a raspberry pi  Read More(yet-another-garage-door-opener) 
-(asp-net-xss-protection) 
+Yet Another Garage Door Opener (yet-another-garage-door-opener) 
+                Just another garage door opener using a raspberry pi  Read More (yet-another-garage-door-opener) 
+ (asp-net-xss-protection) 
 Sep 06 2017
 
-ASP.NET XSS protection(asp-net-xss-protection) 
-                Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).  Read More(asp-net-xss-protection) 
-(raspberry-pi-bluetooth-proximity) 
+ASP.NET XSS protection (asp-net-xss-protection) 
+                Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).  Read More (asp-net-xss-protection) 
+ (raspberry-pi-bluetooth-proximity) 
 May 26 2017
 
-Raspberry Pi Bluetooth Proximity Detector - A Simple Guide(raspberry-pi-bluetooth-proximity) 
-                Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.  Read More(raspberry-pi-bluetooth-proximity) 
+Raspberry Pi Bluetooth Proximity Detector - A Simple Guide (raspberry-pi-bluetooth-proximity) 
+                Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.  Read More (raspberry-pi-bluetooth-proximity) 

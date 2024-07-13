@@ -1,17 +1,4 @@
-﻿
-My Emails Are Out Of Control
-Do Code That Matters(/) 
-Blog(/blog) 
-About(/about) 
-My Emails Are Out Of Control
 
-Jun 25 2024
-          by
-          
-
-Spencer Kittleson
-(https://DoCodeThatMatters.com/about) 
-An email running away from being cleaned up.
 Introduction
 My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  Email is here to stay and i have chose not to commit to a zero inbox game.  So this is my attempt to using some code to analyze and clean up existing messages.  Let's get some control back.
 Code
@@ -42,20 +29,10 @@ Mostly newsletters, some transactional.  Having a time-to-live on some of these 
 
 Solutions
 
-Unsubscribe from the top offenders
-Using a script, delete the top offending emails.
-Created some rules to archive emails via the web portal.
-Run the script top offenders monthly to evaluate who is wasting my time the most
+- Unsubscribe from the top offenders
+- Using a script, delete the top offending emails.
+- Created some rules to archive emails via the web portal.
+- Run the script top offenders monthly to evaluate who is wasting my time the most
 
 Conclusion
 A bit of house cleaning will keep some sanity in my inbox.  With the addition of automation, it should get better over time.
- See something inaccurate or need more detail? Submit a Pull
-        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20My+Emails+Are+Out+Of+Control)  to help me out!
-      
-Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
-
-Latest Posts
-Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
-Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
-Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
-Effective Onboarding for New Engineers(onboarding-devs) 

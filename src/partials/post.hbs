@@ -6,15 +6,9 @@
         <meta itemprop="mainEntityOfPage" content="{{url}}/{{blogPath file}}">
         <h1 itemprop="name headline">{{title}}</h1>
         <small>
-          <time itemprop="datePublished" datetime={{schemaDate date}}>{{formatDate date}}</time>
-          {{#if (schemaDate modified)}}
-            <meta itemprop="dateModified" datetime={{schemaDate modified}} />
-          {{/if}}
-          by
+          <time itemprop="datePublished" datetime={{schemaDate date}}>{{formatDate date}}</time>{{#if (schemaDate modified)}}<meta itemprop="dateModified" datetime={{schemaDate modified}} />{{/if}} by
           <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography">
-              <span itemprop="name">{{author}}</span>
-            </a>
+            <a rel="author" itemprop="url" href="{{url}}/about" title="View author biography"><span itemprop="name">{{author}}</span></a>
             <meta itemprop="jobTitle" content="Software Engineer">
           </span>
           <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">

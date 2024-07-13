@@ -15,33 +15,37 @@ def convert_html_to_text():
             with open(index_html_root,'r', encoding='utf-8') as r:
                 html_content = r.read()           
                 soup = BeautifulSoup(html_content, 'html.parser')
-                for a in soup.find_all('a'):
-                    a.replace_with(f"{a.get_text()}({a['href']}) ")
+                article_body = soup.find(class_='article-body')
+                if not article_body:
+                    article_body = soup
+                
+                # Make some elements prettier
+                for a in article_body.find_all('a'):
+                    a.replace_with(f"{a.get_text()} ({a['href']}) ")
+                for li in article_body.find_all('li'):
+                    li.replace_with(f"- {li.get_text()}")
+                
+                # write to disk
                 with open(index_text_root,'w', encoding='utf-8') as f:
-                    plain_text = soup.get_text()
+                    plain_text = article_body.get_text()
                     plain_text = re.sub(r'\n{3,}', '\n', plain_text)
                     f.write(plain_text)
 
 def update_rss_feed_text_version_lengths():
 
     import xml.etree.ElementTree as ET
-    # Save the updated RSS feed to a file
-    updated_rss_feed = ""
     ET.register_namespace("atom", "http://www.w3.org/2005/Atom")
     tree = ET.parse('docs/rss.xml')
     root = tree.getroot()
-    # with open('docs/rss.xml', 'r', encoding='utf-8') as f:
-        # Parse the RSS feed
-        # root = ET.fromstring(f.read())
-        # root.attrib['xmlns:atom'] = 'http://www.w3.org/2005/Atom' 
-        # namespace = {'atom': 'http://www.w3.org/2005/Atom'}
 
-        # Iterate through each item in the RSS feed
+    # Iterate through each item in the RSS feed
     for item in root.findall('.//item'):
+        # TODO plain/text and mp3 version here.  
         enclosure = item.find('enclosure')
         if enclosure is not None:
             enclosure_url = enclosure.attrib['url']
             
+            # TODO should be the local version
             # Fetch the content from the enclosure URL
             response = requests.get(enclosure_url)
             content = response.text
@@ -57,8 +61,6 @@ def update_rss_feed_text_version_lengths():
 
     with open('docs/rss.xml', 'w', encoding='utf-8') as f:
         f.write(f'<?xml version="1.0" encoding="utf-8" ?>\n{updated_rss_feed}')
-
-    
 
 
 def is_absolute(url):
@@ -102,10 +104,25 @@ def check_all_pages_for_broken_links():
                     writer.writerow([folder, broken_link])
 
 
+def text_to_speech_on_plain_text():
+    """Create audio files for all blog posts using googles tts"""
+
+    from gtts import gTTS
+    language = 'en'
+    for folder in os.listdir('docs'):
+        index_txt = f'docs/{folder}/index.txt'
+        index_mp3 = f'docs/{folder}/index.mp3'
+        if '.' not in folder and os.path.exists(index_txt):
+            print(f'creating audio file for {folder}')
+            with open(index_txt,'r', encoding='utf-8') as r:
+                googleTTSService = gTTS(text=r.read(), lang=language)
+                googleTTSService.save(index_mp3)
+
 
 
 
 if __name__ == '__main__':
     convert_html_to_text()
     update_rss_feed_text_version_lengths()
+    # text_to_speech_on_plain_text()
     # check_all_pages_for_broken_links()

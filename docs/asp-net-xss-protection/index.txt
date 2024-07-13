@@ -1,17 +1,4 @@
-﻿
-ASP.NET XSS protection
-Do Code That Matters(/) 
-Blog(/blog) 
-About(/about) 
-ASP.NET XSS protection
 
-Sep 06 2017
-          by
-          
-
-Spencer Kittleson
-(https://DoCodeThatMatters.com/about) 
-ASP.Net XSS protection
 Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
 In system.webServer element, add the following:
 <httpProtocol>
@@ -36,40 +23,30 @@ In system.webServer element, add the following:
   </customHeaders>
 </httpProtocol>
 
-Content security policy(https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)  was the only one considered less secure due to outside javascript & CSS resources the app used (Google Analytics, Bootstrap, etc).
+Content security policy (https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)  was the only one considered less secure due to outside javascript & CSS resources the app used (Google Analytics, Bootstrap, etc).
 Additional Protection
 
-Applying AntiXss attribute from the ASP.Net Web API AntiXss Attribute(https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute)  project. Check it out here: https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute(https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute) 
-Use a Website Application Firewall for your apps.
+- Applying AntiXss attribute from the ASP.Net Web API AntiXss Attribute (https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute)  project. Check it out here: https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute (https://bitbucket.org/embarr-development/asp.net-web-api-antixss-attribute) 
+- Use a Website Application Firewall for your apps.
 
 Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, Shadow Daemon
 Tools
 Look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing.
 
-nikto2(https://cirt.net/Nikto2) 
-sqlmap(http://sqlmap.org/) 
-OWASP Zap(https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) 
+- nikto2 (https://cirt.net/Nikto2) 
+- sqlmap (http://sqlmap.org/) 
+- OWASP Zap (https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) 
 
 Takeaways
 
-Don't rely on just one layer of protection.
-Use established frameworks.
-Use the same tools as the pen testers.
+- Don't rely on just one layer of protection.
+- Use established frameworks.
+- Use the same tools as the pen testers.
 
 References
 
-https://stackoverflow.com/search?q=XSS(https://stackoverflow.com/search?q=XSS)  (21k and counting!)
-OWASP(https://www.owasp.org/index.php/Main_Page) 
-https://msdn.microsoft.com/en-us/library/ff649310.aspx(https://msdn.microsoft.com/en-us/library/ff649310.aspx) 
-https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP(https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) 
- See something inaccurate or need more detail? Submit a Pull
-        Request(https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20ASP.NET+XSS+protection)  to help me out!
-      
-Buy me a ☕ to support!(https://www.buymeacoffee.com/skittles) 
+- https://stackoverflow.com/search?q=XSS (https://stackoverflow.com/search?q=XSS)  (21k and counting!)
+- OWASP (https://www.owasp.org/index.php/Main_Page) 
+- https://msdn.microsoft.com/en-us/library/ff649310.aspx (https://msdn.microsoft.com/en-us/library/ff649310.aspx) 
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP (https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) 
 
-Latest Posts
-My Emails Are Out Of Control(emails_out_of_control) 
-Part 2 of Hacking my Sony A6000 Camera(hacking-sony-a6000-more) 
-Hacking my Sony A6000 Camera Adding Modern Features(hacking-sony-a6000-for-modernization) 
-Linux Wifi Hotspot with PiHole(linux-wifi-hotspot-usb3) 
-Effective Onboarding for New Engineers(onboarding-devs) 
