@@ -2,6 +2,8 @@ import os
 from bs4 import BeautifulSoup
 import re
 import requests
+from urllib.parse import urlparse
+from pprint import pprint
 
 def convert_html_to_text():
     """
@@ -41,20 +43,14 @@ def update_rss_feed_text_version_lengths():
     # Iterate through each item in the RSS feed
     for item in root.findall('.//item'):
         # TODO plain/text and mp3 version here.  
-        enclosure = item.find('enclosure')
-        if enclosure is not None:
-            enclosure_url = enclosure.attrib['url']
-            
-            # TODO should be the local version
-            # Fetch the content from the enclosure URL
-            response = requests.get(enclosure_url)
-            content = response.text
-            
-            # Determine the length of the text
-            text_length = len(content)
-            
-            # Create a new element for the text length
+
+        # enclosure = item.find('enclosure')
+        enclosures = item.findall('enclosure')
+        for enclosure in enclosures:
+            local_url_path = 'docs' + urlparse(enclosure.attrib['url']).path
+            text_length = os.path.getsize(local_url_path)
             enclosure.attrib['length'] = str(text_length)
+            print(text_length)
 
     # Write the updated RSS feed back to a string
     updated_rss_feed = ET.tostring(root, encoding='utf-8').decode("utf-8")

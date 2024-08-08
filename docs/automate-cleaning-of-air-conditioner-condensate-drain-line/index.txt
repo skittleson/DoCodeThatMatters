@@ -20,27 +20,20 @@ Take a vinegar plastic bottle and poked a hole in it about the size of the fitti
 Tasmota Rules
 Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse about 1 cup of vinegar/water mixture. Increments one to Counter 1.
 Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon
-
 Rule1 on
-
 Turn on pump one every day at 4am within a 15 minute window.
 Timer1 {"Enable":1,"Time":"4:00","Window":15,"Days":"SMTWTFS","Repeat":1,"Output":1,"Action":1}
-
 Timers on
-
 Set the timezone of your location.
 Timezone -8
-
 Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware.
 PowerOnState 0
-
 All of it together:
 
 Final results for the web ui
 
 MQTT Sensor topic
 tele/tasmota_XXXXX/SENSOR = {"Time":"2021-12-31T09:39:59","COUNTER":{"C1":3}}
-
 Future Improvements
 
 - Based on the counter, send an alert to refill the reservoir tank.

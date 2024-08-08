@@ -25,7 +25,7 @@
     <meta property="og:site_name" content="Do Code That Matters" />
     <meta name="twitter:description" content="Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month." />
     <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://templates.blakadder.com/assets/images/WD-01ADE.jpg" />
+    <meta property="og:image" content="https://templates.blakadder.com/assets/device_images/WD-01ADE.webp" />
     <link href="/site.css" rel="stylesheet">
     <link rel='manifest' href='/manifest.json'>
     <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
@@ -95,7 +95,7 @@
         </small>
         <br />
         <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Water pump WD-01ADE" src="https://templates.blakadder.com/assets/images/WD-01ADE.jpg">
+          <img itemprop="url contentUrl" alt="Water pump WD-01ADE" src="https://templates.blakadder.com/assets/device_images/WD-01ADE.webp">
           <figcaption itemprop="caption">Water pump WD-01ADE</figcaption>
         </figure>
         <br />
@@ -112,7 +112,7 @@
 <h2 id="water-pump-preparation">Water Pump Preparation</h2>
 <p>I ordered this <a href="https://www.amazon.com/dp/B08T9KLDHD?&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=da5e68dd8503f9f127b2e0c5222d3424&amp;language=en_US&amp;ref_=as_li_ss_tl">wifi dual water pump</a> from Amazon then flashed it using <a href="https://templates.blakadder.com/WD-01ADE.html">this guide</a>.  The only tricky part was soldering wires to those tiny connections shown in the guide's image. I followed the traces for two of them then soldered unto those instead.  More room to work with.</p>
 <p>Flashed it with <a href="https://github.com/tasmota/tasmotizer/releases">Tasmotizer</a>. Send the wifi configuration then grab the IP address.  Make sure to set the template defined in the guide at this point in <code>Configuration &gt; Configure Other</code>.</p>
-<pre><code>{&quot;NAME&quot;:&quot;WD-01ADE&quot;,&quot;GPIO&quot;:[32,0,0,0,0,225,33,0,224,320,0,0,0,0],&quot;FLAG&quot;:0,&quot;BASE&quot;:18}
+<pre><code class="language-json">{&quot;NAME&quot;:&quot;WD-01ADE&quot;,&quot;GPIO&quot;:[32,0,0,0,0,225,33,0,224,320,0,0,0,0],&quot;FLAG&quot;:0,&quot;BASE&quot;:18}
 </code></pre>
 <p>In order to monitor the pump activations, a counter was added.  This is useful to keep track of the amount water/vinegar mixture is left in the reservoir. This needs to be done after the template was set by going to:</p>
 <p><code>Configuration &gt; Configure Template &gt; GPIO16 to Counter</code> with counter drop down selected as <code>1</code>. The value is stored even after a reboot!</p>
@@ -121,28 +121,21 @@
 <p><img loading="lazy" src="images/plasticBottleHotGlueWaterRes.jpg" alt="Plastic bottle fitting" /></p>
 <h2 id="tasmota-rules">Tasmota Rules</h2>
 <p>Add this rule when the pump1 has started. It will schedule to turn off in 30 seconds which should disperse about 1 cup of vinegar/water mixture. Increments one to Counter 1.</p>
-<pre><code>Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon
-
-Rule1 on
-</code></pre>
+<p><code>Rule1 on power1#state=1 do backlog RuleTimer2 30; counter1 +1 endon on Rules#Timer=2 do power1 off endon</code></p>
+<p><code>Rule1 on</code></p>
 <p>Turn on pump one every day at 4am within a 15 minute window.</p>
-<pre><code>Timer1 {&quot;Enable&quot;:1,&quot;Time&quot;:&quot;4:00&quot;,&quot;Window&quot;:15,&quot;Days&quot;:&quot;SMTWTFS&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}
-
-Timers on
-</code></pre>
+<p><code>Timer1 {&quot;Enable&quot;:1,&quot;Time&quot;:&quot;4:00&quot;,&quot;Window&quot;:15,&quot;Days&quot;:&quot;SMTWTFS&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}</code></p>
+<p><code>Timers on</code></p>
 <p>Set the timezone of your location.</p>
-<pre><code>Timezone -8
-</code></pre>
+<p><code>Timezone -8</code></p>
 <p>Lastly, if the device restarts then ensure the water pump relays are off by default. This is not the default with Tasmota firmware.</p>
-<pre><code>PowerOnState 0
-</code></pre>
+<p><code>PowerOnState 0</code></p>
 <p>All of it together:</p>
 <script src="https://gist.github.com/skittleson/f6fb022cffb9d296b387681b551a13fd.js"></script>
 <p>Final results for the web ui</p>
 <p><img loading="lazy" src="images/waterPumpTasmotaScreenshot.png" alt="Tasmota WebUI" /></p>
 <p>MQTT Sensor topic</p>
-<pre><code>tele/tasmota_XXXXX/SENSOR = {&quot;Time&quot;:&quot;2021-12-31T09:39:59&quot;,&quot;COUNTER&quot;:{&quot;C1&quot;:3}}
-</code></pre>
+<p><code>tele/tasmota_XXXXX/SENSOR = {&quot;Time&quot;:&quot;2021-12-31T09:39:59&quot;,&quot;COUNTER&quot;:{&quot;C1&quot;:3}}</code></p>
 <h2 id="future-improvements">Future Improvements</h2>
 <ul>
 <li>Based on the counter, send an alert to refill the reservoir tank.</li>
@@ -190,7 +183,11 @@ Timers on
       
 </main>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/agate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/languages/csharp.min.js"></script>
+<script>hljs.highlightAll();</script>
 <script async src="/site.js"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
 <script>
