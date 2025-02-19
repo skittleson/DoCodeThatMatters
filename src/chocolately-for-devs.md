@@ -6,6 +6,7 @@ keywords:
   - Automate software installs
   - Software Engineer on Windows
 date: 2021-10-03
+modified: 2024-09-07
 description: Automate software install for a software engineer on Windows
 image: https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80
 alt: Chocolate bar
@@ -17,7 +18,7 @@ As a software engineer, starting with a clean slate in an OS is required often. 
 Install chocolatey from [https://chocolatey.org/install](https://chocolatey.org/install)
 
 <code>
-    choco install -y 7zip arduino audacity autohotkey autoruns bleachbit cmder curl cyberduck ditto drawio ffmpeg Ghostscript.app gimp git gitkraken graphviz grep handbrake hwmonitor ilspy imagemagick inkscape jq keepass microsoft-windows-terminal nano nodejs notepadplusplus paint.net powertoys processhacker rainmeter rsync screentogif sharex sharpkeys SQLite sqlitebrowser sysinternals teracopy tortoisegit totalcommander transmission ultradefrag vlc vscode winmerge wireguard wireshark youtube-dl chocolateypackageupdater python dotnet visualstudio2019community oh-my-posh
+    choco install -y 7zip arduino audacity autohotkey autoruns bleachbit cmder curl cyberduck ditto drawio ffmpeg Ghostscript.app gimp git graphviz grep handbrake hwmonitor ilspy imagemagick inkscape jq keepass microsoft-windows-terminal nano nodejs notepadplusplus paint.net powertoys processhacker rainmeter rsync screentogif sharex sharpkeys SQLite sqlitebrowser sysinternals teracopy tortoisegit totalcommander transmission ultradefrag vlc vscode winmerge wireguard wireshark youtube-dl chocolateypackageupdater python dotnet visualstudio2019community oh-my-posh lazydocker
 </code>
 
 For all available local packages
