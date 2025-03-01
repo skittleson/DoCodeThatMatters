@@ -2,6 +2,9 @@
 
 Go check it out here: [https://docodethatmatters.com](https://docodethatmatters.com)
 
+`cd docs`
+`python -m http.server`
+
 ## Python virtual env
 
 python -m venv venv

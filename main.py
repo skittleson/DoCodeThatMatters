@@ -1,37 +1,41 @@
+"""Tools for content"""
+
 import os
-from bs4 import BeautifulSoup
 import re
+from bs4 import BeautifulSoup
 import requests
 from urllib.parse import urlparse
 from pprint import pprint
+
 
 def convert_html_to_text():
     """
     Provides an alternative text based version of a blog post
     """
-  
+
     for folder in os.listdir('docs'):
         index_html_root = f'docs/{folder}/index.html'
-        index_text_root = index_html_root.replace('.html','.txt')
+        index_text_root = index_html_root.replace('.html', '.txt')
         if '.' not in folder and os.path.exists(index_html_root):
-            with open(index_html_root,'r', encoding='utf-8') as r:
-                html_content = r.read()           
+            with open(index_html_root, 'r', encoding='utf-8') as r:
+                html_content = r.read()
                 soup = BeautifulSoup(html_content, 'html.parser')
                 article_body = soup.find(class_='article-body')
                 if not article_body:
                     article_body = soup
-                
+
                 # Make some elements prettier
                 for a in article_body.find_all('a'):
                     a.replace_with(f"{a.get_text()} ({a['href']}) ")
                 for li in article_body.find_all('li'):
                     li.replace_with(f"- {li.get_text()}")
-                
+
                 # write to disk
-                with open(index_text_root,'w', encoding='utf-8') as f:
+                with open(index_text_root, 'w', encoding='utf-8') as f:
                     plain_text = article_body.get_text()
                     plain_text = re.sub(r'\n{3,}', '\n', plain_text)
                     f.write(plain_text)
+
 
 def update_rss_feed_text_version_lengths():
 
@@ -42,7 +46,7 @@ def update_rss_feed_text_version_lengths():
 
     # Iterate through each item in the RSS feed
     for item in root.findall('.//item'):
-        # TODO plain/text and mp3 version here.  
+        # TODO plain/text and mp3 version here.
 
         # enclosure = item.find('enclosure')
         enclosures = item.findall('enclosure')
@@ -61,6 +65,7 @@ def update_rss_feed_text_version_lengths():
 
 def is_absolute(url):
     return bool(requests.utils.urlparse(url).netloc)
+
 
 def check_links(file_path):
     import mechanicalsoup
@@ -90,12 +95,12 @@ def check_all_pages_for_broken_links():
     Checks all pages for broken links then reports it to a file
     """
     import csv
-    with open('reports/broken_links.csv', 'w') as csvfile:
+    with open('reports/broken_links.csv', 'w', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         for folder in os.listdir('docs'):
             index_html_root = f'docs/{folder}/index.html'
             if '.' not in folder and os.path.exists(index_html_root):
-                broken_links = check_links(index_html_root)      
+                broken_links = check_links(index_html_root)
                 for broken_link in broken_links:
                     writer.writerow([folder, broken_link])
 
@@ -110,11 +115,9 @@ def text_to_speech_on_plain_text():
         index_mp3 = f'docs/{folder}/index.mp3'
         if '.' not in folder and os.path.exists(index_txt):
             print(f'creating audio file for {folder}')
-            with open(index_txt,'r', encoding='utf-8') as r:
+            with open(index_txt, 'r', encoding='utf-8') as r:
                 googleTTSService = gTTS(text=r.read(), lang=language)
                 googleTTSService.save(index_mp3)
-
-
 
 
 if __name__ == '__main__':
