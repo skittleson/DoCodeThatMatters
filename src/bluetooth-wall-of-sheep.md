@@ -44,6 +44,8 @@ A4:00:00:00:00:00: None
 5A:00:00:00:00:00: None
 ```
 
+This data is only good for discovery at the moment.  Bleak is very powerful since it can inspect the data much closer. 
+
 ## Detailed Scanning
 
 ![Wall of Sheep](images/ble_wall_of_sheep.jpg "Bluetooth 'Wall of Sheep'")
@@ -53,14 +55,15 @@ There is useful information here such as device company, services, and distance.
 ### Random MAC addresses preventable tracking (or do they).
 
 When a device uses random MAC address rotation to evade tracking, it's true that this makes it challenging to identify the same device over time. However, there are ways to overcome this challenge. For instance, you can analyze the RSSI (Received Signal Strength Indicator) values for each device in your scan results. Since the device is not moving, its RSSI should remain relatively consistent across multiple scans, even if its MAC address changes. By monitoring the RSSI values and correlating them with other data points such as device type or service characteristics, you can improve your chances of accurately tracking devices that use random MAC rotation.
-
+Here is a [tool on github](https://github.com/skittleson/bluetooth-wos) that device company, services, and distance.  The rest of the post will be gaining insights for data that could be accumulated with long detailed scanning.
 
 ### How can you track distances?
 
-The official way is to use the device transmission power,  receiving powers, and signal propagation (in a line of sight, walls, or heavy interference). https://stackoverflow.com/a/24245724
+![Calculations applied to a cartesian plane](images/bluetooth-wos/distance_diagram.png)
+
+The official way is to use the device transmission power, receiving power, and signal propagation ( this value changes in a line of sight, walls, or heavy interference see [quick reference](https://stackoverflow.com/a/24245724)) 
 
 	distance = 10^((tx_power - rssi) / (10 * signal_propagation_constant))
-
 
 How do you do it with a device's RSSI only?  Not nearly as accurate BUT there is an approximation.
 
@@ -79,6 +82,8 @@ What's more interesting is device present that can hint at the other devices dis
 For example, if you know you are in a line of sight and one device is telling you 5 meters with and RSSI of 40 likely the other device that has no tx but RSSI of 40 is also within 5 meters.  THIS IS USEFUL!
 
 
+
+
 ## Static Addressable BLE Devices
 
 These devices usually have services and characteristics... more on that later.
@@ -89,18 +94,18 @@ Static devices that DO move... like AirTags, Tiles, and BLE tags.  these are REA
 
 ### Services
 
-These devices can have well known services / characteristics !  Temperature and humidity is fairly common.  Battery service as well. There is a really good app to call nr toolbox. Good to discover locally.  Auto resolving these can be tricky since most required a device to be notified.
+These devices can have well known services / characteristics !  Temperature and humidity is fairly common.  Battery service as well. Auto resolving these can be tricky since most required a device to "notify".
 
 ### Insights
 
-- Human presence.
+- Human presence
 	- a TV being ON/OFF is a clear indicator if someone is home... or going to bed
 	- AirTag/Tile seen then disappearing then reappearing at certain times of the day (when someone is coming home!)
-- Resolving distances by using other devices around it that support transmission power.
-- Exposure of semi-sensitive information such as device metadata and/or data.
+- The ability to get distances using other devices that transmission power.
+- Exposure of semi-sensitive information such as using the device metadata.
 
 
 ### References
  
  - https://www.beaconzone.co.uk/blog/category/rssi/
- - Bleak
+ - [bleak](https://bleak.readthedocs.io/en/latest/installation.html)

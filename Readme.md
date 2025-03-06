@@ -7,9 +7,9 @@ Go check it out here: [https://docodethatmatters.com](https://docodethatmatters.
 
 ## Python virtual env
 
-python -m venv venv
+python -m venv .venv
 
-.\venv\Scripts\activate
+.\.venv\Scripts\activate
 
 pip install -r requirements.txt
 
