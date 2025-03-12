@@ -1,4 +1,4 @@
 ﻿Contact: docodethatmatters@outlook.com
-Expires: 2025-02-08T17:53:17.115Z
+Expires: 2025-09-12T14:33:18.827Z
 Preferred-Languages: en
 Canonical: https://DoCodeThatMatters.com/security.txt

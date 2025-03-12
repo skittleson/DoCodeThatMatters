@@ -7,3 +7,4 @@ oldDocs/
 venv
 .sqlite
 reports
+.venv

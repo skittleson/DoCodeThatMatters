@@ -193,6 +193,7 @@
       "summary": "Automate software install for a software engineer on Windows",
       "image": "https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80",
       "date_published": "2021-10-03T00:00:00-07:00",
+      "date_modified": "2024-09-07T00:00:00-07:00",
       "authors": [
         {
           "name": "Spencer Kittleson",
@@ -269,28 +270,6 @@
       ]
     },
     {
-      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
-      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
-      "title": "Duplicator i3 3d printer upgrade",
-      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
-      "image": "https://docodethatmatters.com/images/printer-upgrade/i3.jpg",
-      "date_published": "2020-06-01T00:00:00-07:00",
-      "authors": [
-        {
-          "name": "Spencer Kittleson",
-          "url": "https://twitter.com/@skittleson"
-        }
-      ],
-      "tags": [
-        "3d printing",
-        "diy",
-        "mks gen board",
-        "auto leveling bed",
-        "marlin",
-        "Duplicator i3"
-      ]
-    },
-    {
       "id": "https://docodethatmatters.com/power-switch-monitor",
       "url": "https://docodethatmatters.com/power-switch-monitor",
       "title": "Power Switch Monitor with an Arduino device",
@@ -311,6 +290,28 @@
         "bme280",
         "smart home",
         "smart light"
+      ]
+    },
+    {
+      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
+      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade",
+      "title": "Duplicator i3 3d printer upgrade",
+      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
+      "image": "https://docodethatmatters.com/images/printer-upgrade/i3.jpg",
+      "date_published": "2020-06-01T00:00:00-07:00",
+      "authors": [
+        {
+          "name": "Spencer Kittleson",
+          "url": "https://twitter.com/@skittleson"
+        }
+      ],
+      "tags": [
+        "3d printing",
+        "diy",
+        "mks gen board",
+        "auto leveling bed",
+        "marlin",
+        "Duplicator i3"
       ]
     },
     {

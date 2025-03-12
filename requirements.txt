@@ -1,3 +1,6 @@
 bs4
 requests
 gTTS
+pybars3
+rich
+python-dotenv

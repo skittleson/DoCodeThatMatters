@@ -61,16 +61,16 @@ Nov 02 2020
 
 A simple water sprinkler system, for makers! (automate-sprinkler-with-tasmota) 
                 Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature.  Read More (automate-sprinkler-with-tasmota) 
- (3dprinter-duplicator-i3-upgrade) 
-Jun 01 2020
-
-Duplicator i3 3d printer upgrade (3dprinter-duplicator-i3-upgrade) 
-                Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.  Read More (3dprinter-duplicator-i3-upgrade) 
  (power-switch-monitor) 
 Jun 01 2020
 
 Power Switch Monitor with an Arduino device (power-switch-monitor) 
                 Automate smart devices using an existing light switch and power switch monitor with an Arduino compatible device with wifi.  Read More (power-switch-monitor) 
+ (3dprinter-duplicator-i3-upgrade) 
+Jun 01 2020
+
+Duplicator i3 3d printer upgrade (3dprinter-duplicator-i3-upgrade) 
+                Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.  Read More (3dprinter-duplicator-i3-upgrade) 
  (json-to-s3-with-google-recaptcha) 
 Oct 19 2019
 

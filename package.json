@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npx http-server docs -c 0 --port 8095",
-    "test": "dotnet test --no-build StaticSiteBuilder\\StaticSiteBuilder.Tests\\StaticSiteBuilder.Tests.csproj",
-    "build": "dotnet run --project StaticSiteBuilder\\StaticSiteBuilder\\StaticSiteBuilder.csproj && python main.py",
+    "test": "dotnet test --no-build StaticSiteBuilder/StaticSiteBuilder.Tests/StaticSiteBuilder.Tests.csproj",
+    "build": "dotnet run --project StaticSiteBuilder/StaticSiteBuilder/StaticSiteBuilder.csproj && python main.py",
     "watch": "watch \"npm run build\" ./src",
     "compress": "imagemin src/images/* --out-dir=src/images"
   },
