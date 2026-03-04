@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, modified, image, alt, keywords } = post.data;
+const { title, description, date, modified, image, alt, imageWidth, imageHeight, keywords } = post.data;
 
 const siteUrl = 'https://docodethatmatters.com';
 const postUrl = new URL(`/${post.slug}/`, siteUrl).href;
@@ -81,12 +82,15 @@ const issueTitle = encodeURIComponent(`Post - ${title}`);
 
             {image && (
               <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6">
-                <img
+                <Image
                   itemprop="url contentUrl"
                   src={image}
                   alt={alt ?? title}
+                  width={imageWidth ?? 800}
+                  height={imageHeight ?? 600}
                   class="rounded-md w-full object-cover"
-                  loading="lazy"
+                  loading="eager"
+                  fetchpriority="high"
                 />
                 {alt && (
                   <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center">
@@ -108,7 +112,7 @@ const issueTitle = encodeURIComponent(`Post - ${title}`);
           See something inaccurate or need more detail?{' '}
           <a
             href={`https://github.com/skittleson/DoCodeThatMatters/issues/new?title=${issueTitle}`}
-            class="text-[#9da2ff] hover:underline"
+            class="text-[#9da2ff] underline"
           >
             Submit a Pull Request
           </a>{' '}

@@ -11,6 +11,8 @@ modified: 2024-06-28
 description: Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.
 image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6000
+imageWidth: 2047
+imageHeight: 1558
 priority: 0.9
 ---
 

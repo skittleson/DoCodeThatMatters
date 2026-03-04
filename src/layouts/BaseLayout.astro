@@ -82,13 +82,12 @@ const keywordsStr = keywords.join(', ');
   <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png" />
   <meta name="theme-color" content="#232b32" />
 
+  <!-- Preload critical font to reduce render-blocking dependency chain -->
+  <link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin />
+
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet" />
   <link rel="author" href="/humans.txt" />
 </head>
 <body class="pt-16 min-h-screen">

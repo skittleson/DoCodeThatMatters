@@ -50,6 +50,12 @@
         "alt": {
           "type": "string"
         },
+        "imageWidth": {
+          "type": "number"
+        },
+        "imageHeight": {
+          "type": "number"
+        },
         "keywords": {
           "type": "array",
           "items": {

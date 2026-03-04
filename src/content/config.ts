@@ -9,6 +9,8 @@ const blog = defineCollection({
     modified: z.coerce.date().optional(),
     image: z.string().optional(),
     alt: z.string().optional(),
+    imageWidth: z.number().optional(),
+    imageHeight: z.number().optional(),
     keywords: z.array(z.string()).min(1).optional(),
     priority: z.number().optional(),
     draft: z.boolean().optional().default(false),

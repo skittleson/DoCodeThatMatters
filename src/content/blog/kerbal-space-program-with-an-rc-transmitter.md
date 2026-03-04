@@ -10,7 +10,7 @@ date: 2020-01-01
 description: Configure an RC transmitter to control Kerbal Space Program vehicles for a realistic flight sim experience.
 image: https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?w=500
 alt: RC transmitter controller
-draft: false
+draft: true
 ---
 
 Configuring an radio controller (RC) transmitter for Kerbal Space Program (KSP)! I found this to be realistic when controlling the vehicles. The setup is straight forward with no modifications or soldering needed! This post will take you through the following:

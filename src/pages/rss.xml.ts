@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { markdownToText, byteLength } from '../lib/markdownToText';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -20,10 +21,7 @@ export async function GET(context: APIContext) {
       description: post.data.description ?? '',
       link: `/${post.slug}/`,
       pubDate: post.data.date ?? new Date(),
-      customData: `
-        <enclosure url="${siteUrl}${post.slug}/index.txt" type="text/plain" length="0" />
-        <enclosure url="${siteUrl}${post.slug}/index.mp3" type="audio/mp3" length="0" />
-      `,
+      customData: `<enclosure url="${siteUrl}${post.slug}/index.txt" type="text/plain" length="${byteLength(markdownToText(post.body))}" />`,
     })),
     customData: `
       <language>en-us</language>

@@ -1,0 +1,23 @@
+Introduction
+
+My inbox is FULL. Not in the sense of storage capacity but my mental capacity.  Email is here to stay and i have chose not to commit to a zero inbox game.  So this is my attempt to using some code to analyze and clean up existing messages.  Let's get some control back.
+
+Code
+
+TLDR;  the whohasemailthemost script loops through 11 times by 30 days in an inbox using an IMAP protocol.  Builds a "top FROM" emails then displays it.  The markfordeletions script handles removing a single from email address at a time.
+
+<script src="https://gist.github.com/skittleson/2c6e7a436229f558c86f3c67cefb2ee3.js"></script>
+
+Data
+
+Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion. EDIT: there is a feature called Sweep in Outlook.com that does this.
+Solutions
+
+- Unsubscribe from the top offenders
+- Using a script, delete the top offending emails.
+- Created some rules to archive emails via the web portal.
+- Run the script top offenders monthly to evaluate who is wasting my time the most
+
+Conclusion
+
+A bit of house cleaning will keep some sanity in my inbox.  With the addition of automation, it should get better over time.

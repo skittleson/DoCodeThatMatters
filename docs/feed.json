@@ -262,28 +262,6 @@
       ]
     },
     {
-      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
-      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
-      "title": "Duplicator i3 3d printer upgrade",
-      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
-      "image": "/images/printer-upgrade/i3.jpg",
-      "date_published": "2020-06-01T00:00:00.000Z",
-      "date_modified": "2020-06-01T00:00:00.000Z",
-      "tags": [
-        "3d printing",
-        "diy",
-        "mks gen board",
-        "auto leveling bed",
-        "marlin",
-        "Duplicator i3"
-      ],
-      "authors": [
-        {
-          "name": "Spencer Kittleson"
-        }
-      ]
-    },
-    {
       "id": "https://docodethatmatters.com/power-switch-monitor/",
       "url": "https://docodethatmatters.com/power-switch-monitor/",
       "title": "Power Switch Monitor with an Arduino device",
@@ -299,6 +277,28 @@
         "bme280",
         "smart home",
         "smart light"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
+      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
+      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
+      "title": "Duplicator i3 3d printer upgrade",
+      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
+      "image": "/images/printer-upgrade/i3.jpg",
+      "date_published": "2020-06-01T00:00:00.000Z",
+      "date_modified": "2020-06-01T00:00:00.000Z",
+      "tags": [
+        "3d printing",
+        "diy",
+        "mks gen board",
+        "auto leveling bed",
+        "marlin",
+        "Duplicator i3"
       ],
       "authors": [
         {
