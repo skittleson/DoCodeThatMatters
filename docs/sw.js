@@ -1,6 +1,6 @@
 // This is the "Offline copy of pages" service worker
 
-const CACHE = "pwabuilder-offline";
+const CACHE = "pwabuilder-offline-v2";
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "index.html";
 const offlineFallbackPage = "offline/index.html";
@@ -17,9 +17,28 @@ self.addEventListener("install", function(event) {
   );
 });
 
+// Activate stage: clean up old caches from previous versions
+self.addEventListener("activate", function(event) {
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames
+          .filter(function(cacheName) { return cacheName !== CACHE; })
+          .map(function(cacheName) {
+            console.log("[PWA Builder] Deleting old cache: " + cacheName);
+            return caches.delete(cacheName);
+          })
+      );
+    })
+  );
+});
+
 // If any fetch fails, it will look for the request in the cache and serve it from there first
 self.addEventListener("fetch", function(event) {
   if (event.request.method !== "GET") return;
+
+  // Do not intercept Google Analytics/Tag Manager requests
+  if (event.request.url.includes("googletagmanager.com")) return;
 
   event.respondWith(
     fetch(event.request)

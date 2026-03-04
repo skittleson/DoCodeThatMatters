@@ -11,6 +11,8 @@ export async function GET(context: APIContext) {
 
   const feed = {
     version: 'https://jsonfeed.org/version/1.1',
+
+    //TODO centralize the title of blog
     title: 'Do Code That Matters',
     home_page_url: siteUrl,
     feed_url: `${siteUrl}/feed.json`,
@@ -18,6 +20,7 @@ export async function GET(context: APIContext) {
       'Personal blog about software development, 3D printing, DIY, python, personal automations, and C#',
     authors: [
       {
+        //TODO centeralize this author
         name: 'Spencer Kittleson',
         url: `${siteUrl}/about/`,
       },
@@ -31,6 +34,8 @@ export async function GET(context: APIContext) {
       date_published: post.data.date?.toISOString() ?? new Date().toISOString(),
       date_modified: post.data.modified?.toISOString() ?? post.data.date?.toISOString() ?? new Date().toISOString(),
       tags: post.data.keywords ?? [],
+
+      // TODO centeralize the author
       authors: [{ name: 'Spencer Kittleson' }],
     })),
   };

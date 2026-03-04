@@ -48,43 +48,6 @@ def check_all_pages_for_broken_links():
                     writer.writerow([folder, broken_link])
 
 
-def text_to_speech_on_plain_text():
-    """Create audio files for all blog posts using googles tts"""
-
-    from gtts import gTTS
-    language = 'en'
-    for folder in os.listdir('docs'):
-        index_txt = f'docs/{folder}/index.txt'
-        index_mp3 = f'docs/{folder}/index.mp3'
-        if '.' not in folder and os.path.exists(index_txt):
-            print(f'creating audio file for {folder}')
-            with open(index_txt, 'r', encoding='utf-8') as r:
-                googleTTSService = gTTS(text=r.read(), lang=language)
-                googleTTSService.save(index_mp3)
-
-from pybars import Compiler
-import os
-import shutil
-from rich.console import Console
-from dotenv import dotenv_values
-import datetime
-
-console = Console()
-target_dir = "docs"
-source_dir = "src"
-
-
-def get_partials(compiler):
-    partial_files = [file for file in os.listdir(os.path.join(source_dir, "partials"))]
-    partials = {}
-    for partial_file in partial_files:
-        with open(
-            os.path.join(source_dir, "partials", partial_file), "r", encoding="utf-8"
-        ) as file:
-            partials[partial_file.replace(".hbs", "")] = compiler.compile(file.read())
-    return partials
-
-
 if __name__ == '__main__':
     # text_to_speech_on_plain_text()
     # check_all_pages_for_broken_links()

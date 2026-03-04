@@ -82,14 +82,18 @@ const keywordsStr = keywords.join(', ');
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png" />
   <meta name="theme-color" content="#232b32" />
-
-  <!-- Preload critical font to reduce render-blocking dependency chain -->
   <link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin />
-
-  <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
-
   <link rel="author" href="/humans.txt" />
+
+  <!-- Google tag (gtag.js) -->
+  <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ');
+  </script>
 </head>
 <body class="pt-16 min-h-screen">
   <Nav />
