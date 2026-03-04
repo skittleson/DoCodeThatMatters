@@ -11,8 +11,8 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, date, modified, image, alt, imageWidth, imageHeight, keywords } = post.data;
 
-const siteUrl = 'https://docodethatmatters.com';
-const postUrl = new URL(`/${post.slug}/`, siteUrl).href;
+const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
+const postUrl = new URL(`/${post.slug}/`, Astro.site).href;
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

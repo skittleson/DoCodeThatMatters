@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
     (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)
   );
 
-  const siteUrl = context.site?.href ?? 'https://docodethatmatters.com/';
+  const siteUrl = context.site!.href;
 
   return rss({
     title: 'Do Code That Matters',

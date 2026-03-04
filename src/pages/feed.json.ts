@@ -7,7 +7,7 @@ export async function GET(context: APIContext) {
     (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)
   );
 
-  const siteUrl = (context.site?.href ?? 'https://docodethatmatters.com/').replace(/\/$/, '');
+  const siteUrl = context.site!.href.replace(/\/$/, '');
 
   const feed = {
     version: 'https://jsonfeed.org/version/1.1',

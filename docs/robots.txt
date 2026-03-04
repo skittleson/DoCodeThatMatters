@@ -1,1 +1,4 @@
 User-agent: *
+Allow: /
+
+Sitemap: https://docodethatmatters.com/sitemap-index.xml
