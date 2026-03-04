@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  keywords?: string[];
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description = 'Personal blog about software development, 3D printing, DIY, dotnet, raspberry pis, and C#',
+  image = '/images/agile.jpg',
+  keywords = ['software engineer blog', 'code', 'raspberry pi', 'maker', 'c#'],
+  canonicalUrl,
+} = Astro.props;
+
+const siteUrl = 'https://docodethatmatters.com';
+const company = 'Do Code That Matters';
+const author = 'Spencer Kittleson';
+const pageUrl = canonicalUrl ?? new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).href;
+const keywordsStr = keywords.join(', ');
+---
+
+<!DOCTYPE html>
+<html lang="en-US" itemscope itemtype="http://schema.org/Blog">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta itemprop="description" content={description} />
+  <meta name="keywords" content={keywordsStr} />
+  <meta name="author" content={company} />
+  <meta name="Distribution" content="Global" />
+  <meta name="Rating" content="General" />
+  <meta name="Robots" content="INDEX,FOLLOW" />
+  <meta name="Revisit-after" content="31 Days" />
+  <meta name="application-name" content={company} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={`${title} - ${company}`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content={pageUrl} />
+  <meta property="og:site_name" content={company} />
+  <meta property="og:image" content={ogImage} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={`${title} - ${company}`} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:creator" content="@skittleson" />
+
+  <!-- Feeds -->
+  <link type="application/rss+xml" rel="alternate" title={`${company} - ${author}`} href="/rss.xml" />
+  <link type="application/feed+json" rel="alternate" title={`${company} - ${author}`} href="/feed.json" />
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <meta name="msapplication-TileColor" content="#ffffff" />
+  <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png" />
+  <meta name="theme-color" content="#232b32" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet" />
+  <link rel="author" href="/humans.txt" />
+</head>
+<body class="pt-16 min-h-screen">
+  <Nav />
+  <slot />
+  <Footer />
+</body>
+</html>

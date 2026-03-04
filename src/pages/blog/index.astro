@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = posts.sort(
+  (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)
+);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<BaseLayout
+  title="Blog - Do Code That Matters"
+  description="Articles on software development, 3D printing, IoT, and maker projects."
+>
+  <main class="container mx-auto px-4 py-8">
+    <div class="space-y-8">
+      {sortedPosts.map((post) => (
+        <div class="flex gap-6 items-start">
+          {post.data.image && (
+            <div class="shrink-0">
+              <a href={`/${post.slug}/`}>
+                <img
+                  src={post.data.image}
+                  alt={post.data.description ?? post.data.title}
+                  class="w-40 h-28 object-cover rounded-md"
+                  loading="lazy"
+                />
+              </a>
+            </div>
+          )}
+          <div class="blog-item flex-1">
+            {post.data.date && (
+              <span class="text-xs text-[#a0aec0] font-mono" title={post.data.date.toISOString()}>
+                {formatDate(post.data.date)}
+              </span>
+            )}
+            <h2 class="text-lg font-bold mt-1 mb-2">
+              <a href={`/${post.slug}/`} class="text-[#9da2ff] hover:underline">
+                {post.data.title}
+              </a>
+            </h2>
+            {post.data.description && (
+              <p class="text-sm text-[#a0aec0] font-mono mb-2">{post.data.description}</p>
+            )}
+            <a href={`/${post.slug}/`} class="text-xs text-[#9da2ff] hover:underline font-mono">
+              Read More &rarr;
+            </a>
+          </div>
+        </div>
+        <hr class="border-white/10" />
+      ))}
+    </div>
+  </main>
+</BaseLayout>

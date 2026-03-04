@@ -1,186 +1,47 @@
-﻿<!DOCTYPE html>
-<html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
-<head>
-    <meta charset="UTF-8">
-    <title>Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</title>
-    <base href="https://docodethatmatters.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
-    <meta name="description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
-    <meta name="keywords" content="Electric Skateboard,ESK8,DIY ESK8,3D printed parametric spur gear,3D printing,FreeCAD design" />
-    <meta name="Distribution" content="Global" />
-    <meta name="Rating" content="General" />
-    <meta name="Robots" content="INDEX,FOLLOW" />
-    <meta name="author" content="Do Code That Matters" />
-    <meta name="Revisit-after" content="31 Days" />
-    <meta name="application-name" content="Do Code That Matters">
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards - Do Code That Matters" />
-    <meta property="og:title" content="Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards - Do Code That Matters" />
-    <meta property="og:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://docodethatmatters.com" />
-    <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding." />
-    <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="https://preview.redd.it/0zl39s6dcjd51.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=48567f3f2aad79c253526693e60a65888728c953" />
-    <link href="/site.css" rel="stylesheet">
-    <link rel='manifest' href='/manifest.json'>
-    <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
-    <link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/feed.json" />
-    <link rel="author" href="humans.txt" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
-      rel="stylesheet"
-    />
-
-<body class="dark">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar dark border-bottom">
-        <div class="container">
-            <a href="/" class="navbar-brand d-flex align-items-center logo">
-                <img class="logo-img" src="images/logoWhiteTrans.png" alt="Do Code That Matters" width="60" height="19" />Do Code That Matters</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-<li class="nav-item">
-    <a class="nav-link" href="/blog">Blog</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/about">About</a>
-</li>
-                </ul>
-            </div>
-        </div>
-    </nav><main class="container article">
-  <div class="row">
-    <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-      <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/skateboard-gear">
-        <h1 itemprop="name headline">Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</h1>
-        <small>
-          <time itemprop="datePublished" datetime="2022-06-20T00:00:00.000Z">Jun 20 2022</time> by
-          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography"><span itemprop="name">Spencer Kittleson</span></a>
-            <meta itemprop="jobTitle" content="Software Engineer">
-          </span>
-          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-            <meta itemprop="name" content="Do Code That Matters">
-            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
-            </span>
-          </span>
-        </small>
-        <br />
-        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="initial print and mount of 3d printed parametric gear" src="https://preview.redd.it/0zl39s6dcjd51.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=48567f3f2aad79c253526693e60a65888728c953">
-          <figcaption itemprop="caption">initial print and mount of 3d printed parametric gear</figcaption>
-        </figure>
-        <br />
-      </header>
-      <section itemprop="articleBody" class="article-body">
-        <p>USE AT YOUR OWN RISK. It's been a few years riding on this 3D printed spur gear. Let's give an update from this <a href="https://www.reddit.com/r/functionalprint/comments/hz8yn8/parametric_belt_driven_gear_for_diy_esk8/">Reddit post i did few years ago</a>.</p>
+<!DOCTYPE html><html lang="en-US" itemscope itemtype="http://schema.org/Blog"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards</title><meta name="description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding."><meta itemprop="description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding."><meta name="keywords" content="Electric Skateboard, ESK8, DIY ESK8, 3D printed parametric spur gear, 3D printing, FreeCAD design"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards - Do Code That Matters"><meta property="og:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/skateboard-gear/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://preview.redd.it/0zl39s6dcjd51.png?width=640&crop=smart&auto=webp&s=48567f3f2aad79c253526693e60a65888728c953"><!-- Twitter Card --><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards - Do Code That Matters"><meta name="twitter:description" content="Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding."><meta name="twitter:creator" content="@skittleson"><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><!-- PWA --><link rel="manifest" href="/manifest.json"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet"><link rel="author" href="/humans.txt"><link rel="stylesheet" href="/_astro/index.C9et0Thi.css"></head> <body class="pt-16 min-h-screen"> <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#1a2129]"> <div class="container mx-auto px-4 flex items-center justify-between h-14"> <a href="/" class="flex items-center gap-2 font-mono text-sm text-[#f5f5f5] hover:text-[#9da2ff] transition-colors"> <img src="/images/logoWhiteTrans.png" alt="Do Code That Matters" width="60" height="19" class="mr-1">
+Do Code That Matters
+</a> <ul class="flex gap-6 list-none m-0 p-0"> <li> <a href="/blog/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">Blog</a> </li> <li> <a href="/about/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">About</a> </li> </ul> </div> </nav>  <main class="container mx-auto px-4 py-8 max-w-4xl"> <div class="lg:grid lg:grid-cols-4 lg:gap-8"> <!-- Main Article --> <div class="lg:col-span-3"> <article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"> <meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/skateboard-gear/"> <header class="mb-6"> <h1 itemprop="name headline" class="text-2xl font-bold text-[#f5f5f5] mb-3"> Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards </h1> <p class="text-sm text-[#a0aec0] font-mono mb-4"> <time itemprop="datePublished" datetime="2022-06-20T00:00:00.000Z"> Jun 19, 2022 </time>   by  <span itemprop="author" itemscope itemtype="https://schema.org/Person"> <a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" class="text-[#9da2ff] hover:underline"> <span itemprop="name">Spencer Kittleson</span> </a> <meta itemprop="jobTitle" content="Software Engineer"> </span> <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"> <meta itemprop="name" content="Do Code That Matters"> <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"> <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"> </span> </span> </p> <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"> <img itemprop="url contentUrl" src="https://preview.redd.it/0zl39s6dcjd51.png?width=640&crop=smart&auto=webp&s=48567f3f2aad79c253526693e60a65888728c953" alt="initial print and mount of 3d printed parametric gear" class="rounded-md w-full object-cover" loading="lazy"> <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center"> initial print and mount of 3d printed parametric gear </figcaption> </figure> </header> <section itemprop="articleBody" class="prose prose-invert max-w-none">  <p>USE AT YOUR OWN RISK. It’s been a few years riding on this 3D printed spur gear. Let’s give an update from this <a href="https://www.reddit.com/r/functionalprint/comments/hz8yn8/parametric_belt_driven_gear_for_diy_esk8/">Reddit post i did few years ago</a>.</p>
 <h2 id="specs">Specs</h2>
-<p><a href="images/skateboardGearWheel/SkateboardWheelGear.FCStd">Downloadable FreeCAD version on GitHub</a></p>
+<p><a href="/images/skateboardGearWheel/SkateboardWheelGear.FCStd">Downloadable FreeCAD version on GitHub</a></p>
 <ul>
 <li>Printed with ABS at 0.3mm resolution.</li>
-<li><a href="https://www.amazon.com/BESTORQ-265-5M-9-Timing-Outside-Circumference/dp/B00J9TXEQA?crid=MOIU9VWF3JOJ&amp;keywords=265-5M-9%2B5M%2BTiming%2BBelt&amp;qid=1655757673&amp;sprefix=265-5m-9%2B5m%2Btiming%2Bbelt%2Caps%2C201&amp;sr=8-1-spons&amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExMlhRVlVONFhPTlk0JmVuY3J5cHRlZElkPUEwMTI5Mzg1MURaWUpDRUNIWFo1RyZlbmNyeXB0ZWRBZElkPUEwMjMxMzA3Mlo5RkxDN1g5WFAzSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&amp;th=1&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=cc15402e422e37ad16e212a4e941dccb&amp;language=en_US&amp;ref_=as_li_ss_tl">265-5M-9 5M Timing Belt</a> or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.</li>
+<li><a href="https://www.amazon.com/BESTORQ-265-5M-9-Timing-Outside-Circumference/dp/B00J9TXEQA?crid=MOIU9VWF3JOJ&#x26;keywords=265-5M-9%2B5M%2BTiming%2BBelt&#x26;qid=1655757673&#x26;sprefix=265-5m-9%2B5m%2Btiming%2Bbelt%2Caps%2C201&#x26;sr=8-1-spons&#x26;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExMlhRVlVONFhPTlk0JmVuY3J5cHRlZElkPUEwMTI5Mzg1MURaWUpDRUNIWFo1RyZlbmNyeXB0ZWRBZElkPUEwMjMxMzA3Mlo5RkxDN1g5WFAzSiZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&#x26;th=1&#x26;linkCode=ll1&#x26;tag=dctm-20&#x26;linkId=cc15402e422e37ad16e212a4e941dccb&#x26;language=en_US&#x26;ref_=as_li_ss_tl">265-5M-9 5M Timing Belt</a> or 265 mm Outside Circumference, 9 mm Width, 5 mm Pitch.</li>
 <li>Graphite powder on belt (pencil lead) to smooth out any noise.</li>
 <li>Fully parametric on gear teeth, mounting holes, inner cut out, and height</li>
 <li>80mm wheel</li>
-<li><a href="https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&amp;keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&amp;qid=1655749320&amp;s=toys-and-games&amp;sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&amp;sr=1-1-spons&amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&amp;th=1&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=00aab9f6e7dde286c70b7c3585039b04&amp;language=en_US&amp;ref_=as_li_ss_tl">Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery</a></li>
+<li><a href="https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&#x26;keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&#x26;qid=1655749320&#x26;s=toys-and-games&#x26;sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&#x26;sr=1-1-spons&#x26;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&#x26;th=1&#x26;linkCode=ll1&#x26;tag=dctm-20&#x26;linkId=00aab9f6e7dde286c70b7c3585039b04&#x26;language=en_US&#x26;ref_=as_li_ss_tl">Used with a BLDC motor at 8nM of force / 70amp peak with 12s battery</a></li>
 <li>Cost to print $1.45</li>
 <li>Top speed with existing configuration is 25mph</li>
 <li>Rider is 200lbs</li>
 </ul>
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-<model-viewer style="width: 100%; min-height:300px;" alt="3D Rendering of model" src="images/skateboardGearWheel/SkateboardWheelGear-Body.gltf" ar ar-modes="webxr scene-viewer quick-look" camera-controls enable-pan>
+<model-viewer style="width: 100%; min-height:300px;" alt="3D Rendering of model" src="images/skateboardGearWheel/SkateboardWheelGear-Body.gltf" ar="" ar-modes="webxr scene-viewer quick-look" camera-controls="" enable-pan="">
 </model-viewer>
 <h2 id="parametric-adjustments">Parametric Adjustments</h2>
-<p>All measurements are in millimeters. Adjusted for <a href="https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&amp;keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&amp;qid=1655749320&amp;s=toys-and-games&amp;sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&amp;sr=1-1-spons&amp;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&amp;th=1&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=00aab9f6e7dde286c70b7c3585039b04&amp;language=en_US&amp;ref_=as_li_ss_tl">190kv BLDC motor with 16 tooth gear</a></p>
-<p><img loading="lazy" src="images/skateboardGearWheel/wheelSizeSpreadSheet.png" alt="Parametric variables spread sheet" /></p>
+<p>All measurements are in millimeters. Adjusted for <a href="https://www.amazon.com/Flipsky-Hardened-Electric-Skateboard-Brushless/dp/B08L5WDTSZ?crid=38MPS5ZVVS608&#x26;keywords=Flipsky%2BElectric%2BSkateboard%2B6374%2B190KV%2B3250W%2BBrushless%2BBLDC%2BMotor&#x26;qid=1655749320&#x26;s=toys-and-games&#x26;sprefix=flipsky%2Belectric%2Bskateboard%2B6374%2B190kv%2B3250w%2Bbrushless%2Bbldc%2Bmotor%2Ctoys-and-games%2C106&#x26;sr=1-1-spons&#x26;spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTTI1T1lHSUk4TTBEJmVuY3J5cHRlZElkPUEwNzgzOTM2M0ZOOVlWODFKWDU5MSZlbmNyeXB0ZWRBZElkPUExMDQxMDE2M0tZUTdJSU43V0tWOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&#x26;th=1&#x26;linkCode=ll1&#x26;tag=dctm-20&#x26;linkId=00aab9f6e7dde286c70b7c3585039b04&#x26;language=en_US&#x26;ref_=as_li_ss_tl">190kv BLDC motor with 16 tooth gear</a></p>
+<p><img src="/images/skateboardGearWheel/wheelSizeSpreadSheet.png" alt="Parametric variables spread sheet"></p>
 <h2 id="wear-and-tear">Wear and Tear</h2>
-<p>This was about 100+ hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. <small>Better image coming soon...</small></p>
-<p><img loading="lazy" src="images/skateboardGearWheel/20220620_125219.jpg" alt="Inner Gear Side with Belt" /></p>
+<p>This was about 100+ hours of riding. It’s hard to take a picture with it mounted. Here is a side view until I take it off the truck. <small>Better image coming soon…</small></p>
+<p><img src="/images/skateboardGearWheel/20220620_125219.jpg" alt="Inner Gear Side with Belt"></p>
 <ul>
 <li>Gear teeth have wore down as expected.</li>
 <li>It was noticeable louder than metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10+ rides keeps it sounding smooth and prevents wear.</li>
-<li>The nuts came loose a few times... use lock tight.</li>
+<li>The nuts came loose a few times… use lock tight.</li>
 <li>Belt wear was nominal.  I expect to change it every 500+ hours of riding.</li>
 <li>The <a href="https://en.wikipedia.org/wiki/Gear">bottom land</a> could be more round to fit the belt.</li>
 <li>No noticable cracks or layer spliting in the 3D print.</li>
-<li>Amount of material the bolt and nut can hold unto (or lack of it).  It could &quot;rip off&quot; the end of the plastic gear.  Using longer bolts then removing the inner &quot;cut out cone&quot; could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.</li>
-<li><a href="https://www.amazon.com/Bearings-Skateboard-Shielded-Miniature-Skateboards/dp/B07R7PR72H?crid=NKG7B4O4BVEI&amp;keywords=double+wall+skateboard+bearing&amp;qid=1655758884&amp;sprefix=double+wall+skateboard+bearing%2Caps%2C130&amp;sr=8-4&amp;linkCode=ll1&amp;tag=dctm-20&amp;linkId=2cbdc66d04d6f268439ba46e61195716&amp;language=en_US&amp;ref_=as_li_ss_tl">Use double wall bearings.</a> Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥</li>
+<li>Amount of material the bolt and nut can hold unto (or lack of it).  It could “rip off” the end of the plastic gear.  Using longer bolts then removing the inner “cut out cone” could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.</li>
+<li><a href="https://www.amazon.com/Bearings-Skateboard-Shielded-Miniature-Skateboards/dp/B07R7PR72H?crid=NKG7B4O4BVEI&#x26;keywords=double+wall+skateboard+bearing&#x26;qid=1655758884&#x26;sprefix=double+wall+skateboard+bearing%2Caps%2C130&#x26;sr=8-4&#x26;linkCode=ll1&#x26;tag=dctm-20&#x26;linkId=2cbdc66d04d6f268439ba46e61195716&#x26;language=en_US&#x26;ref_=as_li_ss_tl">Use double wall bearings.</a> Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥</li>
 </ul>
-<p><img loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/2/28/Gear_words.png" alt="Gear nomenclature reference" /></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Gear_words.png" alt="Gear nomenclature reference"></p>
 <h2 id="next-possible-experiment">Next Possible Experiment</h2>
-<p>Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.</p>
-
-      </section>
-    </article>
-  </div>
-
-
- See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Parametric+Belt+Driven+3D+Printed+Spur+Gear+for+Electric+Skateboards">Submit a Pull
-        Request</a> to help me out!
-      <br />
-      <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
-<hr />
-
-<h3>Latest Posts</h3>
-  <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="emails_out_of_control">My Emails Are Out Of Control</a>
-    </li>
-    <li>
-      <a class="read-more" href="hacking-sony-a6000-more">Part 2 of Hacking my Sony A6000 Camera</a>
-    </li>
-    <li>
-      <a class="read-more" href="hacking-sony-a6000-for-modernization">Hacking my Sony A6000 Camera Adding Modern Features</a>
-    </li>
-    <li>
-      <a class="read-more" href="linux-wifi-hotspot-usb3">Linux Wifi Hotspot with PiHole</a>
-    </li>
-    <li>
-      <a class="read-more" href="onboarding-devs">Effective Onboarding for New Engineers</a>
-    </li>
-  </ul>
-
-      
-</main>
-
-
-<script async src="/site.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-93963699-1');
-</script>
-</body>
-
-</html>
+<p>Helical gears or double helical gears with no belt seems like an experiment to try out.  It offers a lot of benefits such as no belt, no belt slipping, quiter, and only 3D printed parts.</p>  </section> </article> <hr class="my-8"> <p class="text-sm font-mono text-[#a0aec0]">
+See something inaccurate or need more detail?  <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Parametric%20Belt%20Driven%203D%20Printed%20Spur%20Gear%20for%20Electric%20Skateboards" class="text-[#9da2ff] hover:underline">
+Submit a Pull Request
+</a> 
+to help me out!
+</p> <p class="text-sm font-mono text-[#a0aec0] mt-2"> <a href="https://www.buymeacoffee.com/skittles" class="text-[#9da2ff] hover:underline">
+Buy me a ☕ to support!
+</a> </p> </div> <!-- Sidebar --> <aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"> <h3 class="text-sm font-bold text-[#f5f5f5] font-mono mb-3 uppercase tracking-wide">
+Latest Posts
+</h3> <ul class="space-y-2 list-none p-0 m-0"> <li> <a href="/emails_out_of_control/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> My Emails Are Out Of Control </a> </li><li> <a href="/hacking-sony-a6000-more/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Part 2 of Hacking my Sony A6000 Camera </a> </li><li> <a href="/hacking-sony-a6000-for-modernization/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Hacking my Sony A6000 Camera Adding Modern Features </a> </li><li> <a href="/linux-wifi-hotspot-usb3/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Linux Wifi Hotspot with PiHole </a> </li><li> <a href="/onboarding-devs/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Effective Onboarding for New Engineers </a> </li> </ul> </aside> </div> </main>  <footer class="mt-12 py-6 border-t border-white/10"> <div class="container mx-auto px-4 text-center text-sm text-[#a0aec0] font-mono"> <p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p> </div> </footer> <script src="/site.js" defer></script> </body></html>

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactInfo from '../../components/ContactInfo.astro';
+---
+
+<BaseLayout
+  title="About - Do Code That Matters"
+  description="Spencer Kittleson - Software engineer, maker, and technology enthusiast."
+>
+  <main class="container mx-auto px-4 py-8 max-w-2xl">
+    <style>
+      @keyframes wave {
+        0% { transform: rotate(0deg); }
+        20% { transform: rotate(-10deg); }
+        40% { transform: rotate(10deg); }
+        60% { transform: rotate(-10deg); }
+        80% { transform: rotate(10deg); }
+        100% { transform: rotate(0deg); }
+      }
+      .wave {
+        animation: wave 2s infinite;
+        font-size: 2rem;
+        display: inline-block;
+      }
+    </style>
+
+    <h2 class="text-2xl font-bold mb-4">
+      Hi, I'm <strong>Spencer</strong> <span class="wave">👋</span>
+    </h2>
+
+    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      As a software engineer with a wealth of experience in software development and database design,
+      I am well-versed in a wide range of modern computer languages, with a particular focus on .NET
+      technologies. My expertise extends to building and scaling systems to work seamlessly across
+      multiple platforms, with a strong emphasis on testing and ensuring the success of my fellow
+      developers.
+    </p>
+
+    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      In addition to my professional pursuits, I am also deeply passionate about a variety of
+      technology-related hobbies. I enjoy experimenting with 3D printing, working with Raspberry Pi
+      and Arduino microcontrollers, and exploring the world of home automation. I also enjoy
+      organizing and hosting hackathons, providing an opportunity for others to share in my passion
+      for technology.
+    </p>
+
+    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      My ultimate goal is to develop software that is efficient, reliable, and user-friendly, and to
+      empower developers to achieve success in their work.
+    </p>
+
+    <p class="mb-6 text-[#f5f5f5] font-mono text-sm">Interested in consulting?</p>
+
+    <ContactInfo />
+
+    <hr class="my-8 border-white/10" />
+
+    <h2 class="text-xl font-bold mb-6">Contact Me</h2>
+
+    <form
+      id="messageForm"
+      class="max-w-lg space-y-4"
+      onsubmit="event.preventDefault(); fetchContactRelay(this);"
+    >
+      <div>
+        <label for="emailFormControlInput" class="block text-sm font-mono text-[#a0aec0] mb-1">
+          Email address
+        </label>
+        <input
+          type="email"
+          id="emailFormControlInput"
+          placeholder="name@example.com"
+          required
+          class="w-full bg-[#1a2129] border border-white/20 rounded px-3 py-2 text-sm font-mono text-[#f5f5f5] placeholder-[#a0aec0] focus:outline-none focus:border-[#9da2ff]"
+        />
+      </div>
+      <div>
+        <label for="messageFormControlInput" class="block text-sm font-mono text-[#a0aec0] mb-1">
+          Message
+        </label>
+        <textarea
+          id="messageFormControlInput"
+          rows="6"
+          minlength="10"
+          required
+          class="w-full bg-[#1a2129] border border-white/20 rounded px-3 py-2 text-sm font-mono text-[#f5f5f5] placeholder-[#a0aec0] focus:outline-none focus:border-[#9da2ff] resize-y"
+        ></textarea>
+      </div>
+      <div>
+        <input
+          id="submitFormControlInput"
+          type="submit"
+          value="Send"
+          class="bg-[#9da2ff] text-[#232b32] font-mono text-sm px-6 py-2 rounded cursor-pointer hover:bg-[#b8bcff] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        />
+      </div>
+    </form>
+  </main>
+  <script src="https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com/latest/script" defer></script>
+</BaseLayout>

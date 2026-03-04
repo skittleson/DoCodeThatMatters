@@ -1,0 +1,98 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-accent: #9da2ff;
+  --color-bg: #232b32;
+  --color-text: #f5f5f5;
+  --font-family-mono: "Inconsolata", monospace;
+}
+
+@layer base {
+  :root {
+    --main-highlight-color: #9da2ff;
+    --main-text-color: #f5f5f5;
+  }
+
+  html,
+  body {
+    background-color: #232b32;
+    color: #f5f5f5;
+    font-family: "Inconsolata", monospace;
+    min-height: 100%;
+  }
+
+  a {
+    color: #9da2ff;
+  }
+
+  a:hover {
+    color: #b8bcff;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Inconsolata", monospace;
+    color: #f5f5f5;
+  }
+
+  h2 a {
+    color: #9da2ff;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    max-height: 600px;
+  }
+
+  hr {
+    border-color: #f5f5f5;
+    opacity: 0.3;
+  }
+}
+
+/* Prose (typography plugin) overrides for dark theme */
+.prose {
+  --tw-prose-body: #f5f5f5;
+  --tw-prose-headings: #f5f5f5;
+  --tw-prose-lead: #f5f5f5;
+  --tw-prose-links: #9da2ff;
+  --tw-prose-bold: #f5f5f5;
+  --tw-prose-counters: #f5f5f5;
+  --tw-prose-bullets: #9da2ff;
+  --tw-prose-hr: rgba(245, 245, 245, 0.3);
+  --tw-prose-quotes: #f5f5f5;
+  --tw-prose-quote-borders: #9da2ff;
+  --tw-prose-captions: #a0aec0;
+  --tw-prose-code: #f5f5f5;
+  --tw-prose-pre-code: #f5f5f5;
+  --tw-prose-pre-bg: #000;
+  --tw-prose-th-borders: rgba(245, 245, 245, 0.3);
+  --tw-prose-td-borders: rgba(245, 245, 245, 0.2);
+  max-width: none;
+}
+
+.prose pre {
+  background-color: #000 !important;
+}
+
+.prose code {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Shiki code block */
+.astro-code {
+  background-color: #000 !important;
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1em 0;
+}

@@ -1,109 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="en-US" itemscope itemtype="http://schema.org/Blog" prefix="og: http://ogp.me/ns#">
-<head>
-    <meta charset="UTF-8">
-    <title>A simple water sprinkler system, for makers!</title>
-    <base href="https://docodethatmatters.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta itemprop="description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
-    <meta name="description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
-    <meta name="keywords" content="tasmota irrigation,tasmota sunrise sunset,sprinkler,tasmota,bme280,mqtt,arduino,wemos,wemos d1 mini,home automation,node red,pcb,alexa,maker" />
-    <meta name="Distribution" content="Global" />
-    <meta name="Rating" content="General" />
-    <meta name="Robots" content="INDEX,FOLLOW" />
-    <meta name="author" content="Do Code That Matters" />
-    <meta name="Revisit-after" content="31 Days" />
-    <meta name="application-name" content="Do Code That Matters">
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="A simple water sprinkler system, for makers! - Do Code That Matters" />
-    <meta property="og:title" content="A simple water sprinkler system, for makers! - Do Code That Matters" />
-    <meta property="og:description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://docodethatmatters.com" />
-    <meta property="og:site_name" content="Do Code That Matters" />
-    <meta name="twitter:description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature." />
-    <meta name="twitter:creator" content="@skittleson" />
-    <meta property="og:image" content="images/sprinklerReplacement.png" />
-    <link href="/site.css" rel="stylesheet">
-    <link rel='manifest' href='/manifest.json'>
-    <link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/rss.xml" />
-    <link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="https://docodethatmatters.com/feed.json" />
-    <link rel="author" href="humans.txt" />
-    <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"
-      rel="stylesheet"
-    />
-
-<body class="dark">
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar dark border-bottom">
-        <div class="container">
-            <a href="/" class="navbar-brand d-flex align-items-center logo">
-                <img class="logo-img" src="images/logoWhiteTrans.png" alt="Do Code That Matters" width="60" height="19" />Do Code That Matters</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-<li class="nav-item">
-    <a class="nav-link" href="/blog">Blog</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/about">About</a>
-</li>
-                </ul>
-            </div>
-        </div>
-    </nav><main class="container article">
-  <div class="row">
-    <article class="col-lg-12" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-      <header>
-        <meta itemprop="mainEntityOfPage" content="https://DoCodeThatMatters.com/automate-sprinkler-with-tasmota">
-        <h1 itemprop="name headline">A simple water sprinkler system, for makers!</h1>
-        <small>
-          <time itemprop="datePublished" datetime="2020-11-02T00:00:00.000Z">Nov 02 2020</time><meta itemprop="dateModified" datetime="2023-01-25T00:00:00.000Z" /> by
-          <span itemprop="author" itemscope itemtype="https://schema.org/Person">
-            <a rel="author" itemprop="url" href="https://DoCodeThatMatters.com/about" title="View author biography"><span itemprop="name">Spencer Kittleson</span></a>
-            <meta itemprop="jobTitle" content="Software Engineer">
-          </span>
-          <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-            <meta itemprop="name" content="Do Code That Matters">
-            <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-              <meta itemprop="url" content="https://DoCodeThatMatters.com/images/agile.jpg">
-            </span>
-          </span>
-        </small>
-        <br />
-        <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <img itemprop="url contentUrl" alt="Sprinkler replacement inside of a previous over the shelf sprinkler system." src="images/sprinklerReplacement.png">
-          <figcaption itemprop="caption">Sprinkler replacement inside of a previous over the shelf sprinkler system.</figcaption>
-        </figure>
-        <br />
-      </header>
-      <section itemprop="articleBody" class="article-body">
-        <p>Homeowners often find that over-the-shelf sprinkler systems can be difficult to use and lack customization options. They may also be outdated and may not be as efficient for water or power usage as desired. The &quot;set it and forget&quot; mentality is not always the best approach. It may be worth considering more customizable and efficient options for your home's sprinkler system.</p>
+<!DOCTYPE html><html lang="en-US" itemscope itemtype="http://schema.org/Blog"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>A simple water sprinkler system, for makers!</title><meta name="description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature."><meta itemprop="description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature."><meta name="keywords" content="tasmota irrigation, tasmota sunrise sunset, sprinkler, tasmota, bme280, mqtt, arduino, wemos, wemos d1 mini, home automation, node red, pcb, alexa, maker"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="A simple water sprinkler system, for makers! - Do Code That Matters"><meta property="og:description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/automate-sprinkler-with-tasmota/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/sprinklerReplacement.png"><!-- Twitter Card --><meta name="twitter:card" content="summary"><meta name="twitter:title" content="A simple water sprinkler system, for makers! - Do Code That Matters"><meta name="twitter:description" content="Setup a water sprinkler using open source hardware/software to trigger based on special conditions like time (including sunrise/sunset), humidity, and perhaps temperature."><meta name="twitter:creator" content="@skittleson"><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><!-- PWA --><link rel="manifest" href="/manifest.json"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet"><link rel="author" href="/humans.txt"><link rel="stylesheet" href="/_astro/index.C9et0Thi.css"></head> <body class="pt-16 min-h-screen"> <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#1a2129]"> <div class="container mx-auto px-4 flex items-center justify-between h-14"> <a href="/" class="flex items-center gap-2 font-mono text-sm text-[#f5f5f5] hover:text-[#9da2ff] transition-colors"> <img src="/images/logoWhiteTrans.png" alt="Do Code That Matters" width="60" height="19" class="mr-1">
+Do Code That Matters
+</a> <ul class="flex gap-6 list-none m-0 p-0"> <li> <a href="/blog/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">Blog</a> </li> <li> <a href="/about/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">About</a> </li> </ul> </div> </nav>  <main class="container mx-auto px-4 py-8 max-w-4xl"> <div class="lg:grid lg:grid-cols-4 lg:gap-8"> <!-- Main Article --> <div class="lg:col-span-3"> <article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"> <meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/automate-sprinkler-with-tasmota/"> <header class="mb-6"> <h1 itemprop="name headline" class="text-2xl font-bold text-[#f5f5f5] mb-3"> A simple water sprinkler system, for makers! </h1> <p class="text-sm text-[#a0aec0] font-mono mb-4"> <time itemprop="datePublished" datetime="2020-11-02T00:00:00.000Z"> Nov 1, 2020 </time> <meta itemprop="dateModified" content="2023-01-25T00:00:00.000Z">  by  <span itemprop="author" itemscope itemtype="https://schema.org/Person"> <a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" class="text-[#9da2ff] hover:underline"> <span itemprop="name">Spencer Kittleson</span> </a> <meta itemprop="jobTitle" content="Software Engineer"> </span> <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"> <meta itemprop="name" content="Do Code That Matters"> <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"> <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"> </span> </span> </p> <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"> <img itemprop="url contentUrl" src="/images/sprinklerReplacement.png" alt="Sprinkler replacement inside of a previous over the shelf sprinkler system." class="rounded-md w-full object-cover" loading="lazy"> <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center"> Sprinkler replacement inside of a previous over the shelf sprinkler system. </figcaption> </figure> </header> <section itemprop="articleBody" class="prose prose-invert max-w-none">  <p>Homeowners often find that over-the-shelf sprinkler systems can be difficult to use and lack customization options. They may also be outdated and may not be as efficient for water or power usage as desired. The “set it and forget” mentality is not always the best approach. It may be worth considering more customizable and efficient options for your home’s sprinkler system.</p>
 <h2 id="project-research">Project Research</h2>
-<p>Want to improve your home's sprinkler system without breaking the bank? One solution is to use a combination of inexpensive hardware and customizable open-source software. This approach allows for flexibility and the ability to add additional features as needed. The main goal is to trigger the water sprinkler solenoid to turn on or off based on specific conditions such as time, including sunrise and sunset, humidity, and temperature. By implementing this method, you can achieve better results with low effort.</p>
+<p>Want to improve your home’s sprinkler system without breaking the bank? One solution is to use a combination of inexpensive hardware and customizable open-source software. This approach allows for flexibility and the ability to add additional features as needed. The main goal is to trigger the water sprinkler solenoid to turn on or off based on specific conditions such as time, including sunrise and sunset, humidity, and temperature. By implementing this method, you can achieve better results with low effort.</p>
 <p><small>(there is affiliate links on this page for hardware used in this project)</small></p>
 <h3 id="must-haves">Must Haves</h3>
 <ul>
@@ -121,7 +20,7 @@
 <li>✅ Watering runaway protection</li>
 <li>⏳ If humidity is at percentage then skip watering today (Most over-the-shelf sprinklers do this)</li>
 <li>⏳ If weather forecast is rainy then skip watering. Notify me when this occurs. (Most off-the-shelf sprinklers can do this sort of)</li>
-<li>⏳ Send to notification to any platform I want (AWS, Gmail, IFTTT, Alexa, etc... )</li>
+<li>⏳ Send to notification to any platform I want (AWS, Gmail, IFTTT, Alexa, etc… )</li>
 <li>⏳ Moisture sensor</li>
 </ul>
 <h3 id="hardware">Hardware</h3>
@@ -132,8 +31,8 @@
 <li>Not require an internet connection.</li>
 <li>Customize power toggling based on special conditions.</li>
 </ul>
-<p>$20 USD over-the-shelf Sonoff hardware that does those 3 out of 4 easily. The 4th point needs to have special programming. There are multiple options out there but this fulfills the need of an &quot;over-the-shelf&quot; device that can be used with open source software.</p>
-<p><a href="https://amzn.to/3jKFeT8"><img loading="lazy" src="images/sonoff_temp.jpg" alt="Sonoff device" /></a></p>
+<p>$20 USD over-the-shelf Sonoff hardware that does those 3 out of 4 easily. The 4th point needs to have special programming. There are multiple options out there but this fulfills the need of an “over-the-shelf” device that can be used with open source software.</p>
+<p><a href="https://amzn.to/3jKFeT8"><img src="/images/sonoff_temp.jpg" alt="Sonoff device"></a></p>
 <p>The easiest way to wire this up is using an existing extension cord, cut into it, then follow the directions of wiring Sonoff guide. Plug one into the <a href="https://amzn.to/3DcQpiY">24 VAC power supply</a> of an existing water sprinkler adapter.</p>
 <p>Alternative hardware that I ended up using:</p>
 <ul>
@@ -142,10 +41,10 @@
 <li><a href="https://amzn.to/2TNYaoe">solid state relay</a></li>
 <li><a href="https://amzn.to/365HD4Z">BME280 (temperature, humidity, and pressure)</a></li>
 </ul>
-<p><img loading="lazy" src="images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D" />
-<img loading="lazy" src="images/sprinklerPcb.png" alt="Sprinkler PCB" /></p>
+<p><img src="/images/sprinklerPcb3d.jpg" alt="Sprinkler PCB 3D">
+<img src="/images/sprinklerPcb.png" alt="Sprinkler PCB"></p>
 <h3 id="software">Software</h3>
-<p>The device can be flashed with open source software <a href="https://tasmota.github.io/docs/">Tasmota</a>. I prototyped with the Arduino IDE for awhile but Tasmota seems safer with features needed. So I won't go into too much detail but Tasmota solves the following problems:</p>
+<p>The device can be flashed with open source software <a href="https://tasmota.github.io/docs/">Tasmota</a>. I prototyped with the Arduino IDE for awhile but Tasmota seems safer with features needed. So I won’t go into too much detail but Tasmota solves the following problems:</p>
 <ul>
 <li>Local network controlled</li>
 <li>Runs even when the internet is down</li>
@@ -155,12 +54,12 @@
 </ul>
 <p>Here is a video on how to flash and setup the device when you get it (this is really common with this device).</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LwZltnda4v8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<h4 id="wiring-module-parameters">Wiring &amp; Module Parameters</h4>
+<h4 id="wiring--module-parameters">Wiring &#x26; Module Parameters</h4>
 <ul>
-<li>D2 GPIO4 -&gt; I2C SDA</li>
-<li>D1 GPIO5 -&gt; I2C SCL</li>
-<li>D5 GPIO14 -&gt; Relay 1</li>
-<li>D0 GPIO16 -&gt; Counter 1</li>
+<li>D2 GPIO4 -> I2C SDA</li>
+<li>D1 GPIO5 -> I2C SCL</li>
+<li>D5 GPIO14 -> Relay 1</li>
+<li>D0 GPIO16 -> Counter 1</li>
 </ul>
 <h3 id="setup-time">Setup Time</h3>
 <p>Using the Tasmota Web Console Command line</p>
@@ -168,7 +67,7 @@
 <li><code>PowerOnState 0</code> If a power outage/reset, default the power state to off.</li>
 <li>Set your time zone using standard GMT offset: <code>Timezone -8</code> .
 <ul>
-<li>This doesn't account for daylight savings time. See docs <a href="https://tasmota.github.io/docs/FAQ/">https://tasmota.github.io/docs/FAQ/</a></li>
+<li>This doesn’t account for daylight savings time. See docs <a href="https://tasmota.github.io/docs/FAQ/">https://tasmota.github.io/docs/FAQ/</a></li>
 </ul>
 </li>
 <li>Test your time with <code>time</code></li>
@@ -178,24 +77,24 @@
 <li>Run <code>Longitude 0.0000</code> for longitude. Replace <code>0.0000</code> with proper value.</li>
 </ul>
 </li>
-<li>Run <code>STATUS 7</code> to see sunrise / sunset with local time. Ensure it's the actual time.</li>
+<li>Run <code>STATUS 7</code> to see sunrise / sunset with local time. Ensure it’s the actual time.</li>
 </ul>
 <h3 id="setup-timers">Setup Timers</h3>
 <p>Using the Tasmota Timer Web UI, 4 timers will be created. Two timers for starting/stopping the watering at sunrise. Two timers for same at sunset.</p>
 <ul>
-<li><code>Timer1 {&quot;Enable&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}</code></li>
-<li><code>Timer2 {&quot;Enable&quot;:1,&quot;Mode&quot;:1,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}</code></li>
-<li><code>Timer3 {&quot;Enable&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:00&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:1}</code></li>
-<li><code>Timer4 {&quot;Enable&quot;:1,&quot;Mode&quot;:2,&quot;Time&quot;:&quot;00:20&quot;,&quot;Window&quot;:0,&quot;Days&quot;:&quot;1111111&quot;,&quot;Repeat&quot;:1,&quot;Output&quot;:1,&quot;Action&quot;:0}</code></li>
+<li><code>Timer1 {"Enable":1,"Mode":1,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}</code></li>
+<li><code>Timer2 {"Enable":1,"Mode":1,"Time":"00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}</code></li>
+<li><code>Timer3 {"Enable":1,"Mode":2,"Time":"00:00","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":1}</code></li>
+<li><code>Timer4 {"Enable":1,"Mode":2,"Time":"00:20","Window":0,"Days":"1111111","Repeat":1,"Output":1,"Action":0}</code></li>
 </ul>
 <p><code>Timers on</code></p>
-<p>⭐ It's adjustable in Web UI as well.</p>
-<p><img loading="lazy" src="images/sprinklerTimer1.png" alt="Sunrise Starting Timer" /></p>
+<p>⭐ It’s adjustable in Web UI as well.</p>
+<p><img src="/images/sprinklerTimer1.png" alt="Sunrise Starting Timer"></p>
 <p>To stop the watering. Timer 3 has a 20 minute offset. This allows for 20 minutes of watering. Do the same for Timer 4 for sunset. Per the Tasmota docs:</p>
 <blockquote>
 <p>When Mode 1 or Mode 2 is used, Latitude and Longitude become available. In that case the Time value is always used as an offset so make sure to set it to 00:00 if no offset is wanted</p>
 </blockquote>
-<p><img loading="lazy" src="images/sprinklerTimer3.png" alt="Sunrise Stopping Timer" /></p>
+<p><img src="/images/sprinklerTimer3.png" alt="Sunrise Stopping Timer"></p>
 <p>Using the Tasmota Web Console Command line, type in the timers to verify:
 <code>Timer1</code> , <code>Timer2</code> , <code>Timer3</code> and <code>Timer4</code> .</p>
 <h2 id="runaway-protection">Runaway Protection</h2>
@@ -208,20 +107,20 @@
 </ul>
 </li>
 <li>Third method, use NodeRed to trigger a power state off if receiving MQTT messages. This could be adapted to turn off timers when the weather is expected to rain.</li>
-<li>Monitor on/off times using Graphana. I've prototyped using alerts with a Telegram integration incase all else fails.</li>
+<li>Monitor on/off times using Graphana. I’ve prototyped using alerts with a Telegram integration incase all else fails.</li>
 </ul>
 <h2 id="extending-to-other-platforms-optional">Extending to other Platforms (Optional)</h2>
-<p>Using a simple flow in NodeRed, I've added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
-<p><img loading="lazy" src="images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support" /></p>
-<p><img loading="lazy" src="images/sprinklerNodeRedUI.png" alt="Node red UI" /></p>
+<p>Using a simple flow in NodeRed, I’ve added support for a UI and Alexa control with tracking usage via Graphana. Using the MQTT message <code>tele/tasmota_YOURDEVICE/SENSOR</code> , the data is formatted and sent to a <a href="https://grafana.com/tutorials/install-grafana-on-raspberry-pi/#3">local Graphana instance</a> on a Raspberry PI.</p>
+<p><img src="/images/sprinklerNodeRedWithAlexa.png" alt="Node red with Alexa support"></p>
+<p><img src="/images/sprinklerNodeRedUI.png" alt="Node red UI"></p>
 <p>Simple tracking the ON/OFF state of tasmota MQTT messages</p>
-<p><img loading="lazy" src="images/sprinklerGraphana.png" alt="Graphana dashboard from Tasmota MQTT" /></p>
-<p><img loading="lazy" src="images/sprinklerGraphana7Days.png" alt="Graphana dashboard from Tasmota MQTT 7 days" /></p>
+<p><img src="/images/sprinklerGraphana.png" alt="Graphana dashboard from Tasmota MQTT"></p>
+<p><img src="/images/sprinklerGraphana7Days.png" alt="Graphana dashboard from Tasmota MQTT 7 days"></p>
 <h3 id="setup-rules-optional">Setup Rules (Optional)</h3>
 <p>Here are two more timers (or rules) wanted:</p>
 <ul>
-<li>🚧 before sunrise, check the temperature. if it's too cold, send a MQTT message and disable start timers</li>
-<li>🚧 before sunrise, check the humidity, if it's raining then disable timer.</li>
+<li>🚧 before sunrise, check the temperature. if it’s too cold, send a MQTT message and disable start timers</li>
+<li>🚧 before sunrise, check the humidity, if it’s raining then disable timer.</li>
 </ul>
 <h2 id="resources">Resources</h2>
 <ul>
@@ -235,51 +134,13 @@
 <li>May 23, 2022 - Various updates regarding setup and configurations.</li>
 <li>November 01, 2020 - PCB designs</li>
 <li>June 27, 2022 - Timers via console</li>
-</ul>
-
-      </section>
-    </article>
-  </div>
-
-
- See something inaccurate or need more detail? <a
-        href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20A+simple+water+sprinkler+system%2c+for+makers!">Submit a Pull
-        Request</a> to help me out!
-      <br />
-      <a href="https://www.buymeacoffee.com/skittles">Buy me a ☕ to support!</a>
-<hr />
-
-<h3>Latest Posts</h3>
-  <ul class="unstyledUl">
-    <li>
-      <a class="read-more" href="emails_out_of_control">My Emails Are Out Of Control</a>
-    </li>
-    <li>
-      <a class="read-more" href="hacking-sony-a6000-more">Part 2 of Hacking my Sony A6000 Camera</a>
-    </li>
-    <li>
-      <a class="read-more" href="hacking-sony-a6000-for-modernization">Hacking my Sony A6000 Camera Adding Modern Features</a>
-    </li>
-    <li>
-      <a class="read-more" href="linux-wifi-hotspot-usb3">Linux Wifi Hotspot with PiHole</a>
-    </li>
-    <li>
-      <a class="read-more" href="onboarding-devs">Effective Onboarding for New Engineers</a>
-    </li>
-  </ul>
-
-      
-</main>
-
-
-<script async src="/site.js"></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93963699-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'UA-93963699-1');
-</script>
-</body>
-
-</html>
+</ul>  </section> </article> <hr class="my-8"> <p class="text-sm font-mono text-[#a0aec0]">
+See something inaccurate or need more detail?  <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20A%20simple%20water%20sprinkler%20system%2C%20for%20makers!" class="text-[#9da2ff] hover:underline">
+Submit a Pull Request
+</a> 
+to help me out!
+</p> <p class="text-sm font-mono text-[#a0aec0] mt-2"> <a href="https://www.buymeacoffee.com/skittles" class="text-[#9da2ff] hover:underline">
+Buy me a ☕ to support!
+</a> </p> </div> <!-- Sidebar --> <aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"> <h3 class="text-sm font-bold text-[#f5f5f5] font-mono mb-3 uppercase tracking-wide">
+Latest Posts
+</h3> <ul class="space-y-2 list-none p-0 m-0"> <li> <a href="/emails_out_of_control/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> My Emails Are Out Of Control </a> </li><li> <a href="/hacking-sony-a6000-more/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Part 2 of Hacking my Sony A6000 Camera </a> </li><li> <a href="/hacking-sony-a6000-for-modernization/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Hacking my Sony A6000 Camera Adding Modern Features </a> </li><li> <a href="/linux-wifi-hotspot-usb3/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Linux Wifi Hotspot with PiHole </a> </li><li> <a href="/onboarding-devs/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Effective Onboarding for New Engineers </a> </li> </ul> </aside> </div> </main>  <footer class="mt-12 py-6 border-t border-white/10"> <div class="container mx-auto px-4 text-center text-sm text-[#a0aec0] font-mono"> <p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p> </div> </footer> <script src="/site.js" defer></script> </body></html>

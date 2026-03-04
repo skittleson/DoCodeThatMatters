@@ -1,0 +1,11 @@
+﻿/* TEAM */
+Contact: Spencer Kittleson
+Site: https://DoCodeThatMatters.com
+Twitter: @skittleson
+Location: California
+
+/* SITE */
+Last update: 2025/03/12 
+Standards: HTML5, CSS3
+Components: dotnet, c#, js, css
+Software: Blog on all things in software engineering
