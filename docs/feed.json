@@ -12,6 +12,35 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
+      "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
+      "title": "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows",
+      "summary": "How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips.",
+      "image": "https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=",
+      "date_published": "2026-03-16T00:00:00.000Z",
+      "date_modified": "2026-03-16T00:00:00.000Z",
+      "tags": [
+        "rust",
+        "proxy",
+        "http",
+        "https",
+        "networking",
+        "linux",
+        "windows",
+        "mixed-OS",
+        "development workflow",
+        "popos",
+        "wsl2",
+        "developer tools",
+        "transparent proxy"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/emails_out_of_control/",
       "url": "https://docodethatmatters.com/emails_out_of_control/",
       "title": "My Emails Are Out Of Control",
@@ -262,6 +291,28 @@
       ]
     },
     {
+      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
+      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
+      "title": "Duplicator i3 3d printer upgrade",
+      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
+      "image": "/images/printer-upgrade/i3.jpg",
+      "date_published": "2020-06-01T00:00:00.000Z",
+      "date_modified": "2020-06-01T00:00:00.000Z",
+      "tags": [
+        "3d printing",
+        "diy",
+        "mks gen board",
+        "auto leveling bed",
+        "marlin",
+        "Duplicator i3"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/power-switch-monitor/",
       "url": "https://docodethatmatters.com/power-switch-monitor/",
       "title": "Power Switch Monitor with an Arduino device",
@@ -277,28 +328,6 @@
         "bme280",
         "smart home",
         "smart light"
-      ],
-      "authors": [
-        {
-          "name": "Spencer Kittleson"
-        }
-      ]
-    },
-    {
-      "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
-      "url": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
-      "title": "Duplicator i3 3d printer upgrade",
-      "summary": "Upgrades for to Duplicator i3 and replacing with a MKS Gen 1.4 Board.",
-      "image": "/images/printer-upgrade/i3.jpg",
-      "date_published": "2020-06-01T00:00:00.000Z",
-      "date_modified": "2020-06-01T00:00:00.000Z",
-      "tags": [
-        "3d printing",
-        "diy",
-        "mks gen board",
-        "auto leveling bed",
-        "marlin",
-        "Duplicator i3"
       ],
       "authors": [
         {

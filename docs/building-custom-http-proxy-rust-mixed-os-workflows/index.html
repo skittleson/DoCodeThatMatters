@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en-US" itemscope itemtype="http://schema.org/Blog"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows</title><meta name="description" content="How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."><meta itemprop="description" content="How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."><meta name="keywords" content="rust, proxy, http, https, networking, linux, windows, mixed-OS, development workflow, popos, wsl2, developer tools, transparent proxy"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows - Do Code That Matters"><meta property="og:description" content="How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8="><!-- Twitter Card --><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows - Do Code That Matters"><meta name="twitter:description" content="How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."><meta name="twitter:creator" content="@skittleson"><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#ffffff"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><link rel="author" href="/humans.txt"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ');
+  </script><link rel="stylesheet" href="/_astro/index.CmeYgbZ6.css"></head> <body class="pt-16 min-h-screen"> <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#1a2129]"> <div class="container mx-auto px-4 flex items-center justify-between h-14"> <a href="/" class="flex items-center gap-2 font-mono text-sm text-[#f5f5f5] hover:text-[#9da2ff] transition-colors"> <img src="/images/logoWhiteTrans.png" alt="" width="60" height="19" class="mr-1">
+Do Code That Matters
+</a> <ul class="flex gap-6 list-none m-0 p-0"> <li> <a href="/blog/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">Blog</a> </li> <li> <a href="/about/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">About</a> </li> </ul> </div> </nav>  <main class="container mx-auto px-4 py-8 max-w-4xl"> <div class="lg:grid lg:grid-cols-4 lg:gap-8"> <!-- Main Article --> <div class="lg:col-span-3"> <article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"> <meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/"> <header class="mb-6"> <h1 itemprop="name headline" class="text-2xl font-bold text-[#f5f5f5] mb-3"> Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows </h1> <p class="text-sm text-[#a0aec0] font-mono mb-4"> <time itemprop="datePublished" datetime="2026-03-16T00:00:00.000Z"> Mar 15, 2026 </time>   by  <span itemprop="author" itemscope itemtype="https://schema.org/Person"> <a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" class="text-[#9da2ff] hover:underline"> <span itemprop="name">Spencer Kittleson</span> </a> <meta itemprop="jobTitle" content="Software Engineer"> </span> <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"> <meta itemprop="name" content="Do Code That Matters"> <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"> <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"> </span> </span> </p> <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"> <img src="https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=" itemprop="url contentUrl" alt="Broken window glass with bullet impact hole" loading="eager" fetchpriority="high" decoding="async" width="800" height="600" class="rounded-md w-full object-cover"> <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center"> Broken window glass with bullet impact hole </figcaption> </figure> </header> <section itemprop="articleBody" class="prose prose-invert max-w-none">  <p>I’ve been a Microsoft fan boy for years. But at some point, Windows stopped being fun. The constant upselling from the store, the digital clutter that never got organized, the cost of OneDrive ($99/year then $129), and the fact that I was reinstalling yearly just to keep things running smoothly. It got old.</p>
+<p>But here’s the thing: my work didn’t support Linux. Corp VPN, specific Windows-only tools, the whole nine yards. I couldn’t just switch and be done with it.</p>
+<p>So I got creative.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk - things were just slow or wouldn’t work the way I expected. Docker volumes shared with the host OS? Forget about it.</p>
+<p>I needed a way to run Linux full time but still access my work’s Windows environment seamlessly.</p>
+<h2 id="first-attempts">First Attempts</h2>
+<p>I tried Squid first. It worked… mostly. But I’d get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.</p>
+<p>I knew I could do better. And I wanted to learn Rust anyway.</p>
+<h2 id="the-rust-proxy">The Rust Proxy</h2>
+<p>I built a transparent HTTP(S) forward proxy in Rust. It’s nothing fancy, but it solves my specific problem:</p>
+<ul>
+<li>HTTP and HTTPS proxy support via CONNECT tunneling</li>
+<li>SSL/TLS error detection with helpful diagnostics (because corporate certs are a pain)</li>
+<li>Windows firewall integration (auto-creates rules for the proxy port)</li>
+<li>Cross-platform binaries (Windows, Linux, macOS)</li>
+<li>Configurable host, port, and logging levels</li>
+</ul>
+<p>Here’s the repo if you want to check it out: <a href="https://github.com/spencerkittleson/rust_reverse_proxy">rust_reverse_proxy</a></p>
+<p>Why Rust? Honestly, I wanted to learn it. But the performance has been solid. The async architecture with tokio handles plenty of concurrent connections without breaking a sweat.</p>
+<h3 id="quick-start">Quick Start</h3>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># Download the latest release</span></span>
+<span class="line"><span style="color:#61AFEF">wget</span><span style="color:#98C379"> https://github.com/spencerkittleson/rust_reverse_proxy/releases/latest/download/rust_proxy-linux-x64</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># Run it</span></span>
+<span class="line"><span style="color:#61AFEF">./rust_proxy-linux-x64</span><span style="color:#D19A66"> --host</span><span style="color:#D19A66"> 0.0.0.0</span><span style="color:#D19A66"> --port</span><span style="color:#D19A66"> 3129</span></span></code></pre>
+<p>Then point your system or app proxy settings to that host and port. Simple.</p>
+<h2 id="popos-setup-the-real-work">PopOS Setup: The Real Work</h2>
+<p>The proxy was the easy part. Getting PopOS to play nice with my work setup? That took some doing.</p>
+<h3 id="docker-install-the-full-walkthrough">Docker Install (The Full Walkthrough)</h3>
+<p>Docker doesn’t come pre-installed on PopOS, so here’s exactly what I did:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># 1. Update system packages</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> update</span><span style="color:#ABB2BF"> &#x26;&#x26; </span><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> upgrade</span><span style="color:#D19A66"> -y</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 2. Install prerequisites</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> install</span><span style="color:#D19A66"> -y</span><span style="color:#98C379"> apt-transport-https</span><span style="color:#98C379"> ca-certificates</span><span style="color:#98C379"> curl</span><span style="color:#98C379"> gnupg</span><span style="color:#98C379"> lsb-release</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 3. Add Docker's official GPG key</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> mkdir</span><span style="color:#D19A66"> -p</span><span style="color:#98C379"> /etc/apt/keyrings</span><span style="color:#ABB2BF">  </span></span>
+<span class="line"><span style="color:#61AFEF">curl</span><span style="color:#D19A66"> -fsSL</span><span style="color:#98C379"> https://download.docker.com/linux/ubuntu/gpg</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> gpg</span><span style="color:#D19A66"> --dearmor</span><span style="color:#D19A66"> -o</span><span style="color:#98C379"> /etc/apt/keyrings/docker.gpg</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 4. Add Docker repository</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "deb [arch=$(</span><span style="color:#61AFEF">dpkg</span><span style="color:#D19A66"> --print-architecture</span><span style="color:#98C379">) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(</span><span style="color:#61AFEF">lsb_release</span><span style="color:#D19A66"> -cs</span><span style="color:#98C379">) stable"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> tee</span><span style="color:#98C379"> /etc/apt/sources.list.d/docker.list</span><span style="color:#ABB2BF"> > </span><span style="color:#98C379">/dev/null</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 5. Update and install</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> update</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> install</span><span style="color:#D19A66"> -y</span><span style="color:#98C379"> docker-ce</span><span style="color:#98C379"> docker-ce-cli</span><span style="color:#98C379"> containerd.io</span><span style="color:#98C379"> docker-buildx-plugin</span><span style="color:#98C379"> docker-compose-plugin</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 6. Start and enable</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> systemctl</span><span style="color:#98C379"> start</span><span style="color:#98C379"> docker</span><span style="color:#ABB2BF">  </span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> systemctl</span><span style="color:#98C379"> enable</span><span style="color:#98C379"> docker</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 7. Add user to docker group</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> usermod</span><span style="color:#D19A66"> -aG</span><span style="color:#98C379"> docker</span><span style="color:#E06C75"> $USER</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># 8. Verify</span></span>
+<span class="line"><span style="color:#61AFEF">docker</span><span style="color:#D19A66"> --version</span></span>
+<span class="line"><span style="color:#61AFEF">docker</span><span style="color:#98C379"> compose</span><span style="color:#98C379"> version</span></span></code></pre>
+<p>Log out and back in (or run <code>newgrp docker</code>) to apply the group changes.</p>
+<h3 id="github-account-switching">GitHub Account Switching</h3>
+<p>I have both a personal and work GitHub account. Here’s how I switch between them:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># For work</span></span>
+<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> skittleson</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># For personal</span></span>
+<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> spencerkittleson</span></span></code></pre>
+<p>Would be nice if there was an alias or something, but this works.</p>
+<h3 id="flatpak-x11-fallback">Flatpak x11 Fallback</h3>
+<p>Some Flatpak apps don’t work well with Wayland. Here’s how to force x11 for VSCodium:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> override</span><span style="color:#D19A66"> --user</span><span style="color:#D19A66"> --nosocket=fallback-x11</span><span style="color:#D19A66"> --socket=x11</span><span style="color:#98C379"> com.vscodium.codium</span></span></code></pre>
+<h3 id="mkcert-for-local-https">mkcert for Local HTTPS</h3>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> install</span><span style="color:#98C379"> libnss3-tools</span></span></code></pre>
+<h3 id="net-linking">.NET Linking</h3>
+<p>I keep a local .dotnet install but link it to the system path:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> ln</span><span style="color:#D19A66"> -sf</span><span style="color:#98C379"> /home/spencerkittleson/.dotnet/dotnet</span><span style="color:#98C379"> /usr/bin/dotnet</span></span></code></pre>
+<h3 id="nvm-for-node">NVM for Node</h3>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">curl</span><span style="color:#D19A66"> -o-</span><span style="color:#98C379"> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">bash</span></span></code></pre>
+<h2 id="the-linux-gremlins">The Linux gremlins</h2>
+<p>PopOS isn’t perfect. Here’s what I had to fix:</p>
+<h3 id="gnome-tweaks">Gnome Tweaks</h3>
+<ul>
+<li>Adjust services startup: <code>gnome-session-properties</code></li>
+<li>Change workspaces quickly: <code>super + ctrl + up/down</code></li>
+<li>Restart Gnome shell: press <code>alt + f2</code>, type “r”, hit enter</li>
+</ul>
+<h3 id="bluetooth">Bluetooth</h3>
+<p>Disable the internal adapter when not needed:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># List devices</span></span>
+<span class="line"><span style="color:#61AFEF">hciconfig</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># Take one down</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> hciconfig</span><span style="color:#98C379"> hci0</span><span style="color:#98C379"> down</span></span></code></pre>
+<h3 id="audio-power-saving">Audio Power Saving</h3>
+<p>This was a common fix for audio issues:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># Temporary</span></span>
+<span class="line"><span style="color:#56B6C2">echo</span><span style="color:#98C379"> "0"</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> tee</span><span style="color:#98C379"> /sys/module/snd_hda_intel/parameters/power_save</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># Permanent</span></span>
+<span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> tee</span><span style="color:#98C379"> /etc/modprobe.d/audio_disable_powersave.conf</span><span style="color:#ABB2BF"> &#x3C;&#x3C;&#x3C; </span><span style="color:#98C379">"options snd_hda_intel power_save=0"</span></span></code></pre>
+<h3 id="wireplumber-suspend">Wireplumber Suspend</h3>
+<p>Prevent unwanted suspend:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> sed</span><span style="color:#D19A66"> -i</span><span style="color:#98C379"> 's/--\["session.suspend-timeout-seconds"\] = 5/\["session.suspend-timeout-seconds"\] = 0/'</span><span style="color:#98C379"> /usr/share/wireplumber/main.lua.d/50-alsa-config.lua</span></span>
+<span class="line"><span style="color:#61AFEF">systemctl</span><span style="color:#98C379"> restart</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> pipewire.service</span></span></code></pre>
+<h3 id="vscodium-gpu">VSCodium GPU</h3>
+<p>If it’s crashing:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">codium</span><span style="color:#D19A66"> --disable-gpu</span></span></code></pre>
+<h2 id="chromium-proxy-setup">Chromium Proxy Setup</h2>
+<p>This is the part that actually makes everything usable. I run different work apps through different proxies. Here’s how I launch Chromium with specific proxy settings:</p>
+<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># Basic proxy</span></span>
+<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.8.204:3129;https://192.168.8.204:3129"</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># With certificate errors ignored (useful for internal corporate certs)</span></span>
+<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.8.204:3129;https://192.168.8.204:3129"</span><span style="color:#D19A66"> --ignore-certificate-errors</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#7F848E;font-style:italic"># Different port for different use case</span></span>
+<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.12.211:3129;https://192.168.12.211:3129"</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span></code></pre>
+<p>I have multiple of these for different work contexts. It’s not elegant but it works.</p>
+<h2 id="the-router-setup">The Router Setup</h2>
+<p>I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It’s basically a home lab but for work. The router runs Wi-Fi 7, which is nice since my work laptops are from 2019 and don’t support it. Since I’m proxying all traffic through the work laptop, this gives me low latency and fast file transfers.</p>
+<h2 id="15-months-in">15 Months In</h2>
+<p>It’s been over a year now. Here’s where I’m at:</p>
+<ul>
+<li>Running PopOS full time on my personal machine</li>
+<li>Work machine is dual-boot PopOS and Windows 10</li>
+<li>The Rust proxy handles all my traffic routing</li>
+<li>I use the proxy to split internet traffic - work stuff goes through corp VPN, everything else direct</li>
+<li>No more OneDrive - I use the web version, git, or my knowledge management system</li>
+<li>C#, PHP, and JS all work natively on Linux now</li>
+</ul>
+<p>Would I do anything differently? Maybe not have spent so much time optimizing Windows when I knew I was going to leave. But hey, that’s how you learn.</p>
+<p>The ecosystem lock-in is real. Once you’re in, it’s hard to get out. But with some creativity and a custom Rust proxy, you can make mixed-OS workflows work for you.</p>  </section> </article> <hr class="my-8"> <p class="text-sm font-mono text-[#a0aec0]">
+See something inaccurate or need more detail?  <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Building%20a%20Custom%20HTTP%20Proxy%20in%20Rust%20for%20Mixed-OS%20Workflows" class="text-[#9da2ff] underline">
+Submit a Pull Request
+</a> 
+to help me out!
+</p> <p class="text-sm font-mono text-[#a0aec0] mt-2"> <a href="https://www.buymeacoffee.com/skittles" class="text-[#9da2ff] hover:underline">
+Buy me a ☕ to support!
+</a> </p> </div> <!-- Sidebar --> <aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"> <h3 class="text-sm font-bold text-[#f5f5f5] font-mono mb-3 uppercase tracking-wide">
+Latest Posts
+</h3> <ul class="space-y-2 list-none p-0 m-0"> <li> <a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows </a> </li><li> <a href="/emails_out_of_control/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> My Emails Are Out Of Control </a> </li><li> <a href="/hacking-sony-a6000-more/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Part 2 of Hacking my Sony A6000 Camera </a> </li><li> <a href="/hacking-sony-a6000-for-modernization/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Hacking my Sony A6000 Camera Adding Modern Features </a> </li><li> <a href="/linux-wifi-hotspot-usb3/" class="text-xs text-[#9da2ff] hover:underline font-mono leading-snug block"> Linux Wifi Hotspot with PiHole </a> </li> </ul> </aside> </div> </main>  <footer class="mt-12 py-6 border-t border-white/10"> <div class="container mx-auto px-4 text-center text-sm text-[#a0aec0] font-mono"> <p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p> </div> </footer> <script src="/site.js" defer></script> </body></html>
