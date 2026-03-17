@@ -5,14 +5,13 @@
     gtag('config', 'G-3TW4YP50BZ');
   </script><link rel="stylesheet" href="/_astro/index.CmeYgbZ6.css"></head> <body class="pt-16 min-h-screen"> <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-[#1a2129]"> <div class="container mx-auto px-4 flex items-center justify-between h-14"> <a href="/" class="flex items-center gap-2 font-mono text-sm text-[#f5f5f5] hover:text-[#9da2ff] transition-colors"> <img src="/images/logoWhiteTrans.png" alt="" width="60" height="19" class="mr-1">
 Do Code That Matters
-</a> <ul class="flex gap-6 list-none m-0 p-0"> <li> <a href="/blog/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">Blog</a> </li> <li> <a href="/about/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">About</a> </li> </ul> </div> </nav>  <main class="container mx-auto px-4 py-8 max-w-4xl"> <div class="lg:grid lg:grid-cols-4 lg:gap-8"> <!-- Main Article --> <div class="lg:col-span-3"> <article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"> <meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/"> <header class="mb-6"> <h1 itemprop="name headline" class="text-2xl font-bold text-[#f5f5f5] mb-3"> Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows </h1> <p class="text-sm text-[#a0aec0] font-mono mb-4"> <time itemprop="datePublished" datetime="2026-03-16T00:00:00.000Z"> Mar 15, 2026 </time>   by  <span itemprop="author" itemscope itemtype="https://schema.org/Person"> <a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" class="text-[#9da2ff] hover:underline"> <span itemprop="name">Spencer Kittleson</span> </a> <meta itemprop="jobTitle" content="Software Engineer"> </span> <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"> <meta itemprop="name" content="Do Code That Matters"> <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"> <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"> </span> </span> </p> <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"> <img src="https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=" itemprop="url contentUrl" alt="Broken window glass with bullet impact hole" loading="eager" fetchpriority="high" decoding="async" width="800" height="600" class="rounded-md w-full object-cover"> <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center"> Broken window glass with bullet impact hole </figcaption> </figure> </header> <section itemprop="articleBody" class="prose prose-invert max-w-none">  <p>I’ve been a Microsoft fan boy for years. But at some point, Windows stopped being fun. The constant upselling from the store, the digital clutter that never got organized, the cost of OneDrive ($99/year then $129), and the fact that I was reinstalling yearly just to keep things running smoothly. It got old.</p>
-<p>But here’s the thing: my work didn’t support Linux. Corp VPN, specific Windows-only tools, the whole nine yards. I couldn’t just switch and be done with it.</p>
-<p>So I got creative.</p>
+</a> <ul class="flex gap-6 list-none m-0 p-0"> <li> <a href="/blog/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">Blog</a> </li> <li> <a href="/about/" class="font-mono text-sm transition-colors text-[#f5f5f5] hover:text-[#9da2ff]">About</a> </li> </ul> </div> </nav>  <main class="container mx-auto px-4 py-8 max-w-4xl"> <div class="lg:grid lg:grid-cols-4 lg:gap-8"> <!-- Main Article --> <div class="lg:col-span-3"> <article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"> <meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/"> <header class="mb-6"> <h1 itemprop="name headline" class="text-2xl font-bold text-[#f5f5f5] mb-3"> Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows </h1> <p class="text-sm text-[#a0aec0] font-mono mb-4"> <time itemprop="datePublished" datetime="2026-03-16T00:00:00.000Z"> Mar 15, 2026 </time>   by  <span itemprop="author" itemscope itemtype="https://schema.org/Person"> <a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" class="text-[#9da2ff] hover:underline"> <span itemprop="name">Spencer Kittleson</span> </a> <meta itemprop="jobTitle" content="Software Engineer"> </span> <span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"> <meta itemprop="name" content="Do Code That Matters"> <span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"> <meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"> </span> </span> </p> <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"> <img src="https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=" itemprop="url contentUrl" alt="Broken window glass with bullet impact hole" loading="eager" fetchpriority="high" decoding="async" width="800" height="600" class="rounded-md w-full object-cover"> <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center"> Broken window glass with bullet impact hole </figcaption> </figure> </header> <section itemprop="articleBody" class="prose prose-invert max-w-none">  <p>TLDR; I’ve been a Microsoft fan boy for years. Windows stopped being fun tho. The constant upselling of in my desktop environment, the digital clutter that never gets organized, the cost of OneDrive, and bitrot got old.</p>
+<p>I wanted to switch to a miminalist OS… the catch-22 is my work didn’t support Linux (or a mac at the time), corp VPN, and a bunch of policies. I couldn’t just switch and be done with it. So I got creative.</p>
 <h2 id="the-problem">The Problem</h2>
-<p>I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk - things were just slow or wouldn’t work the way I expected. Docker volumes shared with the host OS? Forget about it.</p>
+<p>I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk. Things were just slow or wouldn’t work the way I expected.</p>
 <p>I needed a way to run Linux full time but still access my work’s Windows environment seamlessly.</p>
 <h2 id="first-attempts">First Attempts</h2>
-<p>I tried Squid first. It worked… mostly. But I’d get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.</p>
+<p>I tried Squid proxy first. It worked… mostly. But I’d get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.</p>
 <p>I knew I could do better. And I wanted to learn Rust anyway.</p>
 <h2 id="the-rust-proxy">The Rust Proxy</h2>
 <p>I built a transparent HTTP(S) forward proxy in Rust. It’s nothing fancy, but it solves my specific problem:</p>
@@ -23,8 +22,8 @@ Do Code That Matters
 <li>Cross-platform binaries (Windows, Linux, macOS)</li>
 <li>Configurable host, port, and logging levels</li>
 </ul>
-<p>Here’s the repo if you want to check it out: <a href="https://github.com/spencerkittleson/rust_reverse_proxy">rust_reverse_proxy</a></p>
-<p>Why Rust? Honestly, I wanted to learn it. But the performance has been solid. The async architecture with tokio handles plenty of concurrent connections without breaking a sweat.</p>
+<p>Here’s the repo if you want to check it out: <a href="https://github.com/spencerkittleson/rust_reverse_proxy">rust_reverse_proxy</a>  I did use claude code to help me build it since i didnt have alot experience.</p>
+<p>Why Rust? The performance has been said to be solid. The async architecture with tokio handles plenty of concurrent connections without causing any problems.</p>
 <h3 id="quick-start">Quick Start</h3>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># Download the latest release</span></span>
 <span class="line"><span style="color:#61AFEF">wget</span><span style="color:#98C379"> https://github.com/spencerkittleson/rust_reverse_proxy/releases/latest/download/rust_proxy-linux-x64</span></span>
@@ -67,22 +66,20 @@ Do Code That Matters
 <h3 id="github-account-switching">GitHub Account Switching</h3>
 <p>I have both a personal and work GitHub account. Here’s how I switch between them:</p>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># For work</span></span>
-<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> skittleson</span></span>
+<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> work_user</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#7F848E;font-style:italic"># For personal</span></span>
-<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> spencerkittleson</span></span></code></pre>
+<span class="line"><span style="color:#61AFEF">gh</span><span style="color:#98C379"> auth</span><span style="color:#98C379"> switch</span><span style="color:#D19A66"> --user</span><span style="color:#98C379"> personal_user</span></span></code></pre>
 <p>Would be nice if there was an alias or something, but this works.</p>
 <h3 id="flatpak-x11-fallback">Flatpak x11 Fallback</h3>
 <p>Some Flatpak apps don’t work well with Wayland. Here’s how to force x11 for VSCodium:</p>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> override</span><span style="color:#D19A66"> --user</span><span style="color:#D19A66"> --nosocket=fallback-x11</span><span style="color:#D19A66"> --socket=x11</span><span style="color:#98C379"> com.vscodium.codium</span></span></code></pre>
-<h3 id="mkcert-for-local-https">mkcert for Local HTTPS</h3>
-<pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> apt</span><span style="color:#98C379"> install</span><span style="color:#98C379"> libnss3-tools</span></span></code></pre>
 <h3 id="net-linking">.NET Linking</h3>
 <p>I keep a local .dotnet install but link it to the system path:</p>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">sudo</span><span style="color:#98C379"> ln</span><span style="color:#D19A66"> -sf</span><span style="color:#98C379"> /home/spencerkittleson/.dotnet/dotnet</span><span style="color:#98C379"> /usr/bin/dotnet</span></span></code></pre>
 <h3 id="nvm-for-node">NVM for Node</h3>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#61AFEF">curl</span><span style="color:#D19A66"> -o-</span><span style="color:#98C379"> https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh</span><span style="color:#ABB2BF"> | </span><span style="color:#61AFEF">bash</span></span></code></pre>
-<h2 id="the-linux-gremlins">The Linux gremlins</h2>
+<h2 id="the-popos-fun--window-issues">The PopOs fun  window issues</h2>
 <p>PopOS isn’t perfect. Here’s what I had to fix:</p>
 <h3 id="gnome-tweaks">Gnome Tweaks</h3>
 <ul>
@@ -91,7 +88,7 @@ Do Code That Matters
 <li>Restart Gnome shell: press <code>alt + f2</code>, type “r”, hit enter</li>
 </ul>
 <h3 id="bluetooth">Bluetooth</h3>
-<p>Disable the internal adapter when not needed:</p>
+<p>I ditched the bluetooth adapter since it was old and caused issues with PopOs all the time. Disable the internal adapter when not needed:</p>
 <pre class="astro-code one-dark-pro" style="background-color:#282c34;color:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#7F848E;font-style:italic"># List devices</span></span>
 <span class="line"><span style="color:#61AFEF">hciconfig</span></span>
 <span class="line"></span>
@@ -117,10 +114,7 @@ Do Code That Matters
 <span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.8.204:3129;https://192.168.8.204:3129"</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span>
 <span class="line"></span>
 <span class="line"><span style="color:#7F848E;font-style:italic"># With certificate errors ignored (useful for internal corporate certs)</span></span>
-<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.8.204:3129;https://192.168.8.204:3129"</span><span style="color:#D19A66"> --ignore-certificate-errors</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span>
-<span class="line"></span>
-<span class="line"><span style="color:#7F848E;font-style:italic"># Different port for different use case</span></span>
-<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.12.211:3129;https://192.168.12.211:3129"</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span></code></pre>
+<span class="line"><span style="color:#61AFEF">flatpak</span><span style="color:#98C379"> run</span><span style="color:#D19A66"> --command=/app/bin/chromium</span><span style="color:#98C379"> org.chromium.Chromium</span><span style="color:#D19A66"> --profile-directory=Default</span><span style="color:#D19A66"> --proxy-server=</span><span style="color:#98C379">"http://192.168.8.204:3129;https://192.168.8.204:3129"</span><span style="color:#D19A66"> --ignore-certificate-errors</span><span style="color:#ABB2BF"> &#x26; </span><span style="color:#56B6C2">disown</span></span></code></pre>
 <p>I have multiple of these for different work contexts. It’s not elegant but it works.</p>
 <h2 id="the-router-setup">The Router Setup</h2>
 <p>I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It’s basically a home lab but for work. The router runs Wi-Fi 7, which is nice since my work laptops are from 2019 and don’t support it. Since I’m proxying all traffic through the work laptop, this gives me low latency and fast file transfers.</p>
@@ -128,14 +122,12 @@ Do Code That Matters
 <p>It’s been over a year now. Here’s where I’m at:</p>
 <ul>
 <li>Running PopOS full time on my personal machine</li>
-<li>Work machine is dual-boot PopOS and Windows 10</li>
-<li>The Rust proxy handles all my traffic routing</li>
+<li>Work machine is only PopOS Cosmic</li>
+<li>The Rust proxy handles all my traffic routing to a Windows PC</li>
 <li>I use the proxy to split internet traffic - work stuff goes through corp VPN, everything else direct</li>
 <li>No more OneDrive - I use the web version, git, or my knowledge management system</li>
-<li>C#, PHP, and JS all work natively on Linux now</li>
 </ul>
-<p>Would I do anything differently? Maybe not have spent so much time optimizing Windows when I knew I was going to leave. But hey, that’s how you learn.</p>
-<p>The ecosystem lock-in is real. Once you’re in, it’s hard to get out. But with some creativity and a custom Rust proxy, you can make mixed-OS workflows work for you.</p>  </section> </article> <hr class="my-8"> <p class="text-sm font-mono text-[#a0aec0]">
+<p>Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to linux container in production anyways. The ecosystem lock-in is real. Once you’re in, it’s hard to get out. But with some creativity and a custom code, you can make mixed-OS workflows work for you.</p>  </section> </article> <hr class="my-8"> <p class="text-sm font-mono text-[#a0aec0]">
 See something inaccurate or need more detail?  <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Building%20a%20Custom%20HTTP%20Proxy%20in%20Rust%20for%20Mixed-OS%20Workflows" class="text-[#9da2ff] underline">
 Submit a Pull Request
 </a> 

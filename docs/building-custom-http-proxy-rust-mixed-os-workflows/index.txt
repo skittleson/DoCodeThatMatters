@@ -1,18 +1,16 @@
-I've been a Microsoft fan boy for years. But at some point, Windows stopped being fun. The constant upselling from the store, the digital clutter that never got organized, the cost of OneDrive ($99/year then $129), and the fact that I was reinstalling yearly just to keep things running smoothly. It got old.
+TLDR; I've been a Microsoft fan boy for years. Windows stopped being fun tho. The constant upselling of in my desktop environment, the digital clutter that never gets organized, the cost of OneDrive, and bitrot got old.
 
-But here's the thing: my work didn't support Linux. Corp VPN, specific Windows-only tools, the whole nine yards. I couldn't just switch and be done with it.
-
-So I got creative.
+I wanted to switch to a miminalist OS... the catch-22 is my work didn't support Linux (or a mac at the time), corp VPN, and a bunch of policies. I couldn't just switch and be done with it. So I got creative.
 
 The Problem
 
-I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk - things were just slow or wouldn't work the way I expected. Docker volumes shared with the host OS? Forget about it.
+I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk. Things were just slow or wouldn't work the way I expected. 
 
 I needed a way to run Linux full time but still access my work's Windows environment seamlessly.
 
 First Attempts
 
-I tried Squid first. It worked... mostly. But I'd get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.
+I tried Squid proxy first. It worked... mostly. But I'd get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.
 
 I knew I could do better. And I wanted to learn Rust anyway.
 
@@ -26,9 +24,9 @@ I built a transparent HTTP(S) forward proxy in Rust. It's nothing fancy, but it 
 - Cross-platform binaries (Windows, Linux, macOS)
 - Configurable host, port, and logging levels
 
-Here's the repo if you want to check it out: rustreverseproxy (https://github.com/spencerkittleson/rustreverseproxy)
+Here's the repo if you want to check it out: rustreverseproxy (https://github.com/spencerkittleson/rustreverseproxy)  I did use claude code to help me build it since i didnt have alot experience.
 
-Why Rust? Honestly, I wanted to learn it. But the performance has been solid. The async architecture with tokio handles plenty of concurrent connections without breaking a sweat.
+Why Rust? The performance has been said to be solid. The async architecture with tokio handles plenty of concurrent connections without causing any problems.
 
 Quick Start
 Then point your system or app proxy settings to that host and port. Simple.
@@ -50,12 +48,11 @@ Would be nice if there was an alias or something, but this works.
 Flatpak x11 Fallback
 
 Some Flatpak apps don't work well with Wayland. Here's how to force x11 for VSCodium:
-mkcert for Local HTTPS
 .NET Linking
 
 I keep a local .dotnet install but link it to the system path:
 NVM for Node
-The Linux gremlins
+The PopOs fun  window issues
 
 PopOS isn't perfect. Here's what I had to fix:
 
@@ -67,7 +64,7 @@ Gnome Tweaks
 
 Bluetooth
 
-Disable the internal adapter when not needed:
+I ditched the bluetooth adapter since it was old and caused issues with PopOs all the time. Disable the internal adapter when not needed:
 Audio Power Saving
 
 This was a common fix for audio issues:
@@ -91,12 +88,9 @@ I use a travel router to connect my Linux machine to the work Windows machine vi
 It's been over a year now. Here's where I'm at:
 
 - Running PopOS full time on my personal machine
-- Work machine is dual-boot PopOS and Windows 10
-- The Rust proxy handles all my traffic routing
+- Work machine is only PopOS Cosmic
+- The Rust proxy handles all my traffic routing to a Windows PC
 - I use the proxy to split internet traffic - work stuff goes through corp VPN, everything else direct
 - No more OneDrive - I use the web version, git, or my knowledge management system
-- C#, PHP, and JS all work natively on Linux now
 
-Would I do anything differently? Maybe not have spent so much time optimizing Windows when I knew I was going to leave. But hey, that's how you learn.
-
-The ecosystem lock-in is real. Once you're in, it's hard to get out. But with some creativity and a custom Rust proxy, you can make mixed-OS workflows work for you.
+Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to linux container in production anyways. The ecosystem lock-in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed-OS workflows work for you.
