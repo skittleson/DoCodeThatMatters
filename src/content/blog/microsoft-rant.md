@@ -1,34 +1,34 @@
 ---
-title: "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows"
-keywords:
-  - rust
-  - proxy
-  - http
-  - https
-  - networking
-  - linux
-  - windows
-  - mixed-OS
-  - development workflow
-  - popos
-  - wsl2
-  - developer tools
-  - transparent proxy
-slug: building-custom-http-proxy-rust-mixed-os-workflows
-date: 2026-03-16
-description: "How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."
-image: https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048&w=is&k=20&c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=
-alt: "Broken window glass with bullet impact hole"
-priority: 0.9
+ title: "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows"
+ keywords:
+   - rust
+   - proxy
+   - http
+   - https
+   - networking
+   - linux
+   - windows
+   - mixed-OS
+   - development workflow
+   - popos
+   - wsl2
+   - developer tools
+   - transparent proxy
+ slug: building-custom-http-proxy-rust-mixed-os-workflows
+ date: 2026-03-16
+ description: "How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."
+ image: https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048\u0026w=is\u0026k=20\u0026c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=
+ alt: "Broken window glass with bullet impact hole"
+ priority: 0.9
 ---
 
-TLDR; I've been a Microsoft fan boy for years. Windows stopped being fun tho. The constant upselling of in my desktop environment, the digital clutter that never gets organized, the cost of OneDrive, and bitrot got old.
+TLDR; I built a Rust proxy to keep my traffic private and give me remote access to home devices. It’s lightweight, no‑app, works on any device that can point to a proxy. I’ll walk through the privacy benefits, how I use it for local services, and why I still use it even with a full‑tunnel VPN.
 
-I wanted to switch to a miminalist OS... the catch-22 is my work didn't support Linux (or a mac at the time), corp VPN, and a bunch of policies. I couldn't just switch and be done with it. So I got creative.
+I wanted to switch to a miminalist OS... the catch‑22 is my work didn't support Linux (or a mac at the time), corp VPN, and a bunch of policies. I couldn't just switch and be done with it. So I got creative.
 
 ## The Problem
 
-I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk. Things were just slow or wouldn't work the way I expected. 
+I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk. Things were just slow or wouldn't work the way I expected.
 
 I needed a way to run Linux full time but still access my work's Windows environment seamlessly.
 
@@ -44,8 +44,8 @@ I built a transparent HTTP(S) forward proxy in Rust. It's nothing fancy, but it 
 
 - HTTP and HTTPS proxy support via CONNECT tunneling
 - SSL/TLS error detection with helpful diagnostics (because corporate certs are a pain)
-- Windows firewall integration (auto-creates rules for the proxy port)
-- Cross-platform binaries (Windows, Linux, macOS)
+- Windows firewall integration (auto‑creates rules for the proxy port)
+- Cross‑platform binaries (Windows, Linux, macOS)
 - Configurable host, port, and logging levels
 
 Here's the repo if you want to check it out: [rust_reverse_proxy](https://github.com/spencerkittleson/rust_reverse_proxy)  I did use claude code to help me build it since i didnt have alot experience.
@@ -153,6 +153,7 @@ PopOS isn't perfect. Here's what I had to fix:
 ### Bluetooth
 
 I ditched the bluetooth adapter since it was old and caused issues with PopOs all the time. Disable the internal adapter when not needed:
+
 ```bash
 # List devices
 hciconfig
@@ -164,6 +165,7 @@ sudo hciconfig hci0 down
 ### Audio Power Saving
 
 This was a common fix for audio issues:
+
 ```bash
 # Temporary
 echo "0" | sudo tee /sys/module/snd_hda_intel/parameters/power_save
@@ -175,14 +177,16 @@ sudo tee /etc/modprobe.d/audio_disable_powersave.conf <<< "options snd_hda_intel
 ### Wireplumber Suspend
 
 Prevent unwanted suspend:
+
 ```bash
-sudo sed -i 's/--\["session.suspend-timeout-seconds"\] = 5/\["session.suspend-timeout-seconds"\] = 0/' /usr/share/wireplumber/main.lua.d/50-alsa-config.lua
+sudo sed -i 's/--\["session.suspend-time- seconds\] = 5/\["session.suspend-time- seconds\] = 0/' /usr/share/wireplumber/main.lua.d/50-alsa-config.lua
 systemctl restart --user pipewire.service
 ```
 
 ### VSCodium GPU
 
 If it's crashing:
+
 ```bash
 codium --disable-gpu
 ```
@@ -201,9 +205,19 @@ flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-director
 
 I have multiple of these for different work contexts. It's not elegant but it works.
 
+## Flatpak Sandbox Chrome Alias
+
+For convenience, you can set an alias that launches Chromium in a sandboxed Flatpak instance with the proxy already configured:
+
+```bash
+alias proxy="flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server='http://192.168.8.204:3129;https://192.168.8.204:3129' --ignore-certificate-errors & disown"
+```
+
+This keeps the proxy settings isolated from your regular Chrome installation and ensures the sandboxed instance respects the corporate certificate chain.
+
 ## The Router Setup
 
-I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It's basically a home lab but for work. The router runs Wi-Fi 7, which is nice since my work laptops are from 2019 and don't support it. Since I'm proxying all traffic through the work laptop, this gives me low latency and fast file transfers.
+I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It's basically a home lab but for work. The router runs Wi‑Fi 7, which is nice since my work laptops are from 2019 and don't support it. Since I'm proxying all traffic through the work laptop, this gives me low latency and fast file transfers.
 
 ## 15 Months In
 
@@ -215,4 +229,19 @@ It's been over a year now. Here's where I'm at:
 - I use the proxy to split internet traffic - work stuff goes through corp VPN, everything else direct
 - No more OneDrive - I use the web version, git, or my knowledge management system
 
-Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to linux container in production anyways. The ecosystem lock-in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed-OS workflows work for you.
+Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to linux container in production anyways. The ecosystem lock‑in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed‑OS workflows work for you.
+
+## Work VPN Conflicts
+
+I use a full‑tunnel work VPN, which can be problematic for development. NPM, NuGet, and pip can be extremely slow because all traffic is forced through the corporate network. SSL certificates can also be an issue: with a full VPN, an intermediate certificate is installed and becomes part of the chain. I’m not a TLS expert, but it can cause headaches.
+
+Companies may not even like proxies installed on the PC or allow them in general use. Route tables and routing traffic become interesting. I use a proxy in two different ways depending on the use case. I’ve been using an HTTPS proxy for over a year. It solved a few major issues for me. In the age of WireGuard and Tailscale, you might wonder why I still use it.
+
+## Conclusion
+
+- **Keep it simple.** A single, lightweight proxy can solve a lot of headaches without the bloat of a full VPN client.
+- **Don’t over‑optimize.** I spent a lot of time tweaking Windows, but the real win was the Linux side. Focus on the part that actually matters to you.
+- **Document early.** The notes you keep for yourself become the next blog post. I’m still adding to this file, and that’s why it’s a living document.
+- **Stay curious.** The tech landscape changes fast. What worked for me last year might be obsolete next year, so keep experimenting.
+
+Bottom line: if you’re juggling a corporate VPN and a personal workflow, a transparent forward proxy is a surprisingly powerful tool. It keeps your traffic private, gives you remote access to home services, and lets you sidestep the slowdowns of a full‑tunnel VPN. Give it a shot and see how it changes your day‑to‑day dev life.
