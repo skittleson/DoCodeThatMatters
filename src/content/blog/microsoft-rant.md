@@ -17,7 +17,7 @@
  slug: building-custom-http-proxy-rust-mixed-os-workflows
  date: 2026-03-16
  description: "How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips."
- image: https://media.istockphoto.com/id/157193805/photo/broken-glass-window-bullet-shooting-impact-hole-cracks.jpg?s=2048x2048\u0026w=is\u0026k=20\u0026c=0s4HTmGr7zR9kj5D32185ockkai9kykI0R_li8nGWn8=
+ image: /images/broken-window.jpeg
  alt: "Broken window glass with bullet impact hole"
  priority: 0.9
 ---
