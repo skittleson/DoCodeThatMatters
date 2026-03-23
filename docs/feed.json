@@ -12,6 +12,30 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
+      "url": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
+      "title": "I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.",
+      "summary": "Authentik does not support RFC 8693 token exchange. The workaround works, but it shifts a security assumption most people never notice. Here is what I found and how it compares to Keycloak.",
+      "image": "/images/oauth-token-exchange-network.jpg",
+      "date_published": "2026-03-23T00:00:00.000Z",
+      "date_modified": "2026-03-23T00:00:00.000Z",
+      "tags": [
+        "oauth",
+        "token exchange",
+        "keycloak",
+        "authentik",
+        "RFC 8693",
+        "OIDC",
+        "SSO",
+        "identity"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
       "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
       "title": "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows",
