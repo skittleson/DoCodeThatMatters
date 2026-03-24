@@ -49,6 +49,8 @@ const params = new URLSearchParams({
 });
 ```
 
+One note on the `client_assertion` field: [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) normally expects a JWT signed by the client's own private key, not a user's access token. Authentik's federated provider feature accepts the user's access token here because it trusts the issuer, not because this is standard RFC 7523 client authentication. It works, but it is Authentik-specific behavior.
+
 Authentik verifies App A's token comes from a trusted federated provider, then issues a new token with `aud: app-b`.
 
 **The problem:** the issued token's `sub` is not the user. It is a service account - something like `ak-App-A-Provider-client_credentials`. Authentik has no mechanism in this grant path to forward the original user's identity into the token.
@@ -142,10 +144,43 @@ This is where the security models visibly diverge. Keycloak: identity comes from
 
 ## The Key Difference
 
-| IdP       | Method                        | RFC 8693 | `sub` in token  |
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as User
+    participant A as App A
+    participant IdP as Identity Provider
+    participant B as App B
+
+    U->>A: Login
+    A->>IdP: Authenticate user
+    IdP-->>A: User Access Token (sub: user, aud: app-a)
+
+    Note over A,B: User requests data from App B
+
+    rect rgb(255, 230, 200)
+        Note over A,IdP: Authentik — client_credentials fallback
+        A->>IdP: client_credentials + client_assertion (user AT as JWT)
+        Note right of IdP: No user context in this grant
+        IdP-->>A: M2M Token (sub: service-account-a, aud: app-b)
+        A->>B: Bearer M2M Token + X-User-Sub header
+        Note right of B: Implicit trust — B trusts the header because A is authenticated
+    end
+
+    rect rgb(200, 255, 200)
+        Note over A,IdP: Keycloak — RFC 8693 token exchange
+        A->>IdP: token-exchange, subject_token: user AT, audience: app-b
+        Note right of IdP: Validates delegation policy
+        IdP-->>A: Delegated Token (sub: user, aud: app-b, azp: app-a)
+        A->>B: Bearer Delegated Token only
+        Note right of B: Cryptographic trust — sub and azp verified from token
+    end
+```
+
+| IdP       | Grant Type                    | RFC 8693 | Identity Chain  |
 |-----------|-------------------------------|----------|-----------------|
-| Authentik | [JWT Authentication](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication) ([RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523))     | No       | Service account |
-| Keycloak  | Native token exchange ([RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693))         | Yes      | Original user   |
+| Authentik | `client_credentials` ([RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) client assertion) | No | Broken — requires manual `X-User-Sub` header |
+| Keycloak  | `token-exchange` ([RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693)) | Yes | Preserved — `sub` + `azp` in issued token |
 
 With Authentik, you are trusting App A to tell the truth about who the user is. With Keycloak, the IdP is the one asserting it and App B can verify that independently.
 

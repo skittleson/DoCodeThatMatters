@@ -1,6 +1,5 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -82,7 +81,7 @@ const issueTitle = encodeURIComponent(`Post - ${title}`);
 
             {image && (
               <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6">
-                <Image
+                <img
                   itemprop="url contentUrl"
                   src={image}
                   alt={alt ?? title}
@@ -91,6 +90,7 @@ const issueTitle = encodeURIComponent(`Post - ${title}`);
                   class="rounded-md w-full object-cover"
                   loading="eager"
                   fetchpriority="high"
+                  decoding="async"
                 />
                 {alt && (
                   <figcaption itemprop="caption" class="text-xs text-[#a0aec0] mt-1 text-center">
