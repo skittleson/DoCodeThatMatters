@@ -24,8 +24,8 @@ export function markdownToText(body: string): string {
   // Remove code fences
   text = text.replace(/^```[\s\S]*?```/gm, '');
 
-  // Remove inline code backticks
-  text = text.replace(/`([^`]+)`/g, '$1');
+  // Remove inline code (strip both backticks and content — not useful for TTS)
+  text = text.replace(/`[^`]+`/g, '');
 
   // Remove blockquote markers
   text = text.replace(/^>\s*/gm, '');

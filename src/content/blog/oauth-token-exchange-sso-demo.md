@@ -16,7 +16,7 @@ alt: City lights connected across a global network like services passing identit
 draft: false
 ---
 
-I was building a service that needed to call another internal API on behalf of a logged-in user. Standard microservice problem. I had Authentik running already so I went looking for [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) token exchange support. It is not there for Authentik. Instead is [JWT authentication](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication) which is a legitimate M2M pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
+I was building a service that needed to call another internal API on behalf of a logged-in user.  This is a standard issue where services need to talk to each other was that user. I had Authentik running already so I went looking for [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) token exchange support which is not supported! Instead it is [JWT authentication](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication) which is a legitimate machine-to-machine pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
 
 I built a [demo repo](https://github.com/skittleson/IdentityExchangeAppsDemo) that runs both approaches side by side - Keycloak with native [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693), and Authentik with the JWT federation workaround - so you can see exactly where they diverge.
 
@@ -229,12 +229,3 @@ Log in to App A, open App B in a new tab (SSO kicks in automatically), add a few
 - [Authentik JWT Authentication docs](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication)
 - [Demo repo - skittleson/IdentityExchangeAppsDemo](https://github.com/skittleson/IdentityExchangeAppsDemo)
 
-<!--
-HN SUBMISSION -- copy/paste when posting
-
-TITLE:
-I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.
-
-SHOW HN COMMENT BODY:
-I was wiring up two OIDC apps to share a user's identity server to server and discovered that Authentik (which I was already running) does not implement RFC 8693 token exchange at all. The workaround it offers (JWT federation + an X-User-Sub header) works, but it shifts trust to the calling service: a compromised App A can claim to be any user when calling App B. With Keycloak's native RFC 8693 support, the IdP asserts the user's identity in the token itself, so App A cannot forge that even if it is fully compromised. I built a Docker demo that runs both side by side so you can see exactly where the security models diverge. Curious if others have hit this and what they ended up choosing.
--->

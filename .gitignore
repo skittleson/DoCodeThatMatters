@@ -8,3 +8,5 @@ venv
 .sqlite
 reports
 .venv
+__pycache__
+.pytest_cache

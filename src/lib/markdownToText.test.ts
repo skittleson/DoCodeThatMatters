@@ -116,14 +116,14 @@ describe('markdownToText', () => {
       expect(markdownToText(input)).toBe('before\n\nafter');
     });
 
-    it('removes inline code backticks but keeps text', () => {
+    it('removes inline code including its content', () => {
       expect(markdownToText('Use `npm install` to install')).toBe(
-        'Use npm install to install'
+        'Use  to install'
       );
     });
 
-    it('handles multiple inline code spans', () => {
-      expect(markdownToText('`foo` and `bar`')).toBe('foo and bar');
+    it('removes multiple inline code spans including their content', () => {
+      expect(markdownToText('`foo` and `bar`')).toBe('and');
     });
   });
 
@@ -207,6 +207,7 @@ See [the docs](https://example.com) for more.`;
       expect(result).not.toContain('```');
       expect(result).not.toContain('**');
       expect(result).not.toContain('_testing_');
+      expect(result).not.toContain('const x');
       expect(result).toContain('A wise quote.');
       expect(result).toContain('the docs (https://example.com)');
     });

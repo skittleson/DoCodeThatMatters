@@ -47,19 +47,54 @@ draft: false
 
 The site is served from the `docs/` directory on the `master` branch.
 
-1. `npm run build` — generates the `docs/` directory
+1. `npm run build` — builds the site, generates audio for changed posts, and patches `docs/rss.xml`
 2. `git add docs/` — stage the build output
 3. `git commit -m "your message"`
 4. `git push` — GitHub Pages picks up the changes automatically
 
 To preview the build locally before pushing: `npm run preview`
 
-## Python Virtual Env
+The build pipeline runs three steps automatically:
+```
+astro build       → generates docs/ including per-post index.txt files
+python main.py    → generates index.mp3 for new/changed posts, patches docs/rss.xml
+```
+
+## Python Setup (uv)
+
+This project uses [uv](https://docs.astral.sh/uv/) to manage Python dependencies with a single `.venv` pinned to Python 3.12.
+
+### Prerequisites
+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) — `pip install uv` or `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- `ffmpeg` — required for WAV→MP3 conversion (`sudo apt install ffmpeg` / `brew install ffmpeg`)
+
+### First-time setup
 
 ```sh
-python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
+# Create .venv pinned to Python 3.12 and install base + dev deps
+uv sync --group dev
+
+# Install the heavy ML/TTS deps (KittenTTS, PyTorch, etc.) into the same .venv
+VIRTUAL_ENV=.venv uv pip install \
+  "kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl" \
+  soundfile
+```
+
+### Running tests
+
+```sh
+uv run pytest
+```
+
+### Generating audio (TTS)
+
+```sh
+# Single post (for testing/previewing)
+uv run python main.py --slug your-post-slug
+
+# All posts (run automatically as part of npm run build)
+uv run python main.py
 ```
 
 ## Resources

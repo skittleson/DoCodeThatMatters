@@ -1,6 +1,9 @@
 bs4
 requests
-gTTS
 pybars3
 rich
 python-dotenv
+# KittenTTS for blog post audio generation (best model: kitten-tts-mini 80M params)
+kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl
+soundfile
+# NOTE: ffmpeg must be installed on the system for WAV→MP3 conversion (apt install ffmpeg / brew install ffmpeg)

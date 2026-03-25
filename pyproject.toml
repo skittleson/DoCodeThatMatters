@@ -1,0 +1,29 @@
+[project]
+name = "docodethatmatters"
+version = "0.1.0"
+requires-python = ">=3.8"
+# Lightweight deps only — no ML/GPU packages here so `uv run pytest` stays fast.
+# Install the full stack (including KittenTTS) with: uv sync --group tts
+dependencies = [
+    "bs4",
+    "requests",
+    "pybars3",
+    "rich",
+    "python-dotenv",
+]
+
+[dependency-groups]
+# Heavy ML deps needed to actually generate audio (not required for tests).
+# Requires ffmpeg on the system: sudo apt install ffmpeg / brew install ffmpeg
+tts = [
+    "kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl",
+    "soundfile",
+    "numpy",
+]
+dev = [
+    "pytest",
+    "lxml",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
