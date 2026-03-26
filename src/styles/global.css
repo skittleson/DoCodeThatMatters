@@ -163,3 +163,12 @@
   background: var(--color-surface);
   padding: 1em;
 }
+
+/* ─── Audio player ──────────────────────────────────────────── */
+
+.audio-player audio {
+  width: 100%;
+  border-radius: 6px;
+  background: var(--color-surface);
+  accent-color: var(--color-accent);
+}

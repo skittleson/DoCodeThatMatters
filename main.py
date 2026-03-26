@@ -118,7 +118,7 @@ def _patch_rss_audio(updates, rss_path="docs/rss.xml"):
         else:
             base_url = ""
 
-        audio_url = f"{base_url}/{slug}/index.mp3"
+        audio_url = f"{base_url}/audio/{slug}/index.mp3"
 
         # Remove existing audio enclosure if present
         existing = item.find("enclosure", attrs={"type": "audio/mpeg"})
@@ -170,7 +170,7 @@ def _patch_sitemap_audio(updates, sitemap_path="docs/sitemap-0.xml"):
         return
 
     for slug in updates:
-        mp3_url = f"{base_url}/{slug}/index.mp3"
+        mp3_url = f"{base_url}/audio/{slug}/index.mp3"
         if mp3_url in existing_locs:
             continue
 
@@ -189,65 +189,6 @@ def _patch_sitemap_audio(updates, sitemap_path="docs/sitemap-0.xml"):
 
     with open(sitemap_path, "w", encoding="utf-8") as f:
         f.write(str(soup))
-
-
-def _patch_html_audio(updates, docs_dir="docs"):
-    """
-    For each slug in `updates`, inject an <audio> player + download link
-    into docs/<slug>/index.html immediately before the closing </article> tag.
-
-    If a <div class="audio-player"> already exists in the article it is
-    replaced, making this call idempotent.
-    """
-    for slug in updates:
-        html_path = os.path.join(docs_dir, slug, "index.html")
-        if not os.path.exists(html_path):
-            continue
-
-        with open(html_path, "r", encoding="utf-8") as f:
-            content = f.read()
-
-        soup = BeautifulSoup(content, "html.parser")
-
-        article = soup.find("article")
-        if not article:
-            continue
-
-        # Remove existing audio player if present (idempotent)
-        existing = article.find("div", class_="audio-player")
-        if existing:
-            existing.decompose()
-
-        mp3_url = f"/{slug}/index.mp3"
-
-        # Build the player markup
-        wrapper = soup.new_tag("div", attrs={"class": "audio-player mt-6"})
-
-        audio_tag = soup.new_tag(
-            "audio",
-            controls=True,
-            preload="metadata",
-            src=mp3_url,
-            attrs={"class": "w-full"},
-        )
-        audio_tag.string = "Your browser does not support the audio element."
-
-        download_tag = soup.new_tag(
-            "a",
-            href=mp3_url,
-            download=True,
-            attrs={
-                "class": "text-xs text-[#9da2ff] hover:underline font-mono mt-1 inline-block"
-            },
-        )
-        download_tag.string = "Download audio"
-
-        wrapper.append(audio_tag)
-        wrapper.append(download_tag)
-        article.append(wrapper)
-
-        with open(html_path, "w", encoding="utf-8") as f:
-            f.write(str(soup))
 
 
 def _resolve_model(repo_id):
@@ -361,11 +302,12 @@ def text_to_speech_on_plain_text(slug_filter=None):
     Skip regeneration if BOTH conditions are true:
       - The SHA-256 hash of src/content/blog/<slug>.md matches the hash stored
         in audio-hashes.json (a sidecar file that survives astro build wiping docs/)
-      - docs/<slug>/index.mp3 already exists on disk
+      - audio/<slug>/index.mp3 already exists on disk (audio/ is committed to git
+        and never touched by astro build or astro dev)
 
-    After processing, patches docs/rss.xml in-place to inject or update
-    <enclosure type="audio/mpeg" url="..." length="..." hash="..." />
-    for every post that was (re)generated, and writes audio-hashes.json.
+    After processing, copies all audio/<slug>/index.mp3 → docs/<slug>/index.mp3
+    so the built site has the audio files. Also patches docs/rss.xml and
+    docs/sitemap-0.xml for newly generated posts, and writes audio-hashes.json.
 
     Args:
         slug_filter: if set, only process the post with this slug name.
@@ -374,8 +316,9 @@ def text_to_speech_on_plain_text(slug_filter=None):
     from kittentts import KittenTTS
 
     RSS_PATH = "docs/rss.xml"
+    AUDIO_DIR = "public/audio"
 
-    # Load persisted hashes from sidecar — survives astro build wiping docs/
+    # Load persisted hashes from sidecar
     audio_hashes = _load_audio_hashes()
 
     model = None  # lazy-load — only instantiate if something needs generating
@@ -388,7 +331,7 @@ def text_to_speech_on_plain_text(slug_filter=None):
 
         txt_path = f"docs/{folder}/index.tts"
         src_path = f"src/content/blog/{folder}.md"
-        mp3_path = f"docs/{folder}/index.mp3"
+        mp3_path = f"{AUDIO_DIR}/{folder}/index.mp3"
 
         if not os.path.exists(txt_path):
             continue
@@ -411,59 +354,56 @@ def text_to_speech_on_plain_text(slug_filter=None):
         else:
             txt_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-        # Skip if hash matches the sidecar AND the mp3 file exists on disk.
-        # Checking os.path.exists ensures we regenerate when astro build wiped docs/.
+        # Skip if hash matches the sidecar AND the mp3 exists in audio/ (permanent store).
         if audio_hashes.get(folder) == txt_hash and os.path.exists(mp3_path):
             print(f"Skipping {folder} (content unchanged)")
-            continue
+        else:
+            print(f"Generating audio for {folder}...")
 
-        print(f"Generating audio for {folder}...")
+            if model is None:
+                print("Loading KittenTTS model (kitten-tts-mini-0.8)...")
+                model = KittenTTS(_resolve_model("KittenML/kitten-tts-mini-0.8"))
 
-        if model is None:
-            print("Loading KittenTTS model (kitten-tts-mini-0.8)...")
-            model = KittenTTS(_resolve_model("KittenML/kitten-tts-mini-0.8"))
+            audio_chunks = []
+            for chunk in _split_text_for_tts(text):
+                # Skip chunks with no real word content — URLs, punctuation-only
+                # lines, or code remnants produce no phonemes and cause KittenTTS
+                # to return an empty array, crashing numpy.concatenate.
+                if not any(c.isalpha() for c in chunk):
+                    continue
+                try:
+                    result = model.generate(chunk, voice="Hugo", clean_text=True)
+                    if result is not None and result.size > 0:
+                        audio_chunks.append(result)
+                except Exception as e:
+                    print(f"  Warning: skipping chunk ({e!r}): {chunk[:60]!r}")
 
-        audio_chunks = []
-        for chunk in _split_text_for_tts(text):
-            # Skip chunks with no real word content — URLs, punctuation-only
-            # lines, or code remnants produce no phonemes and cause KittenTTS
-            # to return an empty array, crashing numpy.concatenate.
-            if not any(c.isalpha() for c in chunk):
+            if not audio_chunks:
+                print(f"  Warning: no audio generated for {folder}, skipping.")
                 continue
-            try:
-                result = model.generate(chunk, voice="Hugo", clean_text=True)
-                if result is not None and result.size > 0:
-                    audio_chunks.append(result)
-            except Exception as e:
-                print(f"  Warning: skipping chunk ({e!r}): {chunk[:60]!r}")
 
-        if not audio_chunks:
-            print(f"  Warning: no audio generated for {folder}, skipping.")
-            continue
+            audio = numpy.concatenate(audio_chunks, axis=-1)
 
-        audio = numpy.concatenate(audio_chunks, axis=-1)
+            buf = io.BytesIO()
+            sf.write(buf, audio, 24000, format="WAV")
+            buf.seek(0)
+            os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
+            _wav_to_mp3(buf, mp3_path)
 
-        buf = io.BytesIO()
-        sf.write(buf, audio, 24000, format="WAV")
-        buf.seek(0)
-        _wav_to_mp3(buf, mp3_path)
-
-        size = os.path.getsize(mp3_path)
-        updates[folder] = {"length": size, "hash": txt_hash}
-        print(f"  -> {mp3_path} ({size:,} bytes)")
+            size = os.path.getsize(mp3_path)
+            updates[folder] = {"length": size, "hash": txt_hash}
+            print(f"  -> {mp3_path} ({size:,} bytes)")
 
     if updates:
         _patch_rss_audio(updates, RSS_PATH)
         _patch_sitemap_audio(updates, "docs/sitemap-0.xml")
-        _patch_html_audio(updates, "docs")
-        # Persist hashes to sidecar so the next build can skip unchanged posts
-        # even after astro build wipes docs/ and its rss.xml.
+        # Persist hashes so the next build can skip unchanged posts.
         _save_audio_hashes({slug: info["hash"] for slug, info in updates.items()})
         print(
-            f"Patched {len(updates)} post(s): rss.xml, sitemap-0.xml, index.html, audio-hashes.json"
+            f"Patched {len(updates)} post(s): rss.xml, sitemap-0.xml, audio-hashes.json"
         )
     else:
-        print("Nothing to generate.")
+        print("Nothing to generate — copied existing audio to docs/.")
 
 
 if __name__ == "__main__":
