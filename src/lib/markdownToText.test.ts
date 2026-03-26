@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { markdownToText, byteLength } from './markdownToText';
+import { markdownToText, markdownToTTSPlainText, markdownToPlainText, byteLength } from './markdownToText';
 
 describe('markdownToText', () => {
   describe('links', () => {
@@ -210,6 +210,123 @@ See [the docs](https://example.com) for more.`;
       expect(result).not.toContain('const x');
       expect(result).toContain('A wise quote.');
       expect(result).toContain('the docs (https://example.com)');
+    });
+  });
+});
+
+describe('markdownToTTSPlainText', () => {
+  describe('code blocks', () => {
+    it('removes fenced code block entirely', () => {
+      const input = 'before\n```\nconst x = 1;\n```\nafter';
+      expect(markdownToTTSPlainText(input)).toBe('before\n\nafter');
+    });
+
+    it('removes fenced code block with language tag', () => {
+      const input = 'before\n```typescript\nconst x = 1;\n```\nafter';
+      expect(markdownToTTSPlainText(input)).toBe('before\n\nafter');
+    });
+
+    it('keeps inline code text, strips backticks', () => {
+      expect(markdownToTTSPlainText('Run `PowerOnState 0` to set state')).toBe(
+        'Run PowerOnState 0 to set state'
+      );
+    });
+
+    it('keeps multiple inline code spans', () => {
+      expect(markdownToTTSPlainText('Set `Timezone -8` and run `time`')).toBe(
+        'Set Timezone -8 and run time'
+      );
+    });
+
+    it('inline code in a list item keeps text', () => {
+      expect(markdownToTTSPlainText('- Run `STATUS 7` to check status')).toBe(
+        '- Run STATUS 7 to check status'
+      );
+    });
+  });
+
+  describe('prose rules work the same as markdownToText', () => {
+    it('strips headings', () => {
+      expect(markdownToTTSPlainText('## Setup Time')).toBe('Setup Time');
+    });
+
+    it('strips bold', () => {
+      expect(markdownToTTSPlainText('**important**')).toBe('important');
+    });
+
+    it('converts links', () => {
+      expect(markdownToTTSPlainText('[docs](https://example.com)')).toBe(
+        'docs (https://example.com)'
+      );
+    });
+
+    it('normalizes list items', () => {
+      expect(markdownToTTSPlainText('* item')).toBe('- item');
+    });
+
+    it('removes blockquote markers', () => {
+      expect(markdownToTTSPlainText('> A quote')).toBe('A quote');
+    });
+  });
+});
+
+describe('markdownToPlainText', () => {
+  describe('code blocks', () => {
+    it('strips fenced code markers but keeps code content', () => {
+      const input = 'before\n```\nconst x = 1;\n```\nafter';
+      expect(markdownToPlainText(input)).toBe('before\nconst x = 1;\n\nafter');
+    });
+
+    it('strips fenced code markers with language tag but keeps code content', () => {
+      const input = 'before\n```typescript\nconst x = 1;\n```\nafter';
+      expect(markdownToPlainText(input)).toBe('before\nconst x = 1;\n\nafter');
+    });
+
+    it('strips fenced code markers for multi-line code block', () => {
+      const input = 'before\n```\nline one\nline two\n```\nafter';
+      expect(markdownToPlainText(input)).toBe('before\nline one\nline two\n\nafter');
+    });
+
+    it('keeps inline code text, strips backticks', () => {
+      expect(markdownToPlainText('Use `npm install` to install')).toBe(
+        'Use npm install to install'
+      );
+    });
+
+    it('keeps multiple inline code spans', () => {
+      expect(markdownToPlainText('Set `Timezone -8` and run `time`')).toBe(
+        'Set Timezone -8 and run time'
+      );
+    });
+
+    it('inline code in a list item keeps text and command', () => {
+      expect(markdownToPlainText('- Run `STATUS 7` to check status')).toBe(
+        '- Run STATUS 7 to check status'
+      );
+    });
+  });
+
+  describe('prose rules work the same as markdownToText', () => {
+    it('strips headings', () => {
+      expect(markdownToPlainText('## Setup Time')).toBe('Setup Time');
+    });
+
+    it('strips bold', () => {
+      expect(markdownToPlainText('**important**')).toBe('important');
+    });
+
+    it('converts links', () => {
+      expect(markdownToPlainText('[docs](https://example.com)')).toBe(
+        'docs (https://example.com)'
+      );
+    });
+
+    it('normalizes list items', () => {
+      expect(markdownToPlainText('* item')).toBe('- item');
+    });
+
+    it('removes blockquote markers', () => {
+      expect(markdownToPlainText('> A quote')).toBe('A quote');
     });
   });
 });

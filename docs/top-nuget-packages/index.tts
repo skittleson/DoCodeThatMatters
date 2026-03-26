@@ -1,0 +1,72 @@
+Using these nuget projects consistently in most projects I'm building.  See the examples in the details for usage.
+
+FluentValidation
+
+    Install-Package FluentValidation
+
+<details>
+<summary>Doing user input validation can be tedious. This makes it less so.</summary>
+</details>
+
+GitHub reference (https://github.com/FluentValidation/FluentValidation)
+
+Microsoft.Extensions.DependencyInjection
+
+    Install-Package Microsoft.Extensions.DependencyInjection
+
+<details>
+<summary>
+Dependency injection aka inversion of control is a popular pattern.  Lately I've stuck with the Microsoft version as it integrates nicely with ASP.net and fairly simple. Unit testing becomes easier since the interfaces can be mocked.
+</summary>
+<br/>
+
+In this example, a service collection is created using interfaces with corresponding  concrete implementation.  Then one service is used within a scope.
+</details>
+
+Usage reference (https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection-usage)
+
+Easy.Common
+
+    Install-Package Easy.Common
+
+<details>
+<summary>Have you ever tried counting lines of a very large file? If not, it can get complicated quick.</summary>
+
+    
+
+</details>
+
+There are other useful extensions. GitHub reference (https://github.com/NimaAra/Easy.Common)
+
+Xunit, Moq, AutoMoq
+
+    Install-Package xunit
+    Install-Package Moq 
+    Install-Package AutoFixture.AutoMoq
+<details>
+<summary>Example of mocking </summary>
+</details>
+Xunit getting started (https://xunit.net/docs/getting-started/netcore/cmdline)
+https://www.developerhandbook.com/unit-testing/writing-unit-tests-with-nunit-and-moq/#:~:text=Moq%20provides%20you%20methods%20to%20confirm%20that%20particular,was%20called%20a%20particular%20number%20of%20times.%20
+Polly
+
+    Install-Package Polly
+
+<details>
+<summary>Need retry logic?  Exponential back off? This project solves the problems easily with tons of of extensions!</summary>
+</details>
+
+ GitHub reference (https://github.com/App-vNext/Polly)
+Honorable mentions
+
+- LambdaSharp (https://lambdasharp.net) - deploy to AWS lambda and resources easier and safer.
+- PubSub (https://github.com/upta/pubsub) - publish and subscribe pattern
+- M2MqttDotnetCore (https://github.com/mohaqeq/paho.mqtt.m2mqtt) - MQTT client
+- SynthesizerAudio (https://www.nuget.org/packages/SynthesizerAudio/) - Synthesize text to speech
+- Microsoft.OpenApi (https://github.com/Microsoft/OpenAPI.NET) - like swagger but better
+- Microsoft.IdentityModel.Tokens / System.IdentityModel.Tokens.Jwt (https://docs.microsoft.com/en-us/dotnet/api/system.identitymodel.tokens.jwt?view=azure-dotnet)  Working with JWTs.  Not easiest to read but essential for understanding how to use them.
+- Refit (https://github.com/reactiveui/refit) - safe type REST library
+- S22.Imap.Core (https://www.nuget.org/packages/S22.Imap.Core/) - Interacting with email via IMAP.  The library is simple and ease to use.
+- Microsoft.Extensions.Caching.Memory (https://docs.microsoft.com/en-us/dotnet/core/extensions/caching) - caching safely
+- EmbedIO (https://github.com/unosquare/embedio) - Cross platform HTTP / WebSocket server.
+- Watson (https://github.com/jchristn/WatsonWebserver) - Cross platform HTTP server.  Has attribute routing as well.

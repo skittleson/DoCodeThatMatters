@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && python main.py",
+    "build": "astro build && uv run python main.py",
     "preview": "astro preview",
     "compress": "imagemin src/images/* --out-dir=src/images"
   },

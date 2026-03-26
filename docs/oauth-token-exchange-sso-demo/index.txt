@@ -1,8 +1,13 @@
-I was building a service that needed to call another internal API on behalf of a logged-in user. Standard microservice problem. I had Authentik running already so I went looking for RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693) token exchange support. It is not there for Authentik. Instead is JWT authentication (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication) which is a legitimate M2M pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
+I was building a service that needed to call another internal API on behalf of a logged-in user.  This is a standard issue where services need to talk to each other was that user. I had Authentik running already so I went looking for RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693) token exchange support which is not supported! Instead it is JWT authentication (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication) which is a legitimate machine-to-machine pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
 
 I built a demo repo (https://github.com/skittleson/IdentityExchangeAppsDemo) that runs both approaches side by side - Keycloak with native RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693), and Authentik with the JWT federation workaround - so you can see exactly where they diverge.
 
 The Use Case
+
+User logs into App A
+  └─ App A wants to show: how many todos does this user have in App B?
+       └─ App A calls App B /api/todos/count -- server to server
+            └─ App B needs to know: who is this request for?
 App A cannot just forward the user's token. It has aud: app-a. App B will reject it. You cannot mint a new token yourself - that defeats the whole point of a trusted identity provider.
 
 You need the IdP to issue a new token for App B, carrying the original user's sub.
@@ -12,6 +17,14 @@ Option A - Authentik (JWT Authentication)
 Authentik does not implement RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693). What it does offer is JWT authentication (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication) (RFC 7523 (https://datatracker.ietf.org/doc/html/rfc7523) client assertion), which lets one service prove it is who it says it is using a signed JWT as the client_assertion.
 
 App A posts to the token endpoint using client_credentials with the user's access token as the assertion (app-a/server.js#L212-L217 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-a/server.js#L212-L217)):
+
+const params = new URLSearchParams({
+  granttype: 'clientcredentials',
+  clientid: APPBCLIENTID,
+  clientassertiontype: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
+  client_assertion: accessToken,
+  scope: 'openid profile email onbehalfof_sub',
+});
 One note on the client_assertion field: RFC 7523 (https://datatracker.ietf.org/doc/html/rfc7523) normally expects a JWT signed by the client's own private key, not a user's access token. Authentik's federated provider feature accepts the user's access token here because it trusts the issuer, not because this is standard RFC 7523 client authentication. It works, but it is Authentik-specific behavior.
 
 Authentik verifies App A's token comes from a trusted federated provider, then issues a new token with aud: app-b.
@@ -19,6 +32,13 @@ Authentik verifies App A's token comes from a trusted federated provider, then i
 The problem: the issued token's sub is not the user. It is a service account - something like ak-App-A-Provider-client_credentials. Authentik has no mechanism in this grant path to forward the original user's identity into the token.
 
 So App A passes the user identity separately when calling App B (app-a/server.js#L209-L217 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-a/server.js#L209-L217)):
+
+const countRes = await fetch(${APPBINTERNAL_URL}/api/todos/count, {
+  headers: {
+    'Authorization': Bearer ${exchangedToken},
+    'X-User-Sub': req.user.sub,  // user identity sent out-of-band
+  },
+});
 App B trusts X-User-Sub because the bearer token proves the caller is App A's server. That trust is implicit, not cryptographic. A bug or compromise in App A could cause App B to return another user's data. The user identity is not bound to the token - it is just a header anyone with App A's credentials could fabricate.
 
 The concrete risk: if App A is ever compromised (a dependency vulnerability, a leaked secret, a misconfigured env var) an attacker can call App B as any user in the system. The IdP has no knowledge of who the request is "for." App A decides that, and App B trusts it. With the Keycloak path, the IdP is the one asserting the user's identity in the token. App A cannot forge that claim even if it is fully compromised.
@@ -35,6 +55,16 @@ Option B - Keycloak (RFC 8693)
 Keycloak has supported RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693) token exchange natively since version 12. The grant type is urn:ietf:params:oauth:grant-type:token-exchange.
 
 App A posts the user's access token as the subject_token and asks for a new one scoped to App B (app-a/server.js#L168-L185 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-a/server.js#L168-L185)):
+
+const params = new URLSearchParams({
+  grant_type: 'urn:ietf:params:oauth:grant-type:token-exchange',
+  clientid: process.env.CLIENTID,
+  clientsecret: process.env.CLIENTSECRET,
+  subject_token: accessToken,
+  subjecttokentype: 'urn:ietf:params:oauth:token-type:access_token',
+  audience: APPBCLIENT_ID,
+  requestedtokentype: 'urn:ietf:params:oauth:token-type:access_token',
+});
 Keycloak validates the subject_token, checks the exchange policy, and issues a new token with:
 
 - aud: app-b
@@ -42,6 +72,11 @@ Keycloak validates the subject_token, checks the exchange policy, and issues a n
 - azp: app-a - records who performed the exchange
 
 With the user's sub already in the token, App A calls App B with no extra header (app-a/server.js#L188-L196 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-a/server.js#L188-L196)):
+
+const countRes = await fetch(${APPBINTERNAL_URL}/api/todos/count, {
+  headers: { 'Authorization': Bearer ${exchangedToken} },
+  // no X-User-Sub needed -- sub is in the token itself
+});
 App B validates the token's audience and reads sub directly from it. No extra header. No implicit trust. The user identity is cryptographically bound.
 
 <details>
@@ -54,10 +89,52 @@ App B validates the token's audience and reads sub directly from it. No extra he
 On the App B Side
 
 App B enforces a strict audience check on every service-to-service call via requireServiceAuth (app-b/server.js#L88-L102 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-b/server.js#L88-L102)):
+
+const { payload } = await jwtVerify(token, JWKS, {
+  issuer: discoveredIssuer,
+  audience: process.env.CLIENT_ID,  // rejects any token not scoped to app-b
+});
 Then the /api/todos/count handler branches on IDP_TYPE to get the user identity from the right place (app-b/server.js#L162-L175 (https://github.com/skittleson/IdentityExchangeAppsDemo/blob/main/app-b/server.js#L162-L175)):
+
+if (IDP_TYPE === 'keycloak') {
+  onBehalfOf = req.user.sub;         // sub is in the validated token
+} else {
+  onBehalfOf = req.headers['x-user-sub'];  // trusted only because aud check passed
+}
 This is where the security models visibly diverge. Keycloak: identity comes from the token. Authentik: identity comes from a header App A set.
 
 The Key Difference
+
+sequenceDiagram
+    autonumber
+    actor U as User
+    participant A as App A
+    participant IdP as Identity Provider
+    participant B as App B
+
+    U->>A: Login
+    A->>IdP: Authenticate user
+    IdP-->>A: User Access Token (sub: user, aud: app-a)
+
+    Note over A,B: User requests data from App B
+
+    rect rgb(255, 230, 200)
+        Note over A,IdP: Authentik — client_credentials fallback
+        A->>IdP: clientcredentials + clientassertion (user AT as JWT)
+        Note right of IdP: No user context in this grant
+        IdP-->>A: M2M Token (sub: service-account-a, aud: app-b)
+        A->>B: Bearer M2M Token + X-User-Sub header
+        Note right of B: Implicit trust — B trusts the header because A is authenticated
+    end
+
+    rect rgb(200, 255, 200)
+        Note over A,IdP: Keycloak — RFC 8693 token exchange
+        A->>IdP: token-exchange, subject_token: user AT, audience: app-b
+        Note right of IdP: Validates delegation policy
+        IdP-->>A: Delegated Token (sub: user, aud: app-b, azp: app-a)
+        A->>B: Bearer Delegated Token only
+        Note right of B: Cryptographic trust — sub and azp verified from token
+    end
 | IdP       | Grant Type                    | RFC 8693 | Identity Chain  |
 |-----------|-------------------------------|----------|-----------------|
 | Authentik | client_credentials (RFC 7523 (https://datatracker.ietf.org/doc/html/rfc7523) client assertion) | No | Broken — requires manual X-User-Sub header |
@@ -68,7 +145,17 @@ With Authentik, you are trusting App A to tell the truth about who the user is. 
 Running It
 
 Clone the repo, copy the env file, pick a stack:
+
+git clone https://github.com/skittleson/IdentityExchangeAppsDemo
+cd IdentityExchangeAppsDemo
+cp .env.example .env
+
+Keycloak (RFC 8693)
+docker compose -f docker-compose.keycloak.yml up -d
 Add these to /etc/hosts first (both stacks use port 9000):
+
+127.0.0.1 authentik
+127.0.0.1 keycloak
 Wait ~30 seconds for Keycloak to initialize. Then:
 
 - App A: http://localhost:3993 (login here)
@@ -93,13 +180,3 @@ References
 - Keycloak Token Exchange docs (https://www.keycloak.org/docs/latest/securingapps/#token-exchange)
 - Authentik JWT Authentication docs (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication)
 - Demo repo - skittleson/IdentityExchangeAppsDemo (https://github.com/skittleson/IdentityExchangeAppsDemo)
-
-<!--
-HN SUBMISSION -- copy/paste when posting
-
-TITLE:
-I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.
-
-SHOW HN COMMENT BODY:
-I was wiring up two OIDC apps to share a user's identity server to server and discovered that Authentik (which I was already running) does not implement RFC 8693 token exchange at all. The workaround it offers (JWT federation + an X-User-Sub header) works, but it shifts trust to the calling service: a compromised App A can claim to be any user when calling App B. With Keycloak's native RFC 8693 support, the IdP asserts the user's identity in the token itself, so App A cannot forge that even if it is fully compromised. I built a Docker demo that runs both side by side so you can see exactly where the security models diverge. Curious if others have hit this and what they ended up choosing.
--->

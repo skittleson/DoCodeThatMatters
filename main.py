@@ -114,7 +114,7 @@ def _patch_rss_audio(updates, rss_path="docs/rss.xml"):
         # Infer base URL from the existing text enclosure
         txt_enclosure = item.find("enclosure", attrs={"type": "text/plain"})
         if txt_enclosure:
-            base_url = txt_enclosure["url"].rsplit("/", 2)[0]  # strip /<slug>/index.txt
+            base_url = txt_enclosure["url"].rsplit("/", 2)[0]  # strip /<slug>/index.tts
         else:
             base_url = ""
 
@@ -137,6 +137,117 @@ def _patch_rss_audio(updates, rss_path="docs/rss.xml"):
 
     with open(rss_path, "w", encoding="utf-8") as f:
         f.write(str(soup))
+
+
+def _patch_sitemap_audio(updates, sitemap_path="docs/sitemap-0.xml"):
+    """
+    For each slug in `updates` ({ slug: { 'length': int, 'hash': str } }),
+    add a <url> entry for the .mp3 file to docs/sitemap-0.xml if one does
+    not already exist.  Base URL is inferred from existing <loc> entries.
+    """
+    if not os.path.exists(sitemap_path):
+        return
+
+    with open(sitemap_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    soup = BeautifulSoup(content, "xml")
+
+    # Infer base URL (scheme + host) from the first existing <loc>
+    from urllib.parse import urlparse
+
+    first_loc = soup.find("loc")
+    if not first_loc:
+        return
+    parsed = urlparse(first_loc.get_text(strip=True))
+    base_url = f"{parsed.scheme}://{parsed.netloc}"
+
+    # Collect already-present MP3 URLs so we don't duplicate
+    existing_locs = {loc.get_text(strip=True) for loc in soup.find_all("loc")}
+
+    urlset = soup.find("urlset")
+    if not urlset:
+        return
+
+    for slug in updates:
+        mp3_url = f"{base_url}/{slug}/index.mp3"
+        if mp3_url in existing_locs:
+            continue
+
+        url_tag = soup.new_tag("url")
+        loc_tag = soup.new_tag("loc")
+        loc_tag.string = mp3_url
+        changefreq_tag = soup.new_tag("changefreq")
+        changefreq_tag.string = "monthly"
+        priority_tag = soup.new_tag("priority")
+        priority_tag.string = "0.5"
+        url_tag.append(loc_tag)
+        url_tag.append(changefreq_tag)
+        url_tag.append(priority_tag)
+        urlset.append(url_tag)
+        existing_locs.add(mp3_url)
+
+    with open(sitemap_path, "w", encoding="utf-8") as f:
+        f.write(str(soup))
+
+
+def _patch_html_audio(updates, docs_dir="docs"):
+    """
+    For each slug in `updates`, inject an <audio> player + download link
+    into docs/<slug>/index.html immediately before the closing </article> tag.
+
+    If a <div class="audio-player"> already exists in the article it is
+    replaced, making this call idempotent.
+    """
+    for slug in updates:
+        html_path = os.path.join(docs_dir, slug, "index.html")
+        if not os.path.exists(html_path):
+            continue
+
+        with open(html_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        soup = BeautifulSoup(content, "html.parser")
+
+        article = soup.find("article")
+        if not article:
+            continue
+
+        # Remove existing audio player if present (idempotent)
+        existing = article.find("div", class_="audio-player")
+        if existing:
+            existing.decompose()
+
+        mp3_url = f"/{slug}/index.mp3"
+
+        # Build the player markup
+        wrapper = soup.new_tag("div", attrs={"class": "audio-player mt-6"})
+
+        audio_tag = soup.new_tag(
+            "audio",
+            controls=True,
+            preload="metadata",
+            src=mp3_url,
+            attrs={"class": "w-full"},
+        )
+        audio_tag.string = "Your browser does not support the audio element."
+
+        download_tag = soup.new_tag(
+            "a",
+            href=mp3_url,
+            download=True,
+            attrs={
+                "class": "text-xs text-[#9da2ff] hover:underline font-mono mt-1 inline-block"
+            },
+        )
+        download_tag.string = "Download audio"
+
+        wrapper.append(audio_tag)
+        wrapper.append(download_tag)
+        article.append(wrapper)
+
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(str(soup))
 
 
 def _resolve_model(repo_id):
@@ -211,18 +322,50 @@ def _wav_to_mp3(wav_buf, mp3_path):
         os.unlink(tmp_path)
 
 
+AUDIO_HASHES_PATH = "audio-hashes.json"
+
+
+def _load_audio_hashes(path=AUDIO_HASHES_PATH):
+    """
+    Load the sidecar audio-hashes.json file.
+    Returns a dict of { slug: sha256_hash_of_index_txt } or {} if not found.
+    This file lives outside docs/ so astro build cannot delete it.
+    """
+    import json
+
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _save_audio_hashes(hashes, path=AUDIO_HASHES_PATH):
+    """
+    Persist the audio-hashes.json sidecar file.
+    Merges `hashes` into any existing entries so unmodified slugs are retained.
+    """
+    import json
+
+    existing = _load_audio_hashes(path)
+    existing.update(hashes)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(existing, f, indent=2, sort_keys=True)
+        f.write("\n")
+
+
 def text_to_speech_on_plain_text(slug_filter=None):
     """
-    For each docs/<slug>/index.txt, generate docs/<slug>/index.mp3 using
+    For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using
     KittenTTS kitten-tts-mini (80M, best quality) with Hugo voice.
 
-    Skip regeneration if the SHA-256 hash of index.txt matches the hash
-    stored in the <enclosure type="audio/mpeg" hash="..."> attribute in
-    docs/rss.xml (written by the previous run of this script).
+    Skip regeneration if BOTH conditions are true:
+      - The SHA-256 hash of index.tts matches the hash stored in
+        audio-hashes.json (a sidecar file that survives astro build wiping docs/)
+      - docs/<slug>/index.mp3 already exists on disk
 
     After processing, patches docs/rss.xml in-place to inject or update
     <enclosure type="audio/mpeg" url="..." length="..." hash="..." />
-    for every post that was (re)generated.
+    for every post that was (re)generated, and writes audio-hashes.json.
 
     Args:
         slug_filter: if set, only process the post with this slug name.
@@ -232,8 +375,8 @@ def text_to_speech_on_plain_text(slug_filter=None):
 
     RSS_PATH = "docs/rss.xml"
 
-    # Read existing audio enclosures from rss.xml — { slug: { hash, length } }
-    rss_audio = _load_rss_audio(RSS_PATH)
+    # Load persisted hashes from sidecar — survives astro build wiping docs/
+    audio_hashes = _load_audio_hashes()
 
     model = None  # lazy-load — only instantiate if something needs generating
     updates = {}  # slugs that were (re)generated this run: { slug: { length, hash } }
@@ -243,7 +386,7 @@ def text_to_speech_on_plain_text(slug_filter=None):
         if "." in folder:
             continue
 
-        txt_path = f"docs/{folder}/index.txt"
+        txt_path = f"docs/{folder}/index.tts"
         mp3_path = f"docs/{folder}/index.mp3"
 
         if not os.path.exists(txt_path):
@@ -261,8 +404,9 @@ def text_to_speech_on_plain_text(slug_filter=None):
 
         txt_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-        # Skip if the hash in rss.xml matches — content unchanged
-        if rss_audio.get(folder, {}).get("hash") == txt_hash:
+        # Skip if hash matches the sidecar AND the mp3 file exists on disk.
+        # Checking os.path.exists ensures we regenerate when astro build wiped docs/.
+        if audio_hashes.get(folder) == txt_hash and os.path.exists(mp3_path):
             print(f"Skipping {folder} (content unchanged)")
             continue
 
@@ -303,7 +447,14 @@ def text_to_speech_on_plain_text(slug_filter=None):
 
     if updates:
         _patch_rss_audio(updates, RSS_PATH)
-        print(f"Patched {RSS_PATH} with {len(updates)} audio enclosure(s)")
+        _patch_sitemap_audio(updates, "docs/sitemap-0.xml")
+        _patch_html_audio(updates, "docs")
+        # Persist hashes to sidecar so the next build can skip unchanged posts
+        # even after astro build wipes docs/ and its rss.xml.
+        _save_audio_hashes({slug: info["hash"] for slug, info in updates.items()})
+        print(
+            f"Patched {len(updates)} post(s): rss.xml, sitemap-0.xml, index.html, audio-hashes.json"
+        )
     else:
         print("Nothing to generate.")
 

@@ -5,6 +5,15 @@ Wrote the GIST for myself but I had enough requests to share it in a blog post. 
 Request from a frontend source
 
 Add this to the frontend index.html (or anywhere a form will be sent from). Replace the reCAPTCHAsite_key with a real one.
+
+<script src="https://www.google.com/recaptcha/api.js?render=reCAPTCHAsite_key"></script>
+<script>
+  grecaptcha.ready(function() {
+      grecaptcha.execute('reCAPTCHAsitekey', {action: 'homepage'}).then(function(token) {
+      ...
+      });
+  });
+</script>
 Docs: <https://developers.google.com/recaptcha/docs/v3>
 
 Backend Setup

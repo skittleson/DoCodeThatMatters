@@ -12,42 +12,60 @@
                  U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@theme {
-  --color-accent: #9da2ff;
-  --color-bg: #232b32;
+/* ─── Design tokens ─────────────────────────────────────────── */
+
+:root {
+  /* Dark theme (default) */
+  --color-bg: #1a2129;
+  --color-surface: #232b32;
   --color-text: #f5f5f5;
-  --font-family-mono: "Inconsolata", monospace;
+  --color-text-muted: #a0aec0;
+  --color-accent: #9da2ff;
+  --color-accent-hover: #b8bcff;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-code-bg: #000000;
+  --color-code-inline-bg: rgba(255, 255, 255, 0.1);
 }
 
-@layer base {
-  :root {
-    --main-highlight-color: #9da2ff;
-    --main-text-color: #f5f5f5;
-  }
+[data-theme="light"] {
+  --color-bg: #f9f9f7;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-accent: #4f46e5;
+  --color-accent-hover: #3730a3;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-code-bg: #f4f4f5;
+  --color-code-inline-bg: rgba(0, 0, 0, 0.07);
+}
 
+/* ─── Base ──────────────────────────────────────────────────── */
+
+@layer base {
   html,
   body {
-    background-color: #232b32;
-    color: #f5f5f5;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     font-family: "Inconsolata", monospace;
     min-height: 100%;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
   a {
-    color: #9da2ff;
+    color: var(--color-accent);
   }
 
   a:hover {
-    color: #b8bcff;
+    color: var(--color-accent-hover);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: "Inconsolata", monospace;
-    color: #f5f5f5;
+    color: var(--color-text);
   }
 
   h2 a {
-    color: #9da2ff;
+    color: var(--color-accent);
   }
 
   img {
@@ -57,38 +75,40 @@
   }
 
   hr {
-    border-color: #f5f5f5;
-    opacity: 0.3;
+    border-color: var(--color-border);
+    opacity: 1;
   }
 }
 
-/* Prose (typography plugin) overrides for dark theme */
+/* ─── Prose (typography plugin) ─────────────────────────────── */
+
 .prose {
-  --tw-prose-body: #f5f5f5;
-  --tw-prose-headings: #f5f5f5;
-  --tw-prose-lead: #f5f5f5;
-  --tw-prose-links: #9da2ff;
-  --tw-prose-bold: #f5f5f5;
-  --tw-prose-counters: #f5f5f5;
-  --tw-prose-bullets: #9da2ff;
-  --tw-prose-hr: rgba(245, 245, 245, 0.3);
-  --tw-prose-quotes: #f5f5f5;
-  --tw-prose-quote-borders: #9da2ff;
-  --tw-prose-captions: #a0aec0;
-  --tw-prose-code: #f5f5f5;
-  --tw-prose-pre-code: #f5f5f5;
-  --tw-prose-pre-bg: #000;
-  --tw-prose-th-borders: rgba(245, 245, 245, 0.3);
-  --tw-prose-td-borders: rgba(245, 245, 245, 0.2);
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-text);
+  --tw-prose-lead: var(--color-text);
+  --tw-prose-links: var(--color-accent);
+  --tw-prose-bold: var(--color-text);
+  --tw-prose-counters: var(--color-text);
+  --tw-prose-bullets: var(--color-accent);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-text);
+  --tw-prose-quote-borders: var(--color-accent);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-code: var(--color-text);
+  --tw-prose-pre-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-code-bg);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
   max-width: none;
+  line-height: 1.75;
 }
 
 .prose pre {
-  background-color: #000 !important;
+  background-color: var(--color-code-bg) !important;
 }
 
 .prose code {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-code-inline-bg);
   padding: 0.1em 0.3em;
   border-radius: 3px;
   font-size: 0.9em;
@@ -99,9 +119,29 @@
   padding: 0;
 }
 
-/* Shiki code block */
+/* ─── Shiki dual-theme ──────────────────────────────────────── */
+
+/* Dark theme: show dark variant, hide light */
+:root .astro-code,
+:root .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* Light theme: show light variant */
+[data-theme="light"] .astro-code,
+[data-theme="light"] .astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
 .astro-code {
-  background-color: #000 !important;
   border-radius: 6px;
   padding: 1em;
   overflow-x: auto;

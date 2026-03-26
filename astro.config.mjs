@@ -3,6 +3,14 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { EnumChangefreq } from 'sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const oneDarkProAccessible = JSON.parse(
+  readFileSync(join(__dirname, 'src/styles/one-dark-pro-accessible.json'), 'utf-8')
+);
 
 export default defineConfig({
   site: 'https://docodethatmatters.com',
@@ -37,7 +45,10 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: 'one-dark-pro',
+      themes: {
+        dark: oneDarkProAccessible,
+        light: 'github-light',
+      },
       wrap: true,
     },
   },

@@ -13,6 +13,20 @@ Get Bluetooth LE Devices with RSSI values:
 btmgmt find
 
 Response:
+
+    hci0 devfound: <SOMEMAC> type LE Random rssi -92 flags 0x0000
+    AD flags 0x1a
+    eir_len 14
+    hci0 devfound: <SOMEMAC> type LE Random rssi -97 flags 0x0000
+    AD flags 0x1a
+    eir_len 18
+    hci0 devfound: <SOMEMAC> type LE Random rssi -77 flags 0x0000
+    AD flags 0x06
+    name N016Y
+    hci0 devfound: <SOMEMAC> type LE Public rssi -100 flags 0x0004
+    AD flags 0x00
+    eir_len 28
+    hci0 devfound: <SOMEMAC> type LE Random rssi -94 flags 0x0000
 Ping bluetooth enable device without pairing:
 
 l2ping -c 3 <MAC>
@@ -37,6 +51,10 @@ Attempt connection then get RSSI value:
 hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>
 
 Response:
+
+Connections:
+        < ACL <MAC> handle 12 state 7 lm MASTER
+RSSI return value: -4
 This attempts to connect which doesn't work but the RSSI value is now present for device.
 
 Attempt to get RSSI value without trying to connect to device:

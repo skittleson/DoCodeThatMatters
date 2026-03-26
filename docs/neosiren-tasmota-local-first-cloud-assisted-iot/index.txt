@@ -52,6 +52,7 @@ Tasmota Console Commands
 | TuyaSend2 113,0                                 | Disable temperature alarm. Do with a rule instead  |
 | TuyaSend2 114,0                                 | Disable humidity alarm. Do with a rule instead     |
 All of this assumes there is a MQTT configured.  The temperature and humidity data wont show unless this is configured.  To undo this, use SetOption66 0. Optional, ensure dpId states were set by running TuyaSend0. Now that everything is hooked up, the data will be polled and reported every so often.  The caveat is not always temperature and humidity.  This must be accounted for later.
+01:42:21.463 MQT: tele/tasmota_111111/SENSOR = {"Time":"2021-04-08T01:42:21","TuyaSNS":{"Temperature":28.5,"Humidity":4.3},"TempUnit":"C"}
 !Tasmota Web UI with Tuya temperature, humidity, and siren led power toggle (/images/finalResultOfTasmotaUi.png)
 
 I've also considered using rules to catch the Tuya event then publish the MQTT in that rule.
@@ -61,6 +62,24 @@ NodeRed and other smart logic
 Setup a MQTT node with tele/tasmota_REPLACEWITHID/SENSOR in NodeRed. Replace the MQTT ID from the Tasmota information screen (Information > MQTT Full Topic).
 
 Add a function node that can handle temperature and/or humidity being undefined.  Optional to add information such as measurement for Graphana.
+
+msg.measurement = 'siren-tv';
+try {
+    var payload = JSON.parse(msg.payload);
+    if(payload.TuyaSNS){
+        msg.payload = {};
+        if(payload.TuyaSNS.Temperature){
+            msg.payload.Temperature = payload.TuyaSNS.Temperature;
+        }
+        if(payload.TuyaSNS.Humidity){
+            msg.payload.Humidity = payload.TuyaSNS.Humidity * 10;
+        }
+    }
+} catch(ex) {
+    node.error("unable to get temp and humidity", msg);
+    return;
+}
+return msg;
 To turn on the siren remotely. Send either ON or OFF to the MQTT topic cmnd/tasmotaREPLACEWITHID/POWER A return MQTT message returns with stat/tasmotaREPLACEWITHID/POWER
 
 Resources

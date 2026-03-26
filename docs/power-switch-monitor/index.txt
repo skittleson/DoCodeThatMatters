@@ -76,6 +76,16 @@ Rule2 ON analog#a0<1000 DO Backlog Rule1 1; Rule2 0; Publish cmnd/masterlight/SW
 Enable rule 1: Rule1 1
 
 Ensure you have MQTT enable then look at the console for messages similar to this:
+
+01:39:26 MQT: stat/tasmota_A61989/POWER1 = ON
+01:39:26 RUL: POWER1#STATE=1 performs "Backlog Delay 10; Power1 0"
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {"Delay":10}
+01:39:26 RUL: SWITCH2#STATE performs "Publish cmnd/garagedoor/SWITCH 0"
+01:39:26 MQT: cmnd/garagedoor/SWITCH = 0
+01:39:26 MQT: stat/tasmota_A61989/RESULT = {"POWER1":"OFF"}
+01:39:26 MQT: stat/tasmota_A61989/POWER1 = OFF
+1:40:11 MQT: tele/tasmota_A61989/STATE = {"Time":"2020-06-26T01:40:11","Uptime":"6T03:00:30","UptimeSec":529230,"Heap":23,"SleepMode":"Dynamic","Sleep":50,"LoadAvg":19,"MqttCount":1,"POWER1":"OFF","POWER2":"OFF","Wifi":{"AP":1,"SSId":"lucky","BSSId":"4C:ED:FB:7B:4A:98","Channel":4,"RSSI":100,"Signal":-34,"LinkCount":1,"Downtime":"0T00:00:05"}}
+01:40:11 MQT: tele/tasmota_A61989/SENSOR = {"Time":"2020-06-26T01:40:11","Switch2":"OFF"}
 The MQTT topic is cmnd/masterlight/SWITCH with a boolean value of either 1 for open or 0 for close. The topics are for state or the reed switch sensor value Switch2 that are sent every 5 minutes (configurable) via MQTT.
 
 Step 3: Add to a Home Assistance

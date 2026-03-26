@@ -7,40 +7,59 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = posts.sort(
   (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)
 );
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 ---
 
 <BaseLayout title="Do Code That Matters">
   <main class="container mx-auto px-4 py-8" itemscope itemtype="https://schema.org/WebPage">
     <h1 itemprop="name" class="sr-only">Do Code That Matters - Home Page</h1>
 
-    <div class="lg:grid lg:grid-cols-3 lg:gap-8">
+    <div class="lg:grid lg:grid-cols-3 lg:gap-12">
       <!-- Post list -->
       <div class="lg:col-span-2" itemscope itemtype="http://schema.org/BreadcrumbList">
         {sortedPosts.map((post, index) => (
-          <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="mb-6">
-            <h2 class="text-xl font-bold mb-1">
-              <a itemprop="item" href={`/${post.slug}/`} class="text-[#9da2ff] hover:underline">
+          <div
+            itemprop="itemListElement"
+            itemscope
+            itemtype="http://schema.org/ListItem"
+            class="mb-7 pb-7"
+            style="border-bottom: 1px solid var(--color-border);"
+          >
+            <h2 class="text-lg font-bold mb-1 leading-snug">
+              <a
+                itemprop="item"
+                href={`/${post.slug}/`}
+                style="color: var(--color-accent);"
+                class="hover:underline"
+              >
                 <span itemprop="name">{post.data.title}</span>
               </a>
             </h2>
             <meta itemprop="position" content={String(index + 1)} />
-            {post.data.description && (
-              <p class="text-sm text-[#a0aec0] font-mono">{post.data.description}</p>
-            )}
+            <div class="flex items-baseline gap-3 flex-wrap">
+              {post.data.date && (
+                <time
+                  datetime={post.data.date.toISOString()}
+                  class="text-xs font-mono shrink-0"
+                  style="color: var(--color-text-muted);"
+                >
+                  {formatDate(post.data.date)}
+                </time>
+              )}
+              {post.data.description && (
+                <p class="text-sm font-mono m-0" style="color: var(--color-text-muted);">
+                  {post.data.description}
+                </p>
+              )}
+            </div>
           </div>
         ))}
       </div>
 
       <!-- Sidebar -->
       <aside class="mt-10 lg:mt-0">
-        <img
-          src="/images/agile.jpg"
-          width="350"
-          height="246"
-          alt="Agile development"
-          class="rounded-md mb-6 w-full"
-          loading="lazy"
-        />
         <ContactInfo />
       </aside>
     </div>

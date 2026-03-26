@@ -29,6 +29,12 @@ Here's the repo if you want to check it out: rustreverseproxy (https://github.co
 Why Rust? The performance has been said to be solid. The async architecture with tokio handles plenty of concurrent connections without causing any problems.
 
 Quick Start
+
+Download the latest release
+wget https://github.com/spencerkittleson/rustreverseproxy/releases/latest/download/rust_proxy-linux-x64
+
+Run it
+./rust_proxy-linux-x64 --host 0.0.0.0 --port 3129
 Then point your system or app proxy settings to that host and port. Simple.
 
 PopOS Setup: The Real Work
@@ -38,20 +44,60 @@ The proxy was the easy part. Getting PopOS to play nice with my work setup? That
 Docker Install (The Full Walkthrough)
 
 Docker doesn't come pre-installed on PopOS, so here's exactly what I did:
+
+1. Update system packages
+sudo apt update && sudo apt upgrade -y
+
+2. Install prerequisites
+sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+3. Add Docker's official GPG key
+sudo mkdir -p /etc/apt/keyrings  
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+4. Add Docker repository
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+5. Update and install
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+6. Start and enable
+sudo systemctl start docker  
+sudo systemctl enable docker
+
+7. Add user to docker group
+sudo usermod -aG docker $USER
+
+8. Verify
+docker --version
+docker compose version
 Log out and back in (or run newgrp docker) to apply the group changes.
 
 GitHub Account Switching
 
 I have both a personal and work GitHub account. Here's how I switch between them:
+
+For work
+gh auth switch --user work_user
+
+For personal
+gh auth switch --user personal_user
 Would be nice if there was an alias or something, but this works.
 
 Flatpak x11 Fallback
 
 Some Flatpak apps don't work well with Wayland. Here's how to force x11 for VSCodium:
+
+flatpak override --user --nosocket=fallback-x11 --socket=x11 com.vscodium.codium
 .NET Linking
 
 I keep a local .dotnet install but link it to the system path:
+
+sudo ln -sf /home/spencerkittleson/.dotnet/dotnet /usr/bin/dotnet
 NVM for Node
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 The PopOs fun  window issues
 
 PopOS isn't perfect. Here's what I had to fix:
@@ -65,23 +111,48 @@ Gnome Tweaks
 Bluetooth
 
 I ditched the bluetooth adapter since it was old and caused issues with PopOs all the time. Disable the internal adapter when not needed:
+
+List devices
+hciconfig
+
+Take one down
+sudo hciconfig hci0 down
 Audio Power Saving
 
 This was a common fix for audio issues:
+
+Temporary
+echo "0" | sudo tee /sys/module/sndhdaintel/parameters/power_save
+
+Permanent
+sudo tee /etc/modprobe.d/audiodisablepowersave.conf <<< "options sndhdaintel power_save=0"
 Wireplumber Suspend
 
 Prevent unwanted suspend:
+
+sudo sed -i 's/--\["session.suspend-time- seconds\] = 5/\["session.suspend-time- seconds\] = 0/' /usr/share/wireplumber/main.lua.d/50-alsa-config.lua
+systemctl restart --user pipewire.service
 VSCodium GPU
 
 If it's crashing:
+
+codium --disable-gpu
 Chromium Proxy Setup
 
 This is the part that actually makes everything usable. I run different work apps through different proxies. Here's how I launch Chromium with specific proxy settings:
+
+Basic proxy
+flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server="http://192.168.8.204:3129;https://192.168.8.204:3129" & disown
+
+With certificate errors ignored (useful for internal corporate certs)
+flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server="http://192.168.8.204:3129;https://192.168.8.204:3129" --ignore-certificate-errors & disown
 I have multiple of these for different work contexts. It's not elegant but it works.
 
 Flatpak Sandbox Chrome Alias
 
 For convenience, you can set an alias that launches Chromium in a sandboxed Flatpak instance with the proxy already configured:
+
+alias proxy="flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server='http://192.168.8.204:3129;https://192.168.8.204:3129' --ignore-certificate-errors & disown"
 This keeps the proxy settings isolated from your regular Chrome installation and ensures the sandboxed instance respects the corporate certificate chain.
 
 The Router Setup

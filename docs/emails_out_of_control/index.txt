@@ -11,6 +11,27 @@ TLDR;  the whohasemailthemost script loops through 11 times by 30 days in an inb
 Data
 
 Mostly newsletters, some transactional.  Having a time-to-live on some of these emails would make sense.  That's not a feature i'm aware of so lets just do some data deletion. EDIT: there is a feature called Sweep in Outlook.com that does this.
+
+[('news@e.eyebuydirect.com', 290),
+ ('shipment-tracking@amazon.com', 218),
+ ('friendupdates@facebookmail.com', 215),
+ ('express@em.express.com', 211),
+ ('Costco@digital.costco.com', 207),
+ ('photos@onedrive.com', 195),
+ ('noreply@redditmail.com', 179),
+ ('order-update@amazon.com', 178),
+ ('Shutterfly@em.shutterfly.com', 159),
+ ('REDACTED01@REDACTED01.com', 157),
+ ('ProFlowers@news.proflowers.com', 151),
+ ('USPSInformeddelivery@email.informeddelivery.usps.com', 149),
+ ('marketplace-messages@amazon.com', 122),
+ ('microsoft.start@email2.microsoft.com', 114),
+ ('redcross@theamericanredcross.org', 112),
+ ('REDACTED02@REDACTED02', 106),
+ ('newsmax@latest.newsmax.com', 101),
+ ('noreply@email.amctheatres.com', 95),
+ ('jobs-listings@linkedin.com', 95),
+ ('reply@rs.email.nextdoor.com', 93)]
 Solutions
 
 - Unsubscribe from the top offenders
