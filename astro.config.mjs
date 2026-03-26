@@ -7,7 +7,9 @@ import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import rehypePictureWebp from './src/plugins/rehype-picture-webp.mjs';
-import remarkMermaidRaw from './src/plugins/remark-mermaid-raw.mjs';
+import rehypeMermaid from 'rehype-mermaid';
+import remarkMermaidFence from './src/plugins/remark-mermaid-fence.mjs';
+import rehypeMermaidRaw from './src/plugins/rehype-mermaid-raw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const oneDarkProAccessible = JSON.parse(
@@ -46,8 +48,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
-    rehypePlugins: [rehypePictureWebp],
-    remarkPlugins: [remarkMermaidRaw],
+    rehypePlugins: [rehypePictureWebp, rehypeMermaidRaw, [rehypeMermaid, { strategy: 'inline-svg', mermaidConfig: { theme: 'neutral' } }]],
+    remarkPlugins: [remarkMermaidFence],
     shikiConfig: {
       themes: {
         dark: oneDarkProAccessible,

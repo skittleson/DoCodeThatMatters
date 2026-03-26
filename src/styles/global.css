@@ -147,3 +147,19 @@
   overflow-x: auto;
   margin: 1em 0;
 }
+
+/* ─── Mermaid inline SVG ────────────────────────────────────── */
+
+.mermaid-svg-container {
+  overflow-x: auto;
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+.mermaid-svg-container svg {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: var(--color-surface);
+  padding: 1em;
+}
