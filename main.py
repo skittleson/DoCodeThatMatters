@@ -359,8 +359,8 @@ def text_to_speech_on_plain_text(slug_filter=None):
     KittenTTS kitten-tts-mini (80M, best quality) with Hugo voice.
 
     Skip regeneration if BOTH conditions are true:
-      - The SHA-256 hash of index.tts matches the hash stored in
-        audio-hashes.json (a sidecar file that survives astro build wiping docs/)
+      - The SHA-256 hash of src/content/blog/<slug>.md matches the hash stored
+        in audio-hashes.json (a sidecar file that survives astro build wiping docs/)
       - docs/<slug>/index.mp3 already exists on disk
 
     After processing, patches docs/rss.xml in-place to inject or update
@@ -387,6 +387,7 @@ def text_to_speech_on_plain_text(slug_filter=None):
             continue
 
         txt_path = f"docs/{folder}/index.tts"
+        src_path = f"src/content/blog/{folder}.md"
         mp3_path = f"docs/{folder}/index.mp3"
 
         if not os.path.exists(txt_path):
@@ -402,7 +403,13 @@ def text_to_speech_on_plain_text(slug_filter=None):
         if not text:
             continue
 
-        txt_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        # Hash the SOURCE markdown file — stable across builds, not the build output.
+        # Falls back to hashing the .tts content if no source file is found.
+        if os.path.exists(src_path):
+            with open(src_path, "rb") as f:
+                txt_hash = hashlib.sha256(f.read()).hexdigest()
+        else:
+            txt_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
 
         # Skip if hash matches the sidecar AND the mp3 file exists on disk.
         # Checking os.path.exists ensures we regenerate when astro build wiped docs/.
