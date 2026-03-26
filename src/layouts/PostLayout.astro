@@ -32,16 +32,10 @@ const issueTitle = encodeURIComponent(`Post - ${title}`);
 
 // Responsive image helpers
 const isLocalImage = image && image.startsWith('/images/');
-const isRemoteImage = image && image.startsWith('http');
 
-// For local images: derive a 760w variant path (e.g. /images/foo.jpg → /images/foo-760w.jpg)
-const localSrcset = isLocalImage
-  ? (() => {
-      const dot = image.lastIndexOf('.');
-      const base = image.slice(0, dot);
-      const ext = image.slice(dot);
-      return `${base}-760w${ext} 760w, ${image} 1200w`;
-    })()
+// For local images: derive the WebP path (e.g. /images/foo.jpg → /images/foo.webp)
+const localWebp = isLocalImage
+  ? image.replace(/\.[^.]+$/, '.webp')
   : null;
 ---
 
@@ -107,19 +101,20 @@ const localSrcset = isLocalImage
             {image && (
               <figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6">
                 {isLocalImage ? (
-                  <img
-                    itemprop="url contentUrl"
-                    src={image}
-                    srcset={localSrcset ?? undefined}
-                    sizes="(max-width: 768px) calc(100vw - 2rem), 570px"
-                    alt={alt ?? title}
-                    width={imageWidth ?? 800}
-                    height={imageHeight ?? 600}
-                    class="rounded-md w-full object-cover"
-                    loading="eager"
-                    fetchpriority="high"
-                    decoding="async"
-                  />
+                  <picture>
+                    <source type="image/webp" srcset={localWebp ?? undefined} />
+                    <img
+                      itemprop="url contentUrl"
+                      src={image}
+                      alt={alt ?? title}
+                      width={imageWidth ?? 800}
+                      height={imageHeight ?? 600}
+                      class="rounded-md w-full object-cover"
+                      loading="eager"
+                      fetchpriority="high"
+                      decoding="async"
+                    />
+                  </picture>
                 ) : (
                   <img
                     itemprop="url contentUrl"

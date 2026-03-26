@@ -21,5 +21,8 @@
     "autoprefixer": "^10.4.27",
     "imagemin": "7.0.1",
     "tailwindcss": "^4.2.1"
+  },
+  "dependencies": {
+    "mermaid": "^11.13.0"
   }
 }

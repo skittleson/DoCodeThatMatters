@@ -6,6 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import rehypePictureWebp from './src/plugins/rehype-picture-webp.mjs';
+import remarkMermaidRaw from './src/plugins/remark-mermaid-raw.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const oneDarkProAccessible = JSON.parse(
@@ -44,6 +46,8 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
+    rehypePlugins: [rehypePictureWebp],
+    remarkPlugins: [remarkMermaidRaw],
     shikiConfig: {
       themes: {
         dark: oneDarkProAccessible,
