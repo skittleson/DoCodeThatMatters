@@ -12,6 +12,32 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/two-smart-switches-that-wouldnt-stop-talking/",
+      "url": "https://docodethatmatters.com/two-smart-switches-that-wouldnt-stop-talking/",
+      "title": "The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key",
+      "summary": "A state-mirror rule that updates the relay but never the dedup key guarantees an infinite echo, the same failure shape as replication storms and webhook retry loops. I found it live in two MQTT-linked light switches.",
+      "image": "/images/tasmota-runaway-loop-before.png",
+      "date_published": "2026-06-01T00:00:00.000Z",
+      "date_modified": "2026-06-01T00:00:00.000Z",
+      "tags": [
+        "smart home",
+        "Tasmota",
+        "Tuya",
+        "TuyaMCU",
+        "MQTT",
+        "ESP8266",
+        "ESP32-C3",
+        "virtual 3-way",
+        "debugging",
+        "home automation"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
       "url": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
       "title": "I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.",
