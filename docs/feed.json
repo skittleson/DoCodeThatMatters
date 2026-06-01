@@ -12,8 +12,8 @@
   ],
   "items": [
     {
-      "id": "https://docodethatmatters.com/two-smart-switches-that-wouldnt-stop-talking/",
-      "url": "https://docodethatmatters.com/two-smart-switches-that-wouldnt-stop-talking/",
+      "id": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
+      "url": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
       "title": "The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key",
       "summary": "A state-mirror rule that updates the relay but never the dedup key guarantees an infinite echo, the same failure shape as replication storms and webhook retry loops. I found it live in two MQTT-linked light switches.",
       "image": "/images/tasmota-runaway-loop-before.png",
