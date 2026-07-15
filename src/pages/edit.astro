@@ -111,7 +111,7 @@ export default {
 
   <script>
     import { getToken } from '/src/lib/tokenStore.ts';
-    import { createOrUpdatePost } from '/src/lib/githubClient.ts';
+    import { getBlogPosts, createOrUpdatePost } from '/src/lib/githubClient.ts';
     import { assemblePost } from '/src/lib/assembler.ts';
 
     const form = document.getElementById('post-form');
@@ -126,6 +126,48 @@ export default {
         titleInput.setCustomValidity('');
       }
     });
+
+    // On page load, check auth and pre-fill form if editing
+    const token = getToken();
+    if (!token) {
+      window.location.href = '/admin';
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      const editSlug = params.get('slug');
+      if (editSlug) {
+        (async () => {
+          try {
+            const posts = await getBlogPosts(token);
+            const post = posts.find(p => p.name === `${editSlug}.md`);
+            if (post) {
+              const raw = await fetch(post.download_url).then(r => r.text());
+              const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+              if (match) {
+                const yamlText = match[1];
+                const body = match[2];
+                document.getElementById('body').value = body;
+                const lines = yamlText.split('\n');
+                for (const line of lines) {
+                  const [key, ...rest] = line.split(':');
+                  const value = rest.join(':').trim();
+                  const input = document.getElementById(key.trim());
+                  if (input && key.trim() !== 'keywords') {
+                    if (key.trim() === 'draft') {
+                      (input as HTMLInputElement).checked = value === 'true';
+                    } else {
+                      input.value = value;
+                    }
+                  }
+                }
+              }
+            }
+          } catch (err) {
+            statusEl.textContent = `Failed to load post: ${err.message}`;
+            statusEl.className = 'error';
+          }
+        })();
+      }
+    }
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -164,13 +206,18 @@ export default {
       };
 
       const content = assemblePost(data);
-      const message = `blog: add ${title}`;
+      const message = `blog: update ${title}`;
 
-      statusEl.textContent = 'Saving...';
-      statusEl.className = '';
-
+      // Look up existing SHA so edits don't conflict
       try {
-        await createOrUpdatePost(token, slug, content, message);
+        const posts = await getBlogPosts(token);
+        const existingPost = posts.find(p => p.name === `${slug}.md`);
+        const existingSha = existingPost?.sha;
+
+        statusEl.textContent = 'Saving...';
+        statusEl.className = '';
+
+        await createOrUpdatePost(token, slug, content, message, existingSha);
         statusEl.textContent = `Saved! Post available at /${slug}/`;
         statusEl.className = 'success';
         setTimeout(() => { window.location.href = '/admin'; }, 2000);
@@ -179,12 +226,6 @@ export default {
         statusEl.className = 'error';
       }
     });
-
-    // On page load, check auth
-    const token = getToken();
-    if (!token) {
-      window.location.href = '/admin';
-    }
   </script>
 </body>
 </html>
