@@ -1,0 +1,190 @@
+---
+export default {
+  prerender: false,
+};
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Edit Post</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 { color: #9da2ff; }
+    label { display: block; margin: 0.75rem 0 0.25rem; color: #a0aec0; font-size: 0.85rem; }
+    input[type="text"], input[type="number"], input[type="date"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      background: #16213e;
+      color: #e0e0e0;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: monospace;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 400px;
+      resize: vertical;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background: #9da2ff;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    button:hover { background: #7b82ff; }
+    .error { color: #ff6b6b; }
+    .success { color: #51cf66; }
+    .form-row { display: flex; gap: 1rem; }
+    .form-row > div { flex: 1; }
+  </style>
+</head>
+<body>
+  <h1>Edit Post</h1>
+  <a href="/admin" style="color:#9da2ff">← Back to list</a>
+
+  <form id="post-form">
+    <label for="title">Title *</label>
+    <input type="text" id="title" required minlength="5" maxlength="100" placeholder="Post title" />
+
+    <label for="description">Description</label>
+    <input type="text" id="description" placeholder="Short summary" />
+
+    <div class="form-row">
+      <div>
+        <label for="date">Date</label>
+        <input type="date" id="date" />
+      </div>
+      <div>
+        <label for="modified">Modified</label>
+        <input type="date" id="modified" />
+      </div>
+    </div>
+
+    <label for="image">Image path</label>
+    <input type="text" id="image" placeholder="/images/my-image.png" />
+
+    <label for="alt">Alt text</label>
+    <input type="text" id="alt" />
+
+    <div class="form-row">
+      <div>
+        <label for="imageWidth">Image width</label>
+        <input type="number" id="imageWidth" min="0" />
+      </div>
+      <div>
+        <label for="imageHeight">Image height</label>
+        <input type="number" id="imageHeight" min="0" />
+      </div>
+    </div>
+
+    <label for="keywords">Keywords (comma-separated)</label>
+    <input type="text" id="keywords" placeholder="keyword1, keyword2" />
+
+    <label for="priority">Priority (0-1)</label>
+    <input type="number" id="priority" min="0" max="1" step="0.1" />
+
+    <label>
+      <input type="checkbox" id="draft" />
+      Draft (not published)
+    </label>
+
+    <label for="body">Markdown body</label>
+    <textarea id="body" placeholder="# Your post content here"></textarea>
+
+    <button type="submit">Save</button>
+    <div id="status"></div>
+  </form>
+
+  <script>
+    import { getToken } from '/src/lib/tokenStore.ts';
+    import { createOrUpdatePost } from '/src/lib/githubClient.ts';
+    import { assemblePost } from '/src/lib/assembler.ts';
+
+    const form = document.getElementById('post-form');
+    const statusEl = document.getElementById('status');
+
+    // Validate title length
+    const titleInput = document.getElementById('title');
+    titleInput.addEventListener('input', () => {
+      if (titleInput.value.length < 5) {
+        titleInput.setCustomValidity('Title must be at least 5 characters');
+      } else {
+        titleInput.setCustomValidity('');
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const token = getToken();
+      if (!token) {
+        statusEl.textContent = 'Not authenticated. Please log in first.';
+        statusEl.className = 'error';
+        return;
+      }
+
+      const title = titleInput.value.trim();
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/-+$/, '')
+        .replace(/^-+/, '');
+
+      const data = {
+        title,
+        description: document.getElementById('description').value.trim() || undefined,
+        date: document.getElementById('date').value || undefined,
+        modified: document.getElementById('modified').value || undefined,
+        image: document.getElementById('image').value.trim() || undefined,
+        alt: document.getElementById('alt').value.trim() || undefined,
+        imageWidth: document.getElementById('imageWidth').value ? parseInt(document.getElementById('imageWidth').value) : undefined,
+        imageHeight: document.getElementById('imageHeight').value ? parseInt(document.getElementById('imageHeight').value) : undefined,
+        keywords: document.getElementById('keywords').value ? document.getElementById('keywords').value.split(',').map(s => s.trim()).filter(Boolean) : undefined,
+        priority: document.getElementById('priority').value ? parseFloat(document.getElementById('priority').value) : undefined,
+        draft: document.getElementById('draft').checked,
+        body: document.getElementById('body').value,
+      };
+
+      const content = assemblePost(data);
+      const message = `blog: add ${title}`;
+
+      statusEl.textContent = 'Saving...';
+      statusEl.className = '';
+
+      try {
+        await createOrUpdatePost(token, slug, content, message);
+        statusEl.textContent = `Saved! Post available at /${slug}/`;
+        statusEl.className = 'success';
+        setTimeout(() => { window.location.href = '/admin'; }, 2000);
+      } catch (err) {
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.className = 'error';
+      }
+    });
+
+    // On page load, check auth
+    const token = getToken();
+    if (!token) {
+      window.location.href = '/admin';
+    }
+  </script>
+</body>
+</html>
