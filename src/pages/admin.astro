@@ -1,0 +1,103 @@
+---
+export default {
+  prerender: false,
+};
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Blog Admin</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      max-width: 600px;
+      margin: 4rem auto;
+      padding: 0 1rem;
+    }
+    h1 { color: #9da2ff; }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      background: #16213e;
+      color: #e0e0e0;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: #9da2ff;
+      color: #1a1a2e;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: monospace;
+      font-weight: bold;
+    }
+    button:hover { background: #7b82ff; }
+    .error { color: #ff6b6b; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Blog Admin</h1>
+
+  <div id="auth-screen">
+    <p>Enter your GitHub Personal Access Token to access the admin.</p>
+    <p class="text-xs" style="color:#a0aec0">Requires <code>repo</code> scope.</p>
+    <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxx" />
+    <br />
+    <button id="test-btn">Test & Save</button>
+    <div id="auth-error" class="error"></div>
+  </div>
+
+  <div id="app" style="display:none"></div>
+
+  <script>
+    import { authenticate } from '/src/lib/githubClient.ts';
+    import { getToken, setToken, clearToken } from '/src/lib/tokenStore.ts';
+
+    const tokenInput = document.getElementById('token-input');
+    const testBtn = document.getElementById('test-btn');
+    const authError = document.getElementById('auth-error');
+    const authScreen = document.getElementById('auth-screen');
+
+    async function testAndSave() {
+      const token = tokenInput.value.trim();
+      if (!token) {
+        authError.textContent = 'Token is required';
+        return;
+      }
+      testBtn.disabled = true;
+      testBtn.textContent = 'Testing...';
+      try {
+        const ok = await authenticate(token);
+        if (ok) {
+          setToken(token);
+          authScreen.style.display = 'none';
+          document.getElementById('app').style.display = 'block';
+          // TODO: load post list
+        } else {
+          authError.textContent = 'Token is invalid or has insufficient permissions';
+        }
+      } catch (e) {
+        authError.textContent = e.message || 'Authentication failed';
+      }
+      testBtn.disabled = false;
+      testBtn.textContent = 'Test & Save';
+    }
+
+    testBtn.addEventListener('click', testAndSave);
+
+    // Auto-auth if token already stored
+    const stored = getToken();
+    if (stored) {
+      tokenInput.value = stored;
+      // TODO: auto-verify and proceed
+    }
+  </script>
+</body>
+</html>
