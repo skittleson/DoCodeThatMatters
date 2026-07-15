@@ -26,12 +26,20 @@ describe('getBlogPosts', () => {
   beforeEach(() => vi.restoreAllMocks());
 
   it('returns only .md files', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({
+    const listMock = {
+      ok: true,
       json: async () => [
         { name: 'my-post.md', path: 'src/content/blog/my-post.md', sha: 'abc' },
         { name: 'images', path: 'src/content/blog/images', type: 'dir' },
       ],
-    });
+    };
+    const fileMock = {
+      ok: true,
+      json: async () => ({ content: Buffer.from('---\ndate: 2024-01-01\n---\nbody').toString('base64') }),
+    };
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce(listMock)
+      .mockResolvedValueOnce(fileMock);
     const posts = await getBlogPosts('tok');
     expect(posts).toHaveLength(1);
     expect(posts[0].name).toBe('my-post.md');

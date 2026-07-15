@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
+import { stripExt } from '../lib/markdownToText';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -26,8 +27,8 @@ export async function GET(context: APIContext) {
       },
     ],
     items: sortedPosts.map((post) => ({
-      id: `${siteUrl}/${post.slug}/`,
-      url: `${siteUrl}/${post.slug}/`,
+      id: `${siteUrl}/${stripExt(post.id)}/`,
+      url: `${siteUrl}/${stripExt(post.id)}/`,
       title: post.data.title,
       summary: post.data.description ?? '',
       image: post.data.image ?? '',

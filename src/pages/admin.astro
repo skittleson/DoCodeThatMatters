@@ -1,7 +1,5 @@
 ---
-export default {
-  prerender: false,
-};
+export const prerender = false;
 ---
 
 <html lang="en">
@@ -116,7 +114,7 @@ export default {
           card.style.cssText = 'padding:1rem;margin:0.5rem 0;background:#16213e;border-radius:4px;';
           card.innerHTML = `
             <div style="font-weight:bold">${slug}</div>
-            <a href="/edit/${slug}" style="color:#9da2ff">Edit</a>
+            <a href="/edit/?slug=${slug}" style="color:#9da2ff">Edit</a>
           `;
           listEl.appendChild(card);
         });

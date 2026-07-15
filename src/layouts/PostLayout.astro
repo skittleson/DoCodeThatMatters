@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { stripExt } from '../lib/markdownToText';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -11,7 +12,7 @@ const { post } = Astro.props;
 const { title, description, date, modified, image, alt, imageWidth, imageHeight, keywords } = post.data;
 
 const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
-const postUrl = new URL(`/${post.slug}/`, Astro.site).href;
+const postUrl = new URL(`/${stripExt(post.id)}/`, Astro.site).href;
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
@@ -147,13 +148,13 @@ const localWebp = isLocalImage
           <audio
             controls
             preload="metadata"
-            src={`/audio/${post.slug}/index.mp3`}
+            src={`/audio/${stripExt(post.id)}/index.mp3`}
             class="w-full"
           >
             Your browser does not support the audio element.
           </audio>
           <a
-            href={`/audio/${post.slug}/index.mp3`}
+            href={`/audio/${stripExt(post.id)}/index.mp3`}
             download
             class="text-xs font-mono mt-1 inline-block hover:underline"
             style="color: var(--color-accent);"
@@ -191,7 +192,7 @@ const localWebp = isLocalImage
           {latestPosts.map((p) => (
             <li>
               <a
-                href={`/${p.slug}/`}
+                href={`/${stripExt(p.id)}/`}
                 class="text-xs font-mono leading-snug block hover:underline"
                 style="color: var(--color-accent);"
               >

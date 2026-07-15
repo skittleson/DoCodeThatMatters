@@ -12,6 +12,35 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
+      "url": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
+      "title": "I scanned the BLE devices around my house - they are sharing everything",
+      "summary": "An inspired project from DEFCON 2024 of the Wall of Sheep with ble devices",
+      "image": "/images/ble_wall_of_sheep.jpg",
+      "date_published": "2026-06-17T00:00:00.000Z",
+      "date_modified": "2026-06-17T00:00:00.000Z",
+      "tags": [
+        "bluetooth",
+        "ble",
+        "bleak",
+        "wall of sheep",
+        "tracking devices",
+        "rssi",
+        "mac randomization",
+        "device fingerprinting",
+        "airtag",
+        "presence detection",
+        "defcon",
+        "privacy",
+        "python"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
       "id": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
       "url": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
       "title": "The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key",
@@ -83,6 +112,56 @@
         "wsl2",
         "developer tools",
         "transparent proxy"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
+      "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
+      "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
+      "title": "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows",
+      "summary": "I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no-app, works on any device that can point to a proxy.",
+      "image": "/images/broken-window.jpeg",
+      "date_published": "2026-03-15T00:00:00.000Z",
+      "date_modified": "2026-03-15T00:00:00.000Z",
+      "tags": [
+        "rust",
+        "proxy",
+        "http proxy",
+        "linux",
+        "windows",
+        "popos",
+        "vpn",
+        "wsl2",
+        "mixed os",
+        "tokio"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ]
+    },
+    {
+      "id": "https://docodethatmatters.com/sony-camera-part3/",
+      "url": "https://docodethatmatters.com/sony-camera-part3/",
+      "title": "Tethered Raspberry Pi for Modern Camera Functionality",
+      "summary": "How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing.",
+      "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
+      "date_published": "2024-06-28T00:00:00.000Z",
+      "date_modified": "2024-06-28T00:00:00.000Z",
+      "tags": [
+        "Sony a6400",
+        "Sony a6000",
+        "Raspberry Pi",
+        "tethered photography",
+        "gphoto2",
+        "Bluetooth protocol",
+        "camera hacking",
+        "copyparty"
       ],
       "authors": [
         {

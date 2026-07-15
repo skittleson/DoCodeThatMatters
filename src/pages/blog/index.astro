@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { stripExt } from '../../lib/markdownToText';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 const sortedPosts = posts.sort(
-  (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0)
+  (a, b) =>
+    (b.data.modified?.valueOf() ?? b.data.date?.valueOf() ?? 0) -
+    (a.data.modified?.valueOf() ?? a.data.date?.valueOf() ?? 0)
 );
 
 const formatDate = (d: Date) =>
@@ -21,7 +24,7 @@ const formatDate = (d: Date) =>
         <div class="flex gap-6 items-start">
           {post.data.image && (
             <div class="shrink-0">
-              <a href={`/${post.slug}/`}>
+              <a href={`/${stripExt(post.id)}/`}>
                 <img
                   src={post.data.image}
                   alt={post.data.description ?? post.data.title}
@@ -38,14 +41,14 @@ const formatDate = (d: Date) =>
               </span>
             )}
             <h2 class="text-lg font-bold mt-1 mb-2">
-              <a href={`/${post.slug}/`} class="text-[#9da2ff] hover:underline">
+              <a href={`/${stripExt(post.id)}/`} class="text-[#9da2ff] hover:underline">
                 {post.data.title}
               </a>
             </h2>
             {post.data.description && (
               <p class="text-sm text-[#a0aec0] font-mono mb-2">{post.data.description}</p>
             )}
-            <a href={`/${post.slug}/`} class="text-xs text-[#9da2ff] hover:underline font-mono">
+            <a href={`/${stripExt(post.id)}/`} class="text-xs text-[#9da2ff] hover:underline font-mono">
               Read More &rarr;
             </a>
           </div>

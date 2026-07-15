@@ -13,16 +13,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@astrojs/rss": "^4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.1",
-    "astro": "^5.18.0",
+    "astro": "^7.0.3",
     "autoprefixer": "^10.4.27",
     "imagemin": "7.0.1",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "vitest": "^4.1.10"
   },
   "dependencies": {
+    "easymde": "^2.21.0",
+    "highlight.js": "^11.11.1",
+    "marked": "^18.0.6",
+    "marked-highlight": "^2.2.4",
     "mermaid-isomorphic": "^3.1.0",
     "playwright": "^1.58.2",
     "rehype-mermaid": "^3.0.0"

@@ -1,29 +1,30 @@
 ---
-export default {
-  prerender: false,
-};
+export const prerender = false;
 ---
 
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Edit Post</title>
   <style>
     body {
       font-family: monospace;
       background: #1a1a2e;
       color: #e0e0e0;
-      max-width: 800px;
+      max-width: 1200px;
       margin: 2rem auto;
       padding: 0 1rem;
     }
-    h1 { color: #9da2ff; }
+    h1 { color: #9da2ff; font-size: 1.5rem; }
+    @media (min-width: 640px) { h1 { font-size: 1.75rem; } }
     label { display: block; margin: 0.75rem 0 0.25rem; color: #a0aec0; font-size: 0.85rem; }
     input[type="text"], input[type="number"], input[type="date"], textarea {
       width: 100%;
       padding: 0.5rem;
-      background: #16213e;
-      color: #e0e0e0;
+      background: white;
+      color: black;
       border: 1px solid #444;
       border-radius: 4px;
       font-family: monospace;
@@ -32,6 +33,8 @@ export default {
     textarea {
       min-height: 400px;
       resize: vertical;
+      background: white;
+      color: black;
     }
     button {
       padding: 0.75rem 1.5rem;
@@ -48,64 +51,181 @@ export default {
     button:hover { background: #7b82ff; }
     .error { color: #ff6b6b; }
     .success { color: #51cf66; }
-    .form-row { display: flex; gap: 1rem; }
-    .form-row > div { flex: 1; }
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .form-row > div { flex: 1; min-width: 0; }
+    .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+
+    /* Back-to-list link — prominent on mobile */
+    .back-link {
+      display: inline-block;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.5rem;
+      color: #9da2ff;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border: 2px solid #9da2ff;
+      border-radius: 4px;
+    }
+    .back-link:hover { background: #9da2ff; color: #1a1a2e; }
+
+    /* Post Metadata summary — larger tap target */
+    details > summary {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #9da2ff;
+      background: rgba(157, 162, 255, 0.1);
+      border: 1px solid #444;
+      border-radius: 4px;
+      list-style: none;
+      display: flex;
+      align-items: center;
+    }
+    details > summary::before {
+      content: '▸';
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+    }
+    details[open] > summary::before {
+      transform: rotate(90deg);
+    }
+    details > summary::-webkit-details-marker { display: none; }
+
+    /* EasyMDE rich markdown editor overrides */
+    /* Editing area: white background, black text (per user preference) */
+    .EasyMDEContainer .CodeMirror {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #444;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      font-family: monospace;
+      min-height: 400px;
+    }
+    .EasyMDEContainer .CodeMirror-cursor { border-color: #000000; }
+    .EasyMDEContainer .CodeMirror-selected { background: #d7d4f0; }
+    .EasyMDEContainer .cm-s-easymde .CodeMirror-selected { background: #d7d4f0; }
+
+    /* Toolbar: no custom styling — use EasyMDE's default light appearance */
+
+    /* Preview / side-by-side panes: white background, black text */
+    .EasyMDEContainer .editor-preview,
+    .EasyMDEContainer .editor-preview-side {
+      background: #ffffff;
+      color: #000000;
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    .EasyMDEContainer .editor-preview-side {
+      border: 1px solid #444;
+    }
+    .EasyMDEContainer .editor-preview a,
+    .EasyMDEContainer .editor-preview-side a { color: #3182ce; }
+    .EasyMDEContainer .editor-preview pre,
+    .EasyMDEContainer .editor-preview-side pre {
+      background: #1a202c;
+      color: #e2e8f0;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    .EasyMDEContainer .editor-preview code,
+    .EasyMDEContainer .editor-preview-side code {
+      background: #edf2f7;
+      color: #c53030;
+      padding: 0.15em 0.3em;
+      border-radius: 3px;
+    }
+    .EasyMDEContainer .editor-preview pre code,
+    .EasyMDEContainer .editor-preview-side pre code {
+      background: none;
+      color: #e2e8f0;
+      padding: 0;
+    }
+    .EasyMDEContainer .editor-preview blockquote,
+    .EasyMDEContainer .editor-preview-side blockquote {
+      border-left: 4px solid #9da2ff;
+      background: #f7fafc;
+      color: #4a5568;
+      margin: 0.75rem 0;
+      padding: 0.5rem 1rem;
+    }
+    .EasyMDEContainer .editor-preview img,
+    .EasyMDEContainer .editor-preview-side img { max-width: 100%; }
+
+    /* Mobile responsiveness — allow toolbar to wrap, shrink fullscreen */
+    @media (max-width: 640px) {
+      .EasyMDEContainer .editor-toolbar {
+        flex-wrap: wrap;
+      }
+      .EasyMDEContainer .CodeMirror { min-height: 300px; }
+    }
   </style>
 </head>
 <body>
   <h1>Edit Post</h1>
-  <a href="/admin" style="color:#9da2ff">← Back to list</a>
+  <a href="/admin/" class="back-link">← Back to list</a>
 
   <form id="post-form">
-    <label for="title">Title *</label>
-    <input type="text" id="title" required minlength="5" maxlength="100" placeholder="Post title" />
+    <details>
+      <summary>Edit Metadata</summary>
 
-    <label for="description">Description</label>
-    <input type="text" id="description" placeholder="Short summary" />
+      <label for="title">Title *</label>
+      <input type="text" id="title" required minlength="5" maxlength="100" placeholder="Post title" />
 
-    <div class="form-row">
-      <div>
-        <label for="date">Date</label>
-        <input type="date" id="date" />
+      <label for="description">Description</label>
+      <input type="text" id="description" placeholder="Short summary" />
+
+      <div class="form-row">
+        <div>
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+        </div>
+        <div>
+          <label for="modified">Modified</label>
+          <input type="date" id="modified" />
+        </div>
       </div>
-      <div>
-        <label for="modified">Modified</label>
-        <input type="date" id="modified" />
+
+      <label for="image">Image path</label>
+      <input type="text" id="image" placeholder="/images/my-image.png" />
+
+      <label for="alt">Alt text</label>
+      <input type="text" id="alt" />
+
+      <div class="form-row">
+        <div>
+          <label for="imageWidth">Image width</label>
+          <input type="number" id="imageWidth" min="0" />
+        </div>
+        <div>
+          <label for="imageHeight">Image height</label>
+          <input type="number" id="imageHeight" min="0" />
+        </div>
       </div>
-    </div>
 
-    <label for="image">Image path</label>
-    <input type="text" id="image" placeholder="/images/my-image.png" />
+      <label for="keywords">Keywords (comma-separated)</label>
+      <input type="text" id="keywords" placeholder="keyword1, keyword2" />
 
-    <label for="alt">Alt text</label>
-    <input type="text" id="alt" />
+      <label for="priority">Priority (0-1)</label>
+      <input type="number" id="priority" min="0" max="1" step="0.1" />
 
-    <div class="form-row">
-      <div>
-        <label for="imageWidth">Image width</label>
-        <input type="number" id="imageWidth" min="0" />
-      </div>
-      <div>
-        <label for="imageHeight">Image height</label>
-        <input type="number" id="imageHeight" min="0" />
-      </div>
-    </div>
+      <label>
+        <input type="checkbox" id="draft" />
+        Draft (not published)
+      </label>
 
-    <label for="keywords">Keywords (comma-separated)</label>
-    <input type="text" id="keywords" placeholder="keyword1, keyword2" />
+    </details>
 
-    <label for="priority">Priority (0-1)</label>
-    <input type="number" id="priority" min="0" max="1" step="0.1" />
-
-    <label>
-      <input type="checkbox" id="draft" />
-      Draft (not published)
-    </label>
-
-    <label for="body">Markdown body</label>
+    <label for="body">Markdown body — use the toolbar to format, toggle preview for a live render</label>
     <textarea id="body" placeholder="# Your post content here"></textarea>
 
-    <button type="submit">Save</button>
+    <div class="btn-row">
+      <button type="submit">Save</button>
+      <button type="button" id="cancel-btn">Cancel</button>
+    </div>
     <div id="status"></div>
   </form>
 
@@ -113,9 +233,90 @@ export default {
     import { getToken } from '/src/lib/tokenStore.ts';
     import { getBlogPosts, createOrUpdatePost } from '/src/lib/githubClient.ts';
     import { assemblePost } from '/src/lib/assembler.ts';
+    import EasyMDE from 'easymde';
+    import 'easymde/dist/easymde.min.css';
 
     const form = document.getElementById('post-form');
     const statusEl = document.getElementById('status');
+    const bodyTextarea = document.getElementById('body');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    // Initialize the rich markdown editor on the #body textarea.
+    // EasyMDE builds its own toolbar + live/side-by-side preview and
+    // bundles its own markdown rendering, so no separate preview pane needed.
+    const easyMDE = new EasyMDE({
+      element: bodyTextarea,
+      spellChecker: false,
+      autoDownloadFontAwesome: true,
+      placeholder: '# Your post content here',
+      status: ['lines', 'words', 'cursor'],
+      toolbar: [
+        'bold', 'italic', 'heading', '|',
+        'quote', 'unordered-list', 'ordered-list', '|',
+        'link', 'image', 'code', 'table', 'horizontal-rule', '|',
+        'preview', 'side-by-side', 'fullscreen', '|',
+        'guide',
+      ],
+    });
+
+    // Track original field values to detect dirty form
+    const originalValues = new Map();
+
+    // Metadata fields tracked via their DOM elements. The `body` field is
+    // tracked separately through the EasyMDE instance (easyMDE.value()).
+    const trackedFields = [
+      { id: 'title', type: 'text' },
+      { id: 'description', type: 'text' },
+      { id: 'date', type: 'text' },
+      { id: 'modified', type: 'text' },
+      { id: 'image', type: 'text' },
+      { id: 'alt', type: 'text' },
+      { id: 'imageWidth', type: 'text' },
+      { id: 'imageHeight', type: 'text' },
+      { id: 'keywords', type: 'text' },
+      { id: 'priority', type: 'text' },
+      { id: 'draft', type: 'checkbox' },
+    ];
+
+    function captureOriginalValues() {
+      for (const f of trackedFields) {
+        const el = document.getElementById(f.id);
+        if (!el) continue;
+        if (f.type === 'checkbox') {
+          originalValues.set(f.id, (el as HTMLInputElement).checked);
+        } else {
+          originalValues.set(f.id, (el as HTMLInputElement | HTMLTextAreaElement).value);
+        }
+      }
+      // Body value comes from the editor instance, not the raw textarea.
+      originalValues.set('body', easyMDE.value());
+    }
+
+    function isFormDirty(): boolean {
+      for (const f of trackedFields) {
+        const el = document.getElementById(f.id);
+        if (!el) continue;
+        let current;
+        if (f.type === 'checkbox') {
+          current = (el as HTMLInputElement).checked;
+        } else {
+          current = (el as HTMLInputElement | HTMLTextAreaElement).value;
+        }
+        if (current !== originalValues.get(f.id)) return true;
+      }
+      if (easyMDE.value() !== originalValues.get('body')) return true;
+      return false;
+    }
+
+    function navigateAway() {
+      if (!isFormDirty()) {
+        window.location.href = '/admin/';
+        return;
+      }
+      if (confirm('Discard changes?')) {
+        window.location.href = '/admin/';
+      }
+    }
 
     // Validate title length
     const titleInput = document.getElementById('title');
@@ -145,7 +346,7 @@ export default {
               if (match) {
                 const yamlText = match[1];
                 const body = match[2];
-                document.getElementById('body').value = body;
+                easyMDE.value(body);
                 const lines = yamlText.split('\n');
                 for (const line of lines) {
                   const [key, ...rest] = line.split(':');
@@ -161,13 +362,18 @@ export default {
                 }
               }
             }
+            captureOriginalValues();
           } catch (err) {
             statusEl.textContent = `Failed to load post: ${err.message}`;
             statusEl.className = 'error';
           }
         })();
+      } else {
+        captureOriginalValues();
       }
     }
+
+    cancelBtn.addEventListener('click', navigateAway);
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -190,6 +396,9 @@ export default {
         .replace(/-+$/, '')
         .replace(/^-+/, '');
 
+      // Always set modified to today's date before saving
+      document.getElementById('modified').value = new Date().toISOString().split('T')[0];
+
       const data = {
         title,
         description: document.getElementById('description').value.trim() || undefined,
@@ -202,7 +411,7 @@ export default {
         keywords: document.getElementById('keywords').value ? document.getElementById('keywords').value.split(',').map(s => s.trim()).filter(Boolean) : undefined,
         priority: document.getElementById('priority').value ? parseFloat(document.getElementById('priority').value) : undefined,
         draft: document.getElementById('draft').checked,
-        body: document.getElementById('body').value,
+        body: easyMDE.value(),
       };
 
       const content = assemblePost(data);

@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // ── Shared fake post data ────────────────────────────────────────────────────
 
 const fakePostA = {
-  slug: 'post-a',
+  id: 'post-a',
   body: '# Post A\n\nThis is post A.',
   collection: 'blog' as const,
   data: {
@@ -19,7 +19,7 @@ const fakePostA = {
 };
 
 const fakePostB = {
-  slug: 'post-b',
+  id: 'post-b',
   body: '# Post B\n\nThis is post B.',
   collection: 'blog' as const,
   data: {
@@ -32,7 +32,7 @@ const fakePostB = {
 };
 
 const fakeDraftPost = {
-  slug: 'draft-post',
+  id: 'draft-post',
   body: 'Draft content',
   collection: 'blog' as const,
   data: {

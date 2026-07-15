@@ -4,7 +4,7 @@ import { markdownToText, byteLength } from '../lib/markdownToText';
 // ── Fake posts ───────────────────────────────────────────────────────────────
 
 const fakePostA = {
-  slug: 'post-a',
+  id: 'post-a',
   body: '# Post A\n\nThis is **post A** content.',
   collection: 'blog' as const,
   data: {
@@ -16,7 +16,7 @@ const fakePostA = {
 };
 
 const fakePostB = {
-  slug: 'post-b',
+  id: 'post-b',
   body: '## Post B\n\nSomething else.',
   collection: 'blog' as const,
   data: {
@@ -28,7 +28,7 @@ const fakePostB = {
 };
 
 const fakeDraftPost = {
-  slug: 'draft-post',
+  id: 'draft-post',
   body: 'Draft content',
   collection: 'blog' as const,
   data: {

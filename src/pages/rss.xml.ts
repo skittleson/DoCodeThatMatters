@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-import { markdownToText, byteLength } from '../lib/markdownToText';
+import { markdownToText, byteLength, stripExt } from '../lib/markdownToText';
 
 export async function GET(context: APIContext) {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -19,9 +19,9 @@ export async function GET(context: APIContext) {
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       description: post.data.description ?? '',
-      link: `/${post.slug}/`,
+      link: `/${stripExt(post.id)}/`,
       pubDate: post.data.date ?? new Date(),
-      customData: `<enclosure url="${siteUrl}${post.slug}/index.txt" type="text/plain" length="${byteLength(markdownToText(post.body))}" />`,
+      customData: `<enclosure url="${siteUrl}${stripExt(post.id)}/index.txt" type="text/plain" length="${byteLength(markdownToText(post.body))}" />`,
     })),
     customData: `
       <language>en-us</language>

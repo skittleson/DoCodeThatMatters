@@ -94,3 +94,13 @@ export function markdownToPlainText(body: string): string {
 export function byteLength(text: string): number {
   return new TextEncoder().encode(text).length;
 }
+
+/**
+ * Strips the file extension from a content collection entry id.
+ * In Astro v7, the built-in glob loader includes the extension in the id
+ * (e.g. "small-home-automations.md" instead of "small-home-automations").
+ */
+export function stripExt(id: string): string {
+  const dotIndex = id.lastIndexOf('.');
+  return dotIndex > 0 ? id.slice(0, dotIndex) : id;
+}

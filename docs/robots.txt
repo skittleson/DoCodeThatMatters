@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Allow: /*.mp3
+Disallow: /admin/
+Disallow: /edit/
 
 Sitemap: https://docodethatmatters.com/sitemap-index.xml

@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { unified } from '@astrojs/markdown-remark';
 import rehypePictureWebp from './src/plugins/rehype-picture-webp.mjs';
 import rehypeMermaid from 'rehype-mermaid';
 import remarkMermaidFence from './src/plugins/remark-mermaid-fence.mjs';
@@ -22,7 +23,10 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/offline/'),
+      filter: (page) =>
+        !page.includes('/offline/') &&
+        !page.includes('/admin/') &&
+        !page.includes('/edit/'),
       serialize(item) {
         const url = new URL(item.url);
         if (url.pathname === '/') {
@@ -47,9 +51,14 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  legacy: {
+    collectionsBackwardsCompat: true,
+  },
   markdown: {
-    rehypePlugins: [rehypePictureWebp, rehypeMermaidRaw, [rehypeMermaid, { strategy: 'inline-svg', mermaidConfig: { theme: 'neutral' } }]],
-    remarkPlugins: [remarkMermaidFence],
+    processor: unified({
+      rehypePlugins: [rehypePictureWebp, rehypeMermaidRaw, [rehypeMermaid, { strategy: 'inline-svg', mermaidConfig: { theme: 'neutral' } }]],
+      remarkPlugins: [remarkMermaidFence],
+    }),
     shikiConfig: {
       themes: {
         dark: oneDarkProAccessible,

@@ -1,11 +1,11 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
-import { markdownToPlainText } from '../../lib/markdownToText';
+import { markdownToPlainText, stripExt } from '../../lib/markdownToText';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: stripExt(post.id) },
     props: { post },
   }));
 };
