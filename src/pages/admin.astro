@@ -57,7 +57,7 @@ export default {
   <div id="app" style="display:none"></div>
 
   <script>
-    import { authenticate } from '/src/lib/githubClient.ts';
+    import { authenticate, getBlogPosts } from '/src/lib/githubClient.ts';
     import { getToken, setToken, clearToken } from '/src/lib/tokenStore.ts';
 
     const tokenInput = document.getElementById('token-input');
@@ -79,7 +79,7 @@ export default {
           setToken(token);
           authScreen.style.display = 'none';
           document.getElementById('app').style.display = 'block';
-          // TODO: load post list
+          loadPostList();
         } else {
           authError.textContent = 'Token is invalid or has insufficient permissions';
         }
@@ -90,13 +90,48 @@ export default {
       testBtn.textContent = 'Test & Save';
     }
 
+    async function loadPostList() {
+      const token = getToken();
+      if (!token) return;
+      const app = document.getElementById('app');
+      app.innerHTML = '<p style="color:#a0aec0">Loading posts...</p>';
+
+      try {
+        const posts = await getBlogPosts(token);
+
+        app.innerHTML = `
+          <h2>Posts (${posts.length})</h2>
+          <button id="add-new-btn">+ Add New Post</button>
+          <div id="post-list"></div>
+        `;
+
+        const listEl = document.getElementById('post-list');
+        posts.forEach(post => {
+          const slug = post.name.replace(/\.md$/, '');
+          const card = document.createElement('div');
+          card.style.cssText = 'padding:1rem;margin:0.5rem 0;background:#16213e;border-radius:4px;';
+          card.innerHTML = `
+            <div style="font-weight:bold">${slug}</div>
+            <a href="/edit/${slug}" style="color:#9da2ff">Edit</a>
+          `;
+          listEl.appendChild(card);
+        });
+
+        document.getElementById('add-new-btn').addEventListener('click', () => {
+          window.location.href = '/edit/';
+        });
+      } catch (e) {
+        app.innerHTML = `<p class="error">Failed to load posts: ${e.message}</p>`;
+      }
+    }
+
     testBtn.addEventListener('click', testAndSave);
 
     // Auto-auth if token already stored
     const stored = getToken();
     if (stored) {
       tokenInput.value = stored;
-      // TODO: auto-verify and proceed
+      testAndSave();
     }
   </script>
 </body>
