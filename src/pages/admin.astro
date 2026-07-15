@@ -59,6 +59,7 @@ export default {
   <script>
     import { authenticate, getBlogPosts } from '/src/lib/githubClient.ts';
     import { getToken, setToken, clearToken } from '/src/lib/tokenStore.ts';
+    import { autoAuthenticate, handleLogout } from '/src/lib/autoAuth.ts';
 
     const tokenInput = document.getElementById('token-input');
     const testBtn = document.getElementById('test-btn');
@@ -101,7 +102,10 @@ export default {
 
         app.innerHTML = `
           <h2>Posts (${posts.length})</h2>
-          <button id="add-new-btn">+ Add New Post</button>
+          <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+            <button id="add-new-btn">+ Add New Post</button>
+            <button id="logout-btn" style="background:#ff6b6b;color:#fff">Logout</button>
+          </div>
           <div id="post-list"></div>
         `;
 
@@ -120,6 +124,11 @@ export default {
         document.getElementById('add-new-btn').addEventListener('click', () => {
           window.location.href = '/edit/';
         });
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+          handleLogout();
+          window.location.reload();
+        });
       } catch (e) {
         app.innerHTML = `<p class="error">Failed to load posts: ${e.message}</p>`;
       }
@@ -127,12 +136,25 @@ export default {
 
     testBtn.addEventListener('click', testAndSave);
 
-    // Auto-auth if token already stored
-    const stored = getToken();
-    if (stored) {
-      tokenInput.value = stored;
-      testAndSave();
+    // Auto-auth: on page load, check stored token and authenticate it
+    async function runAutoAuth() {
+      const result = await autoAuthenticate();
+      if (result === null) {
+        // No token stored — show the auth screen normally
+        return;
+      }
+      if (result.success) {
+        // Token is valid — skip straight to the post list
+        authScreen.style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        loadPostList();
+      } else {
+        // Token was invalid — it has already been cleared by autoAuth
+        authError.textContent = 'Saved token was invalid. Please enter a new one.';
+      }
     }
+
+    runAutoAuth();
   </script>
 </body>
 </html>
