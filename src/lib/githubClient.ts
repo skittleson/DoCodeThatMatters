@@ -31,18 +31,9 @@ export async function getBranchSha(token: string): Promise<string> {
   return json.commit.sha;
 }
 
-async function fetchPostFrontmatter(
-  token: string,
-  slug: string,
-): Promise<{ date: Date; modified?: Date }> {
-  const res = await fetch(`${API_BASE}/repos/${OWNER}/${REPO}/contents/src/content/blog/${slug}.md`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error(`GitHub API error ${res.status} fetching ${slug}`);
-  const json = await res.json();
-  const content = Buffer.from(json.content, 'base64').toString('utf-8');
+function parseFrontmatterFromContent(content: string): { date: Date; modified?: Date } {
   const fmMatch = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!fmMatch) throw new Error(`No frontmatter found in ${slug}`);
+  if (!fmMatch) throw new Error('No frontmatter found');
   const fm = fmMatch[1];
   const dateLine = fm.match(/^date:\s*(.+)$/m);
   const modifiedLine = fm.match(/^modified:\s*(.+)$/m);
@@ -65,21 +56,26 @@ export async function getBlogPosts(token: string): Promise<PostFile[]> {
     throw new Error('Unexpected response from GitHub API: not an array');
   }
   const mdPosts = items.filter((i: PostFile) => i.name.endsWith('.md'));
-  const results = await Promise.all(
-    mdPosts.map(async (post) => {
-      const slug = post.name.replace(/\.md$/, '');
-      try {
-        const { date, modified } = await fetchPostFrontmatter(token, slug);
-        return { ...post, date, modified };
-      } catch {
-        return { ...post, date: new Date('1970-01-01') };
-      }
-    }),
-  );
+  const results = mdPosts.map((post) => {
+    let content: string;
+    try {
+      content = Buffer.from(post.content, 'base64').toString('utf-8');
+    } catch {
+      content = '';
+    }
+    let date = new Date('1970-01-01');
+    let modified: Date | undefined;
+    try {
+      ({ date, modified } = parseFrontmatterFromContent(content));
+    } catch {
+      date = new Date('1970-01-01');
+    }
+    return { ...post, date, modified };
+  });
   return results.sort(
     (a, b) =>
-      (b.modified?.valueOf() ?? b.date.valueOf() ?? 0) -
-      (a.modified?.valueOf() ?? a.date.valueOf() ?? 0),
+      (b.modified?.valueOf() ?? b.date?.valueOf() ?? 0) -
+      (a.modified?.valueOf() ?? a.date?.valueOf() ?? 0),
   );
 }
 

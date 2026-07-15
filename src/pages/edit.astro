@@ -331,7 +331,7 @@ export const prerender = false;
     // On page load, check auth and pre-fill form if editing
     const token = getToken();
     if (!token) {
-      window.location.href = '/admin';
+      window.location.href = '/admin/';
     } else {
       const params = new URLSearchParams(window.location.search);
       const editSlug = params.get('slug');
@@ -429,7 +429,7 @@ export const prerender = false;
         await createOrUpdatePost(token, slug, content, message, existingSha);
         statusEl.textContent = `Saved! Post available at /${slug}/`;
         statusEl.className = 'success';
-        setTimeout(() => { window.location.href = '/admin'; }, 2000);
+        setTimeout(() => { window.location.href = '/admin/'; }, 2000);
       } catch (err) {
         statusEl.textContent = `Error: ${err.message}`;
         statusEl.className = 'error';

@@ -136,18 +136,26 @@ export const prerender = false;
 
     // Auto-auth: on page load, check stored token and authenticate it
     async function runAutoAuth() {
+      const stored = getToken();
+      if (stored) {
+        // Hide auth screen synchronously to prevent flash
+        authScreen.style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+      }
       const result = await autoAuthenticate();
       if (result === null) {
         // No token stored — show the auth screen normally
+        authScreen.style.display = 'block';
+        document.getElementById('app').style.display = 'none';
         return;
       }
       if (result.success) {
         // Token is valid — skip straight to the post list
-        authScreen.style.display = 'none';
-        document.getElementById('app').style.display = 'block';
         loadPostList();
       } else {
-        // Token was invalid — it has already been cleared by autoAuth
+        // Token was invalid — show auth screen again
+        authScreen.style.display = 'block';
+        document.getElementById('app').style.display = 'none';
         authError.textContent = 'Saved token was invalid. Please enter a new one.';
       }
     }

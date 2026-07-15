@@ -70,22 +70,11 @@ describe('getBlogPosts sorting', () => {
     const listMock = {
       ok: true,
       json: async () => [
-        { name: 'post-a.md', path: 'src/content/blog/post-a.md', sha: 'aaa' },
-        { name: 'post-b.md', path: 'src/content/blog/post-b.md', sha: 'bbb' },
+        { name: 'post-a.md', path: 'src/content/blog/post-a.md', sha: 'aaa', content: Buffer.from('---\ndate: 2024-01-01\nmodified: 2024-03-01\n---\nbody a').toString('base64') },
+        { name: 'post-b.md', path: 'src/content/blog/post-b.md', sha: 'bbb', content: Buffer.from('---\ndate: 2024-02-01\nmodified: 2024-06-01\n---\nbody b').toString('base64') },
       ],
     };
-    const aMock = {
-      ok: true,
-      json: async () => ({ content: Buffer.from('---\ndate: 2024-01-01\nmodified: 2024-03-01\n---\nbody a').toString('base64') }),
-    };
-    const bMock = {
-      ok: true,
-      json: async () => ({ content: Buffer.from('---\ndate: 2024-02-01\nmodified: 2024-06-01\n---\nbody b').toString('base64') }),
-    };
-    global.fetch = vi.fn()
-      .mockResolvedValueOnce(listMock)
-      .mockResolvedValueOnce(aMock)
-      .mockResolvedValueOnce(bMock);
+    global.fetch = vi.fn().mockResolvedValueOnce(listMock);
     const posts = await getBlogPosts('tok');
     expect(posts[0].name).toBe('post-b.md');
     expect(posts[1].name).toBe('post-a.md');
@@ -95,22 +84,11 @@ describe('getBlogPosts sorting', () => {
     const listMock = {
       ok: true,
       json: async () => [
-        { name: 'post-a.md', path: 'src/content/blog/post-a.md', sha: 'aaa' },
-        { name: 'post-b.md', path: 'src/content/blog/post-b.md', sha: 'bbb' },
+        { name: 'post-a.md', path: 'src/content/blog/post-a.md', sha: 'aaa', content: Buffer.from('---\ndate: 2024-06-01\n---\nbody a').toString('base64') },
+        { name: 'post-b.md', path: 'src/content/blog/post-b.md', sha: 'bbb', content: Buffer.from('---\ndate: 2024-01-01\n---\nbody b').toString('base64') },
       ],
     };
-    const aMock = {
-      ok: true,
-      json: async () => ({ content: Buffer.from('---\ndate: 2024-06-01\n---\nbody a').toString('base64') }),
-    };
-    const bMock = {
-      ok: true,
-      json: async () => ({ content: Buffer.from('---\ndate: 2024-01-01\n---\nbody b').toString('base64') }),
-    };
-    global.fetch = vi.fn()
-      .mockResolvedValueOnce(listMock)
-      .mockResolvedValueOnce(aMock)
-      .mockResolvedValueOnce(bMock);
+    global.fetch = vi.fn().mockResolvedValueOnce(listMock);
     const posts = await getBlogPosts('tok');
     expect(posts[0].name).toBe('post-a.md');
     expect(posts[1].name).toBe('post-b.md');
