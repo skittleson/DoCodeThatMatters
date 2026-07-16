@@ -482,9 +482,10 @@ if __name__ == "__main__":
         "--slug",
         metavar="SLUG",
         default=None,
-        help="Only generate audio for the post with this slug (e.g. onboarding-devs)",
+        help="Only generate script + audio for the post with this slug (e.g. battery-station)",
     )
     args = parser.parse_args()
 
+    generate_tts_scripts(slug_filter=args.slug)
     text_to_speech_on_plain_text(slug_filter=args.slug)
     # check_all_pages_for_broken_links()
