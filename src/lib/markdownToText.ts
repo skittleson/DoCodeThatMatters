@@ -104,3 +104,51 @@ export function stripExt(id: string): string {
   const dotIndex = id.lastIndexOf('.');
   return dotIndex > 0 ? id.slice(0, dotIndex) : id;
 }
+
+/**
+ * Describes an audio enclosure for a post's RSS <item>.
+ * `length` is the mp3's byte size (per the RSS spec's enclosure/@length).
+ * `path` is the site-relative URL path to the mp3.
+ */
+export interface AudioEnclosure {
+  path: string;
+  length: number;
+}
+
+/**
+ * Look up the TTS audio file for a post slug and return its enclosure info,
+ * or null if no audio exists for that slug.
+ *
+ * Audio is generated into `public/audio/<slug>/index.mp3` (committed to git),
+ * which Astro copies to `<outDir>/audio/<slug>/index.mp3` at build time, so the
+ * site-relative URL `/audio/<slug>/index.mp3` resolves in the built output.
+ *
+ * `statSize` is injected for testability; it defaults to a real filesystem stat
+ * that returns the file's byte size, or null when the file is absent.
+ */
+export function audioEnclosureFor(
+  slug: string,
+  statSize: (slug: string) => number | null = _defaultAudioSize
+): AudioEnclosure | null {
+  const length = statSize(slug);
+  if (length === null || length <= 0) return null;
+  return { path: `/audio/${slug}/index.mp3`, length };
+}
+
+/**
+ * Default `statSize` for {@link audioEnclosureFor}: returns the byte size of
+ * `public/audio/<slug>/index.mp3` relative to the project root, or null if the
+ * file does not exist. Isolated here so the pure logic above stays testable
+ * without touching disk.
+ */
+function _defaultAudioSize(slug: string): number | null {
+  // Lazy, node-only imports — this runs at build time in the Astro endpoint.
+  const { statSync } = require('node:fs') as typeof import('node:fs');
+  const { join } = require('node:path') as typeof import('node:path');
+  const mp3Path = join(process.cwd(), 'public', 'audio', slug, 'index.mp3');
+  try {
+    return statSync(mp3Path).size;
+  } catch {
+    return null;
+  }
+}

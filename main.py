@@ -57,140 +57,6 @@ def check_all_pages_for_broken_links():
                     writer.writerow([folder, broken_link])
 
 
-def _load_rss_audio(rss_path="docs/rss.xml"):
-    """
-    Parse docs/rss.xml and return a dict of:
-        { slug: { 'hash': str, 'length': str } }
-    extracted from <enclosure type="audio/mpeg" hash="..." length="..."> attributes.
-    Returns an empty dict if the file doesn't exist or has no audio enclosures.
-    """
-    if not os.path.exists(rss_path):
-        return {}
-
-    with open(rss_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    soup = BeautifulSoup(content, "xml")
-    result = {}
-    for item in soup.find_all("item"):
-        link = item.find("link")
-        if not link:
-            continue
-        # link text e.g. https://docodethatmatters.com/onboarding-devs/
-        slug = link.get_text(strip=True).rstrip("/").rsplit("/", 1)[-1]
-        enclosure = item.find("enclosure", attrs={"type": "audio/mpeg"})
-        if enclosure and enclosure.get("hash"):
-            result[slug] = {
-                "hash": enclosure["hash"],
-                "length": enclosure.get("length", "0"),
-            }
-    return result
-
-
-def _patch_rss_audio(updates, rss_path="docs/rss.xml"):
-    """
-    For each slug in `updates` ({ slug: { 'length': int, 'hash': str } }),
-    inject or replace the <enclosure type="audio/mpeg"> element inside the
-    matching <item> in docs/rss.xml, then write the file back.
-
-    The site base URL is inferred from the existing text enclosure URLs so
-    no hardcoded domain is needed.
-    """
-    with open(rss_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    soup = BeautifulSoup(content, "xml")
-
-    for item in soup.find_all("item"):
-        link = item.find("link")
-        if not link:
-            continue
-        slug = link.get_text(strip=True).rstrip("/").rsplit("/", 1)[-1]
-        if slug not in updates:
-            continue
-
-        info = updates[slug]
-
-        # Infer base URL from the existing text enclosure
-        txt_enclosure = item.find("enclosure", attrs={"type": "text/plain"})
-        if txt_enclosure:
-            base_url = txt_enclosure["url"].rsplit("/", 2)[0]  # strip /<slug>/index.tts
-        else:
-            base_url = ""
-
-        audio_url = f"{base_url}/audio/{slug}/index.mp3"
-
-        # Remove existing audio enclosure if present
-        existing = item.find("enclosure", attrs={"type": "audio/mpeg"})
-        if existing:
-            existing.decompose()
-
-        # Build and append the new audio enclosure tag
-        new_tag = soup.new_tag(
-            "enclosure",
-            url=audio_url,
-            type="audio/mpeg",
-            length=str(info["length"]),
-            hash=info["hash"],
-        )
-        item.append(new_tag)
-
-    with open(rss_path, "w", encoding="utf-8") as f:
-        f.write(str(soup))
-
-
-def _patch_sitemap_audio(updates, sitemap_path="docs/sitemap-0.xml"):
-    """
-    For each slug in `updates` ({ slug: { 'length': int, 'hash': str } }),
-    add a <url> entry for the .mp3 file to docs/sitemap-0.xml if one does
-    not already exist.  Base URL is inferred from existing <loc> entries.
-    """
-    if not os.path.exists(sitemap_path):
-        return
-
-    with open(sitemap_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    soup = BeautifulSoup(content, "xml")
-
-    # Infer base URL (scheme + host) from the first existing <loc>
-    from urllib.parse import urlparse
-
-    first_loc = soup.find("loc")
-    if not first_loc:
-        return
-    parsed = urlparse(first_loc.get_text(strip=True))
-    base_url = f"{parsed.scheme}://{parsed.netloc}"
-
-    # Collect already-present MP3 URLs so we don't duplicate
-    existing_locs = {loc.get_text(strip=True) for loc in soup.find_all("loc")}
-
-    urlset = soup.find("urlset")
-    if not urlset:
-        return
-
-    for slug in updates:
-        mp3_url = f"{base_url}/audio/{slug}/index.mp3"
-        if mp3_url in existing_locs:
-            continue
-
-        url_tag = soup.new_tag("url")
-        loc_tag = soup.new_tag("loc")
-        loc_tag.string = mp3_url
-        changefreq_tag = soup.new_tag("changefreq")
-        changefreq_tag.string = "monthly"
-        priority_tag = soup.new_tag("priority")
-        priority_tag.string = "0.5"
-        url_tag.append(loc_tag)
-        url_tag.append(changefreq_tag)
-        url_tag.append(priority_tag)
-        urlset.append(url_tag)
-        existing_locs.add(mp3_url)
-
-    with open(sitemap_path, "w", encoding="utf-8") as f:
-        f.write(str(soup))
-
-
 def _resolve_model(repo_id):
     """
     Ensure the model is cached locally, then set HF_HUB_OFFLINE=1 so
@@ -238,25 +104,31 @@ def _split_text_for_tts(text, max_chars=300):
     return chunks
 
 
-def _wav_to_mp3(wav_buf, mp3_path):
+def _wav_to_audio(wav_buf, outputs):
     """
-    Convert a WAV BytesIO buffer to an MP3 file using ffmpeg directly.
-    Requires ffmpeg to be installed on the system.
+    Encode a WAV BytesIO buffer into one or more audio files using ffmpeg.
+
+    `outputs` is a list of (out_path, ffmpeg_codec_args) tuples, e.g.
+        [("a.mp3", []), ("a.opus", ["-c:a", "libopus", "-b:a", "32k"])]
+    The WAV is written to a single temp file and each output is encoded from
+    it, so the source is only materialised once. Requires ffmpeg on PATH.
     """
     import subprocess
     import tempfile
 
+    data = wav_buf.read()
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
-        tmp.write(wav_buf.read())
+        tmp.write(data)
         tmp_path = tmp.name
 
     try:
-        subprocess.run(
-            ["ffmpeg", "-y", "-i", tmp_path, mp3_path],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        for out_path, codec_args in outputs:
+            subprocess.run(
+                ["ffmpeg", "-y", "-i", tmp_path, *codec_args, out_path],
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
     finally:
         os.unlink(tmp_path)
 
@@ -301,12 +173,15 @@ def text_to_speech_on_plain_text(slug_filter=None):
     Skip regeneration if BOTH conditions are true:
       - The SHA-256 hash of src/content/blog/<slug>.md matches the hash stored
         in audio-hashes.json (a sidecar file that survives astro build wiping docs/)
-      - audio/<slug>/index.mp3 already exists on disk (audio/ is committed to git
-        and never touched by astro build or astro dev)
+      - both audio/<slug>/index.mp3 and index.opus already exist on disk
+        (audio/ is committed to git and never touched by astro build/dev)
 
-    After processing, copies all audio/<slug>/index.mp3 → docs/<slug>/index.mp3
-    so the built site has the audio files. Also patches docs/rss.xml and
-    docs/sitemap-0.xml for newly generated posts, and writes audio-hashes.json.
+    Two encodings are written to public/audio/<slug>/ (committed to git): an
+    MP3 (universal fallback + the RSS <enclosure type="audio/mpeg"> source) and
+    a smaller Opus file (the preferred modern <audio> source). Astro copies
+    public/ into the build output, and the RSS feed emits the MP3 enclosure for
+    each post natively. This function only generates audio and maintains
+    audio-hashes.json.
 
     Args:
         slug_filter: if set, only process the post with this slug name.
@@ -314,7 +189,6 @@ def text_to_speech_on_plain_text(slug_filter=None):
     import soundfile as sf
     from kokoro import KPipeline
 
-    RSS_PATH = "docs/rss.xml"
     AUDIO_DIR = "public/audio"
     VOICE = "af_jessica"  # Kokoro American-English female voice
 
@@ -332,6 +206,7 @@ def text_to_speech_on_plain_text(slug_filter=None):
         txt_path = f"docs/{folder}/index.tts"
         src_path = f"src/content/blog/{folder}.md"
         mp3_path = f"{AUDIO_DIR}/{folder}/index.mp3"
+        opus_path = f"{AUDIO_DIR}/{folder}/index.opus"
 
         if not os.path.exists(txt_path):
             continue
@@ -354,8 +229,14 @@ def text_to_speech_on_plain_text(slug_filter=None):
         else:
             txt_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
 
-        # Skip if hash matches the sidecar AND the mp3 exists in audio/ (permanent store).
-        if audio_hashes.get(folder) == txt_hash and os.path.exists(mp3_path):
+        # Skip only if hash matches the sidecar AND BOTH encodings exist in
+        # audio/ (permanent store). Requiring the .opus too means existing posts
+        # regenerate once to gain the Opus file, then skip thereafter.
+        if (
+            audio_hashes.get(folder) == txt_hash
+            and os.path.exists(mp3_path)
+            and os.path.exists(opus_path)
+        ):
             print(f"Skipping {folder} (content unchanged)")
         else:
             print(f"Generating audio for {folder}...")
@@ -400,22 +281,38 @@ def text_to_speech_on_plain_text(slug_filter=None):
             sf.write(buf, audio, 24000, format="WAV")
             buf.seek(0)
             os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
-            _wav_to_mp3(buf, mp3_path)
+            # MP3 for the RSS enclosure + universal fallback; Opus (speech-tuned
+            # 24 kbps, ~25% smaller than the 32 kbps MP3) as the modern web
+            # source. -application voip optimises libopus for single-voice speech.
+            _wav_to_audio(
+                buf,
+                [
+                    (mp3_path, []),
+                    (
+                        opus_path,
+                        ["-c:a", "libopus", "-b:a", "24k", "-application", "voip"],
+                    ),
+                ],
+            )
 
-            size = os.path.getsize(mp3_path)
-            updates[folder] = {"length": size, "hash": txt_hash}
-            print(f"  -> {mp3_path} ({size:,} bytes)")
+            # RSS enclosure length is the MP3 byte size (see rss.xml.ts).
+            mp3_size = os.path.getsize(mp3_path)
+            opus_size = os.path.getsize(opus_path)
+            updates[folder] = {"length": mp3_size, "hash": txt_hash}
+            print(
+                f"  -> {mp3_path} ({mp3_size:,} bytes), "
+                f"{opus_path} ({opus_size:,} bytes)"
+            )
 
     if updates:
-        _patch_rss_audio(updates, RSS_PATH)
-        _patch_sitemap_audio(updates, "docs/sitemap-0.xml")
         # Persist hashes so the next build can skip unchanged posts.
+        # RSS <enclosure type="audio/mpeg"> elements are emitted natively by the
+        # Astro feed (src/pages/rss.xml.ts) from the mp3s in public/audio/, so
+        # nothing here patches docs/rss.xml or the sitemap anymore.
         _save_audio_hashes({slug: info["hash"] for slug, info in updates.items()})
-        print(
-            f"Patched {len(updates)} post(s): rss.xml, sitemap-0.xml, audio-hashes.json"
-        )
+        print(f"Generated audio for {len(updates)} post(s); updated audio-hashes.json")
     else:
-        print("Nothing to generate — copied existing audio to docs/.")
+        print("Nothing to generate — all audio up to date.")
 
 
 if __name__ == "__main__":

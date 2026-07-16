@@ -1,5 +1,19 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterAll } from 'vitest';
+import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { join } from 'node:path';
 import { markdownToText, byteLength } from '../lib/markdownToText';
+
+// The rss endpoint reads audio sizes from public/audio/<slug>/index.mp3 relative
+// to process.cwd(). Create a fixture mp3 for post-a so the audio-enclosure path
+// is exercised; post-b intentionally has none.
+const AUDIO_A_DIR = join(process.cwd(), 'public', 'audio', 'post-a');
+const AUDIO_A_MP3 = join(AUDIO_A_DIR, 'index.mp3');
+const AUDIO_A_BYTES = 5000;
+mkdirSync(AUDIO_A_DIR, { recursive: true });
+writeFileSync(AUDIO_A_MP3, Buffer.alloc(AUDIO_A_BYTES));
+afterAll(() => {
+  rmSync(AUDIO_A_DIR, { recursive: true, force: true });
+});
 
 // ── Fake posts ───────────────────────────────────────────────────────────────
 
@@ -188,6 +202,55 @@ describe('rss.xml GET handler', () => {
       expect(capturedRssArgs.items[0].customData).toContain(
         `length="${expectedLength}"`
       );
+    });
+  });
+
+  describe('rss() call arguments — markdown enclosure', () => {
+    beforeEach(() => {
+      vi.mocked(getCollection).mockResolvedValue([fakePostA] as any);
+    });
+
+    it('includes a text/markdown enclosure', async () => {
+      await callGET();
+      expect(capturedRssArgs.items[0].customData).toContain('type="text/markdown"');
+    });
+
+    it('markdown enclosure url points to the slug index.md', async () => {
+      await callGET('https://example.com/');
+      expect(capturedRssArgs.items[0].customData).toContain(
+        'url="https://example.com/post-a/index.md"'
+      );
+    });
+
+    it('markdown enclosure length matches byteLength(post.body)', async () => {
+      await callGET();
+      const expectedLength = byteLength(fakePostA.body);
+      expect(capturedRssArgs.items[0].customData).toContain(
+        `type="text/markdown" length="${expectedLength}"`
+      );
+    });
+  });
+
+  describe('rss() call arguments — audio enclosure', () => {
+    it('includes an audio/mpeg enclosure when the mp3 exists', async () => {
+      vi.mocked(getCollection).mockResolvedValue([fakePostA] as any);
+      await callGET('https://example.com/');
+      const cd = capturedRssArgs.items[0].customData;
+      expect(cd).toContain('type="audio/mpeg"');
+      expect(cd).toContain('url="https://example.com/audio/post-a/index.mp3"');
+      expect(cd).toContain(`length="${AUDIO_A_BYTES}"`);
+    });
+
+    it('omits the audio enclosure when no mp3 exists for the slug', async () => {
+      vi.mocked(getCollection).mockResolvedValue([fakePostB] as any);
+      await callGET('https://example.com/');
+      expect(capturedRssArgs.items[0].customData).not.toContain('audio/mpeg');
+    });
+
+    it('does not carry a custom hash attribute on the audio enclosure', async () => {
+      vi.mocked(getCollection).mockResolvedValue([fakePostA] as any);
+      await callGET('https://example.com/');
+      expect(capturedRssArgs.items[0].customData).not.toContain('hash=');
     });
   });
 

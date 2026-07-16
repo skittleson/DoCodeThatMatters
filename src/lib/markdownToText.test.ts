@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { markdownToText, markdownToTTSPlainText, markdownToPlainText, byteLength } from './markdownToText';
+import { markdownToText, markdownToTTSPlainText, markdownToPlainText, byteLength, audioEnclosureFor } from './markdownToText';
 
 describe('markdownToText', () => {
   describe('links', () => {
@@ -362,5 +362,38 @@ describe('byteLength', () => {
   it('returns the same length as TextEncoder for a longer string', () => {
     const str = 'The quick brown fox jumps over the lazy dog';
     expect(byteLength(str)).toBe(new TextEncoder().encode(str).length);
+  });
+});
+
+describe('audioEnclosureFor', () => {
+  it('returns null when no audio file exists for the slug', () => {
+    expect(audioEnclosureFor('missing', () => null)).toBeNull();
+  });
+
+  it('returns null when the audio file size is zero', () => {
+    expect(audioEnclosureFor('empty', () => 0)).toBeNull();
+  });
+
+  it('returns null for a negative (invalid) size', () => {
+    expect(audioEnclosureFor('weird', () => -1)).toBeNull();
+  });
+
+  it('returns the site-relative mp3 path for the slug', () => {
+    const enc = audioEnclosureFor('post-a', () => 12345);
+    expect(enc?.path).toBe('/audio/post-a/index.mp3');
+  });
+
+  it('returns the byte length reported by statSize', () => {
+    const enc = audioEnclosureFor('post-a', () => 12345);
+    expect(enc?.length).toBe(12345);
+  });
+
+  it('passes the slug through to the statSize lookup', () => {
+    let seen = '';
+    audioEnclosureFor('some-slug', (slug) => {
+      seen = slug;
+      return 1;
+    });
+    expect(seen).toBe('some-slug');
   });
 });
