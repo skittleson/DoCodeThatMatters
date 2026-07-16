@@ -20,29 +20,51 @@ const currentPath = Astro.url.pathname;
       >
         Do Code That Matters
       </a>
-      <!-- Row 2: nav links + RSS + theme toggle -->
-      <div class="flex items-center gap-4">
-        <a
-          href="/blog/"
-          class="font-mono text-sm transition-colors"
-          style={currentPath.startsWith('/blog') ? 'color: var(--color-accent);' : 'color: var(--color-text-muted);'}
-        >Blog</a>
-        <a
-          href="/about/"
-          class="font-mono text-sm transition-colors"
-          style={currentPath.startsWith('/about') ? 'color: var(--color-accent);' : 'color: var(--color-text-muted);'}
-        >About</a>
-        <a
-          href="/rss.xml"
-          aria-label="RSS feed"
+        <!-- Row 2: nav links + RSS + EPUB + theme toggle -->
+        <div class="flex items-center gap-4">
+          <a
+            href="/blog/"
+            class="font-mono text-sm transition-colors"
+            style={currentPath.startsWith('/blog') ? 'color: var(--color-accent);' : 'color: var(--color-text-muted);'}
+          >Blog</a>
+          <a
+            href="/about/"
+            class="font-mono text-sm transition-colors"
+            style={currentPath.startsWith('/about') ? 'color: var(--color-accent);' : 'color: var(--color-text-muted);'}
+          >About</a>
+          <a
+            href="/rss.xml"
+            aria-label="RSS feed"
+            class="transition-colors"
+            style="color: var(--color-text-muted);"
+            title="RSS feed"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="6.18" cy="17.82" r="2.18"/>
+              <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+            </svg>
+          </a>
+          <a
+            href="/blog.epub"
+            aria-label="Download EPUB"
+            class="transition-colors"
+            style="color: var(--color-text-muted);"
+            title="Download blog as EPUB"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"/>
+            </svg>
+          </a>
+          <a
+            href="/resume.json"
+          aria-label="JSON Resume"
           class="transition-colors"
           style="color: var(--color-text-muted);"
-          title="RSS feed"
+          title="JSON Resume"
         >
-          <!-- RSS icon -->
+          <!-- File icon -->
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <circle cx="6.18" cy="17.82" r="2.18"/>
-            <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+            <path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"/>
           </svg>
         </a>
         <button
@@ -93,16 +115,38 @@ const currentPath = Astro.url.pathname;
           class="font-mono text-sm transition-colors"
           style={currentPath.startsWith('/about') ? 'color: var(--color-accent);' : 'color: var(--color-text-muted);'}
         >About</a>
-        <a
-          href="/rss.xml"
-          aria-label="RSS feed"
+          <a
+            href="/rss.xml"
+            aria-label="RSS feed"
+            class="transition-colors"
+            style="color: var(--color-text-muted);"
+            title="RSS feed"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="6.18" cy="17.82" r="2.18"/>
+              <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+            </svg>
+          </a>
+          <a
+            href="/blog.epub"
+            aria-label="Download EPUB"
+            class="transition-colors"
+            style="color: var(--color-text-muted);"
+            title="Download blog as EPUB"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"/>
+            </svg>
+          </a>
+          <a
+            href="/resume.json"
+          aria-label="JSON Resume"
           class="transition-colors"
           style="color: var(--color-text-muted);"
-          title="RSS feed"
+          title="JSON Resume"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <circle cx="6.18" cy="17.82" r="2.18"/>
-            <path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/>
+            <path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"/>
           </svg>
         </a>
         <button

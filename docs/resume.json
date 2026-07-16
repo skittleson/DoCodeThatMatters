@@ -1,0 +1,366 @@
+{
+  "basics": {
+    "name": "Spencer Kittleson",
+    "label": "Senior Full Stack Engineer & Technical Lead",
+    "image": "https://avatars.githubusercontent.com/u/1360499?v=4",
+    "email": "spencer@docodethatmatters.com",
+    "phone": "",
+    "url": "https://docodethatmatters.com",
+    "summary": "Senior full-stack engineer and technical lead with 8+ years of experience building and scaling enterprise SaaS platforms. Deep expertise in .NET migrations, observability (OpenTelemetry), authentication/authorization, and AI/ML integration. Proven track record of 1,650+ commits, 672 merged PRs, and 1,701+ code reviews at MindTouch/NICE. Passionate about developer tooling, IoT/embedded systems, and mentoring teams.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "San Diego",
+      "countryCode": "US",
+      "region": "California"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "skittleson",
+        "url": "https://github.com/skittleson"
+      },
+      {
+        "network": "Twitter",
+        "username": "skittleson",
+        "url": "https://twitter.com/skittleson"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "NICE CXone Expert (formerly MindTouch)",
+      "position": "Senior Full Stack Engineer & Technical Lead",
+      "url": "https://www.nicecxone.com",
+      "startDate": "2019-01-01",
+      "endDate": "",
+      "summary": "Leading platform engineering for NICE CXone Expert, a large-scale SaaS knowledge management platform serving enterprise customers worldwide. Lead .NET migrations, OpenTelemetry observability integration, authentication/authorization systems, and AI/ML developer enablement across a distributed team. Manage and mentor developers while driving architectural decisions across .NET/C# backend, TypeScript/JavaScript frontend, and AWS infrastructure.",
+      "highlights": [
+        "Led multi-year .NET migration from Mono to .NET 8 targeting .NET 10, modernizing the entire stack",
+        "Architected and implemented OpenTelemetry observability across the monolith — instrumenting 80% of critical components with distributed tracing, metrics, and structured logging using Grafana and OpenObserve",
+        "Led design and development of Unified Knowledge Service (UKS), a federated knowledge platform with multi-tenant SSO and Cognigy integration",
+        "Redesigned authentication/authorization enablement — built self-service SSO setup, and consolidated legacy auth patterns",
+        "Responded to and documented security incidents including an authentication bypass in the legacy API",
+        "Migrated LambdaSharp infrastructure to AWS CDK for improved deployment reliability",
+        "Led RDS encryption rollout across production databases",
+        "Built developer tooling enforcing local test execution before PR submission",
+        "Mentored and managed a distributed developer team of 10-12 engineers across multiple time zones",
+        "Built AI-assisted technical documentation pipeline using LLMs for gap analysis and content generation",
+        "Created internal reference architectures and architectural decision records (ADRs) for AWS services, microservices, and authentication patterns",
+        "Drove developer productivity improvements — reported measurable error reduction from AI code reviewer integration in CI/CD",
+        "1,650+ commits, 672 merged PRs, 1,701+ PRs reviewed across 8 years on the MindTouch/Deki monorepo",
+        "Built and maintained LambdaSharp Tool (dotnet 8) for AWS Lambda deployment and management"
+      ]
+    }
+  ],
+  "volunteer": [
+    {
+      "name": "Home Automation Community",
+      "position": "Presenter & Knowledge Sharing",
+      "url": "",
+      "startDate": "2018-01-01",
+      "endDate": "",
+      "summary": "Shared expertise in home automation through community presentations and public talks, covering MQTT infrastructure, ESP32/ESP8266 embedded systems, and long-term IoT deployment strategies.",
+      "highlights": [
+        "Delivered multi-part presentation series on home automation, lessons learned, and IoT architecture",
+        "Shared technical write-ups on MQTT broker design, ESP32 firmware development, and network-isolated IoT deployments"
+      ]
+    }
+  ],
+  "education": [],
+  "awards": [],
+  "certificates": [],
+  "publications": [],
+  "skills": [
+    {
+      "name": ".NET Technologies",
+      "level": "Expert",
+      "keywords": [
+        "C#",
+        "ASP.NET",
+        "ASP.NET Core",
+        "Entity Framework",
+        "WASM",
+        "xUnit",
+        "nUnit"
+      ]
+    },
+    {
+      "name": "Programming Languages",
+      "level": "Expert",
+      "keywords": [
+        "C#",
+        "Python",
+        "TypeScript",
+        "JavaScript",
+        "C",
+        "C++",
+        "PHP",
+        "SQL",
+        "Shell Scripting",
+        "Rust"
+      ]
+    },
+    {
+      "name": "Database Design",
+      "level": "Expert",
+      "keywords": [
+        "SQL",
+        "PostgreSQL",
+        "SQL Server",
+        "MySQL",
+        "DynamoDB",
+        "Redis",
+        "Database Optimization",
+        "Table Overflow Mitigation"
+      ]
+    },
+    {
+      "name": "Web Development",
+      "level": "Expert",
+      "keywords": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "Astro",
+        "Tailwind CSS",
+        "React",
+        "Vue.js",
+        "PWA"
+      ]
+    },
+    {
+      "name": "Cloud & DevOps",
+      "level": "Expert",
+      "keywords": [
+        "AWS",
+        "Docker",
+        "Kubernetes",
+        "CI/CD",
+        "Jenkins",
+        "Serverless",
+        "Terraform",
+        "AWS CDK",
+        "Lambda",
+        "CloudFormation",
+        "Shell Scripting",
+        "Tailscale"
+      ]
+    },
+    {
+      "name": "Observability & Monitoring",
+      "level": "Advanced",
+      "keywords": [
+        "OpenTelemetry",
+        "Grafana",
+        "Tempo",
+        "Prometheus",
+        "Loki",
+        "OpenObserve",
+        "Distributed Tracing"
+      ]
+    },
+    {
+      "name": "IoT & Embedded Systems",
+      "level": "Expert",
+      "keywords": [
+        "Raspberry Pi",
+        "ESP32",
+        "ESP8266",
+        "MQTT",
+        "Arduino",
+        "MicroPython",
+        "Tasmota",
+        "OTA Updates"
+      ]
+    },
+    {
+      "name": "AI/ML",
+      "level": "Advanced",
+      "keywords": [
+        "OpenAI Whisper",
+        "Piper TTS",
+        "Ollama",
+        "AWS Bedrock",
+        "LLM Integration",
+        "ChromaDB",
+        "Gemini",
+        "AI Developer Tooling",
+        "Llama cpp"
+      ]
+    },
+    {
+      "name": "Authentication & Security",
+      "level": "Advanced",
+      "keywords": [
+        "OAuth 2.0",
+        "SAML",
+        "SSO",
+        "SCIM",
+        "Keycloak",
+        "Authentik",
+        "Cognito",
+        "Service Tokens",
+        "Security Incident Response"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native speaker"
+    }
+  ],
+  "interests": [
+    {
+      "name": "3D Printing",
+      "keywords": [
+        "CAD",
+        "CNC"
+      ]
+    },
+    {
+      "name": "Embedded Systems & IoT",
+      "keywords": [
+        "ESP32",
+        "ESP8266",
+        "MQTT",
+        "Raspberry Pi",
+        "Custom Firmware"
+      ]
+    },
+    {
+      "name": "Home Automation",
+      "keywords": [
+        "Smart Home",
+        "IoT",
+        "10+ Year MQTT Deployment"
+      ]
+    },
+    {
+      "name": "Hackathons",
+      "keywords": [
+        "Organizing",
+        "Hosting",
+        "Attending"
+      ]
+    }
+  ],
+  "references": [],
+  "projects": [
+    {
+      "name": "ESP-TypeScript",
+      "startDate": "2022-03-01",
+      "endDate": "",
+      "description": "Transpile TypeScript to Espruino JavaScript for ESP8266/ESP32 microcontrollers — enabling safe, maintainable, testable IoT firmware development.",
+      "highlights": [
+        "164 GitHub stars — most starred personal repository",
+        "Bridges TypeScript type safety to bare-metal ESP8266/ESP32 via Espruino transpilation",
+        "Enables full TypeScript features (interfaces, generics, async/await) on $5 microcontrollers",
+        "Template project for writing production-grade, type-checked embedded firmware"
+      ],
+      "url": "https://github.com/skittleson/ESP-TypeScript"
+    },
+    {
+      "name": "bluetooth-wos",
+      "startDate": "2024-09-01",
+      "endDate": "",
+      "description": "Bluetooth Wall of Sheep — terminal-based Bluetooth Low Energy hacking and monitoring tool for discovering, scanning, and interacting with BLE devices.",
+      "highlights": [
+        "15 GitHub stars",
+        "Built with Python for BLE scanning, device discovery, and protocol analysis",
+        "Terminal-based interface for real-time Bluetooth traffic monitoring",
+        "Supports hacking and reverse-engineering of BLE protocols"
+      ],
+      "url": "https://github.com/skittleson/bluetooth-wos"
+    },
+    {
+      "name": "mqtt_broker_esp",
+      "startDate": "2026-04-28",
+      "endDate": "",
+      "description": "Standalone MQTT 3.1.1 broker built from scratch in C for ESP32-S3 — designed for 10-year deployment on $10 silicon with no external dependencies, no cloud, no broker library.",
+      "highlights": [
+        "9 GitHub stars",
+        "~2,800 lines of custom C against lwIP BSD sockets handling CONNECT/SUBSCRIBE/PUBLISH/QoS 0+1/retained/wildcards/$SYS",
+        "Supports up to 100 concurrent clients on 8MB chip with PSRAM for retained store and in-flight tables",
+        "129 pytest assertions running against live ESP32 hardware on every release",
+        "Built-in Tasmota-style scheduled publishes, Berry scripting VM, SNTPv4 server, OTA with dual partitions",
+        "Featured on Hacker News with detailed technical discussion"
+      ],
+      "url": "https://github.com/skittleson/mqtt_broker_esp"
+    },
+    {
+      "name": "jarvis",
+      "startDate": "2024-06-01",
+      "endDate": "2024-12-01",
+      "description": "Local-first AI voice assistant using Piper TTS, OpenAI Whisper, and Ollama for on-device speech-to-text, LLM reasoning, and text-to-speech.",
+      "highlights": [
+        "5 GitHub stars",
+        "Fully local pipeline: Whisper for STT, Ollama for LLM, Piper for TTS — no cloud dependencies",
+        "Demonstrated viable local voice assistant architecture on commodity hardware"
+      ],
+      "url": "https://github.com/skittleson/jarvis"
+    },
+    {
+      "name": "esp32-watch",
+      "startDate": "2026-04-01",
+      "endDate": "",
+      "description": "ESP32-S3 smartwatch firmware with MicroPython/LVGL UI and BLE companion PWA — a full custom watch firmware stack.",
+      "highlights": [
+        "Custom firmware using MicroPython and LVGL for rich graphical UI",
+        "BLE companion PWA for configuration and data sync",
+        "End-to-end embedded product: hardware, firmware, and web companion"
+      ],
+      "url": "https://github.com/skittleson/esp32-watch"
+    },
+    {
+      "name": "Do Code That Matters",
+      "startDate": "2024-01-01",
+      "endDate": "",
+      "description": "Personal blog about software development, 3D printing, DIY, dotnet, raspberry pis, and C#.",
+      "highlights": [
+        "Built with Astro, Tailwind CSS, and TypeScript",
+        "3 GitHub stars"
+      ],
+      "url": "https://docodethatmatters.com"
+    },
+    {
+      "name": "GcodeController",
+      "startDate": "2022-01-01",
+      "endDate": "",
+      "description": "C# application to manage and control sending G-code to serial CNC/3D printing devices.",
+      "highlights": [
+        "7 GitHub stars",
+        "Built with C# and .NET for serial communication with CNC/3D printers",
+        "G-code parsing, queuing, and real-time device control"
+      ],
+      "url": "https://github.com/skittleson/GcodeController"
+    },
+    {
+      "name": "whisper-note",
+      "startDate": "2024-11-01",
+      "endDate": "",
+      "description": "CLI dictation tool powered by OpenAI Whisper for fast voice-to-text note-taking.",
+      "highlights": [
+        "2 GitHub stars",
+        "Python CLI leveraging Whisper for real-time speech-to-text",
+        "Quick note capture via voice input"
+      ],
+      "url": "https://github.com/skittleson/whisper-note"
+    },
+    
+    {
+      "name": "udp-to-websocket",
+      "startDate": "2020-01-01",
+      "endDate": "",
+      "description": "Bridge that forwards UDP server traffic to WebSocket connections for real-time web integration.",
+      "highlights": [
+        "2 GitHub stars",
+        "Enables UDP protocol data to be consumed by web browsers via WebSocket",
+        "Useful for integrating legacy UDP systems with modern web frontends"
+      ],
+      "url": "https://github.com/skittleson/udp-to-websocket"
+    }
+  ]
+}

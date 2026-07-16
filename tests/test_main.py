@@ -1,4 +1,4 @@
-"""Unit tests for main.py — _load_rss_audio, _patch_rss_audio, _patch_sitemap_audio, _patch_html_audio, is_absolute, _split_text_for_tts."""
+"""Unit tests for main.py — _load_rss_audio, _patch_rss_audio, _patch_sitemap_audio, is_absolute, _split_text_for_tts."""
 
 import textwrap
 from pathlib import Path
@@ -10,7 +10,6 @@ from main import (
     _load_rss_audio,
     _patch_rss_audio,
     _patch_sitemap_audio,
-    _patch_html_audio,
     _split_text_for_tts,
     is_absolute,
 )
@@ -178,7 +177,7 @@ class TestPatchRssAudio:
         )
         soup = self._read_soup(rss_file)
         enc = soup.find("enclosure", attrs={"type": "audio/mpeg"})
-        assert enc["url"] == f"{BASE_URL}/my-post/index.mp3"
+        assert enc["url"] == f"{BASE_URL}/audio/my-post/index.mp3"
 
     def test_leaves_other_items_untouched(self, tmp_path):
         items = _item("updated-post", audio=False)
@@ -346,13 +345,13 @@ class TestPatchSitemapAudio:
         sitemap_file = _write_sitemap(tmp_path, _sitemap())
         _patch_sitemap_audio({"my-post": {"length": 1, "hash": "h"}}, str(sitemap_file))
         raw = sitemap_file.read_text(encoding="utf-8")
-        assert f"{SITEMAP_BASE_URL}/my-post/index.mp3" in raw
+        assert f"{SITEMAP_BASE_URL}/audio/my-post/index.mp3" in raw
 
     def test_injected_entry_has_changefreq_and_priority(self, tmp_path):
         sitemap_file = _write_sitemap(tmp_path, _sitemap())
         _patch_sitemap_audio({"my-post": {"length": 1, "hash": "h"}}, str(sitemap_file))
         soup = BeautifulSoup(sitemap_file.read_text(encoding="utf-8"), "xml")
-        mp3_url = f"{SITEMAP_BASE_URL}/my-post/index.mp3"
+        mp3_url = f"{SITEMAP_BASE_URL}/audio/my-post/index.mp3"
         url_tag = next(
             u
             for u in soup.find_all("url")
@@ -396,108 +395,11 @@ class TestPatchSitemapAudio:
             str(sitemap_file),
         )
         raw = sitemap_file.read_text(encoding="utf-8")
-        assert f"{SITEMAP_BASE_URL}/post-a/index.mp3" in raw
-        assert f"{SITEMAP_BASE_URL}/post-b/index.mp3" in raw
+        assert f"{SITEMAP_BASE_URL}/audio/post-a/index.mp3" in raw
+        assert f"{SITEMAP_BASE_URL}/audio/post-b/index.mp3" in raw
 
     def test_no_op_when_sitemap_missing(self, tmp_path):
         # Should not raise — just return silently
         _patch_sitemap_audio(
             {"my-post": {"length": 1, "hash": "h"}}, str(tmp_path / "missing.xml")
         )
-
-
-# ── _patch_html_audio ─────────────────────────────────────────────────────────
-
-
-def _html(slug: str, *, existing_player: bool = False) -> str:
-    """Minimal post HTML with an <article> element."""
-    player = (
-        '<div class="audio-player mt-6"><audio src="/old/index.mp3"></audio></div>'
-        if existing_player
-        else ""
-    )
-    return textwrap.dedent(f"""\
-        <!DOCTYPE html>
-        <html>
-          <body>
-            <article class="article-body">
-              <p>Post content here.</p>
-              {player}
-            </article>
-          </body>
-        </html>
-    """)
-
-
-def _write_html(tmp_path: Path, slug: str, content: str) -> Path:
-    post_dir = tmp_path / slug
-    post_dir.mkdir()
-    f = post_dir / "index.html"
-    f.write_text(content, encoding="utf-8")
-    return tmp_path
-
-
-class TestPatchHtmlAudio:
-    def test_injects_audio_player_into_article(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        assert soup.find("audio") is not None
-
-    def test_audio_src_points_to_slug_mp3(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        assert soup.find("audio")["src"] == "/my-post/index.mp3"
-
-    def test_audio_has_controls_and_preload(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        audio = soup.find("audio")
-        assert audio.has_attr("controls")
-        assert audio.get("preload") == "metadata"
-
-    def test_download_link_present_and_correct(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        link = soup.find("a", href="/my-post/index.mp3")
-        assert link is not None
-        assert link.has_attr("download")
-
-    def test_player_is_inside_article(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        article = soup.find("article")
-        assert article.find("audio") is not None
-
-    def test_replaces_existing_player_not_duplicates(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post", existing_player=True))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        soup = BeautifulSoup(
-            (tmp_path / "my-post" / "index.html").read_text(), "html.parser"
-        )
-        assert len(soup.find_all("audio")) == 1
-        assert soup.find("audio")["src"] == "/my-post/index.mp3"
-
-    def test_leaves_post_without_html_file_untouched(self, tmp_path):
-        # slug in updates but no html file — should not raise
-        _patch_html_audio({"ghost-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-
-    def test_original_article_content_preserved(self, tmp_path):
-        _write_html(tmp_path, "my-post", _html("my-post"))
-        _patch_html_audio({"my-post": {"length": 1, "hash": "h"}}, str(tmp_path))
-        raw = (tmp_path / "my-post" / "index.html").read_text()
-        assert "Post content here." in raw

@@ -21,12 +21,15 @@ export async function GET(context: APIContext) {
       description: post.data.description ?? '',
       link: `/${stripExt(post.id)}/`,
       pubDate: post.data.date ?? new Date(),
-      customData: `<enclosure url="${siteUrl}${stripExt(post.id)}/index.txt" type="text/plain" length="${byteLength(markdownToText(post.body))}" />`,
+      customData: `<enclosure url="${siteUrl}${stripExt(post.id)}/index.txt" type="text/plain" length="${byteLength(markdownToText(post.body))}" />
+        <dct:words>${post.body.split(/\s+/).filter(Boolean).length}</dct:words>`,
     })),
     customData: `
+      <xmlns:dct>http://purl.org/dc/terms/</xmlns:dct>
       <language>en-us</language>
       <copyright>Copyright ${new Date().getFullYear()} Spencer Kittleson</copyright>
       <ttl>30</ttl>
+      <link rel="alternate" type="application/epub+zip" href="${siteUrl}blog.epub"/>
     `,
   });
 }

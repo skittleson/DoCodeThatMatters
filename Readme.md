@@ -75,9 +75,11 @@ This project uses [uv](https://docs.astral.sh/uv/) to manage Python dependencies
 # Create .venv pinned to Python 3.12 and install base + dev deps
 uv sync --group dev
 
-# Install the heavy ML/TTS deps (KittenTTS, PyTorch, etc.) into the same .venv
+# Install the heavy ML/TTS deps (Kokoro-82M, PyTorch, etc.) into the same .venv
+# Kokoro uses the GPU automatically when CUDA is available, otherwise CPU.
 VIRTUAL_ENV=.venv uv pip install \
-  "kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl" \
+  "kokoro>=0.9.4" "misaki[en]>=0.9.4" \
+  "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" \
   soundfile
 ```
 

@@ -5,3 +5,5 @@ Disallow: /admin/
 Disallow: /edit/
 
 Sitemap: https://docodethatmatters.com/sitemap-index.xml
+
+Content-Signal: ai-train=no, search=yes, ai-input=no

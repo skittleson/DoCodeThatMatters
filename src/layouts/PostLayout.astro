@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { stripExt } from '../lib/markdownToText';
+import { buildTFIDF, getRelatedPosts } from '../lib/text-similarity';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -28,6 +29,9 @@ const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const latestPosts = allPosts
   .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0))
   .slice(0, 5);
+
+const tfidfModel = buildTFIDF(allPosts.map((p) => p.body));
+const relatedPosts = getRelatedPosts(post, allPosts, tfidfModel, 3);
 
 const issueTitle = encodeURIComponent(`Post - ${title}`);
 
@@ -57,6 +61,7 @@ const localWebp = isLocalImage
           itemscope
           itemtype="http://schema.org/BlogPosting"
         >
+          <meta itemprop="wordCount" content={wordCount} />
           <meta itemprop="mainEntityOfPage" content={postUrl} />
 
           <header class="mb-6">
@@ -77,6 +82,8 @@ const localWebp = isLocalImage
               {modified && (
                 <meta itemprop="dateModified" content={schemaDate(modified)} />
               )}
+              <span>{wordCount} words</span>
+              <span aria-hidden="true">·</span>
               <span>{readingTime} min read</span>
               <span aria-hidden="true">·</span>
               <span itemprop="author" itemscope itemtype="https://schema.org/Person">
@@ -181,11 +188,38 @@ const localWebp = isLocalImage
             Buy me a ☕ to support!
           </a>
         </p>
+
       </div>
 
       <!-- Sidebar -->
       <aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0">
         <h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">
+          Related Posts
+        </h3>
+        <ul class="space-y-3 list-none p-0 m-0">
+          {relatedPosts.map((p) => (
+            <li>
+              <a
+                href={`/${stripExt(p.id)}/`}
+                class="text-xs font-mono leading-snug block hover:underline"
+                style="color: var(--color-accent);"
+              >
+                {p.data.title}
+              </a>
+              {p.data.date && (
+                <time
+                  datetime={p.data.date.toISOString()}
+                  class="text-xs font-mono block mt-0.5"
+                  style="color: var(--color-text-muted);"
+                >
+                  {formatDate(p.data.date)}
+                </time>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="text-xs font-bold font-mono mt-6 mb-3 uppercase tracking-wide" style="color: var(--color-text);">
           Latest Posts
         </h3>
         <ul class="space-y-3 list-none p-0 m-0">

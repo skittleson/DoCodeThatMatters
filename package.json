@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && uv run python main.py",
+    "build": "astro build && node scripts/generate-epub.mjs && uv run python main.py",
     "preview": "astro preview",
     "compress": "imagemin src/images/* --out-dir=src/images"
   },
@@ -27,6 +27,8 @@
   "dependencies": {
     "@astrojs/node": "^11.0.2",
     "easymde": "^2.21.0",
+    "epub-gen": "^0.1.0",
+    "gray-matter": "^4.0.3",
     "highlight.js": "^11.11.1",
     "marked": "^18.0.6",
     "marked-highlight": "^2.2.4",

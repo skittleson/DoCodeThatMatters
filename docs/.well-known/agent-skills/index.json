@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "read-blog-posts",
+      "type": "skill-md",
+      "description": "Retrieve and read blog post content, audio transcripts, and site resources from docodethatmatters.com",
+      "url": "https://docodethatmatters.com/.well-known/agent-skills/read-blog-posts.md",
+      "digest": "sha256:a8bf7e6dbd1d4fcf7865cf6914506721ce1da3f1811777a2d58f432b57e5c100"
+    }
+  ]
+}

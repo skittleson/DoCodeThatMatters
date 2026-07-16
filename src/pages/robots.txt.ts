@@ -8,5 +8,7 @@ Allow: /*.mp3
 Disallow: /admin/
 Disallow: /edit/
 
-Sitemap: ${sitemapURL.href}`);
+Sitemap: ${sitemapURL.href}
+
+Content-Signal: ai-train=no, search=yes, ai-input=no`);
 };

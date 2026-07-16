@@ -38,6 +38,7 @@ export async function GET(context: APIContext) {
 
       // TODO centeralize the author
       authors: [{ name: 'Spencer Kittleson' }],
+      word_count: post.body.split(/\s+/).filter(Boolean).length,
     })),
   };
 

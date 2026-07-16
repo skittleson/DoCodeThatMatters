@@ -1,9 +1,9 @@
 [project]
 name = "docodethatmatters"
 version = "0.1.0"
-requires-python = ">=3.8"
+requires-python = ">=3.10, <3.13"
 # Lightweight deps only — no ML/GPU packages here so `uv run pytest` stays fast.
-# Install the full stack (including KittenTTS) with: uv sync --group tts
+# Install the full stack (including Kokoro TTS) with: uv sync --group tts
 dependencies = [
     "bs4",
     "requests",
@@ -15,8 +15,14 @@ dependencies = [
 [dependency-groups]
 # Heavy ML deps needed to actually generate audio (not required for tests).
 # Requires ffmpeg on the system: sudo apt install ffmpeg / brew install ffmpeg
+# Kokoro runs on CUDA automatically when a GPU is available, else CPU.
 tts = [
-    "kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl",
+    "kokoro>=0.9.4",
+    "misaki[en]>=0.9.4",
+    # misaki's English G2P needs this spaCy model. Ship it explicitly so it is
+    # never auto-downloaded via `python -m pip` at runtime (uv venvs have no pip,
+    # which otherwise crashes generation).
+    "en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
     "soundfile",
     "numpy",
 ]

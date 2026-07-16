@@ -206,14 +206,12 @@ def _resolve_model(repo_id):
 
 def _split_text_for_tts(text, max_chars=300):
     """
-    Split text into paragraph-sized chunks safe for the KittenTTS BERT encoder.
+    Split text into paragraph-sized chunks safe for the TTS model.
 
-    KittenTTS internally splits on sentence endings (.!?) with max_len=400, but
-    long list items and run-on sentences can still exceed the ONNX model's
-    sequence limit, causing an 'invalid expand shape' error at the BERT node.
-
-    This pre-splits on paragraph/newline boundaries first, then falls back to
-    splitting on sentence endings for any paragraph that is still too long.
+    Long list items and run-on sentences can exceed the model's practical
+    sequence length (Kokoro warns that long texts may be truncated unless
+    split), so we pre-split on paragraph/newline boundaries first, then fall
+    back to splitting on sentence endings for any paragraph still too long.
     """
     import re
 
@@ -232,8 +230,8 @@ def _split_text_for_tts(text, max_chars=300):
                 else:
                     if current:
                         chunks.append(current.strip())
-                    # If a single sentence exceeds max_chars, let KittenTTS
-                    # handle it — it has its own word-level fallback
+                    # If a single sentence exceeds max_chars, let the model
+                    # handle it — Kokoro chunks internally as a fallback.
                     current = sentence
             if current:
                 chunks.append(current.strip())
@@ -297,7 +295,8 @@ def _save_audio_hashes(hashes, path=AUDIO_HASHES_PATH):
 def text_to_speech_on_plain_text(slug_filter=None):
     """
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using
-    KittenTTS kitten-tts-mini (80M, best quality) with Hugo voice.
+    Kokoro-82M with the af_jessica voice. Runs on CUDA if a GPU is
+    available, otherwise falls back to CPU.
 
     Skip regeneration if BOTH conditions are true:
       - The SHA-256 hash of src/content/blog/<slug>.md matches the hash stored
@@ -313,10 +312,11 @@ def text_to_speech_on_plain_text(slug_filter=None):
         slug_filter: if set, only process the post with this slug name.
     """
     import soundfile as sf
-    from kittentts import KittenTTS
+    from kokoro import KPipeline
 
     RSS_PATH = "docs/rss.xml"
     AUDIO_DIR = "public/audio"
+    VOICE = "af_jessica"  # Kokoro American-English female voice
 
     # Load persisted hashes from sidecar
     audio_hashes = _load_audio_hashes()
@@ -361,20 +361,32 @@ def text_to_speech_on_plain_text(slug_filter=None):
             print(f"Generating audio for {folder}...")
 
             if model is None:
-                print("Loading KittenTTS model (kitten-tts-mini-0.8)...")
-                model = KittenTTS(_resolve_model("KittenML/kitten-tts-mini-0.8"))
+                # Prefer the GPU (Kokoro is ~16x faster on CUDA); fall back to CPU.
+                try:
+                    import torch
+
+                    device = "cuda" if torch.cuda.is_available() else "cpu"
+                except ImportError:
+                    device = "cpu"
+                _resolve_model("hexgrad/Kokoro-82M")
+                print(f"Loading Kokoro-82M model on {device}...")
+                model = KPipeline(lang_code="a", device=device)
 
             audio_chunks = []
             for chunk in _split_text_for_tts(text):
                 # Skip chunks with no real word content — URLs, punctuation-only
-                # lines, or code remnants produce no phonemes and cause KittenTTS
-                # to return an empty array, crashing numpy.concatenate.
+                # lines, or code remnants produce no phonemes and cause the model
+                # to return no audio, crashing numpy.concatenate.
                 if not any(c.isalpha() for c in chunk):
                     continue
                 try:
-                    result = model.generate(chunk, voice="Hugo", clean_text=True)
-                    if result is not None and result.size > 0:
-                        audio_chunks.append(result)
+                    for _, _, result in model(chunk, voice=VOICE):
+                        if result is None:
+                            continue
+                        # Kokoro yields a torch tensor; convert to numpy.
+                        result = numpy.asarray(result)
+                        if result.size > 0:
+                            audio_chunks.append(result)
                 except Exception as e:
                     print(f"  Warning: skipping chunk ({e!r}): {chunk[:60]!r}")
 
