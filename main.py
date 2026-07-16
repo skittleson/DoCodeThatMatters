@@ -209,6 +209,27 @@ def _build_tts_prompt(markdown):
     return "Rewrite the following blog post markdown into a spoken script:\n\n" + markdown
 
 
+def _request_tts_script(markdown, host, model):
+    """
+    Send the markdown to Ollama's /api/generate (stream disabled) and return the
+    generated spoken script. Raises requests.RequestException on connection
+    errors or non-2xx responses (via raise_for_status), so callers can catch a
+    single exception type for fallback handling.
+    """
+    resp = requests.post(
+        f"{host}/api/generate",
+        json={
+            "model": model,
+            "system": TTS_SYSTEM_PROMPT,
+            "prompt": _build_tts_prompt(markdown),
+            "stream": False,
+        },
+        timeout=600,
+    )
+    resp.raise_for_status()
+    return resp.json()["response"].strip()
+
+
 def text_to_speech_on_plain_text(slug_filter=None):
     """
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using

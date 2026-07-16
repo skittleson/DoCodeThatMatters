@@ -13,7 +13,48 @@ from main import (
     _ollama_config,
     TTS_SYSTEM_PROMPT,
     _build_tts_prompt,
+    _request_tts_script,
 )
+from unittest.mock import MagicMock, patch
+import requests
+
+
+class TestRequestTtsScript:
+    def test_success_returns_response_text(self):
+        fake_resp = MagicMock()
+        fake_resp.raise_for_status.return_value = None
+        fake_resp.json.return_value = {"response": "  Spoken script here.  "}
+        with patch("main.requests.post", return_value=fake_resp) as post:
+            out = _request_tts_script("# md body", "http://localhost:11434", "llama3.1")
+        assert out == "Spoken script here."
+        # Called the /api/generate endpoint with stream disabled and the system prompt
+        args, kwargs = post.call_args
+        assert args[0] == "http://localhost:11434/api/generate"
+        assert kwargs["json"]["stream"] is False
+        assert kwargs["json"]["model"] == "llama3.1"
+        assert kwargs["json"]["system"] == TTS_SYSTEM_PROMPT
+        assert "# md body" in kwargs["json"]["prompt"]
+
+    def test_connection_error_propagates(self):
+        with patch(
+            "main.requests.post",
+            side_effect=requests.ConnectionError("refused"),
+        ):
+            try:
+                _request_tts_script("md", "http://localhost:11434", "llama3.1")
+                assert False, "expected ConnectionError"
+            except requests.RequestException:
+                pass
+
+    def test_non_200_raises(self):
+        fake_resp = MagicMock()
+        fake_resp.raise_for_status.side_effect = requests.HTTPError("404")
+        with patch("main.requests.post", return_value=fake_resp):
+            try:
+                _request_tts_script("md", "http://localhost:11434", "llama3.1")
+                assert False, "expected HTTPError"
+            except requests.RequestException:
+                pass
 
 
 class TestTtsPrompt:
