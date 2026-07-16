@@ -26,7 +26,6 @@ export async function GET(context: APIContext) {
         <dct:words>${post.body.split(/\s+/).filter(Boolean).length}</dct:words>`,
     })),
     customData: `
-      <xmlns:dct>http://purl.org/dc/terms/</xmlns:dct>
       <language>en-us</language>
       <copyright>Copyright ${new Date().getFullYear()} Spencer Kittleson</copyright>
       <ttl>30</ttl>
