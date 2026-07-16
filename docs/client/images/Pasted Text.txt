@@ -1,0 +1,3 @@
+start -> sent
+{"state":"charge_done","error":0,"mode":"standby","battery":100,"suction":"high"}
+State unchanged. The vacuum is ignoring the command. This is likely a DPS issue — the set_multiple_values equivalent in the Python tinytuya send

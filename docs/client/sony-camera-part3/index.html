@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="en-US" data-theme="dark" itemscope itemtype="http://schema.org/Blog"><head><!-- Flash-of-wrong-theme prevention: runs before first paint --><script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch (_) {}
+    })();
+  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"><title>Tethered Raspberry Pi for Modern Camera Functionality</title><meta name="description" content="How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing."><meta itemprop="description" content="How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing."><meta name="keywords" content="Sony a6400, Sony a6000, Raspberry Pi, tethered photography, gphoto2, Bluetooth protocol, camera hacking, copyparty"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="Tethered Raspberry Pi for Modern Camera Functionality - Do Code That Matters"><meta property="og:description" content="How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/sony-camera-part3/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/Sony-A6000-Sony-16-50mm.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Tethered Raspberry Pi for Modern Camera Functionality - Do Code That Matters"><meta name="twitter:description" content="How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing."><meta name="twitter:creator" content="@skittleson"><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><link rel="author" href="/humans.txt"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ');
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.BqCnzbVq.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><!-- RSS icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  (function () {
+    function syncIcons(theme) {
+      var isDark = theme === 'dark';
+      // mobile
+      var sunM = document.getElementById('icon-sun');
+      var moonM = document.getElementById('icon-moon');
+      // desktop
+      var sunD = document.getElementById('icon-sun-desktop');
+      var moonD = document.getElementById('icon-moon-desktop');
+
+      if (sunM) sunM.style.display = isDark ? '' : 'none';
+      if (moonM) moonM.style.display = isDark ? 'none' : '';
+      if (sunD) sunD.style.display = isDark ? '' : 'none';
+      if (moonD) moonD.style.display = isDark ? 'none' : '';
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.dataset.theme || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (_) {}
+      syncIcons(next);
+    }
+
+    // Sync icons on initial load
+    var initialTheme = document.documentElement.dataset.theme || 'dark';
+    syncIcons(initialTheme);
+
+    var btn = document.getElementById('theme-toggle');
+    var btnD = document.getElementById('theme-toggle-desktop');
+    if (btn) btn.addEventListener('click', toggleTheme);
+    if (btnD) btnD.addEventListener('click', toggleTheme);
+  })();
+</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/sony-camera-part3/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">Tethered Raspberry Pi for Modern Camera Functionality</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2024-06-28T00:00:00.000Z">Jun 2024</time><span aria-hidden="true">·</span><span>7 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"><picture><source type="image/webp" srcset="/images/Sony-A6000-Sony-16-50mm.webp"><img itemprop="url contentUrl" src="/images/Sony-A6000-Sony-16-50mm.jpg" alt="Sony a6400 tethered to Raspberry Pi" width="800" height="600" class="rounded-md w-full object-cover" loading="eager" fetchpriority="high" decoding="async"></picture><figcaption itemprop="caption" class="text-xs mt-1 text-center" style="color: var(--color-text-muted);">Sony a6400 tethered to Raspberry Pi</figcaption></figure></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><h2 id="tldr">TLDR;</h2>
+<p><a href="https://github.com/skittleson/pi_sony_remote">Code about this blog post</a>. Drop the files over ssh into a raspberry pi zero with a micro usb cable then you should be set!</p>
+<h2 id="introduction">Introduction</h2>
+<p>As in my other posts, i’ve made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts (<a href="hacking-sony-a6000-for-modernization.md">hacking-sony-a6000-for-modernization.md</a>) and 2 (<a href="hacking-sony-a6000-more.md">hacking-sony-a6000-more.md</a>): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.</p>
+<p>So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.</p>
+<h2 id="the-dead-ends">The Dead Ends</h2>
+<p>Using the Sony App is kind of slow. I know they did a general good job on it. It’s just really flaky to get going. I tried a bunch of ways but it could be my phone or the camera itself. Not sure but i dont see Sony making a ton of improvements on it.</p>
+<ul>
+<li><strong>Wi-Fi hotspot mode</strong> dumb terminal, no internet, Camera SDK only returns thumbnails without the <code>setPostviewImageSize</code> hack (covered in Part 1)</li>
+<li><strong>USB mass storage</strong> USB 2.0 is painfully slow for 7-10MB JPEGs; camera freezes if you don’t eject safely</li>
+<li><strong>Sony Camera SDK full download</strong> — the <code>setPostviewImageSize</code> trick gives one photo at a time; no enumerate API, no batch download, connection drops when leaving Smart Remote mode</li>
+<li><strong>FTP from camera</strong> Part 2 showed this: 70 files in 13 minutes. Not a workflow.</li>
+<li><strong>gphoto2 with a laptop</strong> works perfectly, not very mobile.</li>
+</ul>
+<p>There is one really cool feature about gphoto2 in PC Mode tho… camera events. Every interaction shows you exactly what gets changed on the camera. We can use that to gain insights and determine what to do next. Just dont want to have a laptop with me.</p>
+<h2 id="architecture">Architecture</h2>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Sony a6400 (PC Remote mode)</span></span>
+<span class="line"><span>        │ USB</span></span>
+<span class="line"><span>        ▼</span></span>
+<span class="line"><span>   gphoto2 --capture-tethered</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span>        ▼</span></span>
+<span class="line"><span>   ~/downloads/NNNNN.jpg</span></span>
+<span class="line"><span>        │</span></span>
+<span class="line"><span>        ├──► Bluetooth RFCOMM server</span></span>
+<span class="line"><span>        └──► Copyparty HTTP server</span></span></code></pre>
+<ul>
+<li>Three services: tethered capture, Bluetooth RFCOMM, copyparty HTTP</li>
+<li>Can run all three or any subset</li>
+<li>Camera always connected via USB in PC Remote mode</li>
+</ul>
+<h2 id="tethered-capture">Tethered Capture</h2>
+<p><strong>Goal:</strong> The most fragile part of the system. Real engineering pain points.</p>
+<p>Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can get those realtime events to stream over.  As well as the full image. its only there for temporary so we need to grab while its still possible to get it.</p>
+<p>I rebuilt gphoto2 from source. it takes awhile on the pi but more stable at 2.5.32+ . Use <code>setup.sh</code> to build from source.</p>
+<p><strong>The Lua monitor pattern (not a systemd Restart trap):</strong></p>
+<ul>
+<li>gphoto2 exits when the USB link blips</li>
+<li>systemd restart is fast enough to collide with the camera still holding the USB device → “Could not claim the USB device”</li>
+<li>Solution: Lua script maintains one persistent gphoto2 session; kills <code>gvfs-gphoto2-volume-monitor</code>, waits 5 seconds, relaunches</li>
+<li>systemd sees a healthy Lua process and never triggers its own restart logic</li>
+<li>Show the Lua loop snippet</li>
+</ul>
+<p><strong>Sequential filenames:</strong></p>
+<ul>
+<li>gphoto2’s <code>%Y%m%d%H%M%S.jpg</code> sorts wrong on mobile</li>
+<li>Use <code>--filenumber=N --filename %05n.%C</code> → <code>00001.jpg</code>, <code>00002.jpg</code></li>
+<li>Lua script scans download directory for highest number before each session → no overwrites after crash/restart</li>
+</ul>
+<p><strong>The <code>WorkingDirectory=/</code> silent failure trap:</strong></p>
+<ul>
+<li>gphoto2 writes a temp file to CWD before moving to target filename</li>
+<li>Default systemd CWD is <code>/</code>, not writable by service user</li>
+<li>Result: gphoto2 exits 0, photo never appears in download directory</li>
+<li>Fix: <code>WorkingDirectory=/home/dietpi/downloads</code> in systemd unit</li>
+<li><em>This one wasted hours</em> — emphasize this</li>
+</ul>
+<hr>
+<h2 id="the-usb-mode-switching-bug">The USB Mode-Switching Bug</h2>
+<p><strong>Goal:</strong> The most annoying physical bug in the system. Not software — physics.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li>
+<p><a href="https://github.com/skittleson/pi_sony_remote/blob/master/README.md"><code>README.md</code></a> — troubleshooting section</p>
+</li>
+<li>
+<p>a6400 falls from PC Control mode (<code>054c:0caa</code>) to charging mode (<code>054c:0994</code>)</p>
+</li>
+<li>
+<p>Causes: marginal cable, insufficient Pi USB current, camera connected before USB stack is ready</p>
+</li>
+<li>
+<p>gphoto2 can’t find the camera in charging mode</p>
+</li>
+<li>
+<p><strong>Fixes:</strong> short quality cable, powered USB hub, 5-second sleep in Lua monitor for re-enumeration</p>
+</li>
+</ul>
+<h2 id="the-bluetooth-binary-protocol">The Bluetooth Binary Protocol</h2>
+<p><strong>Goal:</strong> The technical deep-dive. This is the HN-worthy section.</p>
+<p>The easiest approach <a href="https://github.com/skittleson/pi_sony_remote/blob/master/services/sony_camera_bt_server.py"><code>was to use RFCOMM</code></a> but i know its a bit slower so compression is required.  I suspect this is why the Sony android is so slow. OBEX/OPP is bloated; HTTP over Bluetooth PAN/DUN is finicky on both sides</p>
+<p>So a simple custom protocal was made, only 3 bytes of overhead per message! <code>[1 byte opcode] [2 bytes big-endian length] [payload]</code></p>
+<p><strong>Commands:</strong></p>
+<ul>
+<li><code>0x01 LIST</code> — no payload, returns <code>0x81</code> with newline-delimited filenames</li>
+<li><code>0x02 GET</code> — payload is <code>&#x3C;quality byte>&#x3C;filename></code>, returns <code>0x82</code> with JPEG data</li>
+<li><code>0xFE</code> — error responses with ASCII messages (<code>FILE_NOT_FOUND</code>, <code>BAD_QUALITY</code>, etc.)</li>
+</ul>
+<p><strong>Quality tiers (server-side compression with Pillow/LANCZOS):</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Quality</th><th>Resize</th><th>JPEG quality</th><th>Typical size</th></tr></thead><tbody><tr><td>0</td><td>None (original)</td><td>—</td><td>~7-10 MB</td></tr><tr><td>1</td><td>Half-size</td><td>75</td><td>~1 MB</td></tr><tr><td>2</td><td>1200px wide</td><td>75</td><td>~300 KB</td></tr><tr><td>3</td><td>1200px wide</td><td>40</td><td>~100 KB</td></tr></tbody></table>
+<ul>
+<li>Quality 3 = preview in under 10 seconds over Bluetooth</li>
+<li>Pi does the CPU work; phone receives final compressed JPEG</li>
+</ul>
+<hr>
+<h2 id="copyparty-zero-config-lan-browsing">Copyparty: Zero-Config LAN Browsing</h2>
+<p><strong>Goal:</strong> Quick section — the alternative to Bluetooth for LAN setups.</p>
+<p><strong>References:</strong></p>
+<ul>
+<li>
+<p><a href="https://github.com/skittleson/pi_sony_remote/blob/master/copyparty-setup.sh"><code>copyparty-setup.sh</code></a></p>
+</li>
+<li>
+<p><code>bash copyparty-setup.sh &#x26;&#x26; sudo systemctl enable --now copyparty</code></p>
+</li>
+<li>
+<p>No nginx, no Apache, no config files</p>
+</li>
+<li>
+<p><code>http://&#x3C;pi-ip>:8080</code> → full file browser with thumbnails and grid view</p>
+</li>
+<li>
+<p>Default login: <code>admin</code>/<code>admin</code></p>
+</li>
+<li>
+<p>Use cases: booths, events, bigger screen without Bluetooth</p>
+</li>
+</ul>
+<hr>
+<h2 id="lessons-learned">Lessons Learned</h2>
+<p><strong>Goal:</strong> The section HN loves. Concrete takeaways from real pain.</p>
+<ol>
+<li><strong>Build gphoto2 from source</strong> — distro package is too old; plan for build time</li>
+<li><strong>Use a Lua wrapper, not a raw systemd service</strong> — gphoto2 exits; the Lua monitor handles the USB race condition that systemd restarts can’t fix</li>
+<li><strong>Set <code>WorkingDirectory</code> in your systemd unit</strong> — the silent failure is the most expensive bug in this project</li>
+<li><strong>Quality cable, powered hub, or neither</strong> — USB mode-switching is physics, not software</li>
+<li><strong>Compress server-side for Bluetooth</strong> — Pi has the CPU; use it</li>
+<li><strong>Three bytes beats HTTP on RFCOMM</strong> — length-prefixed packets are simpler and faster</li>
+<li><strong>Sequential filenames for mobile</strong> — timestamps sort wrong on phone galleries</li>
+</ol>
+<hr>
+<h2 id="use-cases">Use Cases</h2>
+<p><strong>Goal:</strong> Who is this for? Make it concrete.</p>
+<ul>
+<li><strong>Product photography</strong> — camera on tripod, Pi on shelf, check phone over Bluetooth. No desk, no laptop cable.</li>
+<li><strong>Wildlife</strong> — remote trigger, instant photo availability. You’re in the field, not at a desk.</li>
+<li><strong>Events</strong> — hands-free capture station. Attendees review on LAN browser, collect originals later.</li>
+<li><strong>Booths and displays</strong> — self-contained photo station. Pi hides behind the setup. No laptop footprint = looks like magic.</li>
+</ul>
+<hr>
+<h2 id="conclusion">Conclusion</h2>
+<p><strong>Goal:</strong> Wrap up and invite discussion.</p>
+<ul>
+<li>TL;DR: $35 Pi replaced a laptop in my tethered workflow</li>
+<li>Three services, one Lua monitor, one custom protocol — it works</li>
+<li>The parts that hurt (USB mode-switching, <code>WorkingDirectory=/</code>, gphoto2 version) are documented now</li>
+<li>The protocol is open — fork the repo, add remote shutter control over Bluetooth, tell me what you build</li>
+<li>Discussion prompts:
+<ul>
+<li>Anyone else reverse-engineer a camera protocol?</li>
+<li>BLE vs RFCOMM for file transfer — which would you use?</li>
+<li>What other cameras would this work on? (gphoto2 camera list is extensive)</li>
+<li>The super-resolution hack from Part 1 — worth a Part 4?</li>
+</ul>
+</li>
+</ul></section></article><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mt-6 mb-4"><audio controls preload="metadata" src="/audio/sony-camera-part3/index.mp3" class="w-full">Your browser does not support the audio element.</audio><a href="/audio/sony-camera-part3/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div><hr class="my-8"><p class="text-sm font-mono" style="color: var(--color-text-muted);">See something inaccurate or need more detail? <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Tethered%20Raspberry%20Pi%20for%20Modern%20Camera%20Functionality" style="color: var(--color-accent);" class="underline">Submit a Pull Request</a> to help me out!</p><p class="text-sm font-mono mt-2"><a href="https://www.buymeacoffee.com/skittles" style="color: var(--color-accent);" class="hover:underline">Buy me a ☕ to support!</a></p></div><!-- Sidebar --><aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"><h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">Latest Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/i-scanned-the-ble-devices-around-my-house/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">I scanned the BLE devices around my house - they are sharing everything</a><time datetime="2026-06-17T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Jun 2026</time></li><li><a href="/the-infinite-echo-state-mirror-bug/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key</a><time datetime="2026-06-01T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">May 2026</time></li><li><a href="/oauth-token-exchange-sso-demo/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.</a><time datetime="2026-03-23T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Mar 2026</time></li><li><a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows</a><time datetime="2026-03-16T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Mar 2026</time></li><li><a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows</a><time datetime="2026-03-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Mar 2026</time></li></ul></aside></div></main><footer class="mt-12 py-6" style="border-top: 1px solid var(--color-border);"><div class="container mx-auto px-4 text-center text-sm font-mono" style="color: var(--color-text-muted);"><p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p></div></footer><!-- Service worker removed — it was caching admin page responses and serving stale content --></body></html>

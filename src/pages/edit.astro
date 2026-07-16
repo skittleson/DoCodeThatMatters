@@ -55,6 +55,31 @@ export const prerender = false;
     .form-row > div { flex: 1; min-width: 0; }
     .btn-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
 
+    /* Restored-draft banner */
+    .draft-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      padding: 0.6rem 0.9rem;
+      background: rgba(157, 162, 255, 0.15);
+      border: 1px solid #9da2ff;
+      border-left: 4px solid #9da2ff;
+      border-radius: 4px;
+      color: #e0e0e0;
+      font-size: 0.9rem;
+    }
+    /* .draft-banner sets display:flex, which out-specifies the UA [hidden]
+       rule, so restore display:none explicitly when hidden. */
+    .draft-banner[hidden] { display: none; }
+    .draft-banner .draft-banner-msg { flex: 1; min-width: 12rem; }
+    .draft-banner button {
+      margin-top: 0;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.85rem;
+    }
+
     /* Back-to-list link — prominent on mobile */
     .back-link {
       display: inline-block;
@@ -169,6 +194,11 @@ export const prerender = false;
   <a href="/admin/" class="back-link">← Back to list</a>
 
   <form id="post-form">
+    <div id="draft-banner" class="draft-banner" role="status" aria-live="polite" hidden>
+      <span class="draft-banner-msg" id="draft-banner-msg"></span>
+      <button type="button" id="discard-draft-btn">Discard draft</button>
+    </div>
+
     <details>
       <summary>Edit Metadata</summary>
 
@@ -233,6 +263,7 @@ export const prerender = false;
     import { getToken } from '/src/lib/tokenStore.ts';
     import { getBlogPosts, createOrUpdatePost } from '/src/lib/githubClient.ts';
     import { assemblePost } from '/src/lib/assembler.ts';
+    import { saveDraft, loadDraft, clearDraft, formatRelativeTime } from '/src/lib/editHelpers.ts';
     import EasyMDE from 'easymde';
     import 'easymde/dist/easymde.min.css';
 
@@ -240,6 +271,15 @@ export const prerender = false;
     const statusEl = document.getElementById('status');
     const bodyTextarea = document.getElementById('body');
     const cancelBtn = document.getElementById('cancel-btn');
+    const draftBanner = document.getElementById('draft-banner');
+    const draftBannerMsg = document.getElementById('draft-banner-msg');
+    const discardDraftBtn = document.getElementById('discard-draft-btn');
+
+    // Slug that keys this post's draft in localStorage. An empty `slug` query
+    // param means "new post", which the draft helpers bucket under "new".
+    const params = new URLSearchParams(window.location.search);
+    const editSlug = params.get('slug') || '';
+    const currentSlug = editSlug;
 
     // Initialize the rich markdown editor on the #body textarea.
     // EasyMDE builds its own toolbar + live/side-by-side preview and
@@ -308,12 +348,92 @@ export const prerender = false;
       return false;
     }
 
+    // --- Draft auto-save (localStorage) -------------------------------------
+
+    // Snapshot the current form state for a draft: every tracked metadata
+    // field plus the editor body (mirrors captureOriginalValues + body).
+    function collectDraftData() {
+      const data: Record<string, unknown> = {};
+      for (const f of trackedFields) {
+        const el = document.getElementById(f.id);
+        if (!el) continue;
+        if (f.type === 'checkbox') {
+          data[f.id] = (el as HTMLInputElement).checked;
+        } else {
+          data[f.id] = (el as HTMLInputElement | HTMLTextAreaElement).value;
+        }
+      }
+      data.body = easyMDE.value();
+      return data;
+    }
+
+    // Apply a stored draft back onto the form + editor.
+    function applyDraftData(data: Record<string, unknown>) {
+      for (const f of trackedFields) {
+        if (!(f.id in data)) continue;
+        const el = document.getElementById(f.id);
+        if (!el) continue;
+        if (f.type === 'checkbox') {
+          (el as HTMLInputElement).checked = Boolean(data[f.id]);
+        } else {
+          const v = data[f.id];
+          (el as HTMLInputElement | HTMLTextAreaElement).value = v == null ? '' : String(v);
+        }
+      }
+      if (typeof data.body === 'string') easyMDE.value(data.body);
+    }
+
+    function showDraftBanner(savedAt: string) {
+      draftBannerMsg.textContent = `Restored unsaved draft from ${formatRelativeTime(savedAt)}.`;
+      draftBanner.hidden = false;
+    }
+
+    // Restore a draft on top of the freshly pre-filled server values, if one
+    // exists. captureOriginalValues() must run first so the layered draft
+    // registers as a dirty change against the server baseline.
+    function maybeRestoreDraft() {
+      const draft = loadDraft(currentSlug);
+      if (!draft) return;
+      applyDraftData(draft);
+      showDraftBanner(draft.savedAt);
+    }
+
+    let saveTimer: ReturnType<typeof setTimeout>;
+    function scheduleSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => saveDraft(currentSlug, collectDraftData()), 500);
+    }
+
+    // Wire debounced auto-save to the editor + each tracked metadata field.
+    // Called AFTER prefill/restore so programmatic value-setting during load
+    // does not spuriously create a draft.
+    function attachAutoSave() {
+      easyMDE.codemirror.on('change', scheduleSave);
+      for (const f of trackedFields) {
+        const el = document.getElementById(f.id);
+        if (!el) continue;
+        el.addEventListener('input', scheduleSave);
+        if (f.type === 'checkbox') el.addEventListener('change', scheduleSave);
+      }
+    }
+
+    // Discard the draft and reload the pristine server version. A full reload
+    // re-fetches + re-pre-fills the fields and, with the draft now cleared,
+    // skips the restore step (no banner).
+    discardDraftBtn.addEventListener('click', () => {
+      clearDraft(currentSlug);
+      draftBanner.hidden = true;
+      window.location.reload();
+    });
+
     function navigateAway() {
       if (!isFormDirty()) {
+        clearDraft(currentSlug);
         window.location.href = '/admin/';
         return;
       }
       if (confirm('Discard changes?')) {
+        clearDraft(currentSlug);
         window.location.href = '/admin/';
       }
     }
@@ -328,49 +448,55 @@ export const prerender = false;
       }
     });
 
-    // On page load, check auth and pre-fill form if editing
+    // Fetch the post from GitHub and pre-fill the editor + metadata fields
+    // with the server version. (Keywords are intentionally left alone — they
+    // are a multi-line YAML array the simple line parser can't restore.)
+    async function prefillFromServer(token) {
+      const posts = await getBlogPosts(token);
+      const post = posts.find(p => p.name === `${editSlug}.md`);
+      if (!post) return;
+      const raw = await fetch(post.download_url).then(r => r.text());
+      const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+      if (!match) return;
+      const yamlText = match[1];
+      const body = match[2];
+      easyMDE.value(body);
+      const lines = yamlText.split('\n');
+      for (const line of lines) {
+        const [key, ...rest] = line.split(':');
+        const value = rest.join(':').trim();
+        const input = document.getElementById(key.trim());
+        if (input && key.trim() !== 'keywords') {
+          if (key.trim() === 'draft') {
+            (input as HTMLInputElement).checked = value === 'true';
+          } else {
+            (input as HTMLInputElement).value = value;
+          }
+        }
+      }
+    }
+
+    // On page load, check auth and pre-fill form if editing.
     const token = getToken();
     if (!token) {
       window.location.href = '/admin/';
     } else {
-      const params = new URLSearchParams(window.location.search);
-      const editSlug = params.get('slug');
-      if (editSlug) {
-        (async () => {
+      (async () => {
+        if (editSlug) {
           try {
-            const posts = await getBlogPosts(token);
-            const post = posts.find(p => p.name === `${editSlug}.md`);
-            if (post) {
-              const raw = await fetch(post.download_url).then(r => r.text());
-              const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-              if (match) {
-                const yamlText = match[1];
-                const body = match[2];
-                easyMDE.value(body);
-                const lines = yamlText.split('\n');
-                for (const line of lines) {
-                  const [key, ...rest] = line.split(':');
-                  const value = rest.join(':').trim();
-                  const input = document.getElementById(key.trim());
-                  if (input && key.trim() !== 'keywords') {
-                    if (key.trim() === 'draft') {
-                      (input as HTMLInputElement).checked = value === 'true';
-                    } else {
-                      input.value = value;
-                    }
-                  }
-                }
-              }
-            }
-            captureOriginalValues();
+            await prefillFromServer(token);
           } catch (err) {
             statusEl.textContent = `Failed to load post: ${err.message}`;
             statusEl.className = 'error';
           }
-        })();
-      } else {
+        }
+        // Baseline = server version (or an empty form for a new post). Capture
+        // BEFORE restoring so a restored draft reads as dirty; then layer any
+        // saved draft on top and wire auto-save last.
         captureOriginalValues();
-      }
+        maybeRestoreDraft();
+        attachAutoSave();
+      })();
     }
 
     cancelBtn.addEventListener('click', navigateAway);
@@ -427,6 +553,8 @@ export const prerender = false;
         statusEl.className = '';
 
         await createOrUpdatePost(token, slug, content, message, existingSha);
+        // Persisted to GitHub — discard the local draft before redirecting.
+        clearDraft(currentSlug);
         statusEl.textContent = `Saved! Post available at /${slug}/`;
         statusEl.className = 'success';
         setTimeout(() => { window.location.href = '/admin/'; }, 2000);

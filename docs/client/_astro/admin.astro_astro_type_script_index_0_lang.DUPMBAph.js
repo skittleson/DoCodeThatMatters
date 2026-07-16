@@ -1,0 +1,11 @@
+import{i as e,n as t,o as n,r,t as i}from"./tokenStore.CPD9OaVj.js";async function a(){let n=t();if(!n)return null;try{return await e(n)?{success:!0,token:n}:(i(),{success:!1})}catch{return i(),{success:!1}}}function o(){i()}var s=document.getElementById(`token-input`),c=document.getElementById(`test-btn`),l=document.getElementById(`auth-error`),u=document.getElementById(`auth-screen`);async function d(){let t=s.value.trim();if(!t){l.textContent=`Token is required`;return}c.disabled=!0,c.textContent=`Testing...`;try{await e(t)?(r(t),u.style.display=`none`,document.getElementById(`app`).style.display=`block`,f()):l.textContent=`Token is invalid or has insufficient permissions`}catch(e){l.textContent=e.message||`Authentication failed`}c.disabled=!1,c.textContent=`Test & Save`}async function f(){let e=t();if(!e)return;let r=document.getElementById(`app`);r.innerHTML=`<p style="color:#a0aec0">Loading posts...</p>`;try{let t=await n(e);r.innerHTML=`
+          <h2>Posts (${t.length})</h2>
+          <div style="display:flex;gap:0.5rem;margin-bottom:0.5rem">
+            <button id="add-new-btn">+ Add New Post</button>
+            <button id="logout-btn" style="background:#ff6b6b;color:#fff">Logout</button>
+          </div>
+          <div id="post-list"></div>
+        `;let i=document.getElementById(`post-list`);t.forEach(e=>{let t=e.name.replace(/\.md$/,``),n=document.createElement(`div`);n.style.cssText=`padding:1rem;margin:0.5rem 0;background:#16213e;border-radius:4px;`,n.innerHTML=`
+            <div style="font-weight:bold">${t}</div>
+            <a href="/edit/?slug=${t}" style="color:#9da2ff">Edit</a>
+          `,i.appendChild(n)}),document.getElementById(`add-new-btn`).addEventListener(`click`,()=>{window.location.href=`/edit/`}),document.getElementById(`logout-btn`).addEventListener(`click`,()=>{o(),window.location.reload()})}catch(e){r.innerHTML=`<p class="error">Failed to load posts: ${e.message}</p>`}}c.addEventListener(`click`,d);async function p(){t()&&(u.style.display=`none`,document.getElementById(`app`).style.display=`block`);let e=await a();if(e===null){u.style.display=`block`,document.getElementById(`app`).style.display=`none`;return}e.success?f():(u.style.display=`block`,document.getElementById(`app`).style.display=`none`,l.textContent=`Saved token was invalid. Please enter a new one.`)}p();
