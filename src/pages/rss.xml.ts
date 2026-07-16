@@ -12,6 +12,7 @@ export async function GET(context: APIContext) {
   const siteUrl = context.site!.href;
 
   return rss({
+    xmlns: { dct: 'http://purl.org/dc/terms/' },
     title: 'Do Code That Matters',
     description:
       'Personal blog about software development, 3D printing, DIY, python, personal automations, and C#',
