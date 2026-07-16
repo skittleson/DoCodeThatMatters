@@ -182,6 +182,33 @@ def _ollama_config():
     return host, model
 
 
+TTS_SYSTEM_PROMPT = (
+    "You rewrite a blog post's markdown into a natural, spoken-word script that "
+    "a text-to-speech voice will read aloud, as if a person were reading a book "
+    "to a friend. Follow these rules exactly:\n"
+    "1. Never read a URL aloud. Replace a link with natural phrasing such as "
+    '"you can find the link on the blog post", or drop it entirely.\n'
+    "2. Where the post references links, images, or extra material, point the "
+    "listener to the blog for the full post and details.\n"
+    "3. When the post has an image, describe what it depicts verbally from the "
+    "alt text and surrounding context, as if describing it to someone who "
+    "cannot see it.\n"
+    "4. Use a conversational book-narrator tone. Produce no markdown artifacts "
+    "(no #, *, backticks, or link/image syntax) and never read code verbatim.\n"
+    "5. Preserve the meaning and structure of the post. Rewrite it to be "
+    "speakable; do not summarize or shorten it.\n"
+    "Output only the spoken script text, with no preamble or commentary."
+)
+
+
+def _build_tts_prompt(markdown):
+    """
+    Build the user prompt for the Ollama request. Supplies the raw markdown
+    (title + body) that the system prompt instructs the model to rewrite.
+    """
+    return "Rewrite the following blog post markdown into a spoken script:\n\n" + markdown
+
+
 def text_to_speech_on_plain_text(slug_filter=None):
     """
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using

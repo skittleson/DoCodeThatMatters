@@ -11,7 +11,32 @@ from main import (
     SCRIPT_HASHES_PATH,
     AUDIO_DIR,
     _ollama_config,
+    TTS_SYSTEM_PROMPT,
+    _build_tts_prompt,
 )
+
+
+class TestTtsPrompt:
+    def test_system_prompt_covers_five_rules(self):
+        p = TTS_SYSTEM_PROMPT.lower()
+        # Rule 1: never read URLs aloud
+        assert "url" in p
+        assert "you can find the link on the blog post" in p
+        # Rule 2: point listeners to the blog
+        assert "blog" in p
+        # Rule 3: describe images verbally from alt text
+        assert "image" in p and "alt" in p
+        # Rule 4: conversational narrator tone, no markdown/code
+        assert "markdown" in p
+        assert "code" in p
+        # Rule 5: preserve meaning, do not summarize
+        assert "summar" in p  # matches "summarize"/"summary"
+        assert "preserve" in p
+
+    def test_user_prompt_contains_markdown_body(self):
+        md = "## Heading\n\nSome body text with a [link](https://x.com)."
+        user = _build_tts_prompt(md)
+        assert md in user
 
 
 class TestOllamaConfig:
