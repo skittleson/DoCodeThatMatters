@@ -1,8 +1,8 @@
 ---
 title: ASP.NET XSS protection
-description: "Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS)."
+description: "\"Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).\""
 date: 2017-09-06
-modified: 2026-07-15
+modified: 2026-07-16
 image: /images/SSL-Featured.png
 alt: ASP.Net XSS protection
 priority: 0.9
@@ -64,5 +64,3 @@ Look for open source tools that are commonly used for penetration testing. These
 - [OWASP](https://www.owasp.org/index.php/Main_Page)
 - [https://msdn.microsoft.com/en-us/library/ff649310.aspx](https://msdn.microsoft.com/en-us/library/ff649310.aspx)
 - [https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
-
-Test
