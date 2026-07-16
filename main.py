@@ -311,6 +311,21 @@ def generate_tts_scripts(slug_filter=None):
         print("Nothing to generate — all TTS scripts up to date.")
 
 
+def _select_audio_source(slug):
+    """
+    Choose the text source for audio generation for a slug: prefer the
+    LLM-generated spoken script, fall back to the astro-built plain .tts text.
+    Returns the path to read, or None if neither exists.
+    """
+    script_path = f"{AUDIO_DIR}/{slug}/index.script.txt"
+    if os.path.exists(script_path):
+        return script_path
+    tts_path = f"docs/{slug}/index.tts"
+    if os.path.exists(tts_path):
+        return tts_path
+    return None
+
+
 def text_to_speech_on_plain_text(slug_filter=None):
     """
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using
@@ -349,12 +364,12 @@ def text_to_speech_on_plain_text(slug_filter=None):
         if "." in folder:
             continue
 
-        txt_path = f"docs/{folder}/index.tts"
+        txt_path = _select_audio_source(folder)
         src_path = f"src/content/blog/{folder}.md"
         mp3_path = f"{AUDIO_DIR}/{folder}/index.mp3"
         opus_path = f"{AUDIO_DIR}/{folder}/index.opus"
 
-        if not os.path.exists(txt_path):
+        if txt_path is None:
             continue
 
         # Apply slug filter when testing a single post

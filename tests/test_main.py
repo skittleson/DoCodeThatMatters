@@ -15,7 +15,29 @@ from main import (
     _build_tts_prompt,
     _request_tts_script,
     generate_tts_scripts,
+    _select_audio_source,
 )
+
+
+class TestSelectAudioSource:
+    def test_prefers_script_over_tts(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "docs" / "postA").mkdir(parents=True)
+        (tmp_path / "docs" / "postA" / "index.tts").write_text("tts", encoding="utf-8")
+        script_dir = tmp_path / "public" / "audio" / "postA"
+        script_dir.mkdir(parents=True)
+        (script_dir / "index.script.txt").write_text("script", encoding="utf-8")
+        assert _select_audio_source("postA") == "public/audio/postA/index.script.txt"
+
+    def test_falls_back_to_tts_when_no_script(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "docs" / "postA").mkdir(parents=True)
+        (tmp_path / "docs" / "postA" / "index.tts").write_text("tts", encoding="utf-8")
+        assert _select_audio_source("postA") == "docs/postA/index.tts"
+
+    def test_returns_none_when_neither_exists(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        assert _select_audio_source("ghost") is None
 from unittest.mock import MagicMock, patch
 import json
 import requests
