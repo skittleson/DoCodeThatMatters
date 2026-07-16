@@ -164,6 +164,24 @@ def _save_audio_hashes(hashes, path=AUDIO_HASHES_PATH):
         f.write("\n")
 
 
+SCRIPT_HASHES_PATH = "script-hashes.json"
+AUDIO_DIR = "public/audio"
+
+
+def _ollama_config():
+    """
+    Read Ollama connection settings from the environment (.env supported via
+    python-dotenv). Returns (host, model). The host has any trailing slash
+    stripped so f"{host}/api/generate" is always well-formed.
+    """
+    from dotenv import load_dotenv
+
+    load_dotenv()
+    host = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
+    model = os.environ.get("OLLAMA_MODEL", "llama3.1")
+    return host, model
+
+
 def text_to_speech_on_plain_text(slug_filter=None):
     """
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using
@@ -189,7 +207,6 @@ def text_to_speech_on_plain_text(slug_filter=None):
     import soundfile as sf
     from kokoro import KPipeline
 
-    AUDIO_DIR = "public/audio"
     VOICE = "af_jessica"  # Kokoro American-English female voice
 
     # Load persisted hashes from sidecar

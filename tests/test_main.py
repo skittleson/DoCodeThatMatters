@@ -8,7 +8,35 @@ _patch_rss_audio, _patch_sitemap_audio) were removed, so their tests are gone.
 from main import (
     _split_text_for_tts,
     is_absolute,
+    SCRIPT_HASHES_PATH,
+    AUDIO_DIR,
+    _ollama_config,
 )
+
+
+class TestOllamaConfig:
+    def test_defaults_when_env_unset(self, monkeypatch):
+        monkeypatch.delenv("OLLAMA_HOST", raising=False)
+        monkeypatch.delenv("OLLAMA_MODEL", raising=False)
+        host, model = _ollama_config()
+        assert host == "http://localhost:11434"
+        assert model == "llama3.1"
+
+    def test_reads_env_overrides(self, monkeypatch):
+        monkeypatch.setenv("OLLAMA_HOST", "http://ollama:9999/")
+        monkeypatch.setenv("OLLAMA_MODEL", "mistral")
+        host, model = _ollama_config()
+        # trailing slash stripped so f"{host}/api/generate" is well-formed
+        assert host == "http://ollama:9999"
+        assert model == "mistral"
+
+
+class TestScriptHashConstants:
+    def test_script_hashes_path(self):
+        assert SCRIPT_HASHES_PATH == "script-hashes.json"
+
+    def test_audio_dir_constant(self):
+        assert AUDIO_DIR == "public/audio"
 
 
 # ── is_absolute ───────────────────────────────────────────────────────────────
