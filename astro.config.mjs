@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import node from '@astrojs/node';
 import { EnumChangefreq } from 'sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { readFileSync } from 'fs';
@@ -23,7 +22,6 @@ export default defineConfig({
   outDir: 'docs',
   trailingSlash: 'always',
   output: 'static',
-  adapter: node({ mode: 'standalone' }),
   integrations: [
     sitemap({
       filter: (page) =>

@@ -1,6 +1,6 @@
 {
   "3dprinter-duplicator-i3-upgrade": "72b1c7459cde5d4a579b7bbc6cff08c5b84f6c17e3d35b93a496d60e149cf801",
-  "asp-net-xss-protection": "d7ac507a42503c16f39d2beaacd022b95a48a3547adae21ea5e1a46a39d38ded",
+  "asp-net-xss-protection": "7bbf3cbd3e11bf1b06ea70119cc445f85fd41300fc6f4da831b3c1df7f2273b0",
   "automate-cleaning-of-air-conditioner-condensate-drain-line": "aef48f12f5764be9ae43405131a8ead1228cf4ab37a8e6939032d26697eadfc9",
   "automate-sprinkler-with-tasmota": "eb0a64611c47d8771f7a918e1ec02f840bcb3a2f5fa96b5222ec2bcfc0651fe0",
   "building-custom-http-proxy-rust-mixed-os-workflows": "3c3baa00819a7ae3403a1c9b9b99eef903fcd4ed08d3cec2ca317ef6dbbc914e",
@@ -8,6 +8,7 @@
   "emails_out_of_control": "a7420c896994eedb2f9cf8bcf60dd386a52272a19d21c1b8554feb19b7cefa16",
   "hacking-sony-a6000-for-modernization": "f087bed77e7daf8354d9effd39f868fd1f093edd0c42cea50491e40451f37284",
   "hacking-sony-a6000-more": "76c63b98d79b23857fd8551e8916f244189437e8d671eec00562cbd87eaa2584",
+  "i-scanned-the-ble-devices-around-my-house": "abf09732c0d06d8771312d8c0c8dafdb4eeb500635087b0437c52186b38a5985",
   "json-to-s3-with-google-recaptcha": "80d36b8e1bcb70bd394927a1e1011492b21489acac5346ed6a94ba28c5f65b2c",
   "linux-wifi-hotspot-usb3": "6d9fec5c998355d8a6428a02eeef310dabf46670283231532395a74bd3d834bc",
   "neosiren-tasmota-local-first-cloud-assisted-iot": "4cb13508d01cccf035e3229b775e40a87f5b58d26083145c544ef358b724de59",
@@ -19,6 +20,7 @@
   "research-bluetooth-proximity": "7f1efaf3420afcaa017f0ca1748b3cda16062df67ae02ac98ec6359a4a7d3e84",
   "skateboard-gear": "36b908d72fd7153305bab5ece0adeb824e338e2adab5ddb939a1f7c91d39fc1e",
   "software-engineering-lessons": "b031b8d32a5567a0d7e34d209e773dcd274f9dc8db5ca6888e020c484d8fa976",
+  "sony-camera-part3": "88f04f2359f308feaa303180a6fd2017b7c1dafa95a7768d0227a313ef85486a",
   "the-infinite-echo-state-mirror-bug": "5963851472a93c12a378f409c9cc39f1474ecf477bc96574ade9297377fa1967",
   "top-nuget-packages": "bef3868269c200a83598ea277a2eedcada4ce7f260db542b8b28696aff9db542",
   "yet-another-garage-door-opener": "dcb3bbc3e26539a2498a4338ce585ac700f9aca18edfa8b74556ba2650ac4d2d"
