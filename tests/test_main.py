@@ -14,9 +14,99 @@ from main import (
     TTS_SYSTEM_PROMPT,
     _build_tts_prompt,
     _request_tts_script,
+    generate_tts_scripts,
 )
 from unittest.mock import MagicMock, patch
+import json
 import requests
+
+
+def _make_post(tmp_path, slug, md_body="# Title\n\nBody text.", tts_body="Title Body text."):
+    """Create docs/<slug>/index.tts and src/content/blog/<slug>.md under tmp_path."""
+    (tmp_path / "docs" / slug).mkdir(parents=True, exist_ok=True)
+    (tmp_path / "docs" / slug / "index.tts").write_text(tts_body, encoding="utf-8")
+    blog = tmp_path / "src" / "content" / "blog"
+    blog.mkdir(parents=True, exist_ok=True)
+    (blog / f"{slug}.md").write_text(md_body, encoding="utf-8")
+
+
+class TestGenerateTtsScripts:
+    def test_writes_script_on_success(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch("main._request_tts_script", return_value="Spoken script."):
+            generate_tts_scripts()
+        script = tmp_path / "public" / "audio" / "postA" / "index.script.txt"
+        assert script.read_text(encoding="utf-8").strip() == "Spoken script."
+        # hash recorded
+        hashes = json.loads((tmp_path / SCRIPT_HASHES_PATH).read_text())
+        assert "postA" in hashes
+
+    def test_skips_when_hash_matches_and_script_exists(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch("main._request_tts_script", return_value="First run.") as gen:
+            generate_tts_scripts()
+            assert gen.call_count == 1
+            # second run: unchanged md + existing script => no LLM call
+            generate_tts_scripts()
+            assert gen.call_count == 1
+
+    def test_regenerates_when_md_changes(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch("main._request_tts_script", return_value="v1") as gen:
+            generate_tts_scripts()
+            (tmp_path / "src" / "content" / "blog" / "postA.md").write_text(
+                "# Title\n\nCHANGED body.", encoding="utf-8"
+            )
+            generate_tts_scripts()
+            assert gen.call_count == 2
+
+    def test_missing_md_skips_slug(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        # only docs/<slug>/index.tts, no source md
+        (tmp_path / "docs" / "postB").mkdir(parents=True)
+        (tmp_path / "docs" / "postB" / "index.tts").write_text("x", encoding="utf-8")
+        with patch("main._request_tts_script", return_value="never") as gen:
+            generate_tts_scripts()
+            assert gen.call_count == 0
+        assert not (tmp_path / "public" / "audio" / "postB" / "index.script.txt").exists()
+
+    def test_connection_error_no_cache_leaves_no_script(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch(
+            "main._request_tts_script",
+            side_effect=requests.ConnectionError("refused"),
+        ):
+            generate_tts_scripts()  # must not raise
+        assert not (
+            tmp_path / "public" / "audio" / "postA" / "index.script.txt"
+        ).exists()
+
+    def test_connection_error_keeps_cached_script(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        cached = tmp_path / "public" / "audio" / "postA"
+        cached.mkdir(parents=True)
+        (cached / "index.script.txt").write_text("cached script", encoding="utf-8")
+        with patch(
+            "main._request_tts_script",
+            side_effect=requests.ConnectionError("refused"),
+        ):
+            generate_tts_scripts()  # must not raise
+        assert (cached / "index.script.txt").read_text() == "cached script"
+
+    def test_slug_filter_limits_processing(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        _make_post(tmp_path, "postB")
+        with patch("main._request_tts_script", return_value="s") as gen:
+            generate_tts_scripts(slug_filter="postA")
+            assert gen.call_count == 1
+        assert (tmp_path / "public" / "audio" / "postA" / "index.script.txt").exists()
+        assert not (tmp_path / "public" / "audio" / "postB" / "index.script.txt").exists()
 
 
 class TestRequestTtsScript:
