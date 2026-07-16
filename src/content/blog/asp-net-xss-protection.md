@@ -1,8 +1,8 @@
 ---
 title: ASP.NET XSS protection
-keywords: ["asp.net", "xss", "config"]
+description: "\"Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).\""
 date: 2017-09-06
-description: Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).
+modified: 2026-07-16
 image: /images/SSL-Featured.png
 alt: ASP.Net XSS protection
 priority: 0.9
