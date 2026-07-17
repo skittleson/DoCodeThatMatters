@@ -1,0 +1,45 @@
+Here's the rewritten script:
+
+Imagine you're standing outside your house with a laptop, and you can tell when someone is watching TV, when they get up, and when they go to bed. No pairing, no password, nothing to hack. This is because many devices only broadcast Bluetooth low energy while they're on, then disappear when they turn off.
+
+I've been interested in this issue for a while now. I wanted to see how it works and how to stop our own devices from leaking this information. So, I built a tool called bluetooth-wos, inspired by the DEFCON's Wall of Sheep project. This tool can scan and fingerprint nearby BLE devices past their randomized MACs, estimate their distance from signal strength, and use one known device to calibrate the rest.
+
+But before we dive into that, let me show you how to do a simple scan using an app called nRF Connect on your phone or a Python library called bleak. With these tools, you can easily scan devices around you, look through service and characteristics data like temperature, humidity, and battery levels.
+
+Here's a code snippet in Python that uses the bleak library to perform a basic scan:
+```python
+import asyncio
+from bleak import BleakScanner
+
+def detection_callback(dev, adv_data):
+    name = dev.name or 'None'
+    rssi = getattr(adv_data, 'rssi', None) if adv_data else None
+    tx_power = None
+    if adv_data:
+        tx_power = getattr(adv_data, 'tx_power', None)
+        if tx_power is None:
+            tx_power = getattr(adv_data, 'TxPower', None)
+    parts = [dev.address, name]
+    if rssi is not None:
+        parts.append(f'RSSI={rssi}')
+    if tx_power is not None:
+        parts.append(f'TX={tx_power}')
+    print(' '.join(parts))
+
+async def main():
+    scanner = BleakScanner(detection_callback=detection_callback)
+    await scanner.start()
+    await asyncio.sleep(10)
+    await scanner.stop()
+
+asyncio.run(main())
+```
+This script will list all the devices it finds, along with their MAC addresses and signal strengths.
+
+Now, let's talk about how to use this tool to protect yourself. The first step is to disable Bluetooth on devices that don't need it. TVs are a big culprit here - if you're not using BLE remotes or casting, turn off Bluetooth in the TV's settings. Same for smart plugs, bulbs, and anything else that broadcasts 24/7.
+
+Next, use Airplane Mode in sensitive areas. This will stop your phone (and its accessories) from advertising altogether. Toggle it when you don't want to be trackable.
+
+And finally, turn on unknown-tracker alerts. Both Apple and Google now warn you when an unfamiliar AirTag or Tile-style tracker is following you.
+
+So, there you have it - a simple way to scan for BLE devices around you and take steps to protect yourself from unwanted tracking.

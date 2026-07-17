@@ -1,0 +1,53 @@
+At 2am, I was startled by the sound of clicking from the hallway. Not once, but forever - two wall switches were flipping each other on and off in a tight loop. A soft relay machine gun in the dark. I finally went to watch the logs.
+
+The shape of it was unmistakable: each device applied the incoming change and then re-announced it. That made the other device apply it and re-announce too, creating an infinite echo. If you've ever watched a replication storm or two event handlers feeding each other, you know this shape. It just doesn't usually live in your hallway wall.
+
+The mechanism is general: a state-mirroring protocol where the receiver applies the effect but never updates the dedup key it uses to suppress its own echo. Every incoming message looks new, so the system amplifies instead of settling. I built this into two light switches with Tasmota and MQTT while getting a new house's smart-home stack ready.
+
+The goal was a virtual 3-way: flip either switch and the other follows. It worked great for months, then a power blip hit both devices, and they started screaming at each other.
+
+To understand how this bug works, I'll walk you through my setup. Two switches, mirrored over MQTT. The naive version is obvious: when switch A changes, publish A's new state to switch B, and vice versa. But it was wrong.
+
+Here's the original rule:
+
+```
+Rule1 ON Power1#State!=%var1% DO Backlog VAR1 %value%; Publish cmnd/<peer>/Power %value% ENDON
+```
+
+The `!=%var1%` part was my echo guard, but it never actually broke the loop. The peer's mirror command arrives as a direct write to `cmnd/<me>/Power`, which flips the relay, but never updates the receiving device's `VAR1`. So the incoming value always differs from the stale local `VAR1`.
+
+Let me describe what you can see in this image: It depicts both `.155` (a plain ESP) and `.166` (the Tuya) firing `POWER1#STATE...Publish` on every hop, creating a runaway loop.
+
+You can find more about my setup and details on the blog post. I built this into two light switches with [Tasmota](https://tasmota.github.io/docs/) and MQTT while getting a new house's smart-home stack ready.
+
+I added a boot-settle guard to disable the mirror rule for 10 seconds after boot, then re-enable it. But that didn't hold either.
+
+That's when I decided to stop guessing and go watch the thing live. Instead of theorizing harder, I cranked the log level and watched both devices while reproducing the issue by hand.
+
+Tasmota's web console has an endpoint for log lines: `http://<ip>/cs?c2=<counter>`. You can scrape it yourself. I set both devices to verbose: `http://<ip>/cm?cmnd=WebLog%204`.
+
+Here are some key logs from the two switches:
+
+*   My "physical-press" fix wasn't even deployed.
+*   The echo guard never actually broke the loop.
+
+Let me describe what you can see in this image: It depicts both `.155` (a plain ESP) and `.166` (the Tuya) firing `POWER1#STATE...Publish` on every hop, creating a runaway loop.
+
+This is how the bug works. The peer's mirror command arrives as a direct write to `cmnd/<me>/Power`, which flips the relay, but never updates the receiving device's `VAR1`. So the incoming value always differs from the stale local `VAR1`.
+
+My next idea was to mirror only on the physical button press, since an MQTT-driven relay change shouldn't generate a button event. But that's not possible with Tuya devices.
+
+Here are some key logs:
+
+*   The `RX Relay-1 --> MCU State: Off` line indicates the issue.
+*   This shows that "only react to physical presses" isn't expressible on Tuya hardware.
+
+The fix was almost embarrassingly small. The bug is that an incoming mirror command updates the relay but not `VAR1`. So, I changed the rule to update `VAR1` before moving the relay:
+
+```
+Rule1 ON Power1#State!=%var1% DO Backlog VAR1 %value%; Publish cmnd/<peer>/Event SYNC=%value% ENDON ON Event#SYNC DO Backlog VAR1 %value%; Power1 %value% ENDON
+```
+
+This fix worked fine on the Tuya device. To prove it, I hammered it with rapid toggles and six clean follows in a row.
+
+You can find more about my setup and details on the blog post. The hallway is quiet now. For a smart home project, that's the highest praise there is.

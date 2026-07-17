@@ -1,0 +1,17 @@
+Let me take you through an effective onboarding strategy for new engineers on a project. 
+
+You know how it is when someone joins your team - there's always that initial period where they're getting up to speed. Well, with the right approach, this transition can be much smoother.
+
+A good onboarding process should start with providing a comprehensive overview of the project itself and making all relevant documentation easily accessible. You want your new engineer to have a solid understanding of what they're walking into.
+
+Next, assign them some tasks or tickets that focus on implementing business logic. This will give them a clear idea of what the project's objectives are and how they fit in.
+
+Collaborating with them to define main test cases is also essential - you want to cover both happy paths and potential exceptions, so they know exactly what to expect and can prepare accordingly.
+
+Now, I know it might be tempting to dive straight into external dependencies, but that can actually slow things down. Instead, use techniques like dependency injection or the dependency provider pattern to delay their implementation. This will allow your new engineer to focus on the core functionality of the project from the start.
+
+Once they're getting comfortable with the codebase, encourage them to submit a pull request early - this way, you can provide timely feedback and guidance before it's too late.
+
+Finally, schedule regular pair programming, code swarming or office hours sessions. This will give your new engineer additional support and guidance whenever they need it.
+
+By following this structured approach, your new engineer can quickly become productive and start contributing to the success of the project. And that's what we're aiming for here - to streamline the transition and boost productivity with a clear and effective onboarding strategy.

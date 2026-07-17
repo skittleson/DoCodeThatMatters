@@ -1,0 +1,60 @@
+Imagine you're building a service that needs to call another internal API on behalf of a logged-in user. This is a common problem where services need to talk to each other as the same user. I was using Authentik already, so I went looking for support for RFC 8693 token exchange - but it's not supported in Authentik. Instead, it offers JWT authentication, which is a legitimate machine-to-machine pattern, but with a trust assumption that's easy to miss.
+
+I built a demo repository that runs both approaches side by side: Keycloak with native RFC 8693 and Authentik with the JWT federation workaround. You can see exactly where they diverge.
+
+Let me explain what's happening here. When you log into App A, it wants to show you how many todos you have in App B. To do this, App A needs to call App B /api/todos/count - but App B will reject the user's token because its audience is set to App A, not App B. You can't mint a new token yourself, as that defeats the whole point of a trusted identity provider.
+
+To fix this, you need the IdP to issue a new token for App B, carrying the original user's subject. This is where things get interesting.
+
+Authentik does offer JWT authentication, which lets one service prove it's who it says it is using a signed JWT as the client assertion. App A posts to the token endpoint using client credentials with the user's access token as the assertion. One note on this: RFC 7523 normally expects a JWT signed by the client's own private key, not a user's access token.
+
+Authentik verifies App A's token comes from a trusted federated provider and issues a new token with audience set to App B - but here's the catch: the issued token's subject is not the user. It's a service account, something like ak-App-A-Provider-client_credentials. Authentik has no mechanism in this grant path to forward the original user's identity into the token.
+
+So App A passes the user identity separately when calling App B using an extra header called X-User-Sub. App B trusts X-User-Sub because it's implicit trust - it assumes App A is telling the truth about who the user is.
+
+Now, let me show you the tradeoff nobody mentions: with Authentik, you're trusting App A to tell the truth about who the user is. With Keycloak, the IdP is the one asserting it and App B can verify that independently.
+
+Here's a simple diagram showing what's happening in both cases:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as User
+    participant A as App A
+    participant IdP as Identity Provider
+    participant B as App B
+
+    U->>A: Login
+    A->>IdP: Authenticate user
+    IdP-->>A: User Access Token (sub: user, aud: app-a)
+
+    Note over A,B: User requests data from App B
+
+    rect rgb(255, 230, 200)
+        Note over A,IdP: Authentik — client_credentials fallback
+        A->>IdP: client_credentials + client_assertion (user AT as JWT)
+        Note right of IdP: No user context in this grant
+        IdP-->>A: M2M Token (sub: service-account-a, aud: app-b)
+        A->>B: Bearer M2M Token + X-User-Sub header
+        Note right of B: Implicit trust — B trusts the header because A is authenticated
+    end
+
+    rect rgb(200, 255, 200)
+        Note over A,IdP: Keycloak — RFC 8693 token exchange
+        A->>IdP: token-exchange, subject_token: user AT, audience: app-b
+        Note right of IdP: Validates delegation policy
+        IdP-->>A: Delegated Token (sub: user, aud: app-b, azp: app-a)
+        A->>B: Bearer Delegated Token only
+        Note right of B: Cryptographic trust — sub and azp verified from token
+    end
+```
+
+In this diagram, you can see how Authentik's client_credentials fallback works, while Keycloak uses RFC 8693 to issue a delegated token with the user's subject. Let me highlight the key difference between these two models.
+
+The bottom line is that with Authentik, you're trusting App A to tell the truth about who the user is, while with Keycloak, the IdP is asserting it and App B can verify that independently.
+
+If you want to run this demo for yourself, I've included instructions in the repository. You'll need to clone the repo, copy the env file, and pick a stack: either Authentik or Keycloak. The demo uses Docker Compose to set up the environment, so make sure you have it installed on your machine.
+
+Once you've got everything set up, navigate to http://localhost:3993 (App A) and log in with credentials `demo` / `changeme`. Then open a new tab and navigate to http://localhost:3994 (App B), where you can add todos. The todo count will show up on App A.
+
+That's it! I hope this helps illustrate the tradeoff between Authentik and Keycloak when it comes to token exchange.

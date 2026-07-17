@@ -1,0 +1,17 @@
+You're probably wondering why I'm sharing another tutorial on building a garage door opener with a Raspberry Pi. Well, to be honest, I've left my garage door open one too many times. You can find the link to the project source code on this blog post.
+
+The goals of this project were simple: use Docker so it's easy to share and restore, create a web API for control, and have some basic functionality like toggling the garage door and checking its status. I also wanted to add some extra features, such as controlling a light switch on the garage door and even adding a cheap camera to see what's going on.
+
+To build this project, you'll need a few things. First, you'll need relay modules - I only needed one of these Channel DC 5V Relay Modules for Arduino. You can also get some cheap containers to throw everything into. For the Raspberry Pi itself, I recommend using a replacement switch for your garage door opener, like the Liftmaster 41A5273-1 Multi-Function Control Panel. And of course, you'll need a Raspberry Pi 3.
+
+Now, I know there are already a ton of garage door projects out there, and I was inspired by many of them. But the LiftMaster garage door system has some anti-tamper hardware measures that almost ended this project before it started. Luckily, I was able to find another circuit that directly connects to the garage door unit - bingo! Two circuits can be connected at the same time.
+
+Let me tell you about the wiring setup. The relay module is stacked on top of the LiftMaster module and taped onto the Raspberry Pi. Note that the relay connections are wired for normally opened. You can see a picture of this setup on this blog post, where I've also included a description of how it all fits together.
+
+Now, let's move on to the installation process. First, you'll need to install Docker on your Raspberry Pi - don't worry, it's easy to follow the instructions on this Raspbian blog post. Once that's done, clone the repository, run the Docker build for the image, and then start the Docker image in privileged mode.
+
+Now that we have everything set up, let's test it out! You can use a command like `curl http://localhost:8090/api` to check if everything is working correctly. And of course, you'll want to explore some of the other API commands available, such as checking the status of the garage door or toggling the light switch.
+
+Now that we have this project up and running, I'm considering moving all the GPIO logic to Python and using Node.js as the API router. Open for pull requests! And finally, here's a summary of what we've built so far: the hardware side is working, and the API has enough information to check and toggle the garage door.
+
+In this project, I used motion to capture video from the camera, but you can use Node-RED to watch the door status - it's just easier to configure. This project took about two days with testing and debugging, so don't worry if things seem a bit complicated at first. And here's a screenshot of my current Node-RED template - still a work in progress!
