@@ -3,7 +3,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
-import Epub from 'epub-gen';
+import { EPub } from '@lesjoursfr/html-to-epub';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, '..');
@@ -32,8 +32,8 @@ async function generateEpub() {
 
   const chapters = posts.map((post) => {
     let html = marked.parse(post.body);
-    // Remove img tags with relative paths — epub-gen can't embed them and
-    // will log confusing download errors. External URLs are kept.
+    // Remove img tags with relative paths — the epub generator can't embed
+    // them and will log confusing download errors. External URLs are kept.
     html = html.replace(/<img[^>]*src=["'](?!https?:\/\/)[^"']+[^>]*>/gi, '');
     return {
       title: post.title,
@@ -41,9 +41,10 @@ async function generateEpub() {
     };
   });
 
-  const epub = new Epub(
+  const epub = new EPub(
     {
       title: 'Do Code That Matters',
+      description: 'Do Code That Matters',
       author: 'Spencer Kittleson',
       content: chapters,
       lang: 'en',
@@ -53,18 +54,13 @@ async function generateEpub() {
     outputEpub
   );
 
-  return new Promise((resolve, reject) => {
-    epub.promise.then(
-      () => {
-        console.log('EPUB generated successfully at docs/blog.epub');
-        resolve();
-      },
-      (err) => {
-        console.error('Failed to generate EPUB:', err);
-        reject(err);
-      }
-    );
-  });
+  try {
+    await epub.render();
+    console.log('EPUB generated successfully at docs/blog.epub');
+  } catch (err) {
+    console.error('Failed to generate EPUB:', err);
+    throw err;
+  }
 }
 
 function formatDate(date) {
