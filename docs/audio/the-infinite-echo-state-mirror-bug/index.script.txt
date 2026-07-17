@@ -1,53 +1,53 @@
-At 2am, I was startled by the sound of clicking from the hallway. Not once, but forever - two wall switches were flipping each other on and off in a tight loop. A soft relay machine gun in the dark. I finally went to watch the logs.
+The Infinite Echo: A State-Mirror Bug That Applies the Effect but Not the Dedup Key.
 
-The shape of it was unmistakable: each device applied the incoming change and then re-announced it. That made the other device apply it and re-announce too, creating an infinite echo. If you've ever watched a replication storm or two event handlers feeding each other, you know this shape. It just doesn't usually live in your hallway wall.
+At 2 a.m., the hallway started clicking. Not once, but continuously. Two wall switches were flipping each other on and off in a tight loop—a sort of soft relay machine gun in the dark. When I finally checked the logs, the shape of the problem was unmistakable. The log entries showed that one device would receive an "off" command, turn itself off, and then immediately broadcast an "off" signal to its neighbor. The neighbor would do the same thing, and the cycle would repeat forever. Each device applied the incoming change and then re-announced it. If you have ever watched a replication storm, a webhook retry loop, or two event handlers feeding each other, you know this shape. It just doesn't usually live in your hallway wall.
 
-The mechanism is general: a state-mirroring protocol where the receiver applies the effect but never updates the dedup key it uses to suppress its own echo. Every incoming message looks new, so the system amplifies instead of settling. I built this into two light switches with Tasmota and MQTT while getting a new house's smart-home stack ready.
+The mechanism here is actually quite general: it involves a state-mirroring protocol where the receiver applies the effect of an action but never updates the deduplication key used to suppress its own echo. Because that specific piece isn't updated, every incoming message looks new to the system. Instead of settling, the system amplifies the signal.
 
-The goal was a virtual 3-way: flip either switch and the other follows. It worked great for months, then a power blip hit both devices, and they started screaming at each other.
+I built this into two light switches using Tasmota and MQTT while setting up a new house's smart-home stack. The switches are Martin Jerry units communicating with my own broker. The goal was to create a virtual three-way: flip either switch, and the other would follow. It worked great for months until a power blip hit. Both devices rebooted and began screaming at each other.
 
-To understand how this bug works, I'll walk you through my setup. Two switches, mirrored over MQTT. The naive version is obvious: when switch A changes, publish A's new state to switch B, and vice versa. But it was wrong.
+This is how the bug works, how I found it live rather than just guessing, and the one-line fix that finally stopped it.
 
-Here's the original rule:
+Let's look at the setup. We had two switches mirrored over MQTT. The basic approach was straightforward: when switch A changes, publish its new state to switch B, and vice versa. To prevent an infinite loop, I used a logic check where the system would only broadcast a change if the new value didn't match the last known value stored in a variable called "VAR1." The theory was that since the command coming back from the partner would match the local "VAR1," it would be ignored by the rule and wouldn't trigger another broadcast. One hop each way, then silence.
 
-```
-Rule1 ON Power1#State!=%var1% DO Backlog VAR1 %value%; Publish cmnd/<peer>/Power %value% ENDON
-```
+It looked correct. It had that satisfying simplicity that makes you feel smart. It also worked for months. But it was still wrong; it just took a power outage to prove it.
 
-The `!=%var1%` part was my echo guard, but it never actually broke the loop. The peer's mirror command arrives as a direct write to `cmnd/<me>/Power`, which flips the relay, but never updates the receiving device's `VAR1`. So the incoming value always differs from the stale local `VAR1`.
+When the failure occurred after the power blip, my first instinct was a classic boot race: both devices coming online at once with empty variables. I tried to fix this by adding a "boot-settle" guard—disabling the mirror rule for ten seconds after a reboot before re-enabling it. Another power blip happened, and they looped again. The band-aid didn't hold.
 
-Let me describe what you can see in this image: It depicts both `.155` (a plain ESP) and `.166` (the Tuya) firing `POWER1#STATE...Publish` on every hop, creating a runaway loop.
+That was the moment to stop guessing and actually look. Instead of trying to out-think the problem with more theories, I increased the log levels and watched both devices live while I triggered the loop by hand. 
 
-You can find more about my setup and details on the blog post. I built this into two light switches with [Tasmota](https://tasmota.github.io/docs/) and MQTT while getting a new house's smart-home stack ready.
+By examining the logs, I learned two things immediately that were more interesting than my boot-race theory. First, my "physical-press" fix wasn't even active; both switches were still running the original flawed logic. It is always important to verify exactly what code is actually running before you try to debug a problem you think you’ve already fixed.
 
-I added a boot-settle guard to disable the mirror rule for 10 seconds after boot, then re-enable it. But that didn't hold either.
+Second, and this was the real breakthrough: the echo guard never actually broke the loop because of how the data was processed. The logs showed that when the peer's message arrived as a direct write to the "Power" command, it flipped the physical relay, but it never updated the "VAR1" variable on the receiving device. Because the value in "VAR1" remained stale, the system saw every incoming message from the partner as a "new" change and re-published it. 
 
-That's when I decided to stop guessing and go watch the thing live. Instead of theorizing harder, I cranked the log level and watched both devices while reproducing the issue by hand.
+You can see this clearly in a supporting image of the Tasmota console. It shows both the plain ESP chip and the Tuya device firing out "Publish" commands to each other on every single hop, effectively feeding the loop back into itself.
 
-Tasmota's web console has an endpoint for log lines: `http://<ip>/cs?c2=<counter>`. You can scrape it yourself. I set both devices to verbose: `http://<ip>/cm?cmnd=WebLog%204`.
+The peer's mirror command arrived as a direct write. It flipped the relay, but since it didn't update the local variable, the rule triggered every single time. My guard only worked for a single, isolated, local toggle. Under any sustained back-and-forth, it was useless. And even a debounce wouldn't have helped; it would have just slowed down the "machine gun" effect rather than stopping it.
 
-Here are some key logs from the two switches:
+I then tried to pivot my strategy by mirroring only on the physical button press, reasoning that an MQTT-driven relay change shouldn't count as a manual interaction. This should have been structurally loop-proof. However, the logs proved this was impossible for certain hardware. One of the switches is a Tuya device where the main chip communicates with a secondary microcontroller over serial. On these devices, there is no distinction between a button press and a commanded relay change; they both report as the same event. Because the two types of input were indistinguishable on the hardware level, "only reacting to physical presses" wasn't an option I could implement. It was a dead end.
 
-*   My "physical-press" fix wasn't even deployed.
-*   The echo guard never actually broke the loop.
+Once I understood the actual mechanism, the fix was almost embarrassingly simple. The problem was that an incoming mirror command updated the relay but ignored the variable_one check. To fix this, I changed the flow: instead of letting the peer write to the "Power" command directly, they now send an event. The receiving device then updates its internal variable first, and only after that is done does it move the relay. 
 
-Let me describe what you can see in this image: It depicts both `.155` (a plain ESP) and `.166` (the Tuya) firing `POWER1#STATE...Publish` on every hop, creating a runaway loop.
+Because the variation is updated before the hardware moves, when the system checks if it needs to broadcast the change, it sees that the new state matches the updated variable and stays quiet. The echo dies after exactly one hop. No timers, no debounce, and no boot guards were required. It works perfectly even on the Tuya device because everything is handled through standard power and MQTT signals.
 
-This is how the bug works. The peer's mirror command arrives as a direct write to `cmnd/<me>/Power`, which flips the relay, but never updates the receiving device's `VAR1`. So the incoming value always differs from the stale local `VAR1`.
+There is one thing to keep in mind for deployment: before activating this rule, you must ensure both relays are in the same state and that the local variables are synchronized to match. Otherwise, they will start up with different values and immediately begin fighting to synchronize.
 
-My next idea was to mirror only on the physical button press, since an MQTT-driven relay change shouldn't generate a button event. But that's not possible with Tuya devices.
+I didn't trust a fix I hadn't tried to break yet. I tested it by performing six rapid toggles on one switch while recording the logs for both. 
 
-Here are some key logs:
+A second image shows this successful test. It displays six clear follow actions with no unintended echoes. In each instance, the receiving switch successfully processed the sync event and updated the relay, but because its internal variable was updated first, it never triggered a redundant "Publish" command. The path for the echo was completely closed. When I stopped pressing the button, everything stayed quiet, and both switches remained in the same state.
 
-*   The `RX Relay-1 --> MCU State: Off` line indicates the issue.
-*   This shows that "only react to physical presses" isn't expressible on Tuya hardware.
+There are several key takeaways from this experience:
 
-The fix was almost embarrassingly small. The bug is that an incoming mirror command updates the relay but not `VAR1`. So, I changed the rule to update `VAR1` before moving the relay:
+First, always verify what is actually running before debugging what you think is running. I nearly spent hours trying to fix a bug that had already been corrected in the code but not yet deployed.
 
-```
-Rule1 ON Power1#State!=%var1% DO Backlog VAR1 %value%; Publish cmnd/<peer>/Event SYNC=%value% ENDON ON Event#SYNC DO Backlog VAR1 %value%; Power1 %value% ENDON
-```
+Second, go watch the thing. Ten minutes of looking at live logs is far more effective than an hour of theorizing about boot races. The logs provided both the root cause and revealed a hardware limitation I hadn't even considered.
 
-This fix worked fine on the Tuya device. To prove it, I hammered it with rapid toggles and six clean follows in a row.
+Third, remember that debounce isn't always the answer. It felt like the right fix because fast presses triggered the loop, but the issue was a logic error in state tracking, not a timing issue. Slowing it down would have only hidden the problem.
 
-You can find more about my setup and details on the blog post. The hallway is quiet now. For a smart home project, that's the highest praise there is.
+Fourth, the smallest correct fix usually comes after you actually understand the underlying mechanism. Everything I tried before that was just a way to put tape over the cracks.
+
+Finally, this category of bug is common. Any time a node applies an incoming change but fails to update the key used to identify its own echo, a two-party mirror becomes an amplifier. This happens in light switches, in failed CRDT merges, and in webhook retry storms. The fix is always the same: update the deduplication key before you apply the effect.
+
+The hallway is quiet now. For a smart home project, that’s the highest praise there is. 
+
+You can find information on the specific hardware and the broker setup mentioned in the blog post.

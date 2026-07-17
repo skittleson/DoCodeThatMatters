@@ -166,6 +166,31 @@ def _save_audio_hashes(hashes, path=AUDIO_HASHES_PATH):
 
 SCRIPT_HASHES_PATH = "script-hashes.json"
 AUDIO_DIR = "public/audio"
+DOCS_AUDIO_DIR = "docs/audio"
+
+
+def _mirror_to_docs_audio(slug, filename):
+    """
+    Mirror a generated artifact from public/audio/<slug>/<filename> into
+    docs/audio/<slug>/<filename> so the committed build copy (docs/, which the
+    live site serves) can never drift stale relative to the source public/ copy.
+
+    Best-effort and guarded: only mirrors when the docs/audio/ tree already
+    exists (i.e. a build has populated it). When docs/audio/ is absent — e.g. a
+    fresh checkout before `astro build` — this is a no-op, so it never crashes.
+    Returns True if the file was mirrored, False otherwise.
+    """
+    import shutil
+
+    if not os.path.isdir(DOCS_AUDIO_DIR):
+        return False
+    src = f"{AUDIO_DIR}/{slug}/{filename}"
+    if not os.path.exists(src):
+        return False
+    dest_dir = f"{DOCS_AUDIO_DIR}/{slug}"
+    os.makedirs(dest_dir, exist_ok=True)
+    shutil.copy2(src, f"{dest_dir}/{filename}")
+    return True
 
 
 def _ollama_config():
@@ -178,7 +203,7 @@ def _ollama_config():
 
     load_dotenv()
     host = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
-    model = os.environ.get("OLLAMA_MODEL", "llama3.1")
+    model = os.environ.get("OLLAMA_MODEL", "gemma4:12b")
     return host, model
 
 
@@ -188,15 +213,21 @@ TTS_SYSTEM_PROMPT = (
     "to a friend. Follow these rules exactly:\n"
     "1. Never read a URL aloud. Replace a link with natural phrasing such as "
     '"you can find the link on the blog post", or drop it entirely.\n'
-    "2. Where the post references links, images, or extra material, point the "
-    "listener to the blog for the full post and details.\n"
+    "2. Deferring to the blog is ONLY for things that literally cannot be "
+    "spoken: a raw URL or link, a code block, or an image the listener cannot "
+    "see. This is NOT a license to omit prose, sections, or lists — never say "
+    '"see the blog for the full post/details" as a way to skip readable text.\n'
     "3. When the post has an image, describe what it depicts verbally from the "
     "alt text and surrounding context, as if describing it to someone who "
     "cannot see it.\n"
     "4. Use a conversational book-narrator tone. Produce no markdown artifacts "
     "(no #, *, backticks, or link/image syntax) and never read code verbatim.\n"
-    "5. Preserve the meaning and structure of the post. Rewrite it to be "
-    "speakable; do not summarize or shorten it.\n"
+    "5. Preserve the full meaning and structure of the post. Rewrite it to be "
+    "speakable; do not summarize or shorten it. Every bulleted or numbered "
+    "list MUST be read out in full, item by item, as natural spoken sentences "
+    '(for example "First, ... Second, ... Third, ..."). NO list, item, or '
+    'section may be replaced with "see the blog for the full list" or any '
+    "similar deferral — read the actual items aloud.\n"
     "Output only the spoken script text, with no preamble or commentary."
 )
 
@@ -223,6 +254,12 @@ def _request_tts_script(markdown, host, model):
             "system": TTS_SYSTEM_PROMPT,
             "prompt": _build_tts_prompt(markdown),
             "stream": False,
+            # A full post's markdown plus the system prompt can exceed Ollama's
+            # default context window (often 2k-4k tokens). When the prompt fills
+            # the window, generation stops immediately with done_reason=length
+            # and an EMPTY response — the script silently comes back blank. Give
+            # the model room for both the whole post AND a full spoken rewrite.
+            "options": {"num_ctx": 8192, "num_predict": 4096},
         },
         timeout=600,
     )
@@ -321,6 +358,9 @@ def generate_tts_scripts(slug_filter=None):
                 f.write(script)
                 if not script.endswith("\n"):
                     f.write("\n")
+            # Mirror into docs/audio/ (the served build copy) so it can't go
+            # stale relative to this freshly generated public/ copy.
+            _mirror_to_docs_audio(folder, "index.script.txt")
             updates[folder] = src_hash
             print(f"  -> {script_path}")
 
@@ -480,6 +520,11 @@ def text_to_speech_on_plain_text(slug_filter=None):
                     ),
                 ],
             )
+
+            # Mirror both encodings into docs/audio/ (the served build copy) so
+            # they can't drift stale relative to these fresh public/ copies.
+            _mirror_to_docs_audio(folder, "index.mp3")
+            _mirror_to_docs_audio(folder, "index.opus")
 
             # RSS enclosure length is the MP3 byte size (see rss.xml.ts).
             mp3_size = os.path.getsize(mp3_path)

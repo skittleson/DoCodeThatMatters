@@ -17,6 +17,8 @@ from main import (
     _unload_ollama_model,
     generate_tts_scripts,
     _select_audio_source,
+    _mirror_to_docs_audio,
+    DOCS_AUDIO_DIR,
 )
 
 
@@ -132,6 +134,52 @@ class TestGenerateTtsScripts:
         assert not (tmp_path / "public" / "audio" / "postB" / "index.script.txt").exists()
 
 
+class TestMirrorToDocsAudio:
+    def test_mirrors_when_docs_audio_exists(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        # public source copy
+        pub = tmp_path / "public" / "audio" / "postA"
+        pub.mkdir(parents=True)
+        (pub / "index.script.txt").write_text("hello script", encoding="utf-8")
+        # docs/audio tree present => a build has populated docs/
+        (tmp_path / "docs" / "audio").mkdir(parents=True)
+
+        assert _mirror_to_docs_audio("postA", "index.script.txt") is True
+        mirrored = tmp_path / "docs" / "audio" / "postA" / "index.script.txt"
+        assert mirrored.read_text(encoding="utf-8") == "hello script"
+
+    def test_noop_when_docs_audio_absent(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        pub = tmp_path / "public" / "audio" / "postA"
+        pub.mkdir(parents=True)
+        (pub / "index.script.txt").write_text("hello", encoding="utf-8")
+        # no docs/audio tree at all
+        assert _mirror_to_docs_audio("postA", "index.script.txt") is False
+        assert not (tmp_path / "docs" / "audio").exists()
+
+    def test_noop_when_source_missing(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        (tmp_path / "docs" / "audio").mkdir(parents=True)
+        # no public source file to mirror
+        assert _mirror_to_docs_audio("postA", "index.script.txt") is False
+
+    def test_generate_scripts_mirrors_into_docs_audio(self, tmp_path, monkeypatch):
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        # docs/audio tree present so mirroring activates
+        (tmp_path / "docs" / "audio").mkdir(parents=True)
+        with patch("main._request_tts_script", return_value="Spoken script."):
+            generate_tts_scripts()
+        pub = tmp_path / "public" / "audio" / "postA" / "index.script.txt"
+        docs = tmp_path / "docs" / "audio" / "postA" / "index.script.txt"
+        assert pub.read_text(encoding="utf-8") == docs.read_text(encoding="utf-8")
+
+
+class TestDocsAudioConstant:
+    def test_docs_audio_dir_constant(self):
+        assert DOCS_AUDIO_DIR == "docs/audio"
+
+
 class TestRequestTtsScript:
     def test_success_returns_response_text(self):
         fake_resp = MagicMock()
@@ -147,6 +195,10 @@ class TestRequestTtsScript:
         assert kwargs["json"]["model"] == "llama3.1"
         assert kwargs["json"]["system"] == TTS_SYSTEM_PROMPT
         assert "# md body" in kwargs["json"]["prompt"]
+        # A large context window is required so a full post + system prompt
+        # doesn't fill the window and yield an empty (done_reason=length) script.
+        assert kwargs["json"]["options"]["num_ctx"] >= 8192
+        assert kwargs["json"]["options"]["num_predict"] >= 2048
 
     def test_connection_error_propagates(self):
         with patch(
@@ -222,8 +274,12 @@ class TestTtsPrompt:
         # Rule 1: never read URLs aloud
         assert "url" in p
         assert "you can find the link on the blog post" in p
-        # Rule 2: point listeners to the blog
+        # Rule 2: blog deferral scoped to unspeakable content only (URLs/code/images),
+        # never a license to drop prose or lists
         assert "blog" in p
+        assert "not a license to omit" in p
+        # Rule 5: lists must be read out in full, item by item
+        assert "read out in full" in p
         # Rule 3: describe images verbally from alt text
         assert "image" in p and "alt" in p
         # Rule 4: conversational narrator tone, no markdown/code
@@ -248,7 +304,7 @@ class TestOllamaConfig:
         monkeypatch.delenv("OLLAMA_MODEL", raising=False)
         host, model = _ollama_config()
         assert host == "http://localhost:11434"
-        assert model == "llama3.1"
+        assert model == "gemma4:12b"
 
     def test_reads_env_overrides(self, monkeypatch):
         monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: False)
