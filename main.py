@@ -230,6 +230,25 @@ def _request_tts_script(markdown, host, model):
     return resp.json()["response"].strip()
 
 
+def _unload_ollama_model(host, model):
+    """
+    Ask Ollama to release the model from memory immediately (keep_alive=0),
+    freeing the GPU VRAM it holds. This matters because generate_tts_scripts
+    runs on the same GPU as the downstream Kokoro TTS step: if Ollama keeps the
+    model resident, Kokoro can hit CUDA out-of-memory and silently drop audio
+    chunks. Best-effort only — any failure (Ollama down, network error) is
+    swallowed so this never affects the build.
+    """
+    try:
+        requests.post(
+            f"{host}/api/generate",
+            json={"model": model, "keep_alive": 0},
+            timeout=30,
+        )
+    except requests.RequestException:
+        pass
+
+
 def generate_tts_scripts(slug_filter=None):
     """
     Rewrite each rendered blog post's original markdown into a natural spoken
@@ -258,57 +277,63 @@ def generate_tts_scripts(slug_filter=None):
     script_hashes = _load_audio_hashes(SCRIPT_HASHES_PATH)
     updates = {}
 
-    for folder in sorted(os.listdir("docs")):
-        if "." in folder:
-            continue
+    try:
+        for folder in sorted(os.listdir("docs")):
+            if "." in folder:
+                continue
 
-        tts_path = f"docs/{folder}/index.tts"
-        src_path = f"src/content/blog/{folder}.md"
-        script_path = f"{AUDIO_DIR}/{folder}/index.script.txt"
+            tts_path = f"docs/{folder}/index.tts"
+            src_path = f"src/content/blog/{folder}.md"
+            script_path = f"{AUDIO_DIR}/{folder}/index.script.txt"
 
-        if not os.path.exists(tts_path):
-            continue
-        if slug_filter and folder != slug_filter:
-            continue
-        if not os.path.exists(src_path):
-            print(f"Skipping script for {folder} (no source markdown)")
-            continue
+            if not os.path.exists(tts_path):
+                continue
+            if slug_filter and folder != slug_filter:
+                continue
+            if not os.path.exists(src_path):
+                print(f"Skipping script for {folder} (no source markdown)")
+                continue
 
-        with open(src_path, "rb") as f:
-            src_bytes = f.read()
-        src_hash = hashlib.sha256(src_bytes).hexdigest()
+            with open(src_path, "rb") as f:
+                src_bytes = f.read()
+            src_hash = hashlib.sha256(src_bytes).hexdigest()
 
-        if script_hashes.get(folder) == src_hash and os.path.exists(script_path):
-            print(f"Skipping script for {folder} (source unchanged)")
-            continue
+            if script_hashes.get(folder) == src_hash and os.path.exists(script_path):
+                print(f"Skipping script for {folder} (source unchanged)")
+                continue
 
-        print(f"Generating TTS script for {folder}...")
-        markdown = src_bytes.decode("utf-8")
-        try:
-            script = _request_tts_script(markdown, host, model)
-        except (requests.RequestException, ValueError, KeyError) as e:
-            if os.path.exists(script_path):
-                print(f"  Warning: Ollama error ({e!r}); using cached script for {folder}")
-            else:
-                print(
-                    f"  Warning: Ollama error ({e!r}); no cached script for {folder}, "
-                    "audio will fall back to index.tts"
-                )
-            continue
+            print(f"Generating TTS script for {folder}...")
+            markdown = src_bytes.decode("utf-8")
+            try:
+                script = _request_tts_script(markdown, host, model)
+            except (requests.RequestException, ValueError, KeyError) as e:
+                if os.path.exists(script_path):
+                    print(f"  Warning: Ollama error ({e!r}); using cached script for {folder}")
+                else:
+                    print(
+                        f"  Warning: Ollama error ({e!r}); no cached script for {folder}, "
+                        "audio will fall back to index.tts"
+                    )
+                continue
 
-        os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
-        with open(script_path, "w", encoding="utf-8") as f:
-            f.write(script)
-            if not script.endswith("\n"):
-                f.write("\n")
-        updates[folder] = src_hash
-        print(f"  -> {script_path}")
+            os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
+            with open(script_path, "w", encoding="utf-8") as f:
+                f.write(script)
+                if not script.endswith("\n"):
+                    f.write("\n")
+            updates[folder] = src_hash
+            print(f"  -> {script_path}")
 
-    if updates:
-        _save_audio_hashes(updates, SCRIPT_HASHES_PATH)
-        print(f"Generated {len(updates)} script(s); updated {SCRIPT_HASHES_PATH}")
-    else:
-        print("Nothing to generate — all TTS scripts up to date.")
+        if updates:
+            _save_audio_hashes(updates, SCRIPT_HASHES_PATH)
+            print(f"Generated {len(updates)} script(s); updated {SCRIPT_HASHES_PATH}")
+        else:
+            print("Nothing to generate — all TTS scripts up to date.")
+    finally:
+        # Free Ollama's GPU memory before the downstream Kokoro audio step runs
+        # on the same GPU. Runs on every path (generated, cached, or error) so
+        # audio generation always starts with a clean GPU. Best-effort.
+        _unload_ollama_model(host, model)
 
 
 def _select_audio_source(slug):

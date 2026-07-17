@@ -14,6 +14,7 @@ from main import (
     TTS_SYSTEM_PROMPT,
     _build_tts_prompt,
     _request_tts_script,
+    _unload_ollama_model,
     generate_tts_scripts,
     _select_audio_source,
 )
@@ -169,6 +170,52 @@ class TestRequestTtsScript:
                 pass
 
 
+class TestUnloadOllamaModel:
+    def test_posts_keep_alive_zero(self):
+        fake_resp = MagicMock()
+        fake_resp.raise_for_status.return_value = None
+        with patch("main.requests.post", return_value=fake_resp) as post:
+            _unload_ollama_model("http://localhost:11434", "llama3.1")
+        args, kwargs = post.call_args
+        assert args[0] == "http://localhost:11434/api/generate"
+        assert kwargs["json"]["model"] == "llama3.1"
+        # keep_alive: 0 tells Ollama to release the model (and its VRAM) immediately
+        assert kwargs["json"]["keep_alive"] == 0
+
+    def test_swallows_connection_error(self):
+        # Unloading is best-effort: a failure must never raise (Ollama may be down).
+        with patch(
+            "main.requests.post",
+            side_effect=requests.ConnectionError("refused"),
+        ):
+            _unload_ollama_model("http://localhost:11434", "llama3.1")  # must not raise
+
+
+class TestGenerateTtsScriptsUnloads:
+    def test_unloads_model_after_run(self, tmp_path, monkeypatch):
+        # After scripts are generated, Ollama's VRAM must be freed so the
+        # downstream Kokoro audio step gets a clean GPU (fixes OOM on shared GPUs).
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch("main._request_tts_script", return_value="Spoken script."), patch(
+            "main._unload_ollama_model"
+        ) as unload:
+            generate_tts_scripts()
+        assert unload.call_count == 1
+
+    def test_unloads_even_when_all_cached(self, tmp_path, monkeypatch):
+        # Even a fully-cached run should free VRAM: a prior step may have left
+        # the model resident, and Kokoro still needs the GPU.
+        monkeypatch.chdir(tmp_path)
+        _make_post(tmp_path, "postA")
+        with patch("main._request_tts_script", return_value="First run."), patch(
+            "main._unload_ollama_model"
+        ) as unload:
+            generate_tts_scripts()  # generates + unloads
+            generate_tts_scripts()  # cached, still unloads
+        assert unload.call_count == 2
+
+
 class TestTtsPrompt:
     def test_system_prompt_covers_five_rules(self):
         p = TTS_SYSTEM_PROMPT.lower()
@@ -194,6 +241,9 @@ class TestTtsPrompt:
 
 class TestOllamaConfig:
     def test_defaults_when_env_unset(self, monkeypatch):
+        # Patch load_dotenv to a no-op so a real repo-root .env cannot leak in;
+        # this isolates the pure env-var -> default resolution logic.
+        monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: False)
         monkeypatch.delenv("OLLAMA_HOST", raising=False)
         monkeypatch.delenv("OLLAMA_MODEL", raising=False)
         host, model = _ollama_config()
@@ -201,6 +251,7 @@ class TestOllamaConfig:
         assert model == "llama3.1"
 
     def test_reads_env_overrides(self, monkeypatch):
+        monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: False)
         monkeypatch.setenv("OLLAMA_HOST", "http://ollama:9999/")
         monkeypatch.setenv("OLLAMA_MODEL", "mistral")
         host, model = _ollama_config()
