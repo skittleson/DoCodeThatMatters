@@ -10,11 +10,10 @@ from main import (
     is_absolute,
     SCRIPT_HASHES_PATH,
     AUDIO_DIR,
-    _ollama_config,
+    _llm_config,
     TTS_SYSTEM_PROMPT,
     _build_tts_prompt,
     _request_tts_script,
-    _unload_ollama_model,
     generate_tts_scripts,
     _select_audio_source,
     _mirror_to_docs_audio,
@@ -181,24 +180,58 @@ class TestDocsAudioConstant:
 
 
 class TestRequestTtsScript:
-    def test_success_returns_response_text(self):
+    def _resp(self, content):
         fake_resp = MagicMock()
         fake_resp.raise_for_status.return_value = None
-        fake_resp.json.return_value = {"response": "  Spoken script here.  "}
-        with patch("main.requests.post", return_value=fake_resp) as post:
-            out = _request_tts_script("# md body", "http://localhost:11434", "llama3.1")
+        fake_resp.json.return_value = {
+            "choices": [{"message": {"content": content}}]
+        }
+        return fake_resp
+
+    def test_success_returns_message_content(self):
+        with patch(
+            "main.requests.post", return_value=self._resp("  Spoken script here.  ")
+        ) as post:
+            out = _request_tts_script(
+                "# md body", "http://192.168.4.104:8080/v1", "Qwopus3.6-27B"
+            )
         assert out == "Spoken script here."
-        # Called the /api/generate endpoint with stream disabled and the system prompt
+        # Hits the OpenAI-compatible chat-completions endpoint, stream disabled,
+        # with the system prompt and the markdown in the user message.
         args, kwargs = post.call_args
-        assert args[0] == "http://localhost:11434/api/generate"
+        assert args[0] == "http://192.168.4.104:8080/v1/chat/completions"
         assert kwargs["json"]["stream"] is False
-        assert kwargs["json"]["model"] == "llama3.1"
-        assert kwargs["json"]["system"] == TTS_SYSTEM_PROMPT
-        assert "# md body" in kwargs["json"]["prompt"]
-        # A large context window is required so a full post + system prompt
-        # doesn't fill the window and yield an empty (done_reason=length) script.
-        assert kwargs["json"]["options"]["num_ctx"] >= 8192
-        assert kwargs["json"]["options"]["num_predict"] >= 2048
+        assert kwargs["json"]["model"] == "Qwopus3.6-27B"
+        msgs = kwargs["json"]["messages"]
+        assert msgs[0]["role"] == "system"
+        assert msgs[0]["content"] == TTS_SYSTEM_PROMPT
+        assert msgs[1]["role"] == "user"
+        assert "# md body" in msgs[1]["content"]
+        # Sampling + a generous output budget so full posts aren't truncated.
+        assert kwargs["json"]["temperature"] == 0.9
+        assert kwargs["json"]["top_p"] == 0.95
+        assert kwargs["json"]["max_tokens"] >= 2048
+
+    def test_authorization_header_present_with_key(self):
+        with patch("main.requests.post", return_value=self._resp("ok")) as post:
+            _request_tts_script(
+                "md", "http://host/v1", "m", api_key="secret-key"
+            )
+        _, kwargs = post.call_args
+        assert kwargs["headers"]["Authorization"] == "Bearer secret-key"
+
+    def test_authorization_header_absent_without_key(self):
+        with patch("main.requests.post", return_value=self._resp("ok")) as post:
+            _request_tts_script("md", "http://host/v1", "m", api_key="")
+        _, kwargs = post.call_args
+        assert "Authorization" not in kwargs["headers"]
+
+    def test_strips_think_block_prefix(self):
+        content = "<think>internal reasoning here</think>\nActual spoken script."
+        with patch("main.requests.post", return_value=self._resp(content)):
+            out = _request_tts_script("md", "http://host/v1", "m")
+        assert out == "Actual spoken script."
+        assert "<think>" not in out and "</think>" not in out
 
     def test_connection_error_propagates(self):
         with patch(
@@ -206,7 +239,7 @@ class TestRequestTtsScript:
             side_effect=requests.ConnectionError("refused"),
         ):
             try:
-                _request_tts_script("md", "http://localhost:11434", "llama3.1")
+                _request_tts_script("md", "http://host/v1", "m")
                 assert False, "expected ConnectionError"
             except requests.RequestException:
                 pass
@@ -216,56 +249,10 @@ class TestRequestTtsScript:
         fake_resp.raise_for_status.side_effect = requests.HTTPError("404")
         with patch("main.requests.post", return_value=fake_resp):
             try:
-                _request_tts_script("md", "http://localhost:11434", "llama3.1")
+                _request_tts_script("md", "http://host/v1", "m")
                 assert False, "expected HTTPError"
             except requests.RequestException:
                 pass
-
-
-class TestUnloadOllamaModel:
-    def test_posts_keep_alive_zero(self):
-        fake_resp = MagicMock()
-        fake_resp.raise_for_status.return_value = None
-        with patch("main.requests.post", return_value=fake_resp) as post:
-            _unload_ollama_model("http://localhost:11434", "llama3.1")
-        args, kwargs = post.call_args
-        assert args[0] == "http://localhost:11434/api/generate"
-        assert kwargs["json"]["model"] == "llama3.1"
-        # keep_alive: 0 tells Ollama to release the model (and its VRAM) immediately
-        assert kwargs["json"]["keep_alive"] == 0
-
-    def test_swallows_connection_error(self):
-        # Unloading is best-effort: a failure must never raise (Ollama may be down).
-        with patch(
-            "main.requests.post",
-            side_effect=requests.ConnectionError("refused"),
-        ):
-            _unload_ollama_model("http://localhost:11434", "llama3.1")  # must not raise
-
-
-class TestGenerateTtsScriptsUnloads:
-    def test_unloads_model_after_run(self, tmp_path, monkeypatch):
-        # After scripts are generated, Ollama's VRAM must be freed so the
-        # downstream Kokoro audio step gets a clean GPU (fixes OOM on shared GPUs).
-        monkeypatch.chdir(tmp_path)
-        _make_post(tmp_path, "postA")
-        with patch("main._request_tts_script", return_value="Spoken script."), patch(
-            "main._unload_ollama_model"
-        ) as unload:
-            generate_tts_scripts()
-        assert unload.call_count == 1
-
-    def test_unloads_even_when_all_cached(self, tmp_path, monkeypatch):
-        # Even a fully-cached run should free VRAM: a prior step may have left
-        # the model resident, and Kokoro still needs the GPU.
-        monkeypatch.chdir(tmp_path)
-        _make_post(tmp_path, "postA")
-        with patch("main._request_tts_script", return_value="First run."), patch(
-            "main._unload_ollama_model"
-        ) as unload:
-            generate_tts_scripts()  # generates + unloads
-            generate_tts_scripts()  # cached, still unloads
-        assert unload.call_count == 2
 
 
 class TestTtsPrompt:
@@ -295,25 +282,29 @@ class TestTtsPrompt:
         assert md in user
 
 
-class TestOllamaConfig:
+class TestLlmConfig:
     def test_defaults_when_env_unset(self, monkeypatch):
         # Patch load_dotenv to a no-op so a real repo-root .env cannot leak in;
         # this isolates the pure env-var -> default resolution logic.
         monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: False)
-        monkeypatch.delenv("OLLAMA_HOST", raising=False)
-        monkeypatch.delenv("OLLAMA_MODEL", raising=False)
-        host, model = _ollama_config()
-        assert host == "http://localhost:11434"
-        assert model == "gemma4:12b"
+        monkeypatch.delenv("LLM_BASE_URL", raising=False)
+        monkeypatch.delenv("LLM_MODEL", raising=False)
+        monkeypatch.delenv("LLM_API_KEY", raising=False)
+        base_url, model, api_key = _llm_config()
+        assert base_url == "http://192.168.4.104:8080/v1"
+        assert model == "Qwopus3.6-27B"
+        assert api_key == ""
 
     def test_reads_env_overrides(self, monkeypatch):
         monkeypatch.setattr("dotenv.load_dotenv", lambda *a, **k: False)
-        monkeypatch.setenv("OLLAMA_HOST", "http://ollama:9999/")
-        monkeypatch.setenv("OLLAMA_MODEL", "mistral")
-        host, model = _ollama_config()
-        # trailing slash stripped so f"{host}/api/generate" is well-formed
-        assert host == "http://ollama:9999"
-        assert model == "mistral"
+        monkeypatch.setenv("LLM_BASE_URL", "http://gpu:9999/v1/")
+        monkeypatch.setenv("LLM_MODEL", "some-model")
+        monkeypatch.setenv("LLM_API_KEY", "abc123")
+        base_url, model, api_key = _llm_config()
+        # trailing slash stripped so f"{base_url}/chat/completions" is well-formed
+        assert base_url == "http://gpu:9999/v1"
+        assert model == "some-model"
+        assert api_key == "abc123"
 
 
 class TestScriptHashConstants:

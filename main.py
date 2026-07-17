@@ -193,18 +193,21 @@ def _mirror_to_docs_audio(slug, filename):
     return True
 
 
-def _ollama_config():
+def _llm_config():
     """
-    Read Ollama connection settings from the environment (.env supported via
-    python-dotenv). Returns (host, model). The host has any trailing slash
-    stripped so f"{host}/api/generate" is always well-formed.
+    Read OpenAI-compatible LLM endpoint settings from the environment (.env
+    supported via python-dotenv). Returns (base_url, model, api_key). The
+    base_url has any trailing slash stripped so f"{base_url}/chat/completions"
+    is always well-formed. An empty api_key means no Authorization header is
+    sent (local, auth-less servers such as llama.cpp).
     """
     from dotenv import load_dotenv
 
     load_dotenv()
-    host = os.environ.get("OLLAMA_HOST", "http://localhost:11434").rstrip("/")
-    model = os.environ.get("OLLAMA_MODEL", "gemma4:12b")
-    return host, model
+    base_url = os.environ.get("LLM_BASE_URL", "http://192.168.4.104:8080/v1").rstrip("/")
+    model = os.environ.get("LLM_MODEL", "Qwopus3.6-27B")
+    api_key = os.environ.get("LLM_API_KEY", "")
+    return base_url, model, api_key
 
 
 TTS_SYSTEM_PROMPT = (
@@ -234,62 +237,62 @@ TTS_SYSTEM_PROMPT = (
 
 def _build_tts_prompt(markdown):
     """
-    Build the user prompt for the Ollama request. Supplies the raw markdown
+    Build the user prompt for the LLM request. Supplies the raw markdown
     (title + body) that the system prompt instructs the model to rewrite.
     """
     return "Rewrite the following blog post markdown into a spoken script:\n\n" + markdown
 
 
-def _request_tts_script(markdown, host, model):
+def _request_tts_script(markdown, base_url, model, api_key=""):
     """
-    Send the markdown to Ollama's /api/generate (stream disabled) and return the
-    generated spoken script. Raises requests.RequestException on connection
-    errors or non-2xx responses (via raise_for_status), so callers can catch a
-    single exception type for fallback handling.
+    Send the markdown to an OpenAI-compatible /chat/completions endpoint (stream
+    disabled) and return the generated spoken script. Raises
+    requests.RequestException on connection errors or non-2xx responses (via
+    raise_for_status), and ValueError/KeyError on a malformed response body, so
+    callers can catch those for fallback handling.
+
+    An Authorization: Bearer header is sent only when api_key is non-empty;
+    local auth-less servers (llama.cpp) are called with no auth header.
     """
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
     resp = requests.post(
-        f"{host}/api/generate",
+        f"{base_url}/chat/completions",
+        headers=headers,
         json={
             "model": model,
-            "system": TTS_SYSTEM_PROMPT,
-            "prompt": _build_tts_prompt(markdown),
+            "messages": [
+                {"role": "system", "content": TTS_SYSTEM_PROMPT},
+                {"role": "user", "content": _build_tts_prompt(markdown)},
+            ],
             "stream": False,
-            # A full post's markdown plus the system prompt can exceed Ollama's
-            # default context window (often 2k-4k tokens). When the prompt fills
-            # the window, generation stops immediately with done_reason=length
-            # and an EMPTY response — the script silently comes back blank. Give
-            # the model room for both the whole post AND a full spoken rewrite.
-            "options": {"num_ctx": 8192, "num_predict": 4096},
+            # Recommended sampling for this model (non-thinking preset).
+            "temperature": 0.9,
+            "top_p": 0.95,
+            # Allow long spoken scripts — a full post rewrite can be lengthy.
+            # 8192 is ample for a blog post and safer than the model's max.
+            "max_tokens": 8192,
         },
         timeout=600,
     )
     resp.raise_for_status()
-    return resp.json()["response"].strip()
+    content = resp.json()["choices"][0]["message"]["content"].strip()
 
-
-def _unload_ollama_model(host, model):
-    """
-    Ask Ollama to release the model from memory immediately (keep_alive=0),
-    freeing the GPU VRAM it holds. This matters because generate_tts_scripts
-    runs on the same GPU as the downstream Kokoro TTS step: if Ollama keeps the
-    model resident, Kokoro can hit CUDA out-of-memory and silently drop audio
-    chunks. Best-effort only — any failure (Ollama down, network error) is
-    swallowed so this never affects the build.
-    """
-    try:
-        requests.post(
-            f"{host}/api/generate",
-            json={"model": model, "keep_alive": 0},
-            timeout=30,
-        )
-    except requests.RequestException:
-        pass
+    # Defensive: some chain-of-thought models wrap output in <think>...</think>.
+    # This model has thinking off (verified), but if a </think> marker appears,
+    # drop everything up to and including the last one before returning.
+    if "</think>" in content:
+        content = content.rsplit("</think>", 1)[-1].strip()
+    return content
 
 
 def generate_tts_scripts(slug_filter=None):
     """
     Rewrite each rendered blog post's original markdown into a natural spoken
-    script via a local Ollama server, writing public/audio/<slug>/index.script.txt.
+    script via an OpenAI-compatible LLM endpoint, writing
+    public/audio/<slug>/index.script.txt.
 
     Runs BEFORE text_to_speech_on_plain_text so audio is generated from the
     script rather than the raw .tts plain text. Slug discovery mirrors the audio
@@ -300,7 +303,7 @@ def generate_tts_scripts(slug_filter=None):
     Caching: skip the LLM call when script-hashes.json holds the current
     sha256 of the source .md AND index.script.txt already exists.
 
-    Failure handling: any Ollama error is caught per-post. A cached script is
+    Failure handling: any LLM error is caught per-post. A cached script is
     kept as-is; otherwise a warning is logged and no script is written so audio
     falls back to index.tts. This step never aborts the build.
 
@@ -310,70 +313,64 @@ def generate_tts_scripts(slug_filter=None):
     if not os.path.isdir("docs"):
         return
 
-    host, model = _ollama_config()
+    base_url, model, api_key = _llm_config()
     script_hashes = _load_audio_hashes(SCRIPT_HASHES_PATH)
     updates = {}
 
-    try:
-        for folder in sorted(os.listdir("docs")):
-            if "." in folder:
-                continue
+    for folder in sorted(os.listdir("docs")):
+        if "." in folder:
+            continue
 
-            tts_path = f"docs/{folder}/index.tts"
-            src_path = f"src/content/blog/{folder}.md"
-            script_path = f"{AUDIO_DIR}/{folder}/index.script.txt"
+        tts_path = f"docs/{folder}/index.tts"
+        src_path = f"src/content/blog/{folder}.md"
+        script_path = f"{AUDIO_DIR}/{folder}/index.script.txt"
 
-            if not os.path.exists(tts_path):
-                continue
-            if slug_filter and folder != slug_filter:
-                continue
-            if not os.path.exists(src_path):
-                print(f"Skipping script for {folder} (no source markdown)")
-                continue
+        if not os.path.exists(tts_path):
+            continue
+        if slug_filter and folder != slug_filter:
+            continue
+        if not os.path.exists(src_path):
+            print(f"Skipping script for {folder} (no source markdown)")
+            continue
 
-            with open(src_path, "rb") as f:
-                src_bytes = f.read()
-            src_hash = hashlib.sha256(src_bytes).hexdigest()
+        with open(src_path, "rb") as f:
+            src_bytes = f.read()
+        src_hash = hashlib.sha256(src_bytes).hexdigest()
 
-            if script_hashes.get(folder) == src_hash and os.path.exists(script_path):
-                print(f"Skipping script for {folder} (source unchanged)")
-                continue
+        if script_hashes.get(folder) == src_hash and os.path.exists(script_path):
+            print(f"Skipping script for {folder} (source unchanged)")
+            continue
 
-            print(f"Generating TTS script for {folder}...")
-            markdown = src_bytes.decode("utf-8")
-            try:
-                script = _request_tts_script(markdown, host, model)
-            except (requests.RequestException, ValueError, KeyError) as e:
-                if os.path.exists(script_path):
-                    print(f"  Warning: Ollama error ({e!r}); using cached script for {folder}")
-                else:
-                    print(
-                        f"  Warning: Ollama error ({e!r}); no cached script for {folder}, "
-                        "audio will fall back to index.tts"
-                    )
-                continue
+        print(f"Generating TTS script for {folder}...")
+        markdown = src_bytes.decode("utf-8")
+        try:
+            script = _request_tts_script(markdown, base_url, model, api_key)
+        except (requests.RequestException, ValueError, KeyError) as e:
+            if os.path.exists(script_path):
+                print(f"  Warning: LLM error ({e!r}); using cached script for {folder}")
+            else:
+                print(
+                    f"  Warning: LLM error ({e!r}); no cached script for {folder}, "
+                    "audio will fall back to index.tts"
+                )
+            continue
 
-            os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
-            with open(script_path, "w", encoding="utf-8") as f:
-                f.write(script)
-                if not script.endswith("\n"):
-                    f.write("\n")
-            # Mirror into docs/audio/ (the served build copy) so it can't go
-            # stale relative to this freshly generated public/ copy.
-            _mirror_to_docs_audio(folder, "index.script.txt")
-            updates[folder] = src_hash
-            print(f"  -> {script_path}")
+        os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
+        with open(script_path, "w", encoding="utf-8") as f:
+            f.write(script)
+            if not script.endswith("\n"):
+                f.write("\n")
+        # Mirror into docs/audio/ (the served build copy) so it can't go
+        # stale relative to this freshly generated public/ copy.
+        _mirror_to_docs_audio(folder, "index.script.txt")
+        updates[folder] = src_hash
+        print(f"  -> {script_path}")
 
-        if updates:
-            _save_audio_hashes(updates, SCRIPT_HASHES_PATH)
-            print(f"Generated {len(updates)} script(s); updated {SCRIPT_HASHES_PATH}")
-        else:
-            print("Nothing to generate — all TTS scripts up to date.")
-    finally:
-        # Free Ollama's GPU memory before the downstream Kokoro audio step runs
-        # on the same GPU. Runs on every path (generated, cached, or error) so
-        # audio generation always starts with a clean GPU. Best-effort.
-        _unload_ollama_model(host, model)
+    if updates:
+        _save_audio_hashes(updates, SCRIPT_HASHES_PATH)
+        print(f"Generated {len(updates)} script(s); updated {SCRIPT_HASHES_PATH}")
+    else:
+        print("Nothing to generate — all TTS scripts up to date.")
 
 
 def _select_audio_source(slug):
