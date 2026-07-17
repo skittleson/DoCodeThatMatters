@@ -1,17 +1,39 @@
-Here's the rewritten spoken script:
-
 My Emails Are Out Of Control
 
-You know how your email inbox can sometimes feel overwhelming? Mine was getting that way. I wasn't about to try to achieve a "zero inbox" game, but I did want to take back some control. So, I decided to write some code to help me out.
+My inbox is full. Not in the sense of storage capacity, but my mental capacity. Email is here to stay and I have chosen not to commit to a zero inbox game. So this is my attempt to use some code to analyze and clean up existing messages. Let's get some control back.
 
-I'll be talking about two Python scripts I created: one analyzes and cleans up existing messages, and the other deletes emails from specific senders. Let's dive in.
+The TLDR is: the "who has emailed the most" script loops through 11 times by 30 days in an inbox using an IMAP protocol. It builds a list of the top "From" email addresses and then displays it. The "mark for deletions" script handles removing a single from email address at a time. You can find the link to the code on the blog post.
 
-First, let me describe the image you see here. It's a picture of an email running away from being cleaned up. That's kind of what my inbox felt like before I started working on these scripts.
+Mostly newsletters, some transactional. Having a time-to-live on some of these emails would make sense. That's not a feature I'm aware of, so let's just do some data deletion. Edit: there is a feature called Sweep in Outlook.com that does this.
 
-The first script is called "who_has_email_the_most." It looks at your inbox over a period of 11 times by 30 days, using the IMAP protocol. It then builds a list of the top senders and displays them for you. The second script is called "mark_for_deletions," and it allows you to delete emails from specific senders one at a time.
+Here is the data:
 
-The data I'm working with includes mostly newsletters and some transactional emails. You can see here what my inbox looked like before I started cleaning up - these are just a few of the top offenders. Having a feature that would let me set a "time-to-live" for certain types of emails would be really helpful, but it's not something I'm aware of.
+news at e dot eyebuydirect dot com with 290 emails
+shipment-tracking at amazon dot com with 218 emails
+friendupdates at facebookmail dot com with 215 emails
+express at em dot express dot com with 211 emails
+Costco at digital dot costco dot com with 207 emails
+photos at onedrive dot com with 195 emails
+noreply at redditmail dot com with 179 emails
+order-update at amazon dot com with 178 emails
+Shutterfly at em dot shutterfly dot com with 159 emails
+REDACTED01 at REDACTED01 dot com with 157 emails
+ProFlowers at news dot proflowers dot com with 151 emails
+USPSInformeddelivery at email dot informeddelivery dot usps dot com with 149 emails
+marketplace-messages at amazon dot com with 122 emails
+microsoft dot start at email2 dot microsoft dot com with 114 emails
+redcross at theamericanredcross dot org with 112 emails
+REDACTED02 at REDACTED02 with 106 emails
+newsmax at latest dot newsmax dot com with 101 emails
+noreply at email dot amctheatres dot com with 95 emails
+jobs-listings at linkedin dot com with 95 emails
+reply at rs dot email dot nextdoor dot com with 93 emails
 
-So, instead, I've been deleting some of these emails and creating rules to archive others through my email provider's web portal. I'm also planning to run the script regularly to see who is wasting my time the most.
+My solutions were:
 
-In conclusion, a bit of house cleaning has really helped me get my inbox under control. With the help of automation, it should continue to improve over time.
+First, unsubscribe from the top offenders.
+Second, using a script, delete the top offending emails.
+Third, create some rules to archive emails via the web portal.
+And fourth, run the script for top offenders monthly to evaluate who is wasting my time the most.
+
+A bit of house cleaning will keep some sanity in my inbox. With the addition of automation, it should get better over time.

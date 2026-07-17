@@ -1,19 +1,67 @@
-Let's sit down and talk about software engineering lessons I've learned along the way. One of the main goals for this year was to put all these lessons into a format that's easy to reference. So, keep coming back for updates.
+Here is the spoken-word script for your blog post.
 
-First off, let's talk about code reviews. They're really important, so do them. Learn from others and share your own experiences too. Code reviews help catch mistakes early on and improve the overall quality of your code.
+***
 
-Now, have you ever heard of flight rules? It's a concept where you document common problems and their solutions in a manual. This is especially useful for teams working together. For example, GitHub has a great repository called "git-flight-rules" that shows how to do this with Git.
+The image accompanying this post shows a view of field notes taken by a software engineer.
 
-Another thing I've learned is the importance of automating routine tasks. Use scripts or tools like bash, autohotkey, or powershell to save time and reduce context switching. This can be especially helpful for repetitive tasks that take up a lot of your time.
+My goal for the year 2018 was to put the lessons I have learned in the field as a software engineer into a format that is easily referenced. Keep coming back for updates!
 
-Keeping current with industry trends and technologies is also crucial. Listen to podcasts, dev blogs, and news feeds to stay on top of things. I recommend starting with some popular ones like "The Core Skills" podcast.
+First, do code reviews. Code reviews are critical. Do it. Learn from your peers at the same time. Ask them questions about your code. Show anything that was interesting or challenging. Showing your code should be as fun as doing it. The act of discussing your code is more important than showing it to someone. As the book Code Complete states, the average effectiveness of design and code inspections are fifty-five and sixty percent. You can find the link to that source on the blog post. Also, check out the blog post from Jeff Atwood, a Stack Overflow founder, which is linked on the page.
 
-When it comes to tools, don't underestimate the value of having the right equipment for your job. Invest in a comfortable chair, keyboard, mouse, software, cell phone, and desk. Having the right tools can really boost productivity.
+Next, understand that process can be your enemy. As a software engineer, creating process is a natural reaction to solve a problem. That is okay most of the time, but let us ask a few non-technical questions. Is a new process really needed? Can you do it manually for a while? It may not need to be automated if it only needs to be done for a short time. Are you solving the symptom of a bigger problem? Try addressing the bigger problem first. How much resources will it save? It is about efficiency and time resource management. Give yourself discovery time before creating a new process. Look for all the edge cases. Creating cogs in the machine should be carefully considered.
 
-Another lesson I've learned is that success often follows people who create a work routine for themselves. Anyone can do this with a bit of willpower and patience. My own work routine includes deep work, reviewing, communication follow-up, meetings, lunch, and more. You might find it helpful to try out a similar schedule.
+Then, know what to do before doing it. Have a goal written down before writing code. Knowing this beforehand will keep you focused. Large tasks that require research should be broken down into smaller tasks. If it is unclear why the task needs to be completed, speak with the stakeholder on why it is needed and what it will do for the business.
 
-Finally, don't be afraid to learn from others' successes and mistakes. Read about how people made errors and what they did wrong. This can help you avoid making the same mistakes in your own projects.
+You must also know what you cannot control. You cannot control the business decisions management has made. Or what a client thinks about your work. Provide your opinion, once. You cannot control everything. So don't. The Daily Stoic is a good source of explaining what you have control of, and you can find the link on the blog post. It is in an easy, bite-size daily format.
 
-That's all for now. Keep checking back for more software engineering lessons and updates. 
+Speak up! Need a tool to make your job easier? Want a raise? Found a way to reduce time or labor? Speak up! A simple way to put it is: I would like A, B, C because of the fact of X, Y, Z.
 
-By the way, have a look at this lovely picture of a field... (This is where we were supposed to see an image of a beautiful landscape.)
+Silence the distractions. Turn off instant notifications, phone, email, and limit distracting websites. Once you get into the Zone, it is hard to get back into it when interruption occurs. If a person interrupts me multiple times, I politely ask them to stop or forward this post from StackOverflow, the link to which is on the blog. Here is the quote from EpsilonVector: How long does it take for you to fall asleep? X minutes. Now imagine that when you are close to falling asleep, someone walks in and interrupts you, how long will it take you to fall asleep now? Those few seconds you had left, or will you have to start again to sink back to where you were? I will have to start again. Great. Same thing. Just like falling asleep, it takes me a while to sink into focus mode, and it takes me a while to get back to it once I am interrupted, except that I also forget half of what I was doing.
+
+Play music. It may seem like the opposite of Silence the Distractions, but it seems to work. Find soothing and/or rhythmic music to play while working. It will keep other distractions away. Spotify has a nice UI for genres and moods. I also like tracks from Carl Franklin at dot net rocks: Music To Code By. You can find the link on the blog post.
+
+Say No. In order to be successful, you need to say no. That means can you take a look, going to an unscheduled meeting, using that latest XYZ framework, etc., is a NO. You may be considered a bottleneck or not a team player, but having less on your mind is absolutely the best way to get more done.
+
+Deal with conflict, quickly. As a developer, you will still need to talk with people, even customers! Dealing with conflict is part of that. It is best to handle it quickly, but be prepared for questions. State the facts and keep answers short and direct.
+
+Reflect upon your code. Take time to reflect upon your code. Look for improvements to shorten and enhance readability. Consider different ways to rewrite it. Review the strength of code written and other connected code. Treat dependencies as a liability. A great book from Michael Feathers gives clear ideas on this, Working Effectively with Legacy Code. The link is available on the blog post.
+
+Iterate. Code that lasts can take more than one go. Write code like an essay. The first one works, but the editing is where the magic makes it come together.
+
+Know when to stop perfecting. You gotta ship those features some time. So plan the MVP before you start. Create additional tasks or issues on future improvements.
+
+No working on breaks. Look at cat pictures, call a friend, go for a walk, or anything at all, EXCEPT WORK! This is important. You must lose focus to stay focused.
+
+Motivation, willpower, and time are limited. Your motivation, your willpower, and your time are the most important resources. This is not understood when starting out as a dev. Every dev has gone through a day where he or she is putting out fires, responding to emails, or in long meetings. At the end of the day, you don't feel like you have accomplished anything. That feeling sucks. A schedule will prevent that sucking feeling. Some of these events are unavoidable, but most can be managed. I plan important programming from 8am to noon. The remaining of the day is code review, bug fixes, responding to emails, meetings, etc. What do you want to have done at the end of the day?
+
+Throw it out. Is the code hard to read? Are you stuck? Start fresh. A great benefit of source control is to create new branches to test.
+
+Walk away. Another effective strategy for solving a problem is by walking away from it. Grab a cup of coffee. You will come back with a different perspective. A little distance from the problem can help get that high level view again. We have all got stuck in the weeds before.
+
+Rubber Duck. Okay, the last two pieces of advice didn't work for you. Try saying it aloud, with a peer, a notepad, or a rubber duck. The link to the rubber duck debugging concept is on the blog post. Describe the problem and what the desired outcome is.
+
+Integration tests over unit tests. Unit tests are great, but when crunched for time, do integration tests. The link to the StackExchange discussion is on the blog post. They take less time to write and give a high code coverage. Integration tests have more value in the big picture. Tread lightly when offering this advice to your team. Remember to keep integration tests only testable on the outside in.
+
+Failure is unavoidable. Your code will have bugs. Projects will be built and never used. Users won't come. You will make mistakes. These events are an insight into what doesn't work. Ask why. Find ways to prevent wasted effort from occurring. Break those failures into rules.
+
+Learn from others' successes and mistakes. We always read about the successes. Learning how someone made a mistake is more important. Know who was involved, why it was needed, and what was done. Isolate the mistakes, then move and add it to your project readme to consider.
+
+Personal Resource Center, a well-organized notebook. Google Keep, OneNote, markdown files, text doc, or just a notebook. It is an invaluable habit to save blog links, research, configurations, and a place to dump knowledge. I compared it to my version of StackOverflow answers. Save the information you don't want to memorize but still need. To start out, store by topic and subtopic. The organizational structure will follow. One of my favorite published notebooks is a pen testing cheat sheet called Red Team Field Manual. The link is on the blog post. Much more from awesome-cheatsheets, also linked on the post. Develop your own cheat sheets.
+
+Identify and document flight rules. Flight rules are the hard-earned body of knowledge recorded in manuals that list, step-by-step, what to do if X occurs, and why. Rules of engagement are the internal rules or directives among military forces that define the circumstances, conditions, degree, and manner in which the use of force, or actions which might be construed as provocative, may be applied. The links to the Wikipedia definitions are on the blog post. This concept of documenting knowledge to a solution for a common problem is critical in teams. Learn to do it well. A great git example is linked on the blog post.
+
+Automate routine trivial tasks. Learn to automate the repetitive tasks. Use bash scripts, autohotkey, powershell, macros, selenium, IFTTT, etc. These will help with context switching.
+
+Keep current. Listen to podcasts, dev blogs, dev news feeds like Hacker News or subreddits, and books are essential to keeping up. It also helps with what developers feel about the current state of technology, companies, and projects. A starting link is provided on the blog post.
+
+Invest in your tools. That means a comfortable chair, keyboard, mouse, software, cell phone, and desk. Having the right tools increases productivity.
+
+Work with different people. Working in a company with multiple software development teams? Try to work for another one or contribute to open source. Working with other individuals can give insight on how to collaborate differently.
+
+Work Routine. Success follows people who create and follow a work routine. Anybody can do this with a little bit of willpower and patience. Here is mine: First, deep work for the first two hours. Second, one hour of review, communication follow up, and meetings. Third, lunch, followed by two hours of deep work. Fourth, one hour for review, communication follow up, and meetings.
+
+A Not To Do list. Empty your mind of what you would like to do. This will help you keep focus on what needs to be done now. I have been a big fan of The Eisenhower Method, the link to which is on the blog post, as it is broken down into four categories: Important and Urgent, Important and Not Urgent, Unimportant and Urgent, and Unimportant and Not Urgent. Most task management software can split into groups.
+
+Stay Uncomfortable. You only get better this way. Here are examples: First, learn another language. Then do it again. Second, give talks. Third, write tutorials and/or blog posts. Fourth, put together challenges. Fifth, teach or mentor.
+
+Here are a few of my favorite resources I often reference: First, 97 Things Every Programmer Should Know. Second, Adaptive Code. Third, The Daily Stoic. Fourth, Functional Programming in C#, though there is no Kindle version sadly, it has great use of LINQ with generics. Fifth, The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win, which is in story form and was a pleasure to read. Sixth, GoodUi.org for landing page UI and UX ideas. Seventh, The Design of Everyday Things. Eighth, Don't Make Me Think. Ninth, xkcd simplewriter, to keep content simple. Tenth, Working Effectively with Legacy Code. Eleventh, the Kalzumeus greatest hits site. Twelfth, the GitHub repository for best websites a programmer should visit. And thirteenth, design patterns. The links to these resources are on the blog post. Note that sources referenced may or may not be Amazon affiliated, because that is where I get my books.

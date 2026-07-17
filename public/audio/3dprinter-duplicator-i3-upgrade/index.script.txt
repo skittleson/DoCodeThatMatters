@@ -1,37 +1,69 @@
-Here is the rewritten script:
+Title: Duplicator i3 3D Printer Upgrade.
 
-If you're anything like me, you've probably got an old Duplicator i3 3D printer sitting in your garage or on a shelf somewhere. You might be wondering what to do with it, since it's been surpassed by newer models.
+TLDR: A how-to on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still in progress.
 
-Well, I took it upon myself to upgrade mine instead of just getting rid of it. And let me tell you, it was quite the journey! In this post, I'll walk you through all the steps I took to modernize my Duplicator i3 and turn it into a capable 3D printer again.
+The Duplicator i3 is a common 3D printer that many now consider outdated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and replacing parts to modernize it. There is also a lot of resources and parts still available.
 
-Now, before we get started, I want to warn you that this post is still in progress. There's a lot of information here, but I'm hoping to flesh out some of these details in the future.
+The To-Do List
 
-So, let's take a look at the list of things I wanted to upgrade or replace on my Duplicator i3:
+First, install a glass bed.
 
-First up, we've got the glass bed. Replacing this was one of the first steps I took, and it made a big difference right off the bat.
+Second, change the steppers from 1 over 16 to 1 over 32 steps. This provides cleaner and smoother prints.
 
-Next, I decided to upgrade the steppers with 1/16 to 1/32 steps. This provides much cleaner and smoother prints than before.
+Third, replace the existing Melzi board with an MKS Gen 1.4 board. This could have been the standard RepRap Arduino Mega 2560 board as well. Regarding this replacement, there are several sub-steps. First, use JST 2-pin to 3-pin adapters for endstop connectors. Second, add a JST connector for the extruder stepper. Third, make Marlin Firmware changes. Here is what that entails:
 
-Now, let's talk about the electronics. As you can see from my image of the MKS Gen 1.4 board wired up, this is a major upgrade over the old Melzi board that came with the printer. And if you're interested in knowing more about the differences between these two boards, I've got a link to some documentation on my blog.
+Invert the endstops. This involves setting X, Y, and Z minimum endstop inverting to true to invert the logic of the endstops.
 
-One thing I had to figure out was how to connect all the end stops properly. If you look at the image of the 3 pin JST connector, you'll see that it's not as straightforward as it seems. Luckily, there are adapters available that make this process much easier.
+Next, handle the DRV8825 Driver Types. Uncomment these and replace them with DRV8825. This applies to the X, Y, Z, Z2, and E1 driver types. Note that the E0 driver type remains as A4988.
 
-Moving on to the firmware, I had to make some changes to get everything working smoothly. Specifically, I had to invert the end stops and double the step count for the DRV8825 drivers.
+Double the step count for the DRV8825 from 1 over 16 to 1 over 32 steps. This comes from the previous Marlin configuration which was set to 80, 80, 400, and 100 for the axis steps per unit. I've kept the extruder on an A4988 chip as the heat was building up too much on it. Calibrate to 0.84 volts. The new axis steps per unit should be set to 160, 160, 800, and 100.
 
-I also experimented with replacing the display, but that was a bit more tricky than expected. The connectors are reversed on the RepRap Discount Full Smart Controller, which made things a bit of a puzzle to solve.
+Invert the X and Y directions, as well as the extruder direction.
 
-Power supply-wise, I upgraded from a 20A to a 30A unit. This is an important upgrade, as it helps prevent overheating issues that can be common with these printers.
+Set the Z travel limit to 180.
 
-Next up was the Y bracket, which got replaced with something sturdier and more adjustable.
+Enable SD Card Support.
 
-Other upgrades included adding an easy access case for the MKS Gen board, installing a filament sensor, and covering the power supply for safety reasons.
+Enable LCD Support for the RepRap Discount Full Smart Controller.
 
-One thing I experimented with was manual LCD bed leveling, but that ended up not working out as planned. However, auto bed leveling using a Z probe servo did turn out to be successful in the end!
+Calibrate the DRV8825. The formula is VREF equals Rated motor current divided by 2. So a standard NEMA 17 motor is rated at 1.68 amps. Divided by 2, it is 0.84 volts. I burned out an extruder stepper following this. I dropped it to 0.6 volts. The steppers were less hot and there was no performance difference.
 
-Now, I want to give you some lessons learned from this experience. Firstly, it's amazing how much can be accomplished by just upgrading and tweaking an existing printer. Secondly, don't underestimate the time required for these kinds of projects – they can quickly spiral out of control!
+Replace the display. The connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out.
 
-Finally, if you're looking for resources on 3D printing and Marlin firmware in particular, I've got some great links to share with you:
+Replace the power supply. I found a 30-amp power supply on Amazon for twenty dollars. The current 20-amp power supply is underpowered. It is a known issue with these printers.
 
-You can find the full details of my upgrades and modifications on my blog post. The links are there for you to explore.
+Replace the Y bracket.
 
-Let me know what you think – have you upgraded your own Duplicator i3, or do you have any questions about these kinds of projects?
+Build an easy access case for the MKS Gen board.
+
+Install a filament sensor.
+
+Create a cover and mount for the power supply.
+
+I tested manual LCD bed leveling using Mesh Bed Leveling, Probe Manually, and LCD Bed Leveling, but ended up reverting it.
+
+Implement Auto Bed Leveling using a Z Probe Servo. This involves wiring and Marlin Configuration. You can find helpful videos and documentation online for this. In the firmware, uncomment the following lines: Define Auto Bed Leveling Linear, set the number of servos to 3, set the Z probe servo number to 0, define the Z servo angles as 80 and 0—this one is important on the servo arm deploy and retraction, use the Z max plug since I have an extra z max to use for the switch on the servo arm, set the Z clearance between probes to 10, set the Z clearance for multiple probes to 10, set the Z probe low point to negative 10, which is the farthest distance below the trigger point to go before stopping, set Z min probe to use the Z min endstop pin, and set the Z min probe pin to 19. Pin 32 is the RAMPS default, but we are using an MKS Gen 1.4 Board.
+
+M280 is important. This controls the servo. Use this for testing. Use the values gathered here to set the Z servo angles property. To get servo 0 angle, enter M280 P0. To move servo 0 to a 90-degree angle, enter M280 P0 S90. To move servo 0 to a 0-degree angle, enter M280 P0 S0.
+
+Set the Marlin config of zprobe offset to negative 1, negative 40, and negative 7.7.
+
+Use M420 to get or set the bed level state.
+
+Use M119 to check endstop states.
+
+Use G29 to start the auto bed leveling routine.
+
+You can find the full Marlin config difference via the link provided on the blog post.
+
+Here is a description of the images included in the post. The first image shows 3-pin JST to 2-pin JST adapters. The second image shows the MKS Gen 1.4 board wired up. The third image shows a model of the Z probe.
+
+Lessons Learned
+
+First, I learned how to configure and almost build a 3D printer using an existing one.
+
+Second, I spent way more time than expected.
+
+Resources
+
+There are several resource links available on the blog post, including the Marlin Firmware website, the 3D Printer Wiki page for the Wanhao Duplicator i3, a specific GitHub gist, and the Texas Instruments datasheet for the DRV8825.

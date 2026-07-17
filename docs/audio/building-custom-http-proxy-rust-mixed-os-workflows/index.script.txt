@@ -1,192 +1,146 @@
-Here's the rewritten blog post in a spoken script format:
+Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows
 
-Hey there! So, I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no-app, works on any device that can point to a proxy. I'll walk through the privacy benefits, how I use it for local services, and why I still use it even with a full-tunnel VPN.
+I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, requires no specific app, and works on any device that can point to a proxy. I'll walk through the privacy benefits, how I use it for local services, and why I still use it even with a full-tunnel VPN.
 
-You see, I wanted to switch to a minimalist OS – Linux, to be specific – but my work didn't support it. They required Windows for their corporate VPN and certain tools. So, I had to get creative.
+I wanted to switch to a minimalist operating system. The catch-22 is my work didn't support Linux, or a Mac at the time, the corporate VPN, and a bunch of policies. I couldn't just switch and be done with it. So I got creative.
 
-I needed a way to run Linux full-time but still access my work's Windows environment seamlessly. And that's when the proxy came in handy.
+The Problem
+
+I wanted Linux as my daily driver. The work required Windows for the VPN and certain tools. WSL2 was okay, but it felt like fighting the OS half the time. USB devices, GUI apps, file operations in bulk. Things were just slow or wouldn't work the way I expected.
+
+I needed a way to run Linux full time but still access my work's Windows environment seamlessly.
 
 First Attempts
-------------
 
-I tried Squid proxy first, which worked... mostly. But I'd get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky. I knew I could do better. And that's when I decided to learn Rust.
+I tried Squid proxy first. It worked, mostly. But I'd get random issues from time to time. Then I wrote a Python script to handle the proxying, which was better but felt hacky.
+
+I knew I could do better. And I wanted to learn Rust anyway.
 
 The Rust Proxy
--------------
 
-I built a transparent HTTP(S) forward proxy in Rust. It's nothing fancy, but it solves my specific problem:
+I built a transparent HTTP and HTTPS forward proxy in Rust. It's nothing fancy, but it solves my specific problem:
 
-*   HTTP and HTTPS proxy support via CONNECT tunneling
-*   SSL/TLS error detection with helpful diagnostics (because corporate certs are a pain)
-*   Windows firewall integration (auto-creates rules for the proxy port)
-*   Cross-platform binaries (Windows, Linux, macOS)
-*   Configurable host, port, and logging levels
+First, HTTP and HTTPS proxy support via CONNECT tunneling.
+Second, SSL and TLS error detection with helpful diagnostics, because corporate certs are a pain.
+Third, Windows firewall integration, auto-creating rules for the proxy port.
+Fourth, cross-platform binaries for Windows, Linux, and macOS.
+And finally, configurable host, port, and logging levels.
 
-You can find the link on this blog post if you want to check it out. I used some code from Claude to help me build it since I didn't have much experience.
+You can find the repository link on the blog post if you want to check it out. I did use Claude code to help me build it since I didn't have a lot of experience.
+
+Why Rust? The performance has been said to be solid. The async architecture with Tokio handles plenty of concurrent connections without causing any problems.
 
 Quick Start
--------------
 
-Here's how to get started:
+Here is how you would download and run it. Download the latest release, then run it with the host set to zero dot zero dot zero dot zero and the port set to three thousand one hundred and twenty-nine. Then point your system or app proxy settings to that host and port. Simple.
 
-1.  Download the latest release: `wget https://github.com/spencerkittleson/rust_reverse_proxy/releases/latest/download/rust_proxy-linux-x64`
-2.  Run it: `./rust_proxy-linux-x64 --host 0.0.0.0 --port 3129`
+PopOS Setup: The Real Work
 
-Then, point your system or app proxy settings to that host and port. Simple.
+The proxy was the easy part. Getting PopOS to play nice with my work setup took some doing.
 
-PopOS Setup
--------------
+Docker Install: The Full Walkthrough
 
-The proxy was the easy part. Getting PopOS to play nice with my work setup? That took some doing.
+Docker doesn't come pre-installed on PopOS, so here's exactly what I did.
 
-### Docker Install (The Full Walkthrough)
+First, update system packages.
+Second, install prerequisites.
+Third, add Docker's official GPG key.
+Fourth, add the Docker repository.
+Fifth, update and install.
+Sixth, start and enable.
+Seventh, add user to docker group.
+And eighth, verify.
 
-Docker doesn't come pre-installed on PopOS, so here's exactly what I did:
+Log out and back in, or run newgrp docker, to apply the group changes.
 
-1.  Update system packages: `sudo apt update && sudo apt upgrade -y`
-2.  Install prerequisites: `sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release`
-3.  Add Docker's official GPG key: `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg`
-4.  Add Docker repository: `echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null`
-5.  Update and install: `sudo apt update` followed by `sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin`
-6.  Start and enable Docker: `sudo systemctl start docker` followed by `sudo systemctl enable docker`
-7.  Add user to Docker group: `sudo usermod -aG docker $USER`
+GitHub Account Switching
 
-### GitHub Account Switching
-
-I have both a personal and work GitHub account. Here's how I switch between them:
-
-```sh
-# For work
-gh auth switch --user work_user
-
-# For personal
-gh auth switch --user personal_user
-```
+I have both a personal and work GitHub account. Here's how I switch between them. For work, I use gh auth switch with the user flag set to work_user. For personal, I use gh auth switch with the user flag set to personal_user.
 
 Would be nice if there was an alias or something, but this works.
 
-### Flatpak x11 Fallback
+Flatpak x11 Fallback
 
-Some Flatpak apps don't work well with Wayland. Here's how to force x11 for VSCodium:
+Some Flatpak apps don't work well with Wayland. Here's how to force x11 for VSCodium. I ran flatpak override for the user, with nosocket set to fallback-x11 and socket set to x11, for the com.vscodium.codium app.
 
-```sh
-flatpak override --user --nosocket=fallback-x11 --socket=x11 com.vscodium.codium
-```
+.NET Linking
 
-### .NET Linking
+I keep a local dotnet install but link it to the system path. I created a symbolic link from the home directory dotnet binary to the system bin dotnet.
 
-I keep a local .dotnet install but link it to the system path:
+NVM for Node
 
-```sh
-sudo ln -sf /home/spencerkittleson/.dotnet/dotnet /usr/bin/dotnet
-```
+I installed Node Version Manager using the standard installation script.
 
-### NVM for Node
+The PopOs fun window issues
 
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-```
+PopOS isn't perfect. Here's what I had to fix.
 
-PopOS fun window issues
-------------------------
+Gnome Tweaks
 
-PopOS isn't perfect. Here's what I had to fix:
+First, adjust services startup using gnome-session-properties.
+Second, change workspaces quickly using the super key plus control plus up or down.
+And third, restart Gnome shell by pressing alt plus f2, typing "r", and hitting enter.
 
-### Gnome Tweaks
+Bluetooth
 
-*   Adjust services startup: `gnome-session-properties`
-*   Change workspaces quickly: `super + ctrl + up/down`
-*   Restart Gnome shell: press `alt + f2`, type "r", hit enter
+I ditched the bluetooth adapter since it was old and caused issues with PopOs all the time. Disable the internal adapter when not needed by listing devices with hciconfig, and taking one down with sudo hciconfig hci0 down.
 
-### Bluetooth
+Audio Power Saving
 
-I ditched the bluetooth adapter since it was old and caused issues with PopOS all the time. Disable the internal adapter when not needed:
+This was a common fix for audio issues. To make it temporary, echo zero into the power save parameter file. To make it permanent, write options snd_hda_intel power_save equals zero to the modprobe configuration file.
 
-```sh
-# List devices
-hciconfig
+Wireplumber Suspend
 
-# Take one down
-sudo hciconfig hci0 down
-```
+Prevent unwanted suspend by editing the wireplumber main Lua configuration file to set the session suspend time to zero, then restarting the pipewire service.
 
-### Audio Power Saving
+VSCodium GPU
 
-This was a common fix for audio issues:
-
-```sh
-# Temporary
-echo "0" | sudo tee /sys/module/snd_hda_intel/parameters/power_save
-
-# Permanent
-sudo tee /etc/modprobe.d/audio_disable_powersave.conf <<< "options snd_hda_intel power_save=0"
-```
-
-### Wireplumber Suspend
-
-Prevent unwanted suspend:
-
-```sh
-sudo sed -i 's/--\["session.suspend-time-seconds\] = 5/\["session.suspend-time-seconds\] = 0/' /usr/share/wireplumber/main.lua.d/50-alsa-config.lua
-systemctl restart --user pipewire.service
-```
-
-### VSCodium GPU
-
-If it's crashing:
-
-```sh
-codium --disable-gpu
-```
+If it's crashing, run codium with the disable-gpu flag.
 
 Chromium Proxy Setup
---------------------
 
-This is the part that actually makes everything usable. I run different work apps through different proxies. Here's how I launch Chromium with specific proxy settings:
+This is the part that actually makes everything usable. I run different work apps through different proxies. Here's how I launch Chromium with specific proxy settings.
 
-```sh
-# Basic proxy
-flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server="http://192.168.8.204:3129;https://192.168.8.204:3129" & disown
+For basic proxy usage, run Chromium in a Flatpak instance with the profile directory set to Default and the proxy server set to the HTTP and HTTPS addresses of the proxy at one hundred and ninety-two dot one six eight dot eight dot two zero four on port three thousand one hundred and twenty-nine.
 
-# With certificate errors ignored (useful for internal corporate certs)
-flatpak run --command=/app/bin/chromium org.chromium.Chromium --profile-directory=Default --proxy-server="http://192.168.8.204:3129;https://192.168.8.204:3129" & disown
-```
+For usage with certificate errors ignored, which is useful for internal corporate certs, add the ignore-certificate-errors flag to that same command.
 
-You can find the link on this blog post if you want to learn more about it.
+I have multiple of these for different work contexts. It's not elegant but it works.
+
+Flatpak Sandbox Chrome Alias
+
+For convenience, you can set an alias that launches Chromium in a sandboxed Flatpak instance with the proxy already configured. I set an alias called proxy that runs the same command as above, with the proxy server and ignore certificate errors flags. This keeps the proxy settings isolated from your regular Chrome installation and ensures the sandboxed instance respects the corporate certificate chain.
 
 The Router Setup
------------------
 
 I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It's basically a home lab but for work. The router runs Wi-Fi 7, which is nice since my work laptops are from 2019 and don't support it. Since I'm proxying all traffic through the work laptop, this gives me low latency and fast file transfers.
 
 15 Months In
--------------
 
 It's been over a year now. Here's where I'm at:
 
-*   Running PopOS full-time on my personal machine
-*   Work machine is only PopOS Cosmic
-*   The Rust proxy handles all my traffic routing to a Windows PC
-*   I use the proxy to split internet traffic - work stuff goes through corp VPN, everything else direct
-*   No more OneDrive – I use the web version, git, or my knowledge management system
+First, running PopOS full time on my personal machine.
+Second, work machine is only PopOS Cosmic.
+Third, the Rust proxy handles all my traffic routing to a Windows PC.
+Fourth, I use the proxy to split internet traffic: work stuff goes through corp VPN, everything else direct.
+And fifth, no more OneDrive; I use the web version, git, or my knowledge management system.
 
-Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to Linux container in production anyways. The ecosystem lock-in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed-OS workflows work for you.
+Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to Linux containers in production anyways. The ecosystem lock-in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed-OS workflows work for you.
 
 Work VPN Conflicts
-------------------
 
 I use a full-tunnel work VPN, which can be problematic for development. NPM, NuGet, and pip can be extremely slow because all traffic is forced through the corporate network. SSL certificates can also be an issue: with a full VPN, an intermediate certificate is installed and becomes part of the chain. I'm not a TLS expert, but it can cause headaches.
 
 Companies may not even like proxies installed on the PC or allow them in general use. Route tables and routing traffic become interesting. I use a proxy in two different ways depending on the use case. I've been using an HTTPS proxy for over a year. It solved a few major issues for me. In the age of WireGuard and Tailscale, you might wonder why I still use it.
 
 Conclusion
-----------
 
-So, here's what I learned:
+First, keep it simple. A single, lightweight proxy can solve a lot of headaches without the bloat of a full VPN client.
 
-*   Keep it simple. A single, lightweight proxy can solve a lot of headaches without the bloat of a full VPN client.
-*   Don't over-optimize. I spent a lot of time tweaking Windows, but the real win was the Linux side. Focus on the part that actually matters to you.
-*   Document early. The notes you keep for yourself become the next blog post. I'm still adding to this file, and that's why it's a living document.
-*   Stay curious. The tech landscape changes fast. What worked for me last year might be obsolete next year, so keep experimenting.
+Second, don't over-optimize. I spent a lot of time tweaking Windows, but the real win was the Linux side. Focus on the part that actually matters to you.
+
+Third, document early. The notes you keep for yourself become the next blog post. I'm still adding to this file, and that's why it's a living document.
+
+And fourth, stay curious. The tech landscape changes fast. What worked for me last year might be obsolete next year, so keep experimenting.
 
 Bottom line: if you're juggling a corporate VPN and a personal workflow, a transparent forward proxy is a surprisingly powerful tool. It keeps your traffic private, gives you remote access to home services, and lets you sidestep the slowdowns of a full-tunnel VPN. Give it a shot and see how it changes your day-to-day dev life.

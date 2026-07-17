@@ -1,23 +1,13 @@
-Here is the spoken script:
+This is a blog post titled Linux Wifi Hotspot with PiHole. The post was originally published on September 29, 2022, and modified on October 11, 2022. The description says to build a wifi hotspot using hostapd via the create_ap project and Pi-hole. There is an image on the post that depicts the Pi-hole logo, which looks like a vortex or funnel shape.
 
-Welcome back to our blog, where we're still working on a project to create a WiFi hotspot using PiHole and hostapd. I'm excited to share this setup with you, so be sure to come back for updates as we continue to work on it.
+A quick note to start: this post is still a work in progress, so come back for updates.
 
-So, let's dive right in. In a nutshell, here's what you can expect: we'll use an Alfa AC1900 WiFi Adapter, which is connected via USB and comes equipped with four 5dBi external dual-band antennas. We'll also need to start by disabling power save mode and setting the transmission power for our adapter.
+Here is the TLDR section. You will need an Alfa AC1900 WiFi Adapter. It is a 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter with four 5 dBi external dual-band antennas. You can find the link to this specific adapter on the blog post.
 
-To do this, we have a starting script called `onstart.sh`. Let me walk you through what's inside it. First, we're turning off power save mode with a command like this: `/sbin/iw dev wlan0 set power_save off`. Then, we're setting the transmission power to 4500 milliwatts using another command: `/sbin/iw wlan0 set txpower fixed 4500`.
+The script used to start the setup is named onstart.sh. Instead of reading the raw code block verbatim, here is what the script does: It is a bash script that first disables power saving on the wlan0 interface. Then, it sets the transmission power on wlan0 to a fixed value of 4500. Next, it writes the value 1 to the system parameter for the 8814au module to switch USB modes. Finally, it runs the create_ap command as a daemon. The command logs to a file at /home/support/create_ap.log, disables dnsmasq, sets the DHCP DNS to 192.168.12.1, sets the country to the US, and enables IEEE 802.11n and 802.11ac standards. It uses the 5 GHz frequency band and specifies various high-throughput capabilities like LDPC, HT40+, SHORT-GI, and MAX-AMSDU. It also specifies VHT capabilities like MAX-MPDU, RXLDPC, SHORT-GI-80, and beamforming options. The script creates a network named TestNetwork with the password testing123, using wlan0 for the wireless interface and eth0 for the uplink.
 
-We also have some additional settings for our adapter. For example, we want to enable USB mode by writing a value of 1 to this file: `echo '1' > /sys/module/8814au/parameters/rtw_switch_usb_mode`. This will allow us to use the adapter in its highest performance mode.
+Next, you need to disable IPv6. To do this, edit the sysctl configuration file using the command sudo nano /etc/sysctl.conf. You need to add three lines to the file: the first disables IPv6 for all network interfaces, the second disables it for the default interface, and the third disables it for the loopback interface.
 
-The final part of our script sets up our WiFi hotspot using the create_ap project. We're creating a network with the name "TestNetwork" and setting the password to "testing123". You can find more information about this process on the blog post itself, where I'll have a link for you.
+Then, install and configure Pi-hole. You can do this by running the Pi-hole installation script from the command line. The command involves using curl to fetch the install script from install.pi-hole.net, setting the environment variable PIHOLE_SKIP_OS_CHECK to true, and running it with sudo and the -E flag. After installation, set up the DHCP server to use the 192.168.12.1 range.
 
-Now that we've set up our adapter and created our WiFi network, let's talk about disabling IPv6. This is an important step because it helps prevent any issues with your internet connection. To do this, simply open up the sysctl.conf file using `sudo nano /etc/sysctl.conf`. Inside, add these three lines of code to disable IPv6 for all interfaces:
-
-`net.ipv6.conf.all.disable_ipv6=1`
-`net.ipv6.conf.default.disable_ipv6=1`
-`net.ipv6.conf.lo.disable_ipv6=1`
-
-Finally, let's move on to setting up PiHole. This is a fantastic tool that helps you manage your DNS settings and block ads across all your devices. To get started with PiHole, simply run this command: `curl -sSL https://install.pi-hole.net | PIHOLE_SKIP_OS_CHECK=true sudo -E bash`.
-
-Once the installation process is complete, be sure to set up your DHCP server to use the 192.168.12.1 range.
-
-That's it for today! If you have any questions or need further clarification on these steps, don't hesitate to reach out in the comments below. I'll be back soon with another update on our project. Thanks for tuning in!
+Finally, here are the resources. There is a link to the linux-wifi-hotspot project on GitHub, specifically the README in the scripts directory. You can find that link on the blog post as well.

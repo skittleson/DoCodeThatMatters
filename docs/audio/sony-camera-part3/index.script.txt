@@ -1,27 +1,77 @@
-Here's the spoken script version of the blog post:
+Tethered Raspberry Pi for Modern Camera Functionality. This is a guide on how to build a laptop-free tethered camera setup on a Raspberry Pi, featuring a custom Bluetooth binary protocol, server-side JPEG compression, and zero-configuration local area network browsing. Here is a description of the image accompanying this post: it shows a Sony a6400 camera tethered to a Raspberry Pi.
 
-Hello and welcome to my latest project, where I've managed to build a laptop-free tethered camera setup using a Raspberry Pi. As some of you may know, I've been working on getting my Sony camera to the modern era, and this time around, I'm excited to share with you how I used mobile compute and additional hardware to make it ultra-compact.
+Let’s get straight to the summary. You can find the code for this project on the blog post’s GitHub link. If you drop the files over SSH into a Raspberry Pi Zero using a micro USB cable, you should be good to go!
 
-You can find more details about the project on the blog post itself, but let me walk you through what we're going to cover today. First, let's talk about why this setup is different from my previous posts. This time around, I've added a Raspberry Pi Zero W with GPS, an external battery, and some small cables. What does all this get us? Well, it allows for real-time shots, online and offline networking, and convenience.
+In this introduction, I have made further progress with getting my camera into the modern era, just as I mentioned in my previous posts. This setup leverages a bit of mobile compute and specific parts to make it ultra-compact. I also recently got a new Sony a6400, which has a few new features I really like. Before I go too far, I want to call out some of the biggest changes since my last two posts: there is no longer SSH access into the device, the PlayMemories app is gone so we can’t get updated apps, and the Android subsystem is no longer available. It looks like Sony has rewritten their software architecture.
 
-Now, let's dive into the architecture of our setup. We have three services: tethered capture, Bluetooth RFCOMM, and copyparty HTTP. The camera is always connected via USB in PC Remote mode. This setup gives us a stable and efficient way to transfer photos from the camera to the Raspberry Pi.
+So, why is this post a bit different? We are using additional hardware for on-the-go capture and viewing. This includes a Raspberry Pi Zero W, a GPS module, an external battery, and some small cables. What does this setup give us? It gives us real-time shots, online and offline networking capabilities, and overall convenience.
 
-One of the most fragile parts of this system is the tethered capture process. Most Sony cameras support PC mode, but it requires some tweaking. I've rebuilt gphoto2 from source, which takes a while on the pi but results in a more stable version. We need to grab the full image temporarily and stream over real-time events.
+Now, let’s look at the dead ends I encountered. Using the Sony app is kind of slow. I know they did a generally good job on it, but it is really flaky to get going. I tried a bunch of ways, but it could be my phone or the camera itself. I am not sure, but I do not see Sony making significant improvements to it soon. Here are the specific issues I faced:
 
-Now, let's talk about the Lua monitor pattern, which is essential for maintaining one persistent gphoto2 session. This script kills gvfs-gphoto2-volume-monitor, waits 5 seconds, and then relaunches it. This prevents systemd from restarting gphoto2, which causes issues with claiming the USB device.
+First, Wi-Fi hotspot mode. This acts as a dumb terminal with no internet. The Camera SDK only returns thumbnails unless you use the setPostviewImageSize hack, which was covered in Part 1.
 
-We also have a sequential filename system to avoid overwriting photos after a crash or restart. The `WorkingDirectory=/` silent failure trap is another crucial aspect of this setup. If we don't set the working directory correctly, gphoto2 will exit 0 but fail to move the photo to its target location. This can waste hours if not addressed.
+Second, USB mass storage. USB 2.0 is painfully slow for seven to ten megabyte JPEGs, and the camera freezes if you do not eject safely.
 
-Next up, let's talk about the USB mode-switching bug. When the camera falls from PC Control mode (`054c:0caa`) to charging mode (`054c:0994`), gphoto2 can't find it. This is due to a marginal cable or insufficient Pi USB current. To fix this, we need to use short quality cables or powered USB hubs.
+Third, the Sony Camera SDK full download. The setPostviewImageSize trick gives you one photo at a time. There is no enumerate API, no batch download, and the connection drops when leaving Smart Remote mode.
 
-Now that we've covered the technical aspects, let's dive into the Bluetooth binary protocol. We created a custom protocol with only 3 bytes of overhead per message! It uses length-prefixed packets for simplicity and speed. The commands include `0x01 LIST`, which returns newline-delimited filenames, and `0x02 GET`, which retrieves JPEG data.
+Fourth, FTP from the camera. Part 2 showed that transferring seventy files took thirteen minutes. That is not a viable workflow.
 
-We also have quality tiers for server-side compression using Pillow/LANCZOS. This allows us to reduce the size of our photos while maintaining a high level of quality.
+Fifth, gphoto2 with a laptop works perfectly, but it is not very mobile.
 
-In addition to Bluetooth, we can use copyparty for LAN setups. This zero-config browser is incredibly easy to set up and provides a full file browser with thumbnails and grid view.
+There is one really cool feature about gphoto2 in PC mode, though: camera events. Every interaction shows you exactly what gets changed on the camera. We can use that to gain insights and determine our next steps. The only issue is that I do not want to carry a laptop with me.
 
-Finally, let's talk about lessons learned from this project. We need to build gphoto2 from source, as the distro package is too old. Using a Lua wrapper instead of a raw systemd service also helps prevent issues with the USB race condition. We should always set `WorkingDirectory` in our systemd unit and use quality cables or powered hubs for USB connectivity.
+Here is the architecture of the setup: The Sony a6400 operates in PC Remote mode and connects via USB to gphoto2 with the capture tethered flag enabled. The images are saved to a local directory. From there, they are served via a Bluetooth RFCOMM server and a Copyparty HTTP server.
 
-This setup has many potential uses, including product photography, wildlife capture, events, and even booths and displays. The Raspberry Pi is incredibly portable, making it perfect for situations where a laptop would be impractical.
+This system relies on three services: tethered capture, Bluetooth RFCOMM, and Copyparty HTTP. You can run all three or any subset of them. The camera is always connected via USB in PC Remote mode.
 
-And that's a wrap on this project! I'm excited to hear your thoughts and discuss further topics such as reverse-engineering camera protocols or the super-resolution hack from Part 1. Thank you for joining me on this journey, and I hope to see what you build with this technology.
+Let’s dive into tethered capture. The goal here is to address the most fragile part of the system, which presents real engineering pain points. Most Sony cameras support PC mode, which is where the magic happens. gphoto2 can stream those real-time events and the full image. However, the image is only available temporarily, so we need to grab it while it is still possible.
+
+I rebuilt gphoto2 from source. It takes a while on the Pi, but version 2.5.32 or higher is more stable. You can use the setup script to build from source.
+
+Next, let’s discuss the Lua monitor pattern, which avoids the systemd Restart trap. When the USB link blips, gphoto2 exits. Systemd restarts are fast enough to collide with the camera still holding the USB device, resulting in a "Could not claim the USB device" error. The solution is a Lua script that maintains one persistent gphoto2 session. It kills the gvfs-gphoto2-volume-monitor, waits five seconds, and then relaunches. Systemd sees a healthy Lua process and never triggers its own restart logic.
+
+Regarding sequential filenames, gphoto2’s default timestamp-based naming scheme sorts incorrectly on mobile devices. Instead, we use a filename number parameter to name files like zero-zero-zero-zero-one dot jpg, zero-zero-zero-zero-two dot jpg, and so on. The Lua script scans the download directory for the highest number before each session to prevent overwrites after a crash or restart.
+
+Finally, there is the silent failure trap related to the working directory. gphoto2 writes a temporary file to the current working directory before moving it to the target filename. The default systemd working directory is the root directory, which is not writable by the service user. As a result, gphoto2 exits with a zero status code, but the photo never appears in the download directory. The fix is to set the working directory to a writable path, such as the user’s downloads folder, in the systemd unit file. This one wasted hours, so I want to emphasize it.
+
+Now, let’s talk about the USB mode-switching bug. The goal here is to address the most annoying physical bug in the system, which is not software-related, but rather a matter of physics. The Sony a6400 tends to fall from PC Control mode into charging mode. This can be caused by a marginal cable, insufficient Pi USB current, or connecting the camera before the USB stack is ready. gphoto2 cannot find the camera in charging mode. The fixes include using a short, high-quality cable, a powered USB hub, and adding a five-second sleep in the Lua monitor for re-enumeration. You can find more troubleshooting details in the project’s README file.
+
+Let’s get into the technical deep-dive: the Bluetooth binary protocol. This is the section that might be worth sharing on Hacker News. The easiest approach was to use RFCOMM, but I know it is a bit slower, so compression is required. I suspect this is why the Sony Android app is so slow. OBEX or OOB protocols are bloated, and HTTP over Bluetooth PAN or DUN is finicky on both sides.
+
+So, a simple custom protocol was made, with only three bytes of overhead per message. The structure is one byte for the opcode, two bytes for the big-endian length, and then the payload.
+
+Here are the commands:
+First, opcode zero-zero-one, or LIST. This has no payload and returns opcode zero-eight-one with newline-delimited filenames.
+Second, opcode zero-zero-two, or GET. The payload is a quality byte followed by the filename. It returns opcode zero-eight-two with the JPEG data.
+Third, opcode zero-FE is used for error responses with ASCII messages, such as file not found or bad quality.
+
+There are quality tiers for server-side compression using Pillow and Lanczos resampling.
+Quality zero means no resizing, keeping the original size, which is typically seven to ten megabytes.
+Quality one resizes to half-size with a JPEG quality of seventy-five, resulting in about one megabyte.
+Quality two resizes to twelve hundred pixels wide with a JPEG quality of seventy-five, resulting in about three hundred kilobytes.
+Quality three resizes to twelve hundred pixels wide with a JPEG quality of forty, resulting in about one hundred kilobytes.
+
+Quality three allows for a preview in under ten seconds over Bluetooth. The Pi does the CPU work, and the phone receives the final compressed JPEG.
+
+Next, let’s look at Copyparty, which offers zero-configuration LAN browsing. The goal here is to provide an alternative to Bluetooth for local area network setups. You can run the copyparty setup script and enable the service. There is no nginx, no Apache, and no config files needed. You simply access the Pi’s IP address on port eight hundred eighty to get a full file browser with thumbnails and grid view. The default login is admin for both the username and password. Use cases include booths, events, and situations where you have a bigger screen but want to avoid Bluetooth.
+
+Let’s wrap up with some lessons learned. These are concrete takeaways from real pain.
+
+First, build gphoto2 from source. The distro package is often too old, so plan for build time.
+Second, use a Lua wrapper, not a raw systemd service. gphoto2 exits unexpectedly, and the Lua monitor handles the USB race condition that systemd restarts cannot fix.
+Third, set the working directory in your systemd unit. The silent failure is the most expensive bug in this project.
+Fourth, use a quality cable, a powered hub, or neither. USB mode-switching is physics, not software.
+Fifth, compress server-side for Bluetooth. The Pi has the CPU, so use it.
+Sixth, three bytes beats HTTP on RFCOMM. Length-prefixed packets are simpler and faster.
+Seventh, use sequential filenames for mobile. Timestamps sort incorrectly on phone galleries.
+
+Who is this for? Let’s look at some use cases.
+
+For product photography, you can have a camera on a tripod, the Pi on a shelf, and check your phone over Bluetooth. No desk, no laptop cable.
+For wildlife photography, you get a remote trigger with instant photo availability. You are in the field, not at a desk.
+For events, you can have a hands-free capture station. Attendees review photos on the LAN browser and collect originals later.
+For booths and displays, you have a self-contained photo station. The Pi hides behind the setup. No laptop footprint means it looks like magic.
+
+To conclude, a thirty-five-dollar Pi replaced a laptop in my tethered workflow. Three services, one Lua monitor, and one custom protocol make it work. The parts that hurt—USB mode-switching, the working directory issue, and the gphoto2 version—are now documented. The protocol is open. Fork the repo, add remote shutter control over Bluetooth, and tell me what you build.
+
+I’d love to hear your thoughts. Has anyone else reverse-engineered a camera protocol? Would you use BLE or RFCOMM for file transfer? What other cameras would this work on? The gphoto2 camera list is extensive. And finally, is the super-resolution hack from Part 1 worth a Part 4?

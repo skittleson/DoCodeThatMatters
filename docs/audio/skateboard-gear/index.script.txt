@@ -1,21 +1,31 @@
-You know how I've been riding my DIY electric skateboard for years now? Well, it's time for an update on the gear situation.
+Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards
 
-A few years ago, I posted about using a parametric 3D printed spur gear on Reddit. You can find the link to that post on the blog for this story. It's been a while since then, and I've put in over 100 hours of riding on this gear.
+Use at your own risk. It's been a few years riding on this 3D printed spur gear. Let's give an update from this Reddit post I did a few years ago. You can find the link to that post on the blog post.
 
-So, let me walk you through some specs. The gear was printed with ABS at a resolution of 0.3 millimeters. I used a 265-5M-9 timing belt, which has an outside circumference of 265 millimeters and a width of 9 millimeters, with a pitch of 5 millimeters. To reduce noise, I applied graphite powder to the belt, similar to using pencil lead.
+Specs
 
-Now, here's what's really cool about this gear: it's fully parametric. That means you can adjust the teeth, mounting holes, inner cut out, and height to your heart's content. And with the FreeCAD design available for download on the blog, you can play around with it yourself.
+You can download the FreeCAD version on GitHub by following the link on the blog post.
 
-You can see a 3D rendering of the model in action if you check out the blog post. It shows the parametric adjustments I made to get it just right for my 190 kilovolt BLDC motor with 16 tooth gear. And don't worry about safety – this motor is plenty powerful, with 8 newton-meters of force and a peak current of 70 amps on a 12-s battery.
+First, it was printed with ABS at 0.3 millimeter resolution. Second, it uses a 265 dash 5M dash 9 5M Timing Belt, which measures 265 millimeters outside circumference, 9 millimeters width, and 5 millimeters pitch. Third, graphite powder on the belt, such as pencil lead, is used to smooth out any noise. Fourth, the design is fully parametric regarding gear teeth, mounting holes, inner cut out, and height. Fifth, it is used with an 80 millimeter wheel. Sixth, it is used with a BLDC motor at 8 Newton meters of force, 70 amps peak with a 12s battery. Seventh, the cost to print is one dollar and 45 cents. Eighth, the top speed with this existing configuration is 25 miles per hour. And finally, the rider weighs 200 pounds.
 
-As for the actual riding experience, I've clocked speeds up to 25 miles per hour with my existing configuration. And that's not bad considering the rider's weight is around 200 pounds.
+Here is a 3D rendering of the model, showing the detailed shape and structure of the gear as designed.
 
-Now, let's talk about wear and tear. After all those hours of riding, you'd expect some damage, right? Well, the gear teeth did wear down as expected, but I've been able to smooth out the noise by adding graphite powder every now and then. The belt itself has worn nominal – I expect to change it in around 500 hours.
+Parametric Adjustments
 
-There are a few things that need attention, though. For one, the nuts on the bolts tend to come loose sometimes, so be sure to use lock tight. And while there's no notable cracking or layer splitting in the print, I do notice that the bottom land could be more rounded to fit the belt better. Not a big deal, but something to keep in mind.
+All measurements are in millimeters. These were adjusted for a 190kv BLDC motor with a 16 tooth gear.
 
-Oh, and one last thing: double-wall bearings are essential for this setup. Water and dirt can cause them to crack at higher speeds, so don't skimp on those.
+Here is a spreadsheet showing the parametric variables, allowing you to see how different input values change the dimensions of the gear design.
 
-Finally, I'm considering experimenting with helical gears or double helical gears next. It's an interesting idea – no belt would mean less maintenance and fewer slipping issues. And it looks like a quieter ride might be in my future too.
+Wear and Tear
 
-You can find more details about the design and experiments on the blog post itself.
+This was about 100 plus hours of riding. It's hard to take a picture with it mounted. Here is a side view until I take it off the truck. A better image is coming soon.
+
+Here is a view of the inner gear side with the belt, showing the condition of the teeth and the mounting area after extensive use.
+
+First, the gear teeth have worn down as expected. Second, it was noticeably louder than a metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10 plus rides keeps it sounding smooth and prevents wear. Third, the nuts came loose a few times, so use lock tight. Fourth, belt wear was nominal. I expect to change it every 500 plus hours of riding. Fifth, the bottom land could be more round to fit the belt better. Sixth, there are no noticeable cracks or layer splitting in the 3D print. Seventh, the amount of material the bolt and nut can hold onto, or lack thereof, is a consideration. It could "rip off" the end of the plastic gear. Using longer bolts then removing the inner "cut out cone" could help with that, as well as using an additional nut for surface area tension. There are no concerns as of yet since the wearing has been nominal. Eighth, use double wall bearings. Even a little water and dirt can cause the bearings to crack at higher speeds. That was a hard lesson.
+
+Here is a reference image for gear nomenclature, illustrating the different parts and terminology used in gear design.
+
+Next Possible Experiment
+
+Helical gears or double helical gears with no belt seem like an experiment to try out. It offers a lot of benefits such as no belt, no belt slipping, quieter operation, and only 3D printed parts.

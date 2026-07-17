@@ -1,19 +1,48 @@
-You're interested in doing some research on Bluetooth proximity using open tools. There's a related blog post I'd like to mention first, but we'll be focusing on the tools and techniques outlined here.
+This is research on Bluetooth proximity using open tools such as hcitool, btmgmt, l2ping, and hcidump. It is a follow-up to the blog post titled Raspberry Pi Bluetooth Proximity.
 
-Let me walk you through some of the commands you can use with these tools. First, make sure to replace any MAC addresses that are mentioned with your own device's address.
+The image accompanying this post shows a Bluetooth device that can be discovered with a simple scan.
 
-To scan for Bluetooth Low Energy devices within a certain range, you would use `hcitool lescan` - this might take around 30 seconds to complete. Keep in mind that the timeout is set to 30 seconds, but you can adjust it if needed.
+Next, we look at the commands. For the following instructions, you should replace the placeholder MAC with the actual Bluetooth MAC address you are working with.
 
-If you want to see the RSSI values of nearby Bluetooth LE devices, you'd run `btmgmt find`. When you do this, you'll get a list of devices with their respective signal strengths - these are expressed in decibels. The higher the value, the stronger the signal is.
+First, to scan for Bluetooth LE devices, you would run the command: timeout with signal SIGINT set to 30 seconds, using hcitool with the lescan option.
 
-Another useful command is `l2ping`, which allows you to ping a Bluetooth-enabled device without actually pairing it first. You can use it like this: `l2ping -c 3 <MAC address>`. Keep in mind that this will send three pings and then stop.
+Second, to get Bluetooth LE devices along with their RSSI values, you would use the command: btmgmt find. The response might look like this:
 
-If you're interested in looking at the data being exchanged between two devices, you might find `hcidump` useful. It allows you to dump all of the data for a paired device. To use it, simply run `hcidump -a`.
+On hci0, a device was found with the address SOME_MAC, type LE Random, RSSI of negative 92, and flags 0x0000. The AD flags are 0x1a, and the eir_len is 14.
 
-Now, let's look at some more advanced techniques. If you want to request authorization from a device, you can use `hcitool cc <MAC>`, followed by `hcitool auth <MAC>`.
+On hci0, another device was found with the address SOME_MAC, type LE Random, RSSI of negative 97, and flags 0x0000. The AD flags are 0x1a, and the eir_len is 18.
 
-One interesting thing is that if you try to connect to a device and then immediately ask for its RSSI value, the connection won't be successful - but the RSSI will still be available. You can do this with the command `hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>`.
+On hci0, a device was found with the address SOME_MAC, type LE Random, RSSI of negative 77, and flags 0x0000. The AD flags are 0x06, and the name is N016Y.
 
-To request just the RSSI value without attempting a connection, you would use `hcitool cmd 0x05 0x0005 0x00 0x00 <MAC>`.
+On hci0, a device was found with the address SOME_MAC, type LE Public, RSSI of negative 100, and flags 0x0004. The AD flags are 0x00, and the eir_len is 28.
 
-If you want to learn more about using these tools or need help with anything else related to Bluetooth proximity research, I'd recommend checking out some of the resources listed here. Keep in mind that there are many more articles and tutorials available online - a quick search on your favorite search engine should yield plenty of results.
+On hci0, a device was found with the address SOME_MAC, type LE Random, RSSI of negative 94, and flags 0x0000.
+
+Third, to ping a Bluetooth-enabled device without pairing, you would use the command: l2ping with the count flag set to 3, followed by the MAC address. The response might look like this:
+
+Ping: SOME_MAC from THIS DEVICE, with a data size of 44 bytes.
+
+44 bytes received from SOME_MAC, id 0, time 6.05 milliseconds.
+
+44 bytes received from SOME_MAC, id 1, time 9.90 milliseconds.
+
+Heart symbol, 2 sent, 2 received, 0 percent loss.
+
+Fourth, to dump all data of a paired Bluetooth device, you would use the command: hcidump with the -a flag.
+
+Fifth, to request authorization from a device, you would run two commands in sequence: hcitool with the cc flag and the MAC address, followed by a semicolon, and then hcitool with the auth flag and the MAC address.
+
+Sixth, to attempt a connection and then get the RSSI value, you would use the command: hcitool with the cc flag and the MAC address, followed by the logical AND operator, hcitool with the con flag, followed by the logical AND operator, and finally hcitool with the rssi flag and the MAC address. The response might look like this:
+
+Connections:
+ACL connection with the MAC address, handle 12, state 7, lm MASTER.
+
+RSSI return value: negative 4.
+
+This attempts to connect, which doesn't work, but the RSSI value is now present for the device.
+
+Seventh, to attempt to get the RSSI value without trying to connect to the device, you would use the command: hcitool cmd with the arguments 0x05, 0x0005, 0x00, 0x00, and the MAC address.
+
+Finally, here are some resources for further reading. You can find the links on the blog post.
+
+These resources include information on unix bluetoothctl and bluetooth-sendto tools, getting started with Bluetooth low energy, Raspberry Pi Bluetooth commands, accessing a terminal over Bluetooth, an IEEE Xplore document, a PDF from Semantic Scholar, a Stack Overflow answer, and a Raspberry Pi forums discussion.

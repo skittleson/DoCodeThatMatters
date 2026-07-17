@@ -1,37 +1,93 @@
-Here's the rewritten spoken script:
+Title: Power Switch Monitor with an Arduino device
 
-Imagine you're trying to turn on a smart light bulb in your living room. You've got all sorts of fancy gadgets at your disposal, like Alexa or Google Home, but what if I told you there's an even simpler way to do it? One that doesn't require asking for permission or fiddling with apps on your phone?
+The biggest rule for home automation is not to change existing behavior of users that causes inconvenience or frustration. Which is a rule that easily forgotten. Let's use the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. This is bad.
 
-Let me tell you about a rule that's often overlooked in home automation. The biggest one is: don't change existing behavior of users that causes inconvenience or frustration. Sounds simple, but we've all been guilty of doing it at some point.
+Here is a GIF showing a person looking visibly frustrated.
 
-Take the classic example of a smart light bulb in a living room. A user typically flips a switch to turn on and off a light. Now they have to ask Alexa, Google, or use an app on their phone. This is bad because it's causing an inconvenience by preventing them from flipping a switch.
+It's causing an inconvenience because the user can't flip a switch.
 
-So, what are the solutions? There are three common ones presented in this situation.
+Solutions
 
-First, we've got blocking the user with tape or other mechanism. You can find examples of how common this is on Thingiverse. But this changes user behavior, so let's move on to something better.
+The 2 common solutions presented in this situation:
 
-Second, we've got replacing the light switch with a smarter one. This is the best option, but it requires a hardware replacement of the light switch. And that may not be possible or cost-effective in your home.
+First, blocking the user with tape or other mechanism. Checkout Thingiverse to see how common this is. You can find the link on the blog post. This changes user behavior so it's a bad idea.
 
-Now, let me introduce you to a third hybrid solution: trigger the smart device with the existing light switch using power wall outlet as feedback using an Arduino device with WiFi. Here's how it works. The light switch changes the power state of the outlet that the Arduino based micro controller is monitoring. When the light switch is turned on or off, it sends a message to a home assistance to notify the smart device.
+Second, replacing the light switch with a smarter one. This is the best option but requires a hardware replacement of the light switch. Which may not be possible, costly and potential dangerous to do-it-yourself!
 
-The advantages are: simple and low effort, uses existing switches to make them smart, ability to control multiple devices with a single switch, and it's open source.
+Third, a third hybrid solution: Trigger the smart device with the existing light switch using power wall outlet as feedback using an Arduino device with WiFi. In this solution, the light switch changes the power state of the outlet that the Arduino based micro controller is monitoring. When the light switch is turn on/off it changes the power to the Arduino analog voltage GPIO pin. That sends a message off to a home assistance to notify the smart device. In US based homes, the 2nd wall outlet still has power so it provides constant power to the device. Here is a diagram to get an idea of the flow to toggle the smart bulb state from a user.
 
-Let's take a look at how you can build this device. We'll start by getting the components and soldering them together.
+The image depicts a flowchart illustrating the power monitor setup. It shows the connection from the light switch to the power outlet, feeding into the Arduino device, which then communicates via MQTT to the home automation system to control the smart light.
 
-You'll need an Arduino compatible device like the Wemos mini d1 from Amazon, or something similar with esp8266 or esp32 capabilities. Along with two resistors, wire, two 5v USB wall chargers, a male USB plug, a regular USB charging cable for the esp32, and some solder.
+The advantages:
 
-![You can find an example of what this looks like on breadboard in an image on the blog post.]
+Simple and low effort.
+Use existing switches to make them smart.
+Ability to control multiple devices with a single switch.
+Open source.
 
-As you build it, keep in mind that we're using the analog voltage GPIO pin to send messages off to home assistance. We've also got a few extra components in case you want to add more features.
+Building the Device
 
-Now, let's move on to downloading and uploading software to your device. You'll need to flash your device with Tasmota firmware. Then configure it as a generic module. 
+Step 1: Get the Components and Solder Them
 
-The configuration for the bme680 sensor is: D2 - I2C SDA (6) - BME680 and D1 - I2C SCL (5) - BME680.
+Tools:
+Soldering iron.
+Third hand or vise.
 
-Next, we need to set up some rules in Tasmota console. We're going to send messages when the external light switch power is on or off. When it's on, we'll send '1' to the MQTT topic `cmnd/masterlight/SWITCH`. And when it's off, we'll send '0'.
+Material:
+Wemos mini d1 from Amazon or similar esp8266 / esp32 device.
+2 x resistors, any two usually works, i used 10k.
+Wire.
+2 5v usb wall chargers.
+1 male usb plugin.
+1 regular usb charging cable for the esp32.
+led.
+solder.
+Optional: bme280 or bme680.
 
-We've also got some sample code to help you get started with NodeRed.
+There is an image of a breadboard version of the circuit.
+There is an image of the schema version of the circuit.
+There is an image of the Wemos mini d1 lite with bme680 front view.
+There is an image of the Wemos mini d1 lite with bme680 back view.
 
-So here comes the part that could change per user preferences: adding your power monitor setup in a home assistance. I'm using NodeRed but this could be done with other home assistance software. You can find an example of how it's set up on the blog post.
+Step 2: Download and Upload Software
 
-That's it! You now have a simple and low-effort way to automate your smart devices using existing light switches and power monitors with an Arduino compatible device and WiFi.
+Flash your device with a Tasmota firmware. You can find the link on the blog post.
+
+Tasmota Module configuration
+
+Set to: Generic Module then click Save. the device will restart.
+
+D2 - I2C SDA (6) - BME680
+D1 - I2C SCL (5) - BME680
+A0 - Analog (1) - connected to 5V power supply resistor divider
+
+Tasmota Console
+
+Send when external light switch power is on, send 1.
+
+The command is: Rule1 ON analog#a0>1000 DO Backlog Rule1 0; Rule2 1; Publish cmnd/masterlight/SWITCH 1 ENDON
+
+When external light switch power is off, send 0.
+
+The command is: Rule2 ON analog#a0<1000 DO Backlog Rule1 1; Rule2 0; Publish cmnd/masterlight/SWITCH 0 ENDON
+
+Enable rule 1: Rule1 1
+
+Ensure you have MQTT enable then look at the console for messages similar to this:
+
+The console output shows various status messages. It indicates that MQTT is active, displaying statistics such as uptime, heap size, and signal strength. It also logs the state changes of the switch, showing that when the switch state changes, the corresponding MQTT topics are published, such as cmnd/masterlight/SWITCH being set to 1 or 0, reflecting the on or off state of the connected device.
+
+The MQTT topic is cmnd/masterlight/SWITCH with a boolean value of either 1 for open or 0 for close. The topics are for state or the reed switch sensor value Switch2 that are sent every 5 minutes, which is configurable, via MQTT.
+
+Step 3: Add to a Home Assistance
+
+So here comes the part that could change per user preferences. I'm using NodeRed but this could be done with other home assistance software. Get the MQTT message then process notifications you would like.
+
+There is an image showing the NodeRed power monitor setup, which illustrates the flow of nodes receiving the MQTT message and triggering the appropriate actions.
+
+Resources
+
+You can find the following links on the blog post for further information:
+Adafruit's guide on the BME680 humidity, temperature, barometric pressure, VOC, and gas sensor.
+Bosch Sensortec's page for the BME680 gas sensors.
+A tutorial on the BME280 sensor for Arduino.

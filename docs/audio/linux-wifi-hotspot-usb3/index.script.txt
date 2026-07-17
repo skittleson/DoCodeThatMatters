@@ -1,23 +1,13 @@
-Here is the rewritten spoken script:
+This is a blog post titled Linux Wifi Hotspot with PiHole. The post was originally published on September 29, 2022, and modified on October 11, 2022. The description says to build a wifi hotspot using hostapd via the create_ap project and Pi-hole. There is an image on the post that depicts the Pi-hole logo, which looks like a vortex or funnel shape.
 
-You're about to learn how to build a WiFi hotspot using a Raspberry Pi and a few other tools, including Pihole. I'll guide you through this process step by step, but keep in mind that this post is still a work in progress, so be sure to come back for updates.
+A quick note to start: this post is still a work in progress, so come back for updates.
 
-So, let's start with the basics. The idea here is to use a device like a Raspberry Pi to create a WiFi hotspot. You can find more details on this project online, including some tutorials and guides that might be helpful as you get started.
+Here is the TLDR section. You will need an Alfa AC1900 WiFi Adapter. It is a 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter with four 5 dBi external dual-band antennas. You can find the link to this specific adapter on the blog post.
 
-One of the key components we'll need is a WiFi adapter. In my case, I'm using an Alfa AC1900 WiFi Adapter. It's a pretty powerful device that should give us good range and performance for our hotspot.
+The script used to start the setup is named onstart.sh. Instead of reading the raw code block verbatim, here is what the script does: It is a bash script that first disables power saving on the wlan0 interface. Then, it sets the transmission power on wlan0 to a fixed value of 4500. Next, it writes the value 1 to the system parameter for the 8814au module to switch USB modes. Finally, it runs the create_ap command as a daemon. The command logs to a file at /home/support/create_ap.log, disables dnsmasq, sets the DHCP DNS to 192.168.12.1, sets the country to the US, and enables IEEE 802.11n and 802.11ac standards. It uses the 5 GHz frequency band and specifies various high-throughput capabilities like LDPC, HT40+, SHORT-GI, and MAX-AMSDU. It also specifies VHT capabilities like MAX-MPDU, RXLDPC, SHORT-GI-80, and beamforming options. The script creates a network named TestNetwork with the password testing123, using wlan0 for the wireless interface and eth0 for the uplink.
 
-Now, let's take a look at the script we'll be using to get started. This script is called `onstart.sh`, and it's where all the magic happens. When you run this script, it will set up your WiFi adapter, configure some settings, and then start creating the hotspot itself.
+Next, you need to disable IPv6. To do this, edit the sysctl configuration file using the command sudo nano /etc/sysctl.conf. You need to add three lines to the file: the first disables IPv6 for all network interfaces, the second disables it for the default interface, and the third disables it for the loopback interface.
 
-Here's what the script looks like:
+Then, install and configure Pi-hole. You can do this by running the Pi-hole installation script from the command line. The command involves using curl to fetch the install script from install.pi-hole.net, setting the environment variable PIHOLE_SKIP_OS_CHECK to true, and running it with sudo and the -E flag. After installation, set up the DHCP server to use the 192.168.12.1 range.
 
-We first turn off power save on our WiFi adapter, which helps ensure that our connection stays stable. Then we set the transmit power to a relatively high level - around 4500 milliwatts. We also enable some advanced features, including support for 802.11ac and beamforming.
-
-Next, we start creating the hotspot itself using a tool called create_ap. This tool is pretty powerful, and it allows us to customize just about every aspect of our hotspot. In this case, we're setting up a network with a few specific settings - like the name of the network (in this case, "TestNetwork"), and the password.
-
-Now that we have our script set up, let's take care of a couple of other things. We need to disable IPv6 on our system, which involves making a few changes to a file called `/etc/sysctl.conf`. This will help prevent some potential issues with IPv6 support in certain devices.
-
-Next, we'll install and configure Pihole, which is an amazing tool for managing your network traffic and blocking ads. We can do this by running a script from the official PiHole repository.
-
-Finally, let's talk about resources. If you want to learn more about setting up a WiFi hotspot with Linux, I recommend checking out the GitHub page for this project. There are some great tutorials and guides available that should help you get started.
-
-That's it for now - I hope you found this helpful! As always, if you have any questions or need further clarification on anything, feel free to ask.
+Finally, here are the resources. There is a link to the linux-wifi-hotspot project on GitHub, specifically the README in the scripts directory. You can find that link on the blog post as well.

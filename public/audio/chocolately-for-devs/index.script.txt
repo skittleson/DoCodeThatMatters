@@ -1,9 +1,15 @@
-As a software engineer, you know how often you need to start with a clean slate in an operating system. Usually, the solution is to use containers for development, but even your primary OS can suffer from what's called "bit rot" over time. For Windows, a factory reset gets things back into a fresh state.
+Common Apps for Devs over Chocolatey
 
-But let me tell you, I've got a lot of apps that I use on a regular basis, and installing them all by hand could take up to a whole day. Not anymore, though! So here's a PowerShell script that I've put together to get the common apps that I need installed quickly.
+As a software engineer, starting with a clean slate in an OS is required often. Usually, using containers is the solution to that for development. After some time, even your primary OS suffers from bit rot. For Windows, a factory reset gets that back into a clean state. I use a lot of apps, and they can take up to a day to install everything, but no more! So here is a PowerShell script to get the common apps used on a regular basis.
 
-To make this work, first you'll need to install something called Chocolatey. You can find the link on the blog post for more information on how to do that. Once it's set up, we can move on to installing these packages.
+Before we get to the script, you’ll need to install Chocolatey. You can find the installation instructions on the Chocolatey website.
 
-The script is a long list of apps that I use regularly: 7zip, Arduino, Audacity... you get the idea. The idea is to install all of these at once with just one command. Now, if you want to see what other local packages are available, you can run this command instead: `choco list --localonly`.
+Here is the command to install all the packages. I’ll read them out for you, so you can hear exactly what’s being included.
 
-You'll find more details on how Chocolatey works and more information on the different apps I've listed by checking out the full post on our blog.
+First, we have 7zip, Arduino, Audacity, AutoHotkey, Autoruns, Bleachbit, CMder, cURL, Cyberduck, Ditto, Draw.io, FFmpeg, Ghostscript, GIMP, Git, Graphviz, grep, Handbrake, HWMonitor, ILSpy, ImageMagick, Inkscape, jq, KeePass, Microsoft Windows Terminal, nano, Node.js, Notepad++, Paint.NET, PowerToys, Process Hacker, Rainmeter, rsync, ScreenToGif, ShareX, SharpKeys, SQLite, SQLiteBrowser, Sysinternals, TeraCopy, TortoiseGit, Total Commander, Transmission, UltraDefrag, VLC, VS Code, WinMerge, WireGuard, Wireshark, youtube-dl, ChocolateyPackageUpdater, Python, .NET, Visual Studio 2019 Community, oh-my-posh, and LazyDocker.
+
+That is quite the list!
+
+Once you have installed these, if you want to see all the available packages currently on your local machine, you can run the command: choco list dash dash local only.
+
+For more information about Chocolatey and what else it can do, check out the main Chocolatey website.

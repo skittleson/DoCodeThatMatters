@@ -1,23 +1,39 @@
 My Emails Are Out Of Control
 
-You know how your email inbox can just get out of control? Mine was getting to that point, and I decided I needed to take back some control. Now, I'm not one of those people who tries to have a zero inbox - that's just too much work. But I do want to be able to keep my inbox from getting overwhelmed.
+My inbox is full. Not in the sense of storage capacity, but my mental capacity. Email is here to stay and I have chosen not to commit to a zero inbox game. So this is my attempt to use some code to analyze and clean up existing messages. Let's get some control back.
 
-So, I started using some code to analyze and clean up my existing messages. Let's take a look at what I came up with.
+The TLDR is: the "who has emailed the most" script loops through 11 times by 30 days in an inbox using an IMAP protocol. It builds a list of the top "From" email addresses and then displays it. The "mark for deletions" script handles removing a single from email address at a time. You can find the link to the code on the blog post.
 
-The first script I wrote is called "who_has_email_the_most". It loops through 11 months of emails in your inbox, using something called the IMAP protocol. What it does is build a list of the top senders - that's who's been emailing me the most. Then, it displays the results.
+Mostly newsletters, some transactional. Having a time-to-live on some of these emails would make sense. That's not a feature I'm aware of, so let's just do some data deletion. Edit: there is a feature called Sweep in Outlook.com that does this.
 
-I also wrote a script to mark certain emails for deletion. This one just removes one email address at a time, but it can be useful if you have a lot of emails from the same sender cluttering up your inbox.
+Here is the data:
 
-So, let's talk about what I found in my analysis. It turns out that most of my emails are from newsletters and transactional emails - things like shipping updates and order confirmations. Now, I wish there was a way to set a time limit on how long these types of emails stay in my inbox. That would be really helpful.
+news at e dot eyebuydirect dot com with 290 emails
+shipment-tracking at amazon dot com with 218 emails
+friendupdates at facebookmail dot com with 215 emails
+express at em dot express dot com with 211 emails
+Costco at digital dot costco dot com with 207 emails
+photos at onedrive dot com with 195 emails
+noreply at redditmail dot com with 179 emails
+order-update at amazon dot com with 178 emails
+Shutterfly at em dot shutterfly dot com with 159 emails
+REDACTED01 at REDACTED01 dot com with 157 emails
+ProFlowers at news dot proflowers dot com with 151 emails
+USPSInformeddelivery at email dot informeddelivery dot usps dot com with 149 emails
+marketplace-messages at amazon dot com with 122 emails
+microsoft dot start at email2 dot microsoft dot com with 114 emails
+redcross at theamericanredcross dot org with 112 emails
+REDACTED02 at REDACTED02 with 106 emails
+newsmax at latest dot newsmax dot com with 101 emails
+noreply at email dot amctheatres dot com with 95 emails
+jobs-listings at linkedin dot com with 95 emails
+reply at rs dot email dot nextdoor dot com with 93 emails
 
-But until then, I'm just going to have to do some data deletion. And it turns out that Outlook.com has a feature called Sweep that can help with this - but I didn't know about it at the time, so I'll just be deleting some of these emails manually.
+My solutions were:
 
-Let me show you what my results looked like. The top offenders were things like news@eyebuydirect.com and shipment-tracking@amazon.com. These are the ones I'm going to focus on getting rid of first.
+First, unsubscribe from the top offenders.
+Second, using a script, delete the top offending emails.
+Third, create some rules to archive emails via the web portal.
+And fourth, run the script for top offenders monthly to evaluate who is wasting my time the most.
 
-So, how am I planning to tackle this problem? Well, first, I'm going to unsubscribe from these top offenders. That should help reduce the number of emails I get from them in the future.
-
-Next, I've written some scripts to delete these emails automatically. This will save me a lot of time in the long run - no more manually deleting thousands of emails!
-
-I also set up some rules on my email provider's web portal to archive certain types of emails. And finally, I plan to run this script every month or so to see which senders are still emailing me the most.
-
-Overall, it's been a bit of a process, but I'm hoping that with these scripts and some regular maintenance, I'll be able to keep my inbox under control for good.
+A bit of house cleaning will keep some sanity in my inbox. With the addition of automation, it should get better over time.

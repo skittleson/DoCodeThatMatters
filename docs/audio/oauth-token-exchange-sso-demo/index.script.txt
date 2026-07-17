@@ -1,60 +1,126 @@
-Imagine you're building a service that needs to call another internal API on behalf of a logged-in user. This is a common problem where services need to talk to each other as the same user. I was using Authentik already, so I went looking for support for RFC 8693 token exchange - but it's not supported in Authentik. Instead, it offers JWT authentication, which is a legitimate machine-to-machine pattern, but with a trust assumption that's easy to miss.
+I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.
 
-I built a demo repository that runs both approaches side by side: Keycloak with native RFC 8693 and Authentik with the JWT federation workaround. You can see exactly where they diverge.
+I was building a service that needed to call another internal API on behalf of a logged-in user. This is a standard issue where services need to talk to each other as that user. I had Authentik running already, so I went looking for RFC 8693 token exchange support, which is not supported! Instead, it offers JWT authentication, which is a legitimate machine-to-machine pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
 
-Let me explain what's happening here. When you log into App A, it wants to show you how many todos you have in App B. To do this, App A needs to call App B /api/todos/count - but App B will reject the user's token because its audience is set to App A, not App B. You can't mint a new token yourself, as that defeats the whole point of a trusted identity provider.
+I built a demo repo that runs both approaches side by side — Keycloak with native RFC 8693, and Authentik with the JWT federation workaround — so you can see exactly where they diverge. You can find the link to the demo repository on the blog post.
 
-To fix this, you need the IdP to issue a new token for App B, carrying the original user's subject. This is where things get interesting.
+## The Use Case
 
-Authentik does offer JWT authentication, which lets one service prove it's who it says it is using a signed JWT as the client assertion. App A posts to the token endpoint using client credentials with the user's access token as the assertion. One note on this: RFC 7523 normally expects a JWT signed by the client's own private key, not a user's access token.
+Imagine the following flow:
+The user logs into App A.
+App A wants to show how many todos this user has in App B.
+App A calls App B’s API endpoint for todo count — server to server.
+App B needs to know: who is this request for?
 
-Authentik verifies App A's token comes from a trusted federated provider and issues a new token with audience set to App B - but here's the catch: the issued token's subject is not the user. It's a service account, something like ak-App-A-Provider-client_credentials. Authentik has no mechanism in this grant path to forward the original user's identity into the token.
+App A cannot just forward the user's token. It has an audience of app-a. App B will reject it. You cannot mint a new token yourself — that defeats the whole point of a trusted identity provider.
 
-So App A passes the user identity separately when calling App B using an extra header called X-User-Sub. App B trusts X-User-Sub because it's implicit trust - it assumes App A is telling the truth about who the user is.
+You need the Identity Provider to issue a new token for App B, carrying the original user’s subject identifier.
 
-Now, let me show you the tradeoff nobody mentions: with Authentik, you're trusting App A to tell the truth about who the user is. With Keycloak, the IdP is the one asserting it and App B can verify that independently.
+## Option A - Authentik (JWT Authentication)
 
-Here's a simple diagram showing what's happening in both cases:
+Authentik does not implement RFC 8693. What it does offer is JWT authentication, which is based on RFC 7523 client assertion. This lets one service prove it is who it says it is using a signed JWT as the client assertion.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor U as User
-    participant A as App A
-    participant IdP as Identity Provider
-    participant B as App B
+App A posts to the token endpoint using the client credentials grant with the user's access token as the assertion. The parameters include the grant type, client ID, client assertion type, the client assertion itself, and the scope.
 
-    U->>A: Login
-    A->>IdP: Authenticate user
-    IdP-->>A: User Access Token (sub: user, aud: app-a)
+One note on the client assertion field: RFC 7523 normally expects a JWT signed by the client's own private key, not a user's access token. Authentik's federated provider feature accepts the user's access token here because it trusts the issuer, not because this is standard RFC 7523 client authentication. It works, but it is Authentik-specific behavior.
 
-    Note over A,B: User requests data from App B
+Authentik verifies App A's token comes from a trusted federated provider, then issues a new token with an audience of app-b.
 
-    rect rgb(255, 230, 200)
-        Note over A,IdP: Authentik — client_credentials fallback
-        A->>IdP: client_credentials + client_assertion (user AT as JWT)
-        Note right of IdP: No user context in this grant
-        IdP-->>A: M2M Token (sub: service-account-a, aud: app-b)
-        A->>B: Bearer M2M Token + X-User-Sub header
-        Note right of B: Implicit trust — B trusts the header because A is authenticated
-    end
+The problem is that the issued token's subject is not the user. It is a service account — something like "ak-App-A-Provider-client_credentials." Authentik has no mechanism in this grant path to forward the original user's identity into the token.
 
-    rect rgb(200, 255, 200)
-        Note over A,IdP: Keycloak — RFC 8693 token exchange
-        A->>IdP: token-exchange, subject_token: user AT, audience: app-b
-        Note right of IdP: Validates delegation policy
-        IdP-->>A: Delegated Token (sub: user, aud: app-b, azp: app-a)
-        A->>B: Bearer Delegated Token only
-        Note right of B: Cryptographic trust — sub and azp verified from token
-    end
-```
+So App A passes the user identity separately when calling App B. It includes the bearer token and adds a custom header, X-User-Sub, containing the user's subject identifier.
 
-In this diagram, you can see how Authentik's client_credentials fallback works, while Keycloak uses RFC 8693 to issue a delegated token with the user's subject. Let me highlight the key difference between these two models.
+App B trusts the X-User-Sub header because the bearer token proves the caller is App A's server. That trust is implicit, not cryptographic. A bug or compromise in App A could cause App B to return another user's data. The user identity is not bound to the token — it is just a header anyone with App A's credentials could fabricate.
 
-The bottom line is that with Authentik, you're trusting App A to tell the truth about who the user is, while with Keycloak, the IdP is asserting it and App B can verify that independently.
+The concrete risk is this: if App A is ever compromised — a dependency vulnerability, a leaked secret, a misconfigured environment variable — an attacker can call App B as any user in the system. The Identity Provider has no knowledge of who the request is for. App A decides that, and App B trusts it. With the Keycloak path, the Identity Provider is the one asserting the user's identity in the token. App A cannot forge that claim even if it is fully compromised.
 
-If you want to run this demo for yourself, I've included instructions in the repository. You'll need to clone the repo, copy the env file, and pick a stack: either Authentik or Keycloak. The demo uses Docker Compose to set up the environment, so make sure you have it installed on your machine.
+You can see a demonstration of this running with Authentik, where you log in, sign in to App B, and the todo count appears in App A with an orange workaround badge.
 
-Once you've got everything set up, navigate to http://localhost:3993 (App A) and log in with credentials `demo` / `changeme`. Then open a new tab and navigate to http://localhost:3994 (App B), where you can add todos. The todo count will show up on App A.
+## Option B - Keycloak (RFC 8693)
 
-That's it! I hope this helps illustrate the tradeoff between Authentik and Keycloak when it comes to token exchange.
+Keycloak has supported RFC 8693 token exchange natively since version 12. The grant type is "urn:ietf:params:oauth:grant-type:token-exchange."
+
+App A posts the user's access token as the subject token and asks for a new one scoped to App B. The parameters include the grant type, client ID, client secret, subject token, subject token type, audience, and requested token type.
+
+Keycloak validates the subject token, checks the exchange policy, and issues a new token with:
+First, an audience of app-b.
+Second, the subject as the original user sub — the real user, not a service account.
+Third, an authorization party of app-a, recording who performed the exchange.
+
+With the user's subject already in the token, App A calls App B with no extra header. No X-User-Sub is needed because the subject is in the token itself.
+
+App B validates the token's audience and reads the subject directly from it. No extra header. No implicit trust. The user identity is cryptographically bound.
+
+You can see a demonstration of this running with Keycloak, where you log in, sign in to App B, and the todo count appears in App A with a green RFC 8693 compliant badge.
+
+## On the App B Side
+
+App B enforces a strict audience check on every service-to-service call via a requireServiceAuth function. It verifies the token against the JSON Web Key Set, ensuring the issuer matches the discovered issuer and the audience matches App B's client ID, rejecting any token not scoped to app-b.
+
+Then the API handler for todo count branches on the Identity Provider type to get the user identity from the right place. If the type is Keycloak, it uses the subject from the validated token. Otherwise, it uses the X-User-Sub header, trusted only because the audience check passed.
+
+This is where the security models visibly diverge. Keycloak: identity comes from the token. Authentik: identity comes from a header App A set.
+
+## The Key Difference
+
+Let’s look at the sequence of events.
+The user logs into App A.
+App A authenticates the user with the Identity Provider.
+The Identity Provider returns a User Access Token with the user as subject and app-a as audience.
+The user requests data from App B.
+
+In the Authentik scenario, using the client credentials fallback:
+App A sends client credentials along with a client assertion containing the user’s access token to the Identity Provider.
+There is no user context in this grant.
+The Identity Provider issues a Machine-to-Machine Token with a service account as subject and app-b as audience.
+App A sends this M2M token to App B along with the X-User-Sub header.
+App B places implicit trust in the header because App A is authenticated.
+
+In the Keycloak scenario, using RFC 8693 token exchange:
+App A sends a token exchange request with the user’s access token and app-b as the audience to the Identity Provider.
+The Identity Provider validates the delegation policy.
+It issues a Delegated Token with the user as subject, app-b as audience, and app-a as the authorization party.
+App A sends only this Delegated Token to App B.
+App B places cryptographic trust in the subject and authorization party verified from the token.
+
+To summarize the differences:
+Authentik uses the client credentials grant with RFC 7523 client assertion. It does not support RFC 8693. The identity chain is broken, requiring a manual X-User-Sub header.
+Keycloak uses the token-exchange grant with RFC 8693. It preserves the identity chain, with the subject and authorization party included in the issued token.
+
+With Authentik, you are trusting App A to tell the truth about who the user is. With Keycloak, the Identity Provider is the one asserting it, and App B can verify that independently.
+
+## Running It
+
+Clone the repo, copy the env file, and pick a stack. You can find the link to the repository on the blog post.
+
+Add these to your hosts file first, as both stacks use port 9000:
+127.0.0.1 authentik
+127.0.0.1 keycloak
+
+Wait about thirty seconds for Keycloak to initialize. Then you have these endpoints:
+App A is at http://localhost:3993, where you log in.
+App B is at http://localhost:3994, where you add todos.
+The Keycloak admin console is at http://keycloak:9090.
+
+The credentials are "demo" and "changeme" for app login, and "admin" and "changeme" for Keycloak.
+
+Log in to App A, open App B in a new tab where single sign-on kicks in automatically, add a few todos, and go back to App A. The todo count shows up. The Token Exchange Info card on App A shows which method was used and whether it is RFC compliant.
+
+## Takeaways
+
+First, Keycloak just works for RFC 8693. The setup script automates the token exchange permission policy so you can see the full flow without manual admin steps.
+
+Second, Authentik's JWT authentication is a legitimate machine-to-machine pattern. But when the goal is passing a user's identity downstream, the subject in the issued token is a service account, not the user. That gap is what forces the X-User-Sub header and shifts the trust to App A.
+
+Third, the authorization party claim matters. In the Keycloak response, the authorization party records which service performed the exchange. App B can use that to enforce policies about which services are allowed to act on behalf of users.
+
+Fourth, audience validation is not optional. Both options enforce strict audience checking on App B. Skip it and any token from the same Identity Provider gets through, which defeats the whole point.
+
+## References
+
+For further reading, you can look up:
+RFC 8693 - OAuth 2.0 Token Exchange
+RFC 7523 - JWT Profile for Client Authentication
+Keycloak Token Exchange docs
+Authentik JWT Authentication docs
+The demo repository by skittleson
