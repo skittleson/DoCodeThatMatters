@@ -1,60 +1,38 @@
-Imagine you're building a service that needs to call another internal API on behalf of a logged-in user. This is a common problem where services need to talk to each other as the same user. I was using Authentik already, so I went looking for support for RFC 8693 token exchange - but it's not supported in Authentik. Instead, it offers JWT authentication, which is a legitimate machine-to-machine pattern, but with a trust assumption that's easy to miss.
+Imagine you're building a service that needs to call another internal API on behalf of a logged-in user. This is a pretty standard issue when services need to talk to each other as the user. I had Authentik running already, so I went looking for support for token exchange with RFC 8693.
 
-I built a demo repository that runs both approaches side by side: Keycloak with native RFC 8693 and Authentik with the JWT federation workaround. You can see exactly where they diverge.
+Unfortunately, it doesn't support it. Instead, it's using JWT authentication, which is a legitimate machine-to-machine pattern, but it has a trust assumption that's easy to miss until something goes wrong.
 
-Let me explain what's happening here. When you log into App A, it wants to show you how many todos you have in App B. To do this, App A needs to call App B /api/todos/count - but App B will reject the user's token because its audience is set to App A, not App B. You can't mint a new token yourself, as that defeats the whole point of a trusted identity provider.
+I built a demo repo that runs both approaches side by side - Keycloak with native token exchange and Authentik with the JWT federation workaround. You can see exactly where they diverge.
 
-To fix this, you need the IdP to issue a new token for App B, carrying the original user's subject. This is where things get interesting.
+Let me walk you through this. Imagine a user logs into App A, and App A wants to show how many todos the user has in App B. App A calls App B's API, but it can't just forward the user's token because it has an audience of app-a, and App B will reject it.
 
-Authentik does offer JWT authentication, which lets one service prove it's who it says it is using a signed JWT as the client assertion. App A posts to the token endpoint using client credentials with the user's access token as the assertion. One note on this: RFC 7523 normally expects a JWT signed by the client's own private key, not a user's access token.
+You need the IdP to issue a new token for App B, carrying the original user's subject. There are two options here: Authentik or Keycloak.
 
-Authentik verifies App A's token comes from a trusted federated provider and issues a new token with audience set to App B - but here's the catch: the issued token's subject is not the user. It's a service account, something like ak-App-A-Provider-client_credentials. Authentik has no mechanism in this grant path to forward the original user's identity into the token.
+With Authentik, you're using JWT authentication with client assertion. It works, but it shifts a security assumption that most people never notice. The problem is that the issued token's subject is not the user; it's a service account. And there's no mechanism in this grant path to forward the original user's identity into the token.
 
-So App A passes the user identity separately when calling App B using an extra header called X-User-Sub. App B trusts X-User-Sub because it's implicit trust - it assumes App A is telling the truth about who the user is.
+So, App A passes the user identity separately when calling App B. That trust is implicit, not cryptographic. A bug or compromise in App A could cause App B to return another user's data. The user identity is not bound to the token; it's just a header that anyone with App A's credentials could fabricate.
 
-Now, let me show you the tradeoff nobody mentions: with Authentik, you're trusting App A to tell the truth about who the user is. With Keycloak, the IdP is the one asserting it and App B can verify that independently.
+The concrete risk here is if App A is ever compromised - an attacker can call App B as any user in the system, and the IdP has no knowledge of who the request is "for". With Keycloak, the IdP is the one asserting the user's identity in the token. App A cannot forge that claim even if it's fully compromised.
 
-Here's a simple diagram showing what's happening in both cases:
+Let me show you what this looks like with Authentik.
 
-```mermaid
-sequenceDiagram
-    autonumber
-    actor U as User
-    participant A as App A
-    participant IdP as Identity Provider
-    participant B as App B
+[Image description: City lights connected across a global network, like services passing identity tokens between each other]
 
-    U->>A: Login
-    A->>IdP: Authenticate user
-    IdP-->>A: User Access Token (sub: user, aud: app-a)
+Now, let's look at Option B - Keycloak with RFC 8693 token exchange. This has been supported by Keycloak since version 12. The grant type is urn:ietf:params:oauth:grant-type:token-exchange.
 
-    Note over A,B: User requests data from App B
+In this case, App A posts the user's access token as the subject token and asks for a new one scoped to App B. Keycloak validates the subject token, checks the exchange policy, and issues a new token with an audience of app-b and the original user's subject in it.
 
-    rect rgb(255, 230, 200)
-        Note over A,IdP: Authentik — client_credentials fallback
-        A->>IdP: client_credentials + client_assertion (user AT as JWT)
-        Note right of IdP: No user context in this grant
-        IdP-->>A: M2M Token (sub: service-account-a, aud: app-b)
-        A->>B: Bearer M2M Token + X-User-Sub header
-        Note right of B: Implicit trust — B trusts the header because A is authenticated
-    end
+With this approach, App A can call App B without any extra headers, and App B can validate the token's audience and read the subject directly from it. This is cryptographic trust; there's no room for error.
 
-    rect rgb(200, 255, 200)
-        Note over A,IdP: Keycloak — RFC 8693 token exchange
-        A->>IdP: token-exchange, subject_token: user AT, audience: app-b
-        Note right of IdP: Validates delegation policy
-        IdP-->>A: Delegated Token (sub: user, aud: app-b, azp: app-a)
-        A->>B: Bearer Delegated Token only
-        Note right of B: Cryptographic trust — sub and azp verified from token
-    end
-```
+Let me show you what this looks like with Keycloak.
 
-In this diagram, you can see how Authentik's client_credentials fallback works, while Keycloak uses RFC 8693 to issue a delegated token with the user's subject. Let me highlight the key difference between these two models.
+[Image description: The same sequence diagram as before]
 
-The bottom line is that with Authentik, you're trusting App A to tell the truth about who the user is, while with Keycloak, the IdP is asserting it and App B can verify that independently.
+Here's a summary of the key differences between these two approaches:
 
-If you want to run this demo for yourself, I've included instructions in the repository. You'll need to clone the repo, copy the env file, and pick a stack: either Authentik or Keycloak. The demo uses Docker Compose to set up the environment, so make sure you have it installed on your machine.
+- Authentik - client credentials fallback, broken identity chain
+- Keycloak - RFC 8693 token exchange, preserved identity chain
 
-Once you've got everything set up, navigate to http://localhost:3993 (App A) and log in with credentials `demo` / `changeme`. Then open a new tab and navigate to http://localhost:3994 (App B), where you can add todos. The todo count will show up on App A.
+The main takeaway here is that Keycloak just works for RFC 8693. With Authentik, you're trusting App A to tell the truth about who the user is. But with Keycloak, the IdP is asserting it and App B can verify that independently.
 
-That's it! I hope this helps illustrate the tradeoff between Authentik and Keycloak when it comes to token exchange.
+You can run this demo by cloning the repo and following the instructions in the README file. It's a good exercise to understand how token exchange works and which approach to choose for your own projects.

@@ -1,0 +1,39 @@
+Here is the rewritten spoken script:
+
+You're about to hear a "How To" on upgrading a Duplicator i3 with modern 3D printer parts, firmware, and creativity. This post is still in progress.
+
+The Duplicator i3 is a common 3D printer that many now consider outdated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and replacing parts to modernize it. There's also a lot of resources and parts still available for this model.
+
+Let me show you the "To-Do" List:
+
+First off, we're going to install a glass bed. This provides a smoother surface for printing.
+
+Next up, we'll be adjusting the stepper motors to 1/16 or 1/32 steps. This gives us cleaner and smoother prints.
+
+Now, let's talk about the electronics upgrade. We'll be replacing the existing Melzi board with a new MKS Gen 1.4 board. You can find more information on this in my blog post. Some necessary changes include installing JST 2-pin to 3-pin adapters for the end stop connectors and adding a JST connector for the extruder stepper.
+
+We'll also be making some Marlin firmware changes. This includes inverting the end stops, uncommenting the driver types for the DRV8825 drivers, and doubling the step count from 1/16 to 1/32 steps. We'll also be setting up SD card support, LCD support for our RepRap Discount Full Smart Controller, and defining some important values like Z travel limit and nozzle offset.
+
+Now, let's move on to some additional upgrades:
+
+We can replace the display connectors since they're backwards on our specific controller model.
+
+Next, we need to upgrade the power supply. It's currently 20A, but we'll be replacing it with a 30A one for more reliable performance.
+
+Moving along, we can update the Y bracket and add an easy access case for the MKS Gen board.
+
+We can also install a filament sensor, cover, and mount for the power supply, as well as implement manual LCD bed leveling using Marlin's `#define MESH_BED_LEVELING` function.
+
+Finally, let's talk about auto bed leveling using Z probe servo. This requires some wiring work and configuration changes in Marlin. We'll be defining some important values like Z clearance between probes, Z clearance multi-probe, and Z min probe pin.
+
+Now, you can find more information on Marlin's config difference by visiting the link to my blog post for a full comparison.
+
+Let me describe the images that accompany this article: There are pictures of a 3-pin JST connector being converted to a 2-pin JST connector; an MKS Gen 1.4 board wired up, showing its layout; and a model of a Z probe in action.
+
+## Lessons Learned
+
+Through this process, I've learned how to configure and almost build a 3D printer using an existing one. It's been a significant learning experience for me.
+
+However, it's also taken way more time than I initially expected.
+
+If you'd like to learn more about the resources used in this project, be sure to check out my blog post for links and references.

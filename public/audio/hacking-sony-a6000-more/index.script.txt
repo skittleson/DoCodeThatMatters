@@ -1,21 +1,19 @@
-Here is the rewritten script:
+Here is the rewritten spoken script:
 
-Hi there, welcome back! Today we're continuing our journey of hacking my Sony A6000 camera. If you haven't checked out the previous post, be sure to head over to the blog for all the details.
+Welcome back, everyone. Today we're continuing with part two of hacking my Sony A6000 camera. If you haven't checked out the previous post, be sure to head over to the blog for more updates.
 
-So, let's dive right in. One of the free apps that I've found incredibly useful is an open-source project called Sony-PMCA-RE. You can find more information about it on the blog post itself, but essentially it provides a way to install time-lapse and FTP uploader capabilities with some additional hacks.
+Let's dive right in. One of the coolest things I've found for this camera is a free app that lets me do time-lapse and FTP uploads with some extra features. It's an open-source project on GitHub called Sony-PMCA-RE. You can find the link on the blog post, but basically, you download the executable from their releases page, and it will guide you through installing the apps.
 
-Now, I also want to mention OpenMemories:Tweaks app, which allows you to change some of the camera's limits. It's definitely worth checking out if you're looking for more flexibility with your Sony A6000.
+I also want to mention another great app I've found called OpenMemories:Tweaks. It allows me to change some of the camera's limits, which is really useful.
 
-Now, let's talk about batteries. The stock battery on this camera is around 1020mAh, and I have to say, it drains very quickly. Swapping out batteries can be a bit tedious, but getting USB-C versions of them has definitely helped with charging on the go. However, it's still a bit annoying with all the cables.
+Now, let's talk about batteries. One of the biggest issues with this camera is that its stock battery only lasts around 1020mAh. Swapping out batteries can be a real pain, so I've been working on a USB-C hack to make it easier to charge on the go.
 
-To address this issue, I decided to try my hand at hacking together a custom power adapter. I took apart an existing USB 5v to 8v adapter and added a female USB-C tail to create a single battery shell that can be charged on the go. The idea is to use a large battery bank when taking very long time-lapses, and building a battery pack on the bottom of the camera is my next project.
+I started by taking apart a power adapter and bundling everything into a single battery shell with a USB-C input. The idea is to use a large battery bank for really long time-lapses, or even build a battery pack onto the bottom of the camera. You can see more details about this project in the video linked on the blog.
 
-You'll find more details about this build in the blog post, along with a YouTube video that shows you how it's done.
+One thing that's always been a bit of a hassle with my camera is transferring data from the SD card. I've found two solutions that work pretty well for me.
 
-Now, let's move on to data transfers. One of the biggest hurdles I've faced when working with this camera is getting files off the SD card quickly and easily. To solve this problem, I keep a small card reader near my camera bag that allows me to plug in the SD card to my computer or phone. It's incredibly convenient for situations where I just need a few pictures on hand.
+First, I keep a small card reader near my camera bag that lets me plug the SD card into my computer or phone. It's super convenient for getting just a few pictures edited and sent quickly.
 
-However, if you're looking to use the FTP uploader within the camera itself, be aware that it can be quite slow - around 70 files in 13 minutes at full resolution JPEG files. If you have a lot of photos to transfer, it's still generally faster to dump them all onto your computer or phone.
+The other solution I use is the FTP uploader app mentioned earlier. While it does take some time to transfer files, especially at full resolution JPEGs – around 70 files in 13 minutes – it's still useful when you don't need to transfer too many photos.
 
-To make things easier, I've been using a script to dump the FTP uploader into a specific directory on my computer. It's a simple bit of Python code that uses the pyftpdlib library - you can find more information about how to use it in the blog post itself.
-
-I hope this helps! Let me know if you have any questions or need further clarification on any of these topics.
+If you want to learn more about setting up your own FTP uploader, I recommend checking out the link on the blog post for a reference command.

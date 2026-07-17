@@ -1,23 +1,23 @@
-Here's the rewritten spoken script:
+Here's the spoken script:
 
-You're looking for a way to save JSON objects to your Amazon Web Services S3 bucket, but you want to make sure that only legitimate messages get through. That's where Google Recaptcha comes in. Today we're going to show you how to set up AWS Lambda and API Gateway to work with Recaptcha and store those messages safely.
+You know, sometimes you need to save messages from a public endpoint to your backend. That's what we're going to cover in this post - how to use AWS Lambda, AWS S3, and Google Recaptcha to get that done.
 
-Let me start by saying I actually wrote a code snippet for myself, but then I got so many requests from people who wanted to see it in a blog post that I figured I'd better share it here. So, take a look at the code if you want - it's right below.
+I actually wrote a GIST for myself on this topic, but I've had enough requests to share it here. So, go ahead and copy whatever you need from this blog post.
 
-Now, on your frontend, where your form is located, whether it's in an index.html file or somewhere else, you'll need to add this script tag and replace `_reCAPTCHA_site_key` with your actual Recaptcha site key. You can find that information on the Google Developers website.
+First, let's talk about the frontend source of your request. You'll need to add a script tag to your index.html file - or wherever your form is being sent from. Replace `_reCAPTCHA_site_key` with a real one from Google Recaptcha.
 
 ```html
-The code adds a script tag from Google's Recaptcha API and executes a function when it's ready.
+You can find the link on the blog post for how to get this script working, but essentially you're adding a few lines of code that include the recaptcha library and execute it.
 ```
 
-When you look at the documentation for Recaptcha, you'll see there are several steps to set up. I've included a link to it here, but if you want more information, you can find it on our blog post.
+Once you've got that set up, let's move on to your backend. You'll need an AWS Lambda function that has permission to add items to S3. This is where things can get a bit complex, but don't worry - we'll break it down.
 
-Now, let's move on to setting up your backend with AWS Lambda and S3. First things first: create an AWS Lambda function that has permission to add items to your S3 bucket. Make sure it's using a Node.js or JavaScript runtime.
+First, create some environment keys for your lambda function. These include your Google Recaptcha key, the name of the bucket you're using in S3, and an SNS topic ARN so you can receive notifications when something goes wrong.
 
-You'll need to set up some environment variables for this function. You can find the details of how to get these keys on the Google Developers website and in the AWS console. We have an example code snippet below that shows you what you need to do.
+You can find more information on how to set up these environment keys by looking at the link provided earlier.
 
-### API Gateway Setup
+Next, let's talk about API Gateway setup. This is where we integrate our lambda function with your web application. Create a new AWS API Gateway API and add a resource called `form` with a POST method. Make sure you select Lambda Proxy integration and choose your lambda function from the dropdown menu.
 
-Next, let's set up your API Gateway. Create a new API with a resource called "form" and add a POST method to it. For integration, choose Lambda Function as the type and select your Lambda function from the dropdown list. Make sure the use Lambda Proxy integration checkbox is checked.
+That's it! With this setup, you should be able to save JSON objects to S3 using Google Recaptcha in an AWS Lambda function.
 
-That's it! With these steps, you should be able to set up a system that uses Google Recaptcha to verify messages sent from a frontend source before storing them in your AWS S3 bucket. If you want more details or have any questions, be sure to check out our full blog post on this topic.
+As we continue on this topic, I'll have more information about how to make everything work together smoothly. For now, let me describe a picture that illustrates what we're trying to protect our endpoint from: it's a chain fence with a lock on it - a visual reminder of the security measures we need to put in place.

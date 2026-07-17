@@ -1,0 +1,17 @@
+Here's the rewritten spoken script:
+
+My Emails Are Out Of Control
+
+You know how your email inbox can sometimes feel overwhelming? Mine was getting that way. I wasn't about to try to achieve a "zero inbox" game, but I did want to take back some control. So, I decided to write some code to help me out.
+
+I'll be talking about two Python scripts I created: one analyzes and cleans up existing messages, and the other deletes emails from specific senders. Let's dive in.
+
+First, let me describe the image you see here. It's a picture of an email running away from being cleaned up. That's kind of what my inbox felt like before I started working on these scripts.
+
+The first script is called "who_has_email_the_most." It looks at your inbox over a period of 11 times by 30 days, using the IMAP protocol. It then builds a list of the top senders and displays them for you. The second script is called "mark_for_deletions," and it allows you to delete emails from specific senders one at a time.
+
+The data I'm working with includes mostly newsletters and some transactional emails. You can see here what my inbox looked like before I started cleaning up - these are just a few of the top offenders. Having a feature that would let me set a "time-to-live" for certain types of emails would be really helpful, but it's not something I'm aware of.
+
+So, instead, I've been deleting some of these emails and creating rules to archive others through my email provider's web portal. I'm also planning to run the script regularly to see who is wasting my time the most.
+
+In conclusion, a bit of house cleaning has really helped me get my inbox under control. With the help of automation, it should continue to improve over time.

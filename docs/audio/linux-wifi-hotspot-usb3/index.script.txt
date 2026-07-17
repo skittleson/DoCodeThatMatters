@@ -1,0 +1,23 @@
+Here is the rewritten spoken script:
+
+You're about to learn how to build a WiFi hotspot using a Raspberry Pi and a few other tools, including Pihole. I'll guide you through this process step by step, but keep in mind that this post is still a work in progress, so be sure to come back for updates.
+
+So, let's start with the basics. The idea here is to use a device like a Raspberry Pi to create a WiFi hotspot. You can find more details on this project online, including some tutorials and guides that might be helpful as you get started.
+
+One of the key components we'll need is a WiFi adapter. In my case, I'm using an Alfa AC1900 WiFi Adapter. It's a pretty powerful device that should give us good range and performance for our hotspot.
+
+Now, let's take a look at the script we'll be using to get started. This script is called `onstart.sh`, and it's where all the magic happens. When you run this script, it will set up your WiFi adapter, configure some settings, and then start creating the hotspot itself.
+
+Here's what the script looks like:
+
+We first turn off power save on our WiFi adapter, which helps ensure that our connection stays stable. Then we set the transmit power to a relatively high level - around 4500 milliwatts. We also enable some advanced features, including support for 802.11ac and beamforming.
+
+Next, we start creating the hotspot itself using a tool called create_ap. This tool is pretty powerful, and it allows us to customize just about every aspect of our hotspot. In this case, we're setting up a network with a few specific settings - like the name of the network (in this case, "TestNetwork"), and the password.
+
+Now that we have our script set up, let's take care of a couple of other things. We need to disable IPv6 on our system, which involves making a few changes to a file called `/etc/sysctl.conf`. This will help prevent some potential issues with IPv6 support in certain devices.
+
+Next, we'll install and configure Pihole, which is an amazing tool for managing your network traffic and blocking ads. We can do this by running a script from the official PiHole repository.
+
+Finally, let's talk about resources. If you want to learn more about setting up a WiFi hotspot with Linux, I recommend checking out the GitHub page for this project. There are some great tutorials and guides available that should help you get started.
+
+That's it for now - I hope you found this helpful! As always, if you have any questions or need further clarification on anything, feel free to ask.

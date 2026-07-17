@@ -1,21 +1,21 @@
-You know how I've been riding my DIY electric skateboard for years now? Well, it's time for an update on the gear situation.
+Here is the rewritten spoken script:
 
-A few years ago, I posted about using a parametric 3D printed spur gear on Reddit. You can find the link to that post on the blog for this story. It's been a while since then, and I've put in over 100 hours of riding on this gear.
+Hey there, I'm excited to share an update on my DIY electric skateboard project that's been going strong for over 100 hours of riding. It's a parametric belt-driven 3D printed spur gear system, and I've had some great results.
 
-So, let me walk you through some specs. The gear was printed with ABS at a resolution of 0.3 millimeters. I used a 265-5M-9 timing belt, which has an outside circumference of 265 millimeters and a width of 9 millimeters, with a pitch of 5 millimeters. To reduce noise, I applied graphite powder to the belt, similar to using pencil lead.
+You can find more information about this project in a Reddit post I made a few years ago. If you're interested in the details, be sure to check out the blog for the full story.
 
-Now, here's what's really cool about this gear: it's fully parametric. That means you can adjust the teeth, mounting holes, inner cut out, and height to your heart's content. And with the FreeCAD design available for download on the blog, you can play around with it yourself.
+Let me give you an idea of what's involved. The gear is printed with ABS at 0.3mm resolution and uses a timing belt from Amazon, specifically the 265-5M-9 model. I also used graphite powder on the belt to smooth out any noise. It's fully parametric, so you can adjust the gear teeth, mounting holes, inner cutout, and height as needed.
 
-You can see a 3D rendering of the model in action if you check out the blog post. It shows the parametric adjustments I made to get it just right for my 190 kilovolt BLDC motor with 16 tooth gear. And don't worry about safety – this motor is plenty powerful, with 8 newton-meters of force and a peak current of 70 amps on a 12-s battery.
+I've been riding with an 80mm wheel and a BLDC motor that puts out 8nm of force at 70 amps peak with a 12s battery. The cost to print was just $1.45, which is pretty impressive. I've reached speeds of up to 25mph on this setup.
 
-As for the actual riding experience, I've clocked speeds up to 25 miles per hour with my existing configuration. And that's not bad considering the rider's weight is around 200 pounds.
+Now, let's talk about some of the wear and tear I've noticed after all these hours of riding. One thing that's become apparent is that the gear teeth have worn down as expected. However, it's been a bit louder than my metal gear due to the pattern chosen for the teeth. Adding graphite powder every 10 rides or so keeps it sounding smooth.
 
-Now, let's talk about wear and tear. After all those hours of riding, you'd expect some damage, right? Well, the gear teeth did wear down as expected, but I've been able to smooth out the noise by adding graphite powder every now and then. The belt itself has worn nominal – I expect to change it in around 500 hours.
+One thing I did notice was that the nuts came loose a few times, so make sure to use lock tight on them. The belt wear has been nominal, and I expect to change it every 500 hours of riding. The bottom land of the gear could be more rounded to fit the belt better.
 
-There are a few things that need attention, though. For one, the nuts on the bolts tend to come loose sometimes, so be sure to use lock tight. And while there's no notable cracking or layer splitting in the print, I do notice that the bottom land could be more rounded to fit the belt better. Not a big deal, but something to keep in mind.
+I've also experimented with different variables in my parametric design spreadsheet, which you can find linked on the blog. You'll see some graphs showing how different parameters affect the gear's performance.
 
-Oh, and one last thing: double-wall bearings are essential for this setup. Water and dirt can cause them to crack at higher speeds, so don't skimp on those.
+As for any issues I've encountered, one thing that stood out was the use of double wall bearings. It turns out they're crucial for high-speed applications like this. If you haven't already, consider switching to double wall bearings in your own skateboard setup.
 
-Finally, I'm considering experimenting with helical gears or double helical gears next. It's an interesting idea – no belt would mean less maintenance and fewer slipping issues. And it looks like a quieter ride might be in my future too.
+Lastly, I think it's worth exploring helical or double helical gears with no belt at all. This could offer a lot of benefits, including quieter operation and reduced maintenance. It might be an interesting experiment for the future.
 
-You can find more details about the design and experiments on the blog post itself.
+That's my update on this project so far. If you're interested in learning more about 3D printing and DIY electric skateboards, I encourage you to check out the blog post for links, images, and more details.

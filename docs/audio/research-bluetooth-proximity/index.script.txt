@@ -1,0 +1,40 @@
+Here's the rewritten spoken script:
+
+My research on Bluetooth proximity using open tools such as hcitool, btmgmt, l2ping, and hcidump. A follow-up to my previous blog post on Raspberry Pi - Bluetooth Proximity.
+
+I want to emphasize that all of these tools can be used with any device that has a Bluetooth connection, not just the Raspberry Pi. You can find the link to my previous blog post in the original article, where you'll get more context about this research.
+
+Let's take a look at some commands and how they're used.
+
+If you want to scan for Bluetooth Low Energy devices within range, you can use hcitool lescan. This will show you all the devices that are currently visible, including their MAC addresses and signal strength. You'll see a response similar to this:
+
+hci0 dev_found: <SOME_MAC> type LE Random rssi -92 flags 0x0000
+AD flags 0x1a
+eir_len 14
+hci0 dev_found: <SOME_MAC> type LE Random rssi -97 flags 0x0000
+AD flags 0x1a
+eir_len 18
+...
+
+You can find more information about hcitool lescan in the original article.
+
+Now, let's say you want to get a list of all the Bluetooth Low Energy devices that are currently connected to your device, along with their RSSI values. You can use btmgmt find for this. Here's what you'll see:
+
+hci0 dev_found: <SOME_MAC> type LE Random rssi -92 flags 0x0000
+AD flags 0x1a
+eir_len 14
+hci0 dev_found: <SOME_MAC> type LE Public rssi -100 flags 0x0004
+AD flags 0x00
+eir_len 28
+
+You can also use l2ping to ping a Bluetooth-enabled device without pairing. This will give you an idea of whether the device is within range.
+
+If you want to dump all data from a paired Bluetooth device, you can use hcidump -a.
+
+Now, let's say you want to request authorization from a device. You'll need to use hcitool cc and then hcitool auth.
+
+You can also attempt to connect to the device and get its RSSI value using these two commands together: hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>
+
+This will give you an idea of whether the device is within range, even if it's not currently connected to your device.
+
+You can find more information about all of these tools and how they're used in the original article. Some additional resources are also available there, including links to other tutorials and articles that might be helpful for further learning.

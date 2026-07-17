@@ -1,17 +1,15 @@
-Let me take you through an effective onboarding strategy for new engineers on a project. 
+Effective onboarding is crucial when it comes to getting new engineers up to speed on a project. Now, if you want to see an example of what we're talking about here, you can find the link on the blog post, but essentially, our goal with effective onboarding is to make that transition as smooth as possible.
 
-You know how it is when someone joins your team - there's always that initial period where they're getting up to speed. Well, with the right approach, this transition can be much smoother.
+Let's take a look at some key elements that make up a successful onboarding strategy for new engineers. First and foremost, providing a comprehensive overview of the project's architecture is essential. This includes making all relevant documentation easily accessible so that the new engineer can get familiar with the ins and outs of the project.
 
-A good onboarding process should start with providing a comprehensive overview of the project itself and making all relevant documentation easily accessible. You want your new engineer to have a solid understanding of what they're walking into.
+Another important aspect of effective onboarding is assigning tasks or tickets to the new engineer that focus specifically on implementing business logic. This gives them a clear understanding of what the project aims to achieve, which helps guide their work from the very beginning.
 
-Next, assign them some tasks or tickets that focus on implementing business logic. This will give them a clear idea of what the project's objectives are and how they fit in.
+Collaboration is also vital when it comes to defining main test cases for the project. We're talking about both the happy path – where everything works as expected – and potential exceptions or edge cases that might arise.
 
-Collaborating with them to define main test cases is also essential - you want to cover both happy paths and potential exceptions, so they know exactly what to expect and can prepare accordingly.
+Now, here's a technique worth mentioning: delaying the implementation of external dependencies by using something like dependency injection or the dependency provider pattern. This allows the new engineer to focus on the core functionality of the project without being bogged down by external factors.
 
-Now, I know it might be tempting to dive straight into external dependencies, but that can actually slow things down. Instead, use techniques like dependency injection or the dependency provider pattern to delay their implementation. This will allow your new engineer to focus on the core functionality of the project from the start.
+To keep things moving smoothly, it's also essential to encourage the new engineer to submit their work for review early and often. This way, senior engineers can provide timely feedback and guidance as needed.
 
-Once they're getting comfortable with the codebase, encourage them to submit a pull request early - this way, you can provide timely feedback and guidance before it's too late.
+Finally, scheduling regular sessions like pair programming, code swarming or office hours is a great idea. These types of sessions offer an opportunity for one-on-one support, additional guidance, and a chance to address any questions the new engineer might have.
 
-Finally, schedule regular pair programming, code swarming or office hours sessions. This will give your new engineer additional support and guidance whenever they need it.
-
-By following this structured approach, your new engineer can quickly become productive and start contributing to the success of the project. And that's what we're aiming for here - to streamline the transition and boost productivity with a clear and effective onboarding strategy.
+By following this approach, you'll find that your new engineers can quickly become productive contributors to the project's success. If you're interested in seeing more details on how to implement these strategies or would like to dive deeper into effective onboarding practices, be sure to check out our full blog post for more information and examples.

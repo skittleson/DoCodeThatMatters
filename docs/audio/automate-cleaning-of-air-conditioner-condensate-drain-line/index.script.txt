@@ -1,0 +1,35 @@
+Here is the rewritten script:
+
+Have you ever had your central air conditioning unit turn off all of a sudden? As a homeowner, this can be a real source of frustration. It's actually one of the most common reasons why service is called for.
+
+The problem usually lies in the air conditioner condensate drain line being blocked. To prevent this from happening, you need to clean the AC condensate drain line every month with a 1/4 cup of vinegar and then flush it out with water. But let's be honest, remembering to do this can be easy to forget.
+
+In this post, we're going to show you how to automate cleaning your air conditioner condensate drain line using a smart WiFi dual water pump. This will save you time and effort in the long run, and ensure that your AC unit runs smoothly and efficiently.
+
+To start with, you'll need to plan out the setup. Here's what we recommend:
+
+First, flash the device with Tasmota firmware. Then set up a water reservoir and route the water line to the AC condensate drain line opening - usually near the start of the heating or fan unit.
+
+Once you have your pump ready, you'll need to add rules to manage the water pump's timing and notifications. This is where things can get a bit tricky, but don't worry, we've got a step-by-step guide to help you through it.
+
+Let's take a closer look at setting up our water pump. I ordered this WiFi dual water pump from Amazon and followed the instructions in [this guide](the blog post). The only tricky part was soldering wires to those tiny connections shown in the image - but with some patience, it wasn't too difficult.
+
+Next, we flashed the device using Tasmotizer. This sent the WiFi configuration and grabbed the IP address for us. Make sure to set the template defined in the guide at this point in Configuration > Configure Other.
+
+Now, let's talk about monitoring the pump activations. We added a counter to keep track of how much water or vinegar mixture is left in the reservoir. To do this, go to Configuration > Configure Template > GPIO16 to Counter and select 1 from the dropdown menu. The value will be stored even after a reboot.
+
+Now that our pump is set up, let's talk about setting up our water reservoir. We used a plastic bottle and hot glued one of the fittings from the water pump into it. Make sure to poke a hole in the top so air can enter the bottle.
+
+Let me describe the image for you: it shows a vinegar plastic bottle with a fitting attached using hot glue, with a small hole poked into the top.
+
+Next, we need to set up some rules to manage our water pump's timing and notifications. This is where things get really interesting.
+
+We added a rule that will turn on the pump every day at 4am within a 15-minute window. We also set up a timer to ensure that the pump turns off after 30 seconds - which should disperse about 1 cup of vinegar/water mixture.
+
+Finally, we set our timezone and ensured that the water pump relays are off by default - this isn't the default with Tasmota firmware.
+
+If you want to see how everything comes together, you can check out the screenshot on our blog post. And if you're interested in learning more about using Tasmota, I recommend checking out their documentation and tutorials.
+
+In future improvements, we'd like to send an alert when the counter reaches a certain level - this will remind us to refill the reservoir tank.
+
+As always, be sure to check out our resources page for links to all the materials and tools you'll need to complete this project. Happy automating!

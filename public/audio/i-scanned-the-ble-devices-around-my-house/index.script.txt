@@ -1,45 +1,23 @@
-Here's the rewritten script:
+Imagine you're standing in your living room, and you notice a few things that seem harmless. But what if I told you those devices are actually broadcasting your habits to anyone who's listening? Let me show you how this works.
 
-Imagine you're standing outside your house with a laptop, and you can tell when someone is watching TV, when they get up, and when they go to bed. No pairing, no password, nothing to hack. This is because many devices only broadcast Bluetooth low energy while they're on, then disappear when they turn off.
+You can use an app like nRF Connect on your phone to scan the Bluetooth Low Energy (BLE) devices around you. It'll give you a list of nearby devices, including their names and RSSI values. But what if I told you there's a way to go beyond just scanning? You can build a tool using Python and the Bleak library that not only scans but also estimates the distance between you and each device.
 
-I've been interested in this issue for a while now. I wanted to see how it works and how to stop our own devices from leaking this information. So, I built a tool called bluetooth-wos, inspired by the DEFCON's Wall of Sheep project. This tool can scan and fingerprint nearby BLE devices past their randomized MACs, estimate their distance from signal strength, and use one known device to calibrate the rest.
+The idea is simple: when a BLE device broadcasts its signal strength, it also sends out its transmission power. By comparing these two values, you can estimate how far away the device is from you. But here's the thing – this isn't just an exact science. The environment, like walls or interference, affects the signal in complex ways.
 
-But before we dive into that, let me show you how to do a simple scan using an app called nRF Connect on your phone or a Python library called bleak. With these tools, you can easily scan devices around you, look through service and characteristics data like temperature, humidity, and battery levels.
+Imagine you're trying to pinpoint where someone is in a room using only their phone's Bluetooth signal. It's not easy, but with enough data and some clever math, you can get surprisingly accurate readings. In fact, my own tool, which I'll share later, uses this technique to estimate the distance between devices.
 
-Here's a code snippet in Python that uses the bleak library to perform a basic scan:
-```python
-import asyncio
-from bleak import BleakScanner
+Now, let me show you how it works in action. Suppose we're scanning for BLE devices in a room. The output will give us a list of nearby devices, along with their names and estimated distances. This can be useful for tracking who's home and when – like knowing whether someone is watching TV or not.
 
-def detection_callback(dev, adv_data):
-    name = dev.name or 'None'
-    rssi = getattr(adv_data, 'rssi', None) if adv_data else None
-    tx_power = None
-    if adv_data:
-        tx_power = getattr(adv_data, 'tx_power', None)
-        if tx_power is None:
-            tx_power = getattr(adv_data, 'TxPower', None)
-    parts = [dev.address, name]
-    if rssi is not None:
-        parts.append(f'RSSI={rssi}')
-    if tx_power is not None:
-        parts.append(f'TX={tx_power}')
-    print(' '.join(parts))
+But this isn't just about tracking individual people; it's also about understanding the habits of the household as a whole. For instance, if you see that every time someone leaves the house, their AirTag disappears from the scan list, you can infer that they're taking it with them.
 
-async def main():
-    scanner = BleakScanner(detection_callback=detection_callback)
-    await scanner.start()
-    await asyncio.sleep(10)
-    await scanner.stop()
+Now, let's talk about how to protect yourself. It starts with being mindful of which devices are broadcasting their presence and turning off Bluetooth on those that don't need it. TVs, for example, often have this feature turned on by default – so make sure to disable it if you don't use BLE remotes or casting.
 
-asyncio.run(main())
-```
-This script will list all the devices it finds, along with their MAC addresses and signal strengths.
+Another simple step is to enable Airplane Mode in sensitive areas. This completely stops your phone from advertising its presence to the world. And finally, turn on unknown-tracker alerts on both Apple and Google devices. These will warn you when an unfamiliar tracker is following you – a great way to stay one step ahead of potential snoops.
 
-Now, let's talk about how to use this tool to protect yourself. The first step is to disable Bluetooth on devices that don't need it. TVs are a big culprit here - if you're not using BLE remotes or casting, turn off Bluetooth in the TV's settings. Same for smart plugs, bulbs, and anything else that broadcasts 24/7.
+Now that we've covered how this works, let's explore some real-world insights from my own tool. In one capture, I found a mix of devices with names like "Samsung Q7 Series (55)" and "COROS PACE 3 676710." These specific models are quite revealing about the owner's habits – like when they're home or what kind of gear they use.
 
-Next, use Airplane Mode in sensitive areas. This will stop your phone (and its accessories) from advertising altogether. Toggle it when you don't want to be trackable.
+In another example, I noticed a sharp bimodal distribution between residents and passers-by. It turns out that some devices persist for the entire observation period, while others appear only briefly. This is where things get really interesting: by tracking these patterns over time, you can learn more about who's home and when – and even get an idea of their daily routines.
 
-And finally, turn on unknown-tracker alerts. Both Apple and Google now warn you when an unfamiliar AirTag or Tile-style tracker is following you.
+Lastly, let me share a fascinating behavioral event caught by my tool. A person walked into the room at 23:59 and put on earbuds, which triggered a change in their BLE fingerprint. It was like watching a movie unfold in real-time!
 
-So, there you have it - a simple way to scan for BLE devices around you and take steps to protect yourself from unwanted tracking.
+So there you have it – a glimpse into the world of BLE device tracking. By being aware of this phenomenon and taking simple steps to protect yourself, you can stay one step ahead of potential snoopers and maintain your digital privacy.

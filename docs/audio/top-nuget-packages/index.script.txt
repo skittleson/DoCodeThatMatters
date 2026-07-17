@@ -1,0 +1,113 @@
+Here is the rewritten spoken script:
+
+Hello and welcome to this overview of top NuGet packages for .NET development. I'll be walking you through five essential libraries that will make your coding life easier, along with some honorable mentions.
+
+First up, we have FluentValidation. This library helps simplify user input validation, which can be a tedious task. With FluentValidation, you can create custom validators for your models and use them to validate user input. Here's an example of how to use it:
+
+Imagine you're building a customer management system, and you want to ensure that the surname is not empty, the first name is not empty with a specific message, the discount is not equal to zero when the user has a discount, the address length is between 20 and 250 characters, and the postcode is valid. With FluentValidation, you can create rules for these conditions and use them to validate your customer data.
+
+Let me show you some example code:
+```csharp
+public class CustomerValidator: AbstractValidator<Customer> {
+    public CustomerValidator() {
+        RuleFor(x => x.Surname).NotEmpty();
+        RuleFor(x => x.Forename).NotEmpty().WithMessage("Please specify a first name");
+        RuleFor(x => x.Discount).NotEqual(0).When(x => x.HasDiscount);
+        RuleFor(x => x.Address).Length(20, 250);
+        RuleFor(x => x.Postcode).Must(BeAValidPostcode).WithMessage("Please specify a valid postcode");
+    }
+
+    private bool BeAValidPostcode(string postcode) {
+        // custom postcode validating logic goes here
+    }
+}
+
+// Usage
+var customer = new Customer();
+var validator = new CustomerValidator();
+ValidationResult results = validator.Validate(customer);
+
+bool success = results.IsValid;
+IList<ValidationFailure> failures = results.Errors;
+```
+
+You can find more details and examples on the FluentValidation GitHub page.
+
+Next up, we have Microsoft.Extensions.DependencyInjection. This library provides a popular dependency injection pattern that integrates well with ASP.NET and is relatively simple to use. With this library, you can create interfaces for your services and use them in your application while unit testing becomes easier since the interfaces can be mocked.
+
+Here's an example of how to use it:
+```csharp
+var services = new ServiceCollection();
+services.AddSingleton<IFoo>(new Foo());
+services.AddScoped<IBar, Bar>();
+var provider = services.BuildServiceProvider();
+
+// usage
+using var scope = _provider.CreateScope();
+var instance = scope.ServiceProvider.GetService<IBar>();
+```
+
+You can find more details and examples on the Microsoft documentation website.
+
+Now, let's talk about Easy.Common. This library provides a simple way to count lines in large files, which can be a complex task otherwise. Here's an example of how to use it:
+```csharp
+var file = new FileInfo("veryLargerFile.csv");
+using var stream = file.OpenRead(); 
+var lines = stream.CountLines();
+```
+
+You can find more details and examples on the Easy.Common GitHub page.
+
+Moving on, we have Xunit, Moq, and AutoMoq. These libraries provide essential tools for testing your code. With Xunit, you can write unit tests for your code, while Moq provides a mocking library that helps you create mock objects for your dependencies. AutoMoq takes it to the next level by automatically creating mocks for your dependencies.
+
+Here's an example of how to use them:
+```csharp
+[Fact]
+public async Task Can_get_message_from_cache() {
+
+    // Arrange
+    var expected = _fixture.Create<uint>();
+    _mock.Setup(x => x.Get(expected))
+        .Returns(_fixture
+            .Build<Message>()
+            .Do(x => x.Headers.Add("UID", expected.ToString()))
+            .Create());
+
+    // Act
+    var message = await _provider.GetMessageAsync(expected);
+
+    // Assert
+    Assert.Equal(expected, uint.Parse(message.Headers["UID"]));
+}
+```
+
+You can find more details and examples on the Xunit documentation website.
+
+Next up, we have Polly. This library provides a simple way to implement retry logic and exponential backoff for your code. With Polly, you can create policies that define how your code should behave when encountering transient exceptions or other types of errors.
+
+Here's an example of how to use it:
+```csharp
+var retryPolicy = Policy.Handle<TransientException>()
+.WaitAndRetry(retryCount: 3, sleepDurationProvider: _ => TimeSpan.FromSeconds(1));
+
+var attempt = 0;
+retryPolicy.Execute(() =>
+{
+    Log($"Attempt {++attempt}");
+    throw new TransientException();
+});
+```
+
+You can find more details and examples on the Polly GitHub page.
+
+Finally, I'd like to mention some honorable mentions. These libraries are not as widely used but are still worth mentioning:
+
+- LambdaSharp: A library that makes it easier to deploy to AWS lambda resources.
+- PubSub: A publish-subscribe pattern implementation for .NET.
+- M2MqttDotnetCore: An MQTT client library for .NET.
+- SynthesizerAudio: A library that can synthesize text to speech.
+- Microsoft.OpenApi: A library that provides OpenAPI support for .NET applications.
+
+You can find more details and examples on the respective GitHub pages or documentation websites.
+
+That's it for today's overview of top NuGet packages for .NET development. I hope you found this helpful, and I encourage you to explore each library further to learn how they can improve your coding experience.

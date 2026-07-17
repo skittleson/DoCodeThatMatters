@@ -1,0 +1,54 @@
+As a software engineer, you've probably learned a thing or two about what works and what doesn't in the field. My goal for this year was to take all those lessons and put them into a format that's easy to reference.
+
+One of the most important things I've learned is the importance of code reviews. It's crucial that you do it regularly, whether it's with your team or by yourself. Code reviews help catch mistakes, improve code quality, and even speed up development in the long run.
+
+When it comes to productivity, having the right tools can make a huge difference. A comfortable chair, keyboard, mouse, software, cell phone – all these things can increase your efficiency. But don't just stop at the physical stuff; invest in yourself too. Take courses, attend workshops, and read books on topics you're interested in.
+
+Another key thing to remember is that failure is a part of the learning process. It's not about being perfect, it's about getting better with each attempt. So don't be discouraged when things go wrong – ask why, figure out what went wrong, and use that as an opportunity to learn.
+
+Now, I want to share some resources that have helped me along the way. First off, there are some amazing books on software development that you should check out. "97 Things Every Programmer Should Know" is a great place to start, followed by "Adaptive Code". If you're interested in design patterns or legacy code management, then "Working Effectively with Legacy Code" is a must-read.
+
+I also want to mention the importance of staying up-to-date with industry trends and best practices. Listen to podcasts like "Top 7 Podcasts for the Modern Software Developer", follow dev blogs, and keep an eye on what's happening in the world of tech.
+
+And finally, don't be afraid to take risks and try new things. Working with different people can give you insight into how to collaborate differently, and creating a work routine that works for you is key to success. Just remember to stay uncomfortable – it's only by pushing ourselves outside our comfort zones that we truly grow as developers.
+
+Here are some of my favorite resources:
+
+* 97 Things Every Programmer Should Know
+* Adaptive Code
+* Daily Stoic
+* Functional Programming in C#
+* The Phoenix Project: A Novel About IT, DevOps, and Helping Your Business Win
+* GoodUi.org
+* The Design of Everyday Things
+* Don't Make Me Think
+* xkcd – simplewriter
+
+Take a look at these resources, and I hope you find something that helps you on your own journey as a software engineer.
+
+Now, let me share some more tips that have helped me along the way. One thing is to automate routine tasks whenever possible. Use bash scripts, autohotkey, powershell, macros, selenium, or even IFTTT – whatever works for you. And don't forget to keep your tools up-to-date and comfortable.
+
+Another important thing is to keep learning. Whether it's through podcasts, dev blogs, news feeds, or books, stay informed about the latest developments in software development. Start with a resource like "Top 7 Podcasts for the Modern Software Developer".
+
+And remember that failure is an opportunity to learn. When things go wrong, ask why and use it as a chance to improve.
+
+Now, let's talk about the importance of code reviews. It's crucial that you do them regularly, whether it's with your team or by yourself. Code reviews help catch mistakes, improve code quality, and even speed up development in the long run.
+
+Also, remember that you should automate routine tasks whenever possible. Use bash scripts, autohotkey, powershell, macros, selenium, or even IFTTT – whatever works for you.
+
+Here are some additional tips:
+
+* Create a work routine that works for you
+* Stay up-to-date with industry trends and best practices
+* Automate routine tasks whenever possible
+* Keep your tools up-to-date and comfortable
+
+And finally, don't be afraid to take risks and try new things. Working with different people can give you insight into how to collaborate differently.
+
+I want to leave you with a few more resources that have helped me along the way:
+
+* https://www.kalzumeus.com/greatest-hits/
+* https://github.com/sdmg15/Best-websites-a-programmer-should-visit
+* Design patterns at sourcemaking.com
+
+Take a look and see if you find anything that helps.

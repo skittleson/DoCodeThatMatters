@@ -1,40 +1,19 @@
-Here's the rewritten spoken script:
+You're interested in doing some research on Bluetooth proximity using open tools. There's a related blog post I'd like to mention first, but we'll be focusing on the tools and techniques outlined here.
 
-My research on Bluetooth proximity using open tools such as hcitool, btmgmt, l2ping, and hcidump. A follow-up to my previous blog post on Raspberry Pi - Bluetooth Proximity.
+Let me walk you through some of the commands you can use with these tools. First, make sure to replace any MAC addresses that are mentioned with your own device's address.
 
-I want to emphasize that all of these tools can be used with any device that has a Bluetooth connection, not just the Raspberry Pi. You can find the link to my previous blog post in the original article, where you'll get more context about this research.
+To scan for Bluetooth Low Energy devices within a certain range, you would use `hcitool lescan` - this might take around 30 seconds to complete. Keep in mind that the timeout is set to 30 seconds, but you can adjust it if needed.
 
-Let's take a look at some commands and how they're used.
+If you want to see the RSSI values of nearby Bluetooth LE devices, you'd run `btmgmt find`. When you do this, you'll get a list of devices with their respective signal strengths - these are expressed in decibels. The higher the value, the stronger the signal is.
 
-If you want to scan for Bluetooth Low Energy devices within range, you can use hcitool lescan. This will show you all the devices that are currently visible, including their MAC addresses and signal strength. You'll see a response similar to this:
+Another useful command is `l2ping`, which allows you to ping a Bluetooth-enabled device without actually pairing it first. You can use it like this: `l2ping -c 3 <MAC address>`. Keep in mind that this will send three pings and then stop.
 
-hci0 dev_found: <SOME_MAC> type LE Random rssi -92 flags 0x0000
-AD flags 0x1a
-eir_len 14
-hci0 dev_found: <SOME_MAC> type LE Random rssi -97 flags 0x0000
-AD flags 0x1a
-eir_len 18
-...
+If you're interested in looking at the data being exchanged between two devices, you might find `hcidump` useful. It allows you to dump all of the data for a paired device. To use it, simply run `hcidump -a`.
 
-You can find more information about hcitool lescan in the original article.
+Now, let's look at some more advanced techniques. If you want to request authorization from a device, you can use `hcitool cc <MAC>`, followed by `hcitool auth <MAC>`.
 
-Now, let's say you want to get a list of all the Bluetooth Low Energy devices that are currently connected to your device, along with their RSSI values. You can use btmgmt find for this. Here's what you'll see:
+One interesting thing is that if you try to connect to a device and then immediately ask for its RSSI value, the connection won't be successful - but the RSSI will still be available. You can do this with the command `hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>`.
 
-hci0 dev_found: <SOME_MAC> type LE Random rssi -92 flags 0x0000
-AD flags 0x1a
-eir_len 14
-hci0 dev_found: <SOME_MAC> type LE Public rssi -100 flags 0x0004
-AD flags 0x00
-eir_len 28
+To request just the RSSI value without attempting a connection, you would use `hcitool cmd 0x05 0x0005 0x00 0x00 <MAC>`.
 
-You can also use l2ping to ping a Bluetooth-enabled device without pairing. This will give you an idea of whether the device is within range.
-
-If you want to dump all data from a paired Bluetooth device, you can use hcidump -a.
-
-Now, let's say you want to request authorization from a device. You'll need to use hcitool cc and then hcitool auth.
-
-You can also attempt to connect to the device and get its RSSI value using these two commands together: hcitool cc <MAC> && hcitool con && hcitool rssi <MAC>
-
-This will give you an idea of whether the device is within range, even if it's not currently connected to your device.
-
-You can find more information about all of these tools and how they're used in the original article. Some additional resources are also available there, including links to other tutorials and articles that might be helpful for further learning.
+If you want to learn more about using these tools or need help with anything else related to Bluetooth proximity research, I'd recommend checking out some of the resources listed here. Keep in mind that there are many more articles and tutorials available online - a quick search on your favorite search engine should yield plenty of results.

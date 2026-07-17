@@ -1,25 +1,23 @@
-Here is the rewritten spoken script:
+Imagine sitting down with a friend who's struggling to secure their ASP.NET WebApi. You'd sit them down, make 'em a cup of coffee, and start explaining...
 
-Securing an ASP.NET WebApi for PCI application tests is no trivial matter. It can take weeks of planning and the app to be analyzed. After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks, including MIIM and XSS.
+Securing an ASP.NET WebApi for PCI application tests - that's no trivial matter, my friend. It can take weeks of planning and analysis before you're even close to done. After reviewing all the best practices out there, I started with the web.config. That's where you want to update it first to prevent those nasty XSS attacks.
 
-You're probably wondering how to do this. Well, let me walk you through it. In your system.webServer element, add the following configuration settings.
+Now, let me show you what you need to add to your system.webServer element in the web.config file. This is where things get interesting. You'll see a bunch of custom headers that we're going to remove and then add new ones. Think of it like a game of Jenga - you take out the old pieces, and then carefully place the new ones.
 
-Imagine a long list of security headers that need to be set up in your web.config file. We're going to remove all the existing ones first, so we start with a clear slate. Then, we'll add new ones that will help protect against cross-site scripting attacks and other vulnerabilities.
+When I said "custom headers," I mean exactly that. These are special instructions that tell your web server how to behave when requests come in. We're removing all sorts of things here: Server, X-Powered-By, X-Frame-Options... you get the idea. Then we clear out anything else that might be set by IIS.
 
-These new settings include things like X-Frame-Options, X-XSS-Protection, and Content-Security-Policy. These are all important for preventing attacks from happening in the first place.
+Now, don't worry if this looks like gibberish - it's not too complicated once you see how it fits together. We're adding new headers here: X-Frame-Options to deny framing (that means no one can embed your site in another page), X-XSS-Protection to prevent cross-site scripting attacks, and a few others. 
 
-The Content-Security-Policy is particularly interesting because it determines where resources can come from on your website. You need to decide what's safe and what's not when it comes to loading JavaScript and CSS files from external sources.
+Oh, and let me tell you about Content-Security-Policy - that's the one thing I considered less secure because our app uses outside JavaScript resources from Google Analytics and Bootstrap. But don't worry, it's all about balance.
 
-For example, if you're using Google Analytics or Bootstrap on your site, you'll want to make sure that's accounted for in your policy. You can find more information about how to set up a Content-Security-Policy on the blog post, but basically, it involves being very specific about what you allow and don't allow.
+By the way, have you taken a look at your content security policy? It's crucial in preventing cross-site scripting attacks. You can find more information on it by checking out the blog post.
 
-Now, I know this might seem like a lot to take in, so let me summarize some of the key points. First, make sure you're using established frameworks that have already been tested for security vulnerabilities.
+Now, let's talk additional protection. We've got a few tricks up our sleeve here. First, there's an AntiXss attribute from this fantastic ASP.Net Web API AntiXss Attribute project. You should really check that out - it's been a game-changer for us.
 
-In addition to setting up your web.config file, there are other tools and techniques you can use to protect against XSS attacks. For example, you could apply an AntiXss attribute from a project called ASP.Net Web API AntiXss Attribute. You can find more information about this on the bitbucket page.
+And then there are website application firewalls: Amazon WAF, ModSecurity, IronBee... you get the idea. These guys can be lifesavers when it comes to keeping your app secure.
 
-Another good idea is to use a Website Application Firewall for your apps. This will help block malicious traffic and prevent attacks before they even get started.
+Of course, we're also going to want to use some tools that'll help us identify vulnerabilities. Nikto2, sqlmap, OWASP Zap - these are all great resources for penetration testing.
 
-Finally, it's always a good idea to test your app regularly with tools like Nikto2, sqlmap, or OWASP Zap. These can give you some valuable insights into what needs securing.
+But here's what I've learned: don't rely on just one layer of protection. Use established frameworks and the same tools as the pen testers. Trust me, it makes a world of difference.
 
-The main takeaway here is that you shouldn't rely on just one layer of protection. Use multiple techniques and tools to ensure that your app is as secure as possible. And don't forget to stay up-to-date with the latest security guidelines and best practices. You can find more information about XSS and web security on OWASP, which has a wealth of resources available.
-
-I want to leave you with some references in case you need to do further research. There are plenty of online communities and forums dedicated to web security that can be very helpful. Just remember, securing an ASP.NET WebApi is no trivial matter, but with the right tools and techniques, you can make it happen!
+I'll stop there for now, but do check out the references at the end - especially that link to OWASP, which is like the bible for web security.

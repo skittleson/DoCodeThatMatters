@@ -1,0 +1,15 @@
+Here's a spoken script version of the blog post:
+
+Welcome to our guide on building a Bluetooth proximity detector using Raspberry Pi. We'll walk you through the process of detecting nearby Bluetooth devices without needing to pair them.
+
+First, let's make sure the USB Bluetooth adapter is working properly on your Raspberry Pi. To do this, we need to install a package called 'bluetooth'. You can find more information on how to do this in the blog post where I'm talking about this tutorial. Just head over there and follow the instructions for setting up the Bluetooth adapter.
+
+Once you've got that installed, let's check the status of your Bluetooth device using the command 'hcitool dev'. This should return the device's Bluetooth address, which will be a long string of numbers like '00:00:00:00:00:17'.
+
+Now that we have our Raspberry Pi set up with Bluetooth working properly, let's move on to getting the MAC address of a device. If you're using an Android phone, go to Settings > System > About device > Status > Bluetooth address. You'll find the MAC address listed there.
+
+Next, we need to test the connection to the client device. The command for this is 'sudo l2ping -c 2 00:11:22:AA:BB:CC', where you replace the '00:11:22:AA:BB:CC' with the MAC address of the device you want to detect.
+
+When you run this command, it will return some information about the ping. It should show that there are two bytes received from the device and give you a response time in milliseconds.
+
+This is just a basic example, but I've included more commands in this blog post that can help you fine-tune your Bluetooth proximity detector.

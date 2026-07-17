@@ -1,0 +1,27 @@
+Here is the rewritten spoken script:
+
+Have you ever thought about upgrading your home's sprinkler system? Over-the-shelf systems can be difficult to use and lack customization options. They may also be outdated and not as efficient for water or power usage as you'd like.
+
+You might consider a more customizable and efficient approach using open-source hardware and software. This combination allows for flexibility and the ability to add additional features as needed. The main goal is to trigger the water sprinkler solenoid to turn on or off based on specific conditions such as time, including sunrise and sunset, humidity, and temperature.
+
+Let's take a look at what we need to get started. We'll require an IoT device that can run when the internet is down, timer-based watering with support for sunrise and sunset, manual toggling of the watering state, backup and restore settings, and more. Some features you might also want include measuring water time, humidity, and temperature, as well as local network control without submitting data to a third party.
+
+Now, let's talk about the hardware we'll need. At the lowest level, our IoT device should be able to toggle power on and off, report power state, humidity, and temperature, and not require an internet connection. You can use over-the-shelf Sonoff hardware that meets three out of four of these requirements easily.
+
+The easiest way to wire this up is by using an existing extension cord, cutting into it, then following the directions in the Sonoff guide. Plug one into the 24 VAC power supply of an existing water sprinkler adapter. Alternatively, you can use an ESP8266 microcontroller, OLED screen, solid state relay, and BME280 for temperature, humidity, and pressure.
+
+You'll also need to flash open-source software called Tasmota onto your device. This solves several problems, including local network control, running even when the internet is down, high customizability, simple programming, and multiple ways of interacting.
+
+Wiring up your device involves connecting the D2 GPIO4 to I2C SDA, D1 GPIO5 to I2C SCL, D5 GPIO14 to Relay 1, and D0 GPIO16 to Counter 1. Using the Tasmota Web Console Command line, you can set the power on state to off after a power outage or reset, set your time zone using standard GMT offset, test your time, update your location, and see sunrise and sunset with local time.
+
+Next, let's create timers for starting and stopping watering at sunrise and sunset. We'll use the Tasmota Timer Web UI to create four timers: two for sunrise and two for sunset. The timers will be adjustable in the Web UI as well.
+
+To stop the watering, we can use a 20-minute offset for Timer 3 and do the same for Timer 4 at sunset. You can verify your timers using the Tasmota Web Console Command line by typing in `Timer1`, `Timer2`, `Timer3`, and `Timer4`.
+
+Now that our basic setup is complete, let's talk about runaway protection. We have three methods to prevent the sprinkler from running too long: stopping it with Timer 2 and Timer 4, never running more than 1,320 seconds when the power state is on, or using NodeRed to trigger a power state off if receiving MQTT messages.
+
+If you want to extend your system to other platforms, we can use a simple flow in NodeRed to add support for a UI, Alexa control with tracking usage via Graphana. We'll format and send data from the `tele/tasmota_YOURDEVICE/SENSOR` MQTT message to a local Graphana instance on a Raspberry PI.
+
+In this script, you can find links to the project resources, such as Tasmota documentation, timer settings, and more. You can also check out the setup rules, which include checking temperature before sunrise and sending a MQTT message if it's too cold. Finally, you can see some graphs of your system using Graphana.
+
+You'll want to refer to the blog post for all the details on this project.

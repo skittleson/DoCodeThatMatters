@@ -1,0 +1,11 @@
+You know, as a software engineer, you often find yourself starting from scratch with a new operating system. And let's be honest, using containers is usually the way to go for development purposes. But even your primary OS can start to feel cluttered and sluggish after a while. I mean, have you ever experienced what they call "bit rot"? That's when your computer starts to slow down just from all the regular use.
+
+For me, at least, the solution is a factory reset - it gets my Windows system back to its clean slate state. But let's be real, with the number of apps I use on a daily basis, installing everything from scratch can take up to a day! So, I've found a way to speed things up. You can find the link on the blog post for the tool I'm about to share.
+
+It's called Chocolatey - it's like a package manager for Windows. And with a simple PowerShell script, you can install all the common apps we use as developers in one go. Let me walk you through this. First things first: install Chocolatey from its website. You can find that link on the blog post.
+
+Once that's set up, here are the apps I like to have installed on my system. And this is where the script comes in. Now, I'm not going to read you all of it verbatim, but essentially, this script will install everything from 7-Zip to Wireshark - that's a whole lot of apps! You can find the full list on the blog post, along with the instructions for how to use Chocolatey and this script.
+
+Now, if you want to see what packages are available locally on your system, just run this command: choco list --localonly. And don't forget, all the details - including links to the tools and more information about how to set everything up - can be found on the blog post for this article.
+
+The image here is of a chocolate bar - I thought it was fitting, given the name Chocolatey!
