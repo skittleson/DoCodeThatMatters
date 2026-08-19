@@ -1,0 +1,39 @@
+---
+interface Props {
+  tone?: 'dev' | 'default';
+}
+
+const { tone = 'default' } = Astro.props;
+---
+
+<div
+  class="my-6 rounded-lg border p-4"
+  style="background-color: var(--color-surface, #1e262f); border-color: var(--color-border, #2f3a45);"
+>
+  <p class="text-sm font-bold mb-1" style="color: var(--color-text);">
+    Looking for hands-on help?
+  </p>
+  {tone === 'dev' ? (
+    <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">
+      I'm a software engineer who enjoys solving thorny problems — OAuth, Rust, home automation, and
+      everything in between. If this kind of work sounds useful for your team,{' '}
+      <a href="https://www.linkedin.com/in/skittleson/" style="color: var(--color-accent);" class="hover:underline">
+        reach out on LinkedIn
+      </a>{' '}
+      or{' '}
+      <a href="mailto:spencer@docodethatmatters.com" style="color: var(--color-accent);" class="hover:underline">
+        email me
+      </a>
+      . I'm available for consulting and contract work.
+    </p>
+  ) : (
+    <p class="text-xs leading-relaxed" style="color: var(--color-text-muted);">
+      This is the kind of project I build every day. If you need help with something similar — or want it done
+      for you —{' '}
+      <a href="https://www.linkedin.com/in/skittleson/" style="color: var(--color-accent);" class="hover:underline">
+        get in touch
+      </a>
+      . I'm available for consulting and contract work.
+    </p>
+  )}
+</div>

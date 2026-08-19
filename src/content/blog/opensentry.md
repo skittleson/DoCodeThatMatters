@@ -12,6 +12,7 @@ description: Repurposing android devices as rich security devices.
 # imageHeight: 1558
 priority: 0.9
 draft: true
+consulting: true
 ---
 
 TLDR; i have old phones/tablets! Most are Android based.  I took some time to repurpose them into something useful.  I collect useful sensor data such as accelmotor, magnometor, light levels, camera, microphone, wifi data, 

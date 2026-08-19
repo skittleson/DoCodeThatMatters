@@ -11,6 +11,7 @@ description: Automate software install for a software engineer on Windows
 image: https://images.unsplash.com/photo-1610450949065-1f2841536c88?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80
 alt: Chocolate bar
 priority: 0.9
+consulting: true
 ---
 
 As a software engineer, starting with a clean slate in an OS is required often. Usually using containers is the solution to that for development. After some time even your primary OS suffers from **bit rot**. For Windows, a factory reset gets that back into a clean state. I use A LOT of apps and they can take up to day to install everything but no more! So here is powershell script to get the common apps used on a regular basis.

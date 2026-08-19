@@ -13,6 +13,7 @@ keywords:
   - tokio
 date: 2026-03-15
 description: I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no-app, works on any device that can point to a proxy.
+consulting: true
 image: /images/broken-window.jpeg
 alt: Broken window glass with bullet impact hole
 draft: false

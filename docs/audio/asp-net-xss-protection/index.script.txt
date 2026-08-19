@@ -1,15 +1,15 @@
-Securing an ASP.NET WebApi for PCI application tests is no trivial matter. It can take weeks of planning and the app to be analyzed. After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks like Man-In-The-Middle and Cross-Site Scripting.
+ASP.NET XSS Protection
 
-The featured image illustrates ASP.NET XSS protection.
+Securing an ASP.NET Web API for PCI application tests is no trivial matter. It can take weeks of planning and analyzing the app. After reviewing OWASP and other related cross-site scripting sites, the web.config was the first to be updated to prevent against attacks, specifically Man-in-the-Middle and cross-site scripting.
 
-In the system.webServer element, you add custom headers. First, you remove the Server, X-Powered-By, X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, Cache-Control, Pragma, Expires, and Content-Security-Policy headers. You also clear anything set by IIS. Then, you add them back with secure settings: X-Frame-Options set to DENY, X-XSS-Protection set to one mode block, X-Content-Type-Options set to nosniff, Cache-Control set to no-cache, no-store, must-revalidate, Pragma set to no-cache, and Expires set to a date far in the past, specifically Sunday, January first, nineteen ninety. Finally, you add a Content-Security-Policy that allows resources from self, unsafe-inline, and data, permits fonts from any source, and allows images from https sources only.
+Inside the system web server element, you need to add the following configuration. Since this is a specific code block, you can find the exact XML snippet on the blog post. To give you the gist of what is happening, we are removing standard headers like Server, X-Powered-By, and various protection headers that might be set by default. We are then adding back specific, stricter versions of those headers. This includes setting X-Frame-Options to Deny, enabling XSS protection in block mode, setting Content-Type-Options to nosniff, and configuring cache control to ensure data isn't stored. We are also setting the Expires header to a date in the past to prevent caching, and defining a Content Security Policy that restricts where resources can come from, allowing only inline scripts and self-hosted resources, with exceptions for fonts and images from HTTPS sources.
 
-The content security policy was the only one considered less secure due to outside JavaScript and CSS resources the app used, such as Google Analytics and Bootstrap. You can find more details on this in the linked blog post.
+The Content Security Policy was the only one considered less secure due to outside JavaScript and CSS resources the app used, such as Google Analytics and Bootstrap.
 
-Moving on to additional protection, there are two main points. First, apply the AntiXss attribute from the ASP.Net Web API AntiXss Attribute project. Second, use a Website Application Firewall for your apps. Some examples of these firewalls include Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, and Shadow Daemon.
+Let's look at additional protection. First, you should apply the AntiXSS attribute from the ASP.NET Web API AntiXSS Attribute project. You can find that project on Bitbucket. Second, use a Website Application Firewall for your apps. Examples of these include Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, and Shadow Daemon.
 
-Next, let's talk about tools. You should look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing. The specific tools mentioned are nikto2, sqlmap, and OWASP Zap.
+Regarding tools, look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing. Specifically, you should check out Nikto2, SQLMap, and OWASP ZAP.
 
-Finally, here are the takeaways. First, don't rely on just one layer of protection. Second, use established frameworks. Third, use the same tools as the pen testers.
+Finally, here are the key takeaways. First, don't rely on just one layer of protection. Second, use established frameworks. Third, use the same tools as the pen testers.
 
-The references for this post include a Stack Overflow search for XSS, the OWASP main page, an MSDN library article, and the Mozilla Developer Network documentation on CSP.
+For further reading, you can find the full list of references on the blog post, including links to Stack Overflow, OWASP, Microsoft documentation, and Mozilla's developer documentation on Content Security Policy.

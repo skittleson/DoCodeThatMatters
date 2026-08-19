@@ -15,6 +15,7 @@ const blog = defineCollection({
     keywords: z.array(z.string()).min(1).optional(),
     priority: z.number().optional(),
     draft: z.boolean().optional().default(false),
+    consulting: z.boolean().optional().default(false),
   }),
 });
 

@@ -1,0 +1,53 @@
+How I Run Local LLMs for Coding and Why the Quant Matters
+
+A quick note on the process: this post was written with assistance from my own local model, then edited by me. The setup, tests, and numbers are all real.
+
+To give you the short version, I run a coding assistant entirely on my own hardware. I am using a single RTX 3090 Ti with twenty-four gigabytes of video memory to serve a twenty-seven billion parameter model to my editor, OpenCode, over my local network. There are no API bills, and no data leaves the house. This post is about the two specific things that actually caused me problems: the quantization type silently corrupting the output, and a single missing sampler flag causing repetition loops. Both of these had non-obvious fixes.
+
+I have written before about keeping things local, whether that was a custom proxy in Rust or self-hosting everything. Local large language models are the same instinct. If the model runs on my desk, I control it, and I can leave it running.
+
+Let's talk about the setup.
+
+The rig is a Pop!_OS computer with an RTX 3090 Ti, which has twenty-four gigabytes of memory and is an Ampere architecture card. It runs the llama.cpp software as a system service, exposing an API compatible with OpenAI on port eighty-eighty. My editor, OpenCode, points a provider to that local address and never knows the difference.
+
+The model I am using is a twenty-seven billion parameter coder variant of Qwen 3.8. I have quantized it to Q4 K M, which takes up about sixteen gigabytes on disk. That leaves just enough video memory for a two-hundred-thousand token context window, using a Q4 0 key-value cache and having MTP speculative decoding turned on. It runs at around seventy tokens per second. For a coding agent that fires a lot of tool calls, that is plenty fast.
+
+You can find the specific launch command in the blog post, but the most critical part of it is the flag to offload every layer to the GPU. If you forget that flag, your speed drops from around one hundred and seventy tokens per second to roughly two tokens per second because it falls back to the central processing unit.
+
+The first major issue was that the quant type quietly broke things.
+
+When Unsloth shipped their Dynamic 3.0 quantization files for Qwen 3.8, the pitch was great: more accuracy at the same file size. So I downloaded their IQ4 XS build and tested it.
+
+It produced garbage. But not random garbage—it was subtle garbage. My username came out with an extra "s" at the end. File paths came back with a Cyrillic "e" swapped in for the Latin "e". "MindTouch" became "MMindTouch". It is the kind of corruption you would miss on a quick glance and then spend an hour debugging in a generated script.
+
+The isolation test told the story. When I ran it using only the central processing unit, the output was perfect. But if I ran any part of it on the GPU, it corrupted the text. That pointed straight at a CUDA kernel bug for that specific model's linear attention layers on Ampere cards. It was not something I could fix myself.
+
+Here is the part that took a second round to figure out: it was the quantization type, not the build itself. IQ4 XS is what is called an "i-quant". When I tested a Q4 K M, which is a "k-quant" of the same model, on the same GPU, it ran completely clean. Same twenty-seven billion parameter model, same four-bit target, wildly different result. The difference is that the i-quant path hit the broken kernel, while the k-quant path did not.
+
+The lesson here is that on an Ampere GPU, stick to k-quants, like Q4 K M or Q5 K M. The i-quants squeeze into less video memory, which is tempting, but they lean on kernels that are not always solid. I verify every new model with a simple test now. I ask it to echo an exact path ten times and check that the characters are right before I trust it with real work.
+
+The second issue was a looping problem, which one flag fixed.
+
+The other issue I faced was repetition. In long agentic sessions, the model would occasionally get stuck repeating itself. Short prompts were fine, but long ones would eventually self-reinforce a pattern with nothing to break it.
+
+When I checked the live server configuration, the cause was plain: I had no repetition control turned on at all. There was no presence penalty and no DRY sampler. With zero guard, short generations rarely hit a repeating loop, but a long session would find one and never climb out.
+
+Unsloth's model card recommends a presence penalty of one point five for this model in non-thinking mode. Before changing my daily driver, I tested it. I used five loop-prone prompt types, such as long enumerations, repetitive code, and the classic "continue this list" trap. I ran these at one thousand two hundred tokens each, across presence penalty values of zero point six, one point zero, and one point five.
+
+The results were clear enough to act on.
+
+First, at zero point six, four out of five tests were clean. Only the nastiest "keep going without restarting" prompt degraded.
+
+Second, at one point zero, five out of five tests were clean, balanced, and had no side effects.
+
+Third, at one point five, it was also five out of five, but it started stopping early and wandering off-format on structured tasks.
+
+Speed was identical across all three values, so there was no performance cost either way. I landed on one point zero, rather than the recommended one point five, because it fixed the failure without the format drift.
+
+You can find the specific flag in the blog post. Unsloth's number was a good starting point, but the right value for my workload was milder. You should test it against the thing you actually do, not the thing the docs assume you do.
+
+So, would I do it again?
+
+Yes. Once it is dialed in, a local coding model is genuinely useful and costs nothing per token. But it is not plug-and-play. The two things that cost me the most time were not questions of "which model is best." They were the quantization type interacting badly with my specific GPU, and a sampler default I never set.
+
+Both are the kind of thing you only find by testing on your own hardware with your own prompts. And honestly, that is half the fun.

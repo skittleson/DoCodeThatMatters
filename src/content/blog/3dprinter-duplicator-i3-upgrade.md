@@ -21,9 +21,14 @@ The Duplicator i3 is a common 3D printer that many now consider out dated. Inste
 
 ## The "To-Do" List
 
+| Part | Purpose | Buy |
+|---|---|---|
+| [MKS Gen 1.4 board](https://amzn.to/2yT1NlY) | Replaces the stock Melzi board | [Amazon](https://amzn.to/2yT1NlY) |
+| [RepRap Discount Full Smart Controller](https://amzn.to/2JygbSy) | LCD display for the new board | [Amazon](https://amzn.to/2JygbSy) |
+| [30A power supply](https://amzn.to/2XP8wpz) | Replaces the under-powered 20A unit | [Amazon](https://amzn.to/2XP8wpz) |
+
 - Glass bed
 - 1/16 to 1/32 steps for steppers. This provides cleaner and smoother prints.
-- Replace existing Melzi board with a [MKS Gen 1.4 board](https://amzn.to/2yT1NlY). This could have been the standard RepRap Arudino Mega 2560 board as well.
 
   - JST 2 pin to 3 pin adapters for end stop connectors.
   - Add JST connector for extruder stepper

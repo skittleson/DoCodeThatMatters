@@ -12,6 +12,7 @@ description: Top nuget packages in dotnet including fluent validation, counting 
 image: /images/logo-header.svg
 alt: Nuget logo
 priority: 0.9
+consulting: true
 ---
 
 Using these nuget projects consistently in most projects I'm building.  See the examples in the details for usage.

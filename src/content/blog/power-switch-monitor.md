@@ -53,15 +53,13 @@ The advantages:
 
 #### Material
 
-- [Wemos mini d1 from Amazon](https://amzn.to/2zI2nUf) or similar esp8266 / esp32 device
-- 2 x resistors (any two usually works, i used 10k)
-- Wire
-- 2 5v usb wall chargers.
-- 1 male usb plugin
-- 1 regular usb charging cable for the esp32.
-- led
-- solder
-- (optional) [bme280](https://amzn.to/2U2qCTM) or [bme680](https://amzn.to/2XL2C8U)
+| Component | Purpose | Buy |
+|---|---|---|
+| [Wemos D1 Mini](https://amzn.to/2zI2nUf) or similar esp8266 / esp32 device | WiFi MCU that reads the power state | [Amazon](https://amzn.to/2zI2nUf) |
+| 2 x resistors (any two usually works, i used 10k) | Voltage divider for the power sense pin | — |
+| [BME280](https://amzn.to/2U2qCTM) or [BME680](https://amzn.to/2XL2C8U) *(optional)* | Temperature / humidity sensing | [Amazon](https://amzn.to/2U2qCTM) · [Amazon](https://amzn.to/2XL2C8U) |
+
+Other material: wire, solder, led, 2 x 5v usb wall chargers, 1 male usb plugin, 1 regular usb charging cable for the esp32.
 
 ![bread board version](/images/PowerMonitor_bb.png)
 

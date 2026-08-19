@@ -12,6 +12,34 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/running-local-llms-for-coding/",
+      "url": "https://docodethatmatters.com/running-local-llms-for-coding/",
+      "title": "How I Run Local LLMs for Coding (and Why the Quant Matters)",
+      "summary": "I run a coding LLM locally on a single RTX 3090 Ti. Here is how I pick a model, why the quant type quietly broke one build, and how one missing sampler flag fixed my looping problem.",
+      "image": "/images/rtx-3090.jpg",
+      "date_published": "2026-08-19T00:00:00.000Z",
+      "date_modified": "2026-08-19T00:00:00.000Z",
+      "tags": [
+        "AI;DR",
+        "local llm",
+        "llama.cpp",
+        "qwen3",
+        "unsloth",
+        "gguf",
+        "quantization",
+        "rtx 3090",
+        "opencode",
+        "ampere",
+        "homelab"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ],
+      "word_count": 932
+    },
+    {
       "id": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
       "url": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
       "title": "I scanned the BLE devices around my house - they are sharing everything",
@@ -66,7 +94,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1345
+      "word_count": 1387
     },
     {
       "id": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
@@ -217,7 +245,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 375
+      "word_count": 440
     },
     {
       "id": "https://docodethatmatters.com/hacking-sony-a6000-for-modernization/",
@@ -239,7 +267,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2165
+      "word_count": 2233
     },
     {
       "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3/",
@@ -259,7 +287,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 115
+      "word_count": 124
     },
     {
       "id": "https://docodethatmatters.com/onboarding-devs/",
@@ -350,7 +378,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 517
+      "word_count": 542
     },
     {
       "id": "https://docodethatmatters.com/chocolately-for-devs/",
@@ -403,7 +431,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 572
+      "word_count": 610
     },
     {
       "id": "https://docodethatmatters.com/automate-sprinkler-with-tasmota/",
@@ -434,7 +462,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1111
+      "word_count": 1156
     },
     {
       "id": "https://docodethatmatters.com/3dprinter-duplicator-i3-upgrade/",
@@ -457,7 +485,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 762
+      "word_count": 789
     },
     {
       "id": "https://docodethatmatters.com/power-switch-monitor/",
@@ -481,7 +509,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 668
+      "word_count": 703
     },
     {
       "id": "https://docodethatmatters.com/json-to-s3-with-google-recaptcha/",
@@ -543,7 +571,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1855
+      "word_count": 1893
     },
     {
       "id": "https://docodethatmatters.com/yet-another-garage-door-opener/",
@@ -564,7 +592,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 722
+      "word_count": 746
     },
     {
       "id": "https://docodethatmatters.com/asp-net-xss-protection/",

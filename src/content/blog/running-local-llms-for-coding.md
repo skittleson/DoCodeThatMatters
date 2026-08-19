@@ -1,0 +1,91 @@
+---
+title: How I Run Local LLMs for Coding (and Why the Quant Matters)
+keywords:
+  - AI;DR
+  - local llm
+  - llama.cpp
+  - qwen3
+  - unsloth
+  - gguf
+  - quantization
+  - rtx 3090
+  - opencode
+  - ampere
+  - homelab
+date: 2026-08-19
+description: I run a coding LLM locally on a single RTX 3090 Ti. Here is how I pick a model, why the quant type quietly broke one build, and how one missing sampler flag fixed my looping problem.
+image: /images/rtx-3090.jpg
+alt: An NVIDIA GeForce RTX 3090-class 24GB graphics card, the GPU I run local coding models on.
+imageWidth: 1200
+imageHeight: 800
+draft: false
+---
+
+> **AI;DR** — This post was written with AI assistance from my own local model, then edited by me. The setup, tests, and numbers are all real.
+
+TLDR; I run a coding assistant entirely on my own hardware — a single RTX 3090 Ti with 24GB of VRAM, serving a 27B model to OpenCode over the LAN. No API bills, no data leaving the house. This post is about the two things that actually bit me: the quantization *type* silently corrupting output, and a single missing sampler flag causing repetition loops. Both had non-obvious fixes.
+
+I have written before about keeping things local — the [Rust proxy](/building-custom-http-proxy-rust-mixed-os-workflows/), the self-hosted everything. Local LLMs are the same instinct. If the model runs on my desk, I control it, and I can leave it running.
+
+## The Setup
+
+The rig is a Pop!_OS box with an RTX 3090 Ti (24GB, Ampere). It runs [llama.cpp](https://github.com/ggml-org/llama.cpp) as a systemd service, exposing an OpenAI-compatible API on port 8080. My editor (OpenCode) points a provider at `http://<box>:8080/v1` and never knows the difference.
+
+The model is a 27B Qwen3.8 coder variant, quantized to `Q4_K_M` (about 16GB on disk). That leaves just enough VRAM for a 200K token context window with a q4_0 KV cache and MTP speculative decoding turned on. It runs around 70 tokens/second. On a coding agent that fires a lot of tool calls, that is plenty.
+
+Here is the shape of the launch command:
+
+```sh
+llama-server \
+  -m ~/models/Qwen3.8-27B-MTP-Q4_K_M.gguf \
+  -c 200000 \
+  -ngl 99 \
+  --cache-type-k q4_0 --cache-type-v q4_0 \
+  --flash-attn on --jinja \
+  --spec-type draft-mtp --spec-draft-n-max 4 \
+  --reasoning off \
+  --temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0 \
+  --host 0.0.0.0 --port 8080
+```
+
+The `-ngl 99` is the one that matters most — it offloads every layer to the GPU. Forget it and you drop from ~170 tok/s to ~2 tok/s as it falls back to CPU.
+
+## The Quant Type Quietly Broke Things
+
+When [Unsloth](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs) shipped their Dynamic 3.0 quants for Qwen3.8, the pitch was great: more accuracy at the same file size. So I downloaded their `IQ4_XS` build and tested it.
+
+It produced garbage. Not random garbage — subtle garbage. My username came out as `spencerkittlesson` (extra 's'). Paths came back with a Cyrillic `е` swapped in for the Latin `e`. `MindTouch` became `MMindTouch`. The kind of corruption you would miss on a quick glance and then spend an hour debugging in a generated script.
+
+The isolation test told the story: run it CPU-only (`-ngl 0`) and it was perfect. Run any part of it on the GPU and it corrupted. That pointed straight at a CUDA kernel bug for that model's linear-attention layers on Ampere cards — not something I could fix.
+
+Here is the part that took a second round to figure out: **it was the quant *type*, not the build.** `IQ4_XS` is an "i-quant." When I tested a `Q4_K_M` "k-quant" of the same model, on the same GPU, it ran completely clean. Same 27B model, same 4-bit target, wildly different result — because the i-quant path hit the broken kernel and the k-quant path did not.
+
+The lesson: on an Ampere GPU, stick to **k-quants** (`Q4_K_M`, `Q5_K_M`, and friends). The i-quants (`IQ*`) squeeze into less VRAM, which is tempting, but they lean on kernels that are not always solid. I verify every new model with a dumb little test now — ask it to echo an exact path ten times and check the characters are right before I trust it with real work.
+
+## One Flag Fixed My Looping Problem
+
+The other issue was repetition. In long agentic sessions the model would occasionally get stuck repeating itself. Short prompts were fine; long ones would eventually self-reinforce a pattern with nothing to break it.
+
+When I checked the live server config, the cause was plain: I had no repetition control turned on at all. No presence penalty, no DRY sampler. With zero guard, short generations rarely hit a repeating loop, but a long session would find one and never climb out.
+
+Unsloth's model card recommends a `presence_penalty` of 1.5 for this model in non-thinking mode. Before changing my daily driver, I tested it — five loop-prone prompt types (long enumerations, repetitive code, the classic "continue this list" trap) at 1200 tokens each, across `presence_penalty` values of 0.6, 1.0, and 1.5.
+
+The results were clear enough to act on:
+
+- **0.6** — 4 of 5 clean. Only the nastiest "keep going without restarting" prompt degraded.
+- **1.0** — 5 of 5 clean, balanced, no side effects.
+- **1.5** — also 5 of 5, but it started stopping early and wandering off-format on structured tasks.
+
+Speed was identical across all three, so there was no performance cost either way. I landed on **1.0**, not the recommended 1.5 — it fixed the failure without the format-drift. One flag:
+
+```sh
+--presence-penalty 1.0
+```
+
+Unsloth's number was a good starting point, but the right value for my workload was milder. Test it against the thing you actually do, not the thing the docs assume you do.
+
+## Would I Do It Again?
+
+Yes. Once it is dialed in, a local coding model is genuinely useful and costs nothing per token. But it is not plug-and-play. The two things that cost me the most time were not "which model is best" — they were the quant type interacting badly with my specific GPU, and a sampler default I never set.
+
+Both are the kind of thing you only find by testing on your own hardware with your own prompts. Which, honestly, is half the fun.

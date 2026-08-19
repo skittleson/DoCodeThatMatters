@@ -1,29 +1,35 @@
-Automate Cleaning of Air Conditioner Condensate Drain Line
+So, have you ever had your central air conditioning unit just shut off all of a sudden? If you are a homeowner, this is a incredibly common source of annoyance. In fact, it is the most common reason why people call in a service technician. The culprit is usually that the air conditioner condensate drain line has become blocked.
 
-Ever have your central AC unit turn off all of a sudden? If you’re a homeowner, this is a common source of annoyance. It’s the most common reason why service is called for. The air conditioner condensate drain line is blocked. The solution is to clean the AC condensate drain line every month with a quarter cup of vinegar, then flush with water once a month. You have to remember to do this, though, and it’s easily forgotten. It should be done more frequently to prevent any mold or bacteria buildup. This post is a how-to guide to configure an off-the-shelf smart Wi-Fi dual water pump to flush out this line on a regular basis.
+The solution is straightforward. You need to clean the AC condensate drain line every month. You do this by pouring a quarter cup of vinegar down the line and then flushing it with water. Ideally, you should do this even more frequently to prevent any mold or bacteria from building up. The problem, of course, is that you have to remember to do it, and it is easily forgotten.
 
-Here is the plan. First, flash the device with Tasmota firmware. Second, set up a water reservoir. Third, route the water line to the AC condensate drain line opening, which is usually near the start of the heating or fan unit. And finally, add rules to manage water pump timing and notifications.
+This post is a how-to guide to help you configure an off-the-shelf smart Wi-Fi dual water pump to automatically flush out this line on a regular basis, so you never have to worry about it again.
 
-Now, let’s look at the water pump preparation. I ordered this Wi-Fi dual water pump from Amazon, and you can find the link on the blog post. Then I flashed it using the guide available at blakadder.com, and you can find that link as well on the blog post. The only tricky part was soldering wires to those tiny connections shown in the guide’s image. I followed the traces for two of them and soldered onto those instead, giving me more room to work with.
+Let's start with the plan. First, you need to flash the device with Tasmota firmware. Second, you need to set up a water reservoir. Third, you need to route the water line to the AC condensate drain line opening, which is usually located near the start of the heating or fan unit. Finally, you need to add rules to manage the water pump timing and notifications.
 
-I flashed it with Tasmotizer, which you can find on the GitHub releases page. Send the Wi-Fi configuration, then grab the IP address. Make sure to set the template defined in the guide at this point, by going to Configuration, Configure Other. The template is a JSON object with the name WD-01ADE, GPIO values of 32, 0, 0, 0, 0, 225, 33, 0, 224, 320, 0, 0, 0, 0, a flag of 0, and a base of 18.
+Moving on to preparing the water pump. I ordered a Wi-Fi dual water pump from Amazon. It is a specific model called the WD-01ADE. There is an image of this device in the blog post; it is a small, white plastic unit designed for home use.
 
-In order to monitor the pump activations, a counter was added. This is useful to keep track of the amount of water or vinegar mixture left in the reservoir. This needs to be done after the template was set by going to Configuration, Configure Template, and setting GPIO 16 to Counter, with the counter drop-down selected as 1. The value is stored even after a reboot.
+After getting the hardware, I flashed it using the guide provided by the Tasmota community. You can find the link to that specific guide on the blog post. The only tricky part of the physical setup was soldering wires to those tiny connections shown in the guide's image. I ended up following the traces on the circuit board for two of the connections and soldering directly onto those points instead. That gave me a lot more room to work with.
 
-Next, we set up a water reservoir. Take a vinegar plastic bottle and poke a hole in it about the size of the fitting. After that, hot glue in one of the fittings that came with the water pump supplies. Be sure to poke a hole in the top so air can enter the bottle. There is an image here showing the plastic bottle with the fitting hot-glued in place.
+Once the hardware was ready, I flashed it with a tool called Tasmotizer. You can find the link to the Tasmotizer releases on the blog post. After that, you send the Wi-Fi configuration and grab the IP address. At this point, it is crucial to make sure you set the template defined in the guide. You do this by going to the Configuration menu and selecting Configure Other.
 
-Now, let’s configure the Tasmota rules. Add this rule when pump one has started. It will schedule to turn off in thirty seconds, which should disperse about one cup of vinegar and water mixture. It increments one to Counter 1. The rule reads: Rule 1, on power 1 state equals 1, do backlog RuleTimer2 30, counter1 plus 1, endon, on Rules Timer equals 2, do power 1 off, endon. Then type Rule1 on.
+There is a specific JSON string you need to paste in there to define the GPIO pins for this pump. You can find that exact code block on the blog post, as it is too technical to read aloud, but it defines the specific pins for the WD-01ADE device.
 
-Turn on pump one every day at 4 a.m. within a fifteen-minute window. The command is Timer1 with Enable 1, Time 4:00, Window 15, Days SMTWTFS, Repeat 1, Output 1, Action 1. Then type Timers on.
+To help monitor the pump activations, a counter was added. This is useful to keep track of how much water and vinegar mixture is left in the reservoir. This needs to be done after the template was set. You go to Configuration, then Configure Template, and you set GPIO16 to Counter. In the counter drop-down menu, select number one. The nice thing about this is that the value is stored even after a reboot.
 
-Set the timezone of your location. For example, Timezone negative 8.
+Next, let's talk about setting up the water reservoir. You can take a plastic vinegar bottle and poke a hole in it about the size of the fitting you need. After that, you hot glue one of the fittings that came with the water pump supplies into that hole. Be sure to poke a small hole in the top of the bottle so that air can enter, otherwise, it will just suck the air out and stop flowing. There is an image in the post showing the plastic bottle with the fitting hot-glued in place so you can see exactly what it looks like.
 
-Lastly, if the device restarts, ensure the water pump relays are off by default. This is not the default with Tasmota firmware. Use the command PowerOnState 0.
+Now, for the Tasmota rules. We need to add a rule for when the pump starts. When pump one starts, it should schedule to turn off in thirty seconds. This duration should disperse about one cup of the vinegar and water mixture. It also increments Counter one by one. You can find the specific rule text on the blog post, as it is a command line string. Then, you turn that rule on.
 
-All of these commands together are also available in a Gist, which you can find the link for on the blog post.
+We also need to set the schedule. We want to turn on pump one every day at four in the morning, within a fifteen-minute window. You can find the specific timer configuration command on the blog post. Then, you turn the timers on.
 
-Final results for the web UI are shown in a screenshot of the Tasmota interface. There is also an MQTT Sensor topic that looks like this: tele/tasmota underscore XXXXX/SENSOR, with a time stamp and a counter value.
+Don't forget to set the timezone of your location. In the example, I used minus eight, but you should use your local offset. You can find the specific command on the blog post.
 
-For future improvements, based on the counter, we could send an alert to refill the reservoir tank.
+Lastly, if the device restarts, we need to ensure the water pump relays are off by default. This is not the default behavior in Tasmota firmware. You can find the specific command to set the Power On State to zero on the blog post.
 
-And finally, here are the resources mentioned. You can find the links on the blog post for the Tasmota device template, a guide on unclogging AC condensate lines, the Tasmotizer GitHub releases, the Tasmota Device Manager documentation, and the PowerOnState documentation.
+There is a block of code on the blog post that puts all of these commands together so you can copy and paste them easily.
+
+The final result is that you have full control over the pump via the web interface. There is a screenshot in the post showing the Tasmota Web UI with the pump status and settings visible. You can also monitor it via MQTT. For example, the sensor topic will show the time and the current value of Counter one, which in the example screenshot is three, meaning it has run three times.
+
+Looking ahead to future improvements, based on that counter, you could send an alert to notify you to refill the reservoir tank before it runs dry.
+
+And that’s it for this project. You can find all the resources, including the Tasmota template guide, a guide on unclogging AC lines, the Tasmotizer download link, and documentation on the Tasmota Device Manager and Power On State, linked at the bottom of the blog post.

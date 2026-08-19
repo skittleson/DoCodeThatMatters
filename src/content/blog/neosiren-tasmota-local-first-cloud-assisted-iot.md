@@ -25,6 +25,12 @@ priority: 0.9
 
 Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) with Tasmota for local network first setup.
 
+## Components
+
+| Component | Purpose | Buy |
+|---|---|---|
+| [NEO Coolcam Siren Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) | The device being flashed | — |
+| [Serial-to-USB Adapter](https://amzn.to/3sW2QaW) | Connects the ESP8266 to your PC for flashing | [Amazon](https://amzn.to/3sW2QaW) |
 
 ## Wiring Guide
 

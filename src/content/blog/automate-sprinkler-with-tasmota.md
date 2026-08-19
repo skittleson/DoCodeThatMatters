@@ -67,10 +67,12 @@ The easiest way to wire this up is using an existing extension cord, cut into it
 
 Alternative hardware that I ended up using:
 
-- [Esp8266 microcontroller](https://amzn.to/3oWMCNZ)
-- [oled screen](https://amzn.to/3oTJUZj)
-- [solid state relay](https://amzn.to/2TNYaoe)
-- [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z)
+| Component | Purpose | Buy |
+|---|---|---|
+| [Esp8266 microcontroller](https://amzn.to/3oWMCNZ) | WiFi MCU that runs Tasmota | [Amazon](https://amzn.to/3oWMCNZ) |
+| [oled screen](https://amzn.to/3oTJUZj) | Status display for sprinkler state | [Amazon](https://amzn.to/3oTJUZj) |
+| [solid state relay](https://amzn.to/2TNYaoe) | Switches the 24 VAC sprinkler valve | [Amazon](https://amzn.to/2TNYaoe) |
+| [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z) | Skips watering when too cold/humid | [Amazon](https://amzn.to/365HD4Z) |
 
 ![Sprinkler PCB 3D](/images/sprinklerPcb3d.jpg)
 ![Sprinkler PCB](/images/sprinklerPcb.png)

@@ -2,8 +2,11 @@ this post is still a working in progress, come back for updates!
 
 ## TLDR
 
-Using a 
-[Alfa AC1900 WiFi Adapter - 1900 Mbps 802.11ac Long-Range Dual Band USB 3.0 Wi-Fi Network Adapter w/4x 5dBi External Dual-Band Antennas](https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl)
+Using a [Alfa AC1900 WiFi Adapter](https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl) to broadcast the hotspot:
+
+| Component | Purpose | Buy |
+|---|---|---|
+| [Alfa AC1900 WiFi Adapter](https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl) | Long-range dual-band 802.11ac hotspot AP | [Amazon](https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=en_US&ref_=as_li_ss_tl) |
 
 
 starting script: `onstart.sh`

@@ -1,39 +1,13 @@
-Save JSON Objects to AWS S3 with Google Recaptcha
+This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3, and Google Recaptcha.
 
-This post will show you how to save messages from a public endpoint to your backend using AWS Lambda, AWS S3 and Google Recaptcha.
+I originally wrote the Gist for myself, but I had enough requests to share it in a blog post. Feel free to copy and paste what you want.
 
-I wrote the gist for myself, but I had enough requests to share it in a blog post. Feel free to copy and paste what you want.
+Let's start with the request from a frontend source. You will need to add a script to your frontend index.html, or anywhere else a form will be sent from. Inside this script, you will replace a placeholder site key with your real Recaptcha site key. The code sets up the Google Recaptcha API and executes a script when the page is ready. It takes an action, specifically for the homepage, and then uses the resulting token for the next steps. You can find the full source code and documentation links for this on the blog post.
 
-Request from a frontend source
+Next, let's look at the backend setup. Start by creating an AWS Lambda function that has access to add items to S3. We are using a Node.js or JavaScript lambda function here.
 
-Add this to the frontend index.html, or anywhere a form will be sent from. Replace the underscore recaptcha site key with a real one.
+There are three environment keys you need to set up for this function. First is the Google Recaptcha key, which you can get from the Google Recaptcha developers page. Second is the message bucket, which requires you to create a bucket in AWS S3. Third is the SNS topic ARN, where you create an SNS topic to receive emails or SMS messages to your phone.
 
-First, include the Google Recaptcha script source. Then, within a script tag, use grecaptcha ready to execute the site key with the action set to homepage, and handle the resulting token.
+You can find the full lambda function code in a script on the blog post.
 
-You can find the official documentation for Google Recaptcha version 3 on the Google developers website.
-
-Backend Setup
-
-Start by creating an AWS Lambda function that has access to add items to S3. Use a node.js javascript lambda function.
-
-You will need to set up the following environment keys:
-
-First, GoogleRecapKey. Get this from the Google Recaptcha developers page.
-
-Second, MessageBucket. Create a bucket in AWS S3.
-
-Third, SnsTopicArn. Create a SNS topic to receive emails or SMS to your phone.
-
-For the code implementation, you can find the link to the gist on the blog post.
-
-API Gateway Setup
-
-To set up the API Gateway, follow these steps:
-
-First, create an AWS API Gateway API with a resource named form with a method of POST.
-
-Second, set the integration type to Lambda Function.
-
-Third, ensure that Use Lambda Proxy integration is checked.
-
-Fourth, select your Lambda function.
+Finally, we have the API Gateway setup. First, create an AWS API Gateway API with a resource called form and a method set to POST. Second, set the integration type to Lambda Function. Third, make sure to check the box for Use Lambda Proxy integration. And lastly, select your specific Lambda function from the list.

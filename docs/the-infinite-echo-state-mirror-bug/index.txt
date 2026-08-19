@@ -85,5 +85,10 @@ The hallway is quiet now. For a smart home project, that's the highest praise th
 
 Hardware and code
 
-- Switches: <https://amzn.to/4udkmqC>, <https://amzn.to/435hVLR>, <https://amzn.to/49xMQnw>
+| Gear | Purpose | Buy |
+|---|---|---|
+| Martin Jerry smart switch (https://amzn.to/49xMQnw) | Wi-Fi relay switch, Tasmota-flashed | Amazon (https://amzn.to/49xMQnw) |
+| Martin Jerry smart switch (https://amzn.to/435hVLR) | Wi-Fi relay switch, Tasmota-flashed | Amazon (https://amzn.to/435hVLR) |
+| Martin Jerry smart switch (https://amzn.to/4udkmqC) | Wi-Fi relay switch, Tasmota-flashed | Amazon (https://amzn.to/4udkmqC) |
+
 - Broker / provisioning: <https://github.com/skittleson/mqttbrokeresp>

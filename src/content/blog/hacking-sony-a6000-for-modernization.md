@@ -71,9 +71,12 @@ Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then 
 
 To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu > page 2 > subpage 3 > FINDER/MONITOR > FINDER.  
 
-- [Sony A6000 but get it used on ebay](https://amzn.to/3oW4qO1) [or on Amazon](https://amzn.to/3oW4qO1)
-- [Power adapter](https://amzn.to/4afC0jy)
-- [HDMI to USB3 Adapter](https://amzn.to/3P84lBr)
+| Gear | Purpose | Buy |
+|---|---|---|
+| [Sony A6000 body](https://amzn.to/3oW4qO1) | 24.3 MP mirrorless camera | [Amazon](https://amzn.to/3oW4qO1) |
+| [AC-PW20 power adapter](https://amzn.to/4afC0jy) | Dummy battery for continuous power | [Amazon](https://amzn.to/4afC0jy) |
+| [HDMI to USB3 capture adapter](https://amzn.to/3P84lBr) | Camera output shows up as a webcam | [Amazon](https://amzn.to/3P84lBr) |
+
 - [How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling](https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link)
 
 
@@ -242,6 +245,11 @@ A GPS module doesn't exist for this camera.  I've done a few proof of concepts b
 - Use something like google maps history to match images times with GPS location
 - Use hardware device like [Neo 6m](https://amzn.to/44Mfexf) hooked up to a raspberry pi/microcontroller to collect time/location then post process.
 - My favorite is a combination of methods. Is to add a [super small GPS device](https://amzn.to/3X2tOOF) that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I've tried.   The other major issue is something like a Raspberry Zero W 2 has a limit of 64GB of storage.  So it should be offloaded quickly.
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| [u-blox NEO-6M GPS module](https://amzn.to/44Mfexf) | Logs time/location for post processing | [Amazon](https://amzn.to/44Mfexf) |
+| [Super small GPS module](https://amzn.to/3X2tOOF) | Tiny GPS for the Pi Zero build | [Amazon](https://amzn.to/3X2tOOF) |
 
 Quick python script to collect GPS data off the GPS serial device.
 ```python

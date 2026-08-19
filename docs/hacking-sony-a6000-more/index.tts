@@ -11,6 +11,15 @@ Batteries drain very quickly with this camera. The stock battery is around 1020m
 
 After a bit of hacking the power adapter (https://amzn.to/4afC0jy) version of this, I bundled everything up into a single battery shell with a usb-c (https://amzn.to/44Kd0jk) female tail.  Nothing clever here other than taking apart the usb 5v to 8v adapter then adding that to the shell with a usb-c (https://amzn.to/44Kd0jk) input.  The idea here is to use a large battery bank when taking very long time-lapse. Bulding a battery pack on the bottom is the next idea. Here is the build for the power adapter (https://amzn.to/4afC0jy).
 
+Battery Hack Gear
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| USB-C NP-FW50 batteries (https://amzn.to/4bBDFBc) | Rechargeable on-the-go batteries | Amazon (https://amzn.to/4bBDFBc) |
+| AC-PW20 power adapter (https://amzn.to/4afC0jy) | Dummy battery, cannibalized for the shell | Amazon (https://amzn.to/4afC0jy) |
+| USB-C female tail (https://amzn.to/44Kd0jk) | Input for the external battery bank | Amazon (https://amzn.to/44Kd0jk) |
+| SanDisk Extreme SD card reader (https://amzn.to/3UJHEVi) | Fast on-the-go card dumps | Amazon (https://amzn.to/3UJHEVi) |
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uRE7KQktJBk?si=iQUhHBQ98gUw4M6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Data Transfers Hurdles

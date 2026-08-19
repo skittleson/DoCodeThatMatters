@@ -13,6 +13,7 @@ date: 2026-03-23
 description: Authentik does not support RFC 8693 token exchange. The workaround works, but it shifts a security assumption most people never notice. Here is what I found and how it compares to Keycloak.
 image: /images/oauth-token-exchange-network.jpg
 alt: City lights connected across a global network like services passing identity tokens between each other
+consulting: true
 draft: false
 ---
 

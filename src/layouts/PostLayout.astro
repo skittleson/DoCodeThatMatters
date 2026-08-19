@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { stripExt } from '../lib/markdownToText';
 import { buildTFIDF, getRelatedPosts } from '../lib/text-similarity';
+import ConsultingCallout from '../components/ConsultingCallout.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -174,6 +175,10 @@ const localWebp = isLocalImage
         </article>
 
         <hr class="my-8" />
+
+        {post.data.consulting && (
+          <ConsultingCallout tone="dev" />
+        )}
 
         <p class="text-sm font-mono" style="color: var(--color-text-muted);">
           See something inaccurate or need more detail?{' '}

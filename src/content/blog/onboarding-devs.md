@@ -13,6 +13,7 @@ description: Learn an effective onboarding strategy for new engineers on a proje
 image: https://images.unsplash.com/photo-1536597297293-f5adf6145863?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8c2hpcCUyMGJvYXJkaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60
 alt: Onboarding
 priority: 0.9
+consulting: true
 ---
 
 Onboarding new engineers on a project can be a time-consuming process. However, by implementing a structured approach, the transition can be made smoother.
