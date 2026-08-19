@@ -4,6 +4,23 @@ TLDR; I run a coding assistant entirely on my own hardware — a single RTX 3090
 
 I have written before about keeping things local — the [Rust proxy](/building-custom-http-proxy-rust-mixed-os-workflows/), the self-hosted everything. Local LLMs are the same instinct. If the model runs on my desk, I control it, and I can leave it running.
 
+## How I Got Here
+
+I did not land on the current setup on day one. It took a couple of months of swapping models and tuning knobs, and most of the interesting lessons came from the dead ends.
+
+I started with a Claude-distilled reasoning model — a Qwen3.6-35B-A3B distilled from Claude 4.7 Opus. It was fine, but it refused things a coding assistant should not refuse, so I moved to an [uncensored variant](https://huggingface.co/HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive), and then to a cleaner Wasserstein-abliterated build, which is still my fast fallback at ~174 tok/s.
+
+The turning point was understanding **MoE versus dense**. Those 35B-A3B models are Mixture-of-Experts: 35B total parameters but only ~3B active per token, so they are fast. I tested a true dense 27B alongside them. The dense model was measurably smarter on benchmarks — but about **3.5x slower** because it activates roughly nine times more parameters per token. For an interactive coding agent, speed is a feature, so the fast model usually wins. The exception is when accuracy really matters, and that is where I landed on a dense 27B coder fine-tune ([Jackrong's Qwopus](https://huggingface.co/Jackrong/Qwopus3.6-27B-Coder-MTP-GGUF), and later a Qwen3.8 build) as the daily driver, keeping the fast MoE around for when I want throughput.
+
+Two rabbit holes were worth the time:
+
+- **Should I switch off llama.cpp to [vLLM](https://docs.vllm.ai/)?** vLLM has better speculative decoding and concurrency. But on my RTX 3090 Ti — an Ampere card — the FP8 weight path that makes long context cheap is [not supported](https://docs.vllm.ai/en/latest/features/quantization/) (it needs Ada or Hopper). Switching would have crushed my context window from 200K down to ~32-64K. Not worth it. Long context matters more to me than raw latency on this hardware, so I stayed on llama.cpp.
+- **Speculative decoding (MTP).** This is the trick that gets me ~70 tok/s on a dense 27B. The model drafts several tokens ahead and the main pass verifies them in one shot. It was fiddly to get working — most Qwen GGUFs ship their MTP heads for vLLM only, not llama.cpp — so finding a build with a working `mtp-*.gguf` sibling was half the battle.
+
+I also spent an afternoon overclocking the VRAM (+1500 MHz via [LACT](https://github.com/ilya-zlobintsev/LACT), the Wayland-friendly NVIDIA tool) and measured a whole ~2% speedup. That tiny number was actually useful data: it proved this workload is not purely memory-bandwidth bound, so there was no point chasing more.
+
+If there is one meta-lesson from all of that: measure on your own box. Nearly every "best model" or "best setting" claim I read turned out to be conditional on hardware I do not have.
+
 ## The Setup
 
 The rig is a Pop!_OS box with an RTX 3090 Ti (24GB, Ampere). It runs [llama.cpp](https://github.com/ggml-org/llama.cpp) as a systemd service, exposing an OpenAI-compatible API on port 8080. My editor (OpenCode) points a provider at `http://<box>:8080/v1` and never knows the difference.

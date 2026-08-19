@@ -15,7 +15,7 @@
       "id": "https://docodethatmatters.com/running-local-llms-for-coding/",
       "url": "https://docodethatmatters.com/running-local-llms-for-coding/",
       "title": "How I Run Local LLMs for Coding (and Why the Quant Matters)",
-      "summary": "I run a coding LLM locally on a single RTX 3090 Ti. Here is how I pick a model, why the quant type quietly broke one build, and how one missing sampler flag fixed my looping problem.",
+      "summary": "How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, and the quant type and sampler flag that quietly bit me.",
       "image": "/images/rtx-3090.jpg",
       "date_published": "2026-08-19T00:00:00.000Z",
       "date_modified": "2026-08-19T00:00:00.000Z",
@@ -30,14 +30,17 @@
         "rtx 3090",
         "opencode",
         "ampere",
-        "homelab"
+        "homelab",
+        "mixture of experts",
+        "vllm",
+        "speculative decoding"
       ],
       "authors": [
         {
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 932
+      "word_count": 1361
     },
     {
       "id": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
