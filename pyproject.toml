@@ -33,3 +33,12 @@ dev = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.uv]
+# Security floors for transitively-pulled packages (via the tts/kokoro stack).
+# setuptools: sdist MANIFEST.in exclusion bypass (GHSA) — fixed in 83.0.0.
+# torch: memory corruption in torch.jit.script — fixed in 2.13.0.
+constraint-dependencies = [
+    "setuptools>=83.0.0",
+    "torch>=2.13.0",
+]
