@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/generate-epub.mjs && uv run python main.py && node scripts/validate-xml.mjs",
+    "build": "astro build && node scripts/generate-epub.mjs && uv run python main.py && node scripts/validate-xml.mjs && node scripts/validate-pwa.mjs",
     "validate:xml": "node scripts/validate-xml.mjs",
+    "validate:pwa": "node scripts/validate-pwa.mjs",
     "preview": "astro preview",
     "compress": "imagemin src/images/* --out-dir=src/images"
   },
