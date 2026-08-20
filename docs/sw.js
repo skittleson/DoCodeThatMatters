@@ -1,6 +1,6 @@
 // This is the "Offline copy of pages" service worker
 
-const CACHE = "pwabuilder-offline-v2";
+const CACHE = "pwabuilder-offline-v3";
 
 // TODO: replace the following with the correct offline fallback page i.e.: const offlineFallbackPage = "index.html";
 const offlineFallbackPage = "offline/index.html";
@@ -39,6 +39,13 @@ self.addEventListener("fetch", function(event) {
 
   // Do not intercept Google Analytics/Tag Manager requests
   if (event.request.url.includes("googletagmanager.com")) return;
+
+  // Do not intercept admin/editor tooling or large binary downloads
+  // (audio + epub) -- let the browser fetch these directly, uncached.
+  var requestUrl = new URL(event.request.url);
+  var isExcludedPath = requestUrl.pathname.startsWith("/admin") || requestUrl.pathname.startsWith("/edit");
+  var isExcludedFile = requestUrl.pathname.endsWith(".mp3") || requestUrl.pathname.endsWith(".epub");
+  if (isExcludedPath || isExcludedFile) return;
 
   event.respondWith(
     fetch(event.request)
