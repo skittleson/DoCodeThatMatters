@@ -46,11 +46,13 @@ const localWebp = isLocalImage
 ---
 
 <BaseLayout
-  title={title}
+  title={`${title} — Do Code That Matters`}
   description={description}
   image={image}
   keywords={keywords}
   canonicalUrl={postUrl}
+  ogType="article"
+  twitterCard="summary_large_image"
 >
   <main class="container mx-auto px-4 py-8 max-w-4xl">
     <div class="lg:grid lg:grid-cols-4 lg:gap-8">
