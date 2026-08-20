@@ -54,22 +54,51 @@ The rig is a Pop!_OS box with an RTX 3090 Ti (24GB, Ampere). It runs [llama.cpp]
 
 The model is a 27B Qwen3.8 coder variant, quantized to `Q4_K_M` (about 16GB on disk). That leaves just enough VRAM for a 200K token context window with a q4_0 KV cache and MTP speculative decoding turned on. It runs around 70 tokens/second. On a coding agent that fires a lot of tool calls, that is plenty.
 
-Here is the shape of the launch command:
+Here is the actual command, pulled straight from the systemd unit that runs it:
 
 ```sh
 llama-server \
-  -m ~/models/Qwen3.8-27B-MTP-Q4_K_M.gguf \
+  -m ~/models/qwen3.8-27b-jackrong/Qwen3.8-27B-MTP-Q4_K_M.gguf \
   -c 200000 \
+  --parallel 1 \
   -ngl 99 \
-  --cache-type-k q4_0 --cache-type-v q4_0 \
-  --flash-attn on --jinja \
-  --spec-type draft-mtp --spec-draft-n-max 4 \
+  --cache-type-k q4_0 \
+  --cache-type-v q4_0 \
+  --flash-attn on \
+  --no-context-shift \
+  --cache-ram 32768 \
+  --ctx-checkpoints 8 \
+  --jinja \
+  --spec-type draft-mtp \
+  --spec-draft-n-max 4 \
   --reasoning off \
-  --temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0 \
-  --host 0.0.0.0 --port 8080
+  --temperature 0.7 \
+  --top-p 0.8 \
+  --top-k 20 \
+  --min-p 0 \
+  --presence-penalty 1.0 \
+  --alias Qwen3.8-27B \
+  --host 0.0.0.0 \
+  --port 8080
 ```
 
-The `-ngl 99` is the one that matters most — it offloads every layer to the GPU. Forget it and you drop from ~170 tok/s to ~2 tok/s as it falls back to CPU.
+Every one of those flags is doing something specific:
+
+- **`-m`** — path to the GGUF model file on disk (Jackrong's `Q4_K_M` quant, ~16GB).
+- **`-c 200000`** — the context window, in tokens. This is the ceiling for prompt + tool output + reply combined, and it is the number everything else below is tuned around, to make it fit in 24GB of VRAM.
+- **`--parallel 1`** — one request slot, not the default of several. I'm the only client (OpenCode, over the LAN), so reserving KV cache for concurrent requests I'll never make would just waste VRAM I need for context.
+- **`-ngl 99`** — the one that matters most. It offloads every layer to the GPU ("number of GPU layers"). Get this wrong and llama.cpp falls back to CPU for the rest — the difference between ~170 tok/s and ~2 tok/s.
+- **`--cache-type-k q4_0` / `--cache-type-v q4_0`** — quantizes the KV cache itself, not just the model weights, down to 4-bit. This is the flag that actually makes a 200K context window possible at all; at full-precision KV it would run out of VRAM long before 200K.
+- **`--flash-attn on`** — the fused flash-attention kernel instead of the naive implementation. Faster, lower memory, no downside on Ampere.
+- **`--no-context-shift`** — turns off llama.cpp's default behavior of silently sliding old tokens out of the context window once you hit the limit. For a coding agent that depends on everything it has read and decided so far, I want a hard error at 200K, not a session that quietly forgets its first half.
+- **`--cache-ram 32768` / `--ctx-checkpoints 8`** — these two work together. llama.cpp can checkpoint prompt-cache state to host RAM so a long agentic session doesn't have to re-process the entire prompt on every turn. `--cache-ram` caps that at 32GB of RAM; `--ctx-checkpoints 8` is how many checkpoint slots it keeps around.
+- **`--jinja`** — use the chat template baked into the GGUF's metadata (a real Jinja2 template) instead of a hardcoded one. Needed for tool-calling to format correctly.
+- **`--spec-type draft-mtp` / `--spec-draft-n-max 4`** — turns on speculative decoding using the model's own Multi-Token Prediction head as the draft model, drafting up to 4 tokens ahead per step. This is what gets a dense 27B to ~70 tok/s instead of ~20-25.
+- **`--reasoning off`** — Qwen3.8 defaults to an aggressive "xhigh" thinking mode that burns tokens overthinking simple requests. A coding agent just needs the answer.
+- **`--temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0`** — the sampler settings straight from Qwen's own model card for non-thinking/instruct mode.
+- **`--presence-penalty 1.0`** — the repetition fix from the next section. Penalizes tokens that have already shown up, so long sessions can't loop forever.
+- **`--alias Qwen3.8-27B`** — the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
+- **`--host 0.0.0.0 --port 8080`** — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 
 ## The Quant Type Quietly Broke Things
 
