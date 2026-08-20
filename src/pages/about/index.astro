@@ -95,6 +95,22 @@ import ContactInfo from '../../components/ContactInfo.astro';
         />
       </div>
     </form>
+
+    <div id="contactThankYou" class="hidden max-w-lg" role="status">
+      <p class="font-mono text-sm font-bold mb-1" style="color: var(--color-accent);">
+        &check; Message sent
+      </p>
+      <p class="font-mono text-sm text-[#a0aec0]">
+        Thanks for reaching out — I'll get back to you soon.
+      </p>
+    </div>
+
+    <div id="contactError" class="hidden max-w-lg mt-3" role="alert">
+      <p class="font-mono text-sm" style="color: #f87171;">
+        <span id="contactErrorDetail">Something went wrong sending your message.</span>
+        Please try again.
+      </p>
+    </div>
   </main>
   <script src="/site.js" defer></script>
   <script src="/contact-relay.js" defer></script>
