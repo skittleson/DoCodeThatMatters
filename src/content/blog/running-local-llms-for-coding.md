@@ -19,7 +19,7 @@ date: 2026-08-19
 modified: 2026-08-19
 description: How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, and the quant type and sampler flag that quietly bit me.
 image: /images/rtx-3090.jpg
-alt: An NVIDIA GeForce RTX 3090-class 24GB graphics card, the GPU I run local coding models on.
+alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.
 imageWidth: 1200
 imageHeight: 800
 draft: false
