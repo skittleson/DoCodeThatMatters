@@ -9,6 +9,8 @@ interface Props {
   image?: string;
   keywords?: string[];
   canonicalUrl?: string;
+  ogType?: string;
+  twitterCard?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   image = '/images/agile.jpg',
   keywords = ['software engineer blog', 'code', 'raspberry pi', 'maker', 'c#'],
   canonicalUrl,
+  ogType = 'website',
+  twitterCard = 'summary',
 } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
@@ -45,8 +49,9 @@ const keywordsStr = keywords.join(', ');
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com" />
   <title>{title}</title>
+  <link rel="canonical" href={pageUrl} />
   <meta name="description" content={description} />
   <meta itemprop="description" content={description} />
   <meta name="keywords" content={keywordsStr} />
@@ -58,17 +63,17 @@ const keywordsStr = keywords.join(', ');
   <meta name="application-name" content={company} />
 
   <!-- Open Graph -->
-  <meta property="og:title" content={`${title} - ${company}`} />
+  <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:type" content="article" />
+  <meta property="og:type" content={ogType} />
   <meta property="og:url" content={pageUrl} />
   <meta property="og:site_name" content={company} />
   <meta property="og:image" content={ogImage} />
 
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={`${title} - ${company}`} />
+  <meta name="twitter:card" content={twitterCard} />
+  <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:creator" content="@skittleson" />
 
