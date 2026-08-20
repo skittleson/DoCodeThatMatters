@@ -1,6 +1,8 @@
-const contactRelayLoadedScriptSource = document.currentScript.src;
 async function fetchContactRelayCore(request) {
-  const endpoint = new URL(contactRelayLoadedScriptSource).origin + "/latest";
+  // The relay lives on the API Gateway, not wherever this script is hosted
+  // (it used to be loaded directly from the gateway, so origin-from-script
+  // worked by coincidence; self-hosting this file broke that assumption).
+  const endpoint = "https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com/latest";
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
