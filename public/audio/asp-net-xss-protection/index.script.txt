@@ -1,15 +1,17 @@
-ASP.NET XSS Protection
+ASP.NET XSS protection
 
-Securing an ASP.NET Web API for PCI application tests is no trivial matter. It can take weeks of planning and analyzing the app. After reviewing OWASP and other related cross-site scripting sites, the web.config was the first to be updated to prevent against attacks, specifically Man-in-the-Middle and cross-site scripting.
+Securing an ASP.NET Web API for PCI application tests is no trivial matter. It can take weeks of planning and the app to be analyzed. After reviewing OWASP and other related cross-site scripting sites, the web.config was the first to be updated to prevent against attacks, specifically man-in-the-middle and cross-site scripting.
 
-Inside the system web server element, you need to add the following configuration. Since this is a specific code block, you can find the exact XML snippet on the blog post. To give you the gist of what is happening, we are removing standard headers like Server, X-Powered-By, and various protection headers that might be set by default. We are then adding back specific, stricter versions of those headers. This includes setting X-Frame-Options to Deny, enabling XSS protection in block mode, setting Content-Type-Options to nosniff, and configuring cache control to ensure data isn't stored. We are also setting the Expires header to a date in the past to prevent caching, and defining a Content Security Policy that restricts where resources can come from, allowing only inline scripts and self-hosted resources, with exceptions for fonts and images from HTTPS sources.
+Inside the system.webServer element, you add a specific configuration block. This involves setting up custom headers. First, you remove several default headers, including Server, X-Powered-By, X-Frame-Options, X-XSS-Protection, X-Content-Type-Options, Cache-Control, Pragma, Expires, and Content-Security-Policy. You also clear any headers that might have been set by IIS.
 
-The Content Security Policy was the only one considered less secure due to outside JavaScript and CSS resources the app used, such as Google Analytics and Bootstrap.
+Once those are removed, you add back specific security headers with strict values. You set X-Frame-Options to DENY. You set X-XSS-Protection to 1; mode=block. You set X-Content-Type-Options to nosniff. For caching, which could potentially be altered by an attacker, you set Cache-Control to no-cache, no-store, must-revalidate. You also set Pragma to no-cache. For the Expires header, since it can be tampered with, you set it to a date far in the past, specifically Sun, 1 Jan 1990 00:00:00 UTC, rather than using a negative value. Finally, you add a Content-Security-Policy. This policy defines where resources can come from, allowing self, unsafe-inline, and data sources for default resources, while permitting fonts from any source and images specifically from HTTPS sources.
 
-Let's look at additional protection. First, you should apply the AntiXSS attribute from the ASP.NET Web API AntiXSS Attribute project. You can find that project on Bitbucket. Second, use a Website Application Firewall for your apps. Examples of these include Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, and Shadow Daemon.
+Content security policy was the only area considered less secure due to outside JavaScript and CSS resources that the application used, such as Google Analytics and Bootstrap.
 
-Regarding tools, look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing. Specifically, you should check out Nikto2, SQLMap, and OWASP ZAP.
+There are additional protections you should consider. First, you can apply the AntiXss attribute from a project called the ASP.Net Web API AntiXss Attribute; you can find the link on the blog post. Second, use a Website Application Firewall for your apps. Some popular options include Amazon WAF, ModSecurity, IronBee, NAXSI, WebKnight, and Shadow Daemon.
 
-Finally, here are the key takeaways. First, don't rely on just one layer of protection. Second, use established frameworks. Third, use the same tools as the pen testers.
+For tools, look for open source tools that are commonly used for penetration testing. These tools gave some pretty good insight on where the app needed securing. One tool is Nikto2, another is sqlmap, and the third is OWASP ZAP.
 
-For further reading, you can find the full list of references on the blog post, including links to Stack Overflow, OWASP, Microsoft documentation, and Mozilla's developer documentation on Content Security Policy.
+Here are the key takeaways. Don't rely on just one layer of protection. Use established frameworks. And use the same tools as the penetration testers.
+
+Finally, for further reading, you can look at Stack Overflow for discussions on XSS, which has over twenty-one thousand results and counting. You should also review the OWASP main page, the Microsoft documentation on this topic, and the Mozilla Developer Network documentation on Content Security Policy. Links to all of these resources are available on the blog post.

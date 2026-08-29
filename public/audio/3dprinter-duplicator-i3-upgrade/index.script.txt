@@ -1,75 +1,73 @@
-Duplicator i3 3d printer upgrade. This is a how-to guide on upgrading a Duplicator i3 with modern 3d printer parts, firmware, and creativity. Keep in mind, this project is still a work in progress.
+Hey there. So, quick summary up front: this is a how-to guide on upgrading a Duplicator i3 printer with modern 3D printing parts, firmware, and a bit of creativity. And to be honest, this project was still in progress when I wrote it down.
 
-The Duplicator i3 is a common 3d printer that many people now consider outdated. Instead of throwing it away and buying a new one, I took the challenge of upgrading and replacing parts to modernize it. There are also a lot of resources and parts still available for this model.
+The Duplicator i3 is a really common 3D printer, but these days, many people consider it outdated. Instead of just throwing mine away and buying a new one, I took on the challenge of upgrading or replacing parts to modernize it. Plus, there are still plenty of resources and parts available out there for this model.
 
-First, let’s look at the to-do list.
+So, here is the to-do list.
 
-We started with the core components. I replaced the stock Melzi board with an MKS Gen 1.4 board. You can find the link to that part on the blog post. Next, I added a RepRap Discount Full Smart Controller to serve as the LCD display for the new board. You can find the link for that as well. I also swapped out the under-powered 20-amp power supply for a 30-amp unit. You can find the link to that upgrade on the blog post.
+First, we need an MKS Gen 1.4 board. This replaces the stock Melzi board. You can find the link on the blog post if you want to buy it.
 
-Beyond those main purchases, there was a specific list of hardware and software changes. First, I installed a glass bed. Second, I updated the stepper motors to use 1/32 steps instead of 1/16. This provides cleaner and smoother prints. To make this happen, I needed some JST 2-pin to 3-pin adapters for the end stop connectors and added a JST connector for the extruder stepper.
+Next, a RepRap Discount Full Smart Controller. This is the LCD display for the new board. Again, I’ll leave the purchase link on the blog.
 
-Then came the software changes in the Marlin firmware. This was a big part of the process.
+Third, a 30 Amp power supply. This replaces the under-powered 20 Amp unit. The link is also available in the post.
 
-First, I had to invert the end stops. In the configuration file, I set the X, Y, and Z minimum end stop inverting to true.
+We also need a glass bed.
 
-Second, I defined the driver types. I uncommented the sections for the drivers and set the X, Y, Z, Z2, and E1 drivers to DRV8825. I left the E0 driver as an A4988.
+And we need to change the stepper drivers from one-sixteenth to one-thirty-second steps. This provides cleaner and smoother prints. To do that, you need a few specific components and firmware changes.
 
-Third, I doubled the step count for the DRV8825 drivers, moving from 1/16 to 1/32 steps. This came from the previous Marlin configuration, which had the default axis steps per unit set to 80, 80, 400, and 100. I updated the default axis steps per unit to 160, 160, 800, and 100. I kept the extruder on the A4988 chip because heat was building up on it too much. I calibrated it to 0.84 volts.
+You will need JST 2-pin to 3-pin adapters for the endstop connectors. You also need to add a JST connector for the extruder stepper.
 
-Fourth, I inverted the X and Y directions, as well as the extruder direction. I set invert X direction to true, invert Y direction to true, and invert E0 direction to true.
+Then, there are some Marlin Firmware changes.
 
-Fifth, I set the Z travel limit to 180.
+First, invert the endstops. In the code, this means setting X-Min, Y-Min, and Z-Min endstop inverting to true. This inverts the logic of the endstops.
 
-Sixth, I enabled SD card support.
+Second, you need to handle the driver types. You want to uncomment the driver type definitions and replace them with DRV8825 for the X, Y, Z, and second Z axes, while keeping the first extruder as an A4988 and the second extruder as a DRV8825.
 
-Seventh, I enabled LCD support for the RepRap Discount Full Smart Controller.
+Third, double the step count for the DRV8825 drivers from one-sixteenth to one-thirty-two steps. This comes from the previous Marlin configuration. I kept the extruder on an A4988 chip because heat was building up too much on it. You’ll need to calibrate this to 0.84 volts. In the code, this updates the default axis steps per unit to 160 for X and Y, 800 for Z, and 100 for E.
 
-Next, I dealt with DRV8825 calibration. The formula is VREF equals the rated motor current divided by two. A standard NEMA 17 motor is rated at 1.68 amps. Divided by two, that’s 0.84 volts. However, I burned out an extruder stepper following this. So I dropped it to 0.6 volts. The steppers were less hot, and I didn’t notice a performance difference.
+Fourth, invert the X and Y directions, and also invert the extruder direction. In the code, this means setting the invert direction flags for X, Y, and E0 to true.
 
-I also had to replace the display. The connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out, so be careful.
+Fifth, set the Z travel limit. In the code, you define Z max position as 180.
 
-I replaced the power supply. I found a 30-amp one on Amazon for twenty dollars. The current 20-amp power supply is under-powered. It’s a known issue with these printers.
+Sixth, enable SD card support by defining SDSUPPORT.
 
-I replaced the Y bracket.
+Seventh, add LCD support for that RepRap Discount Full Smart Controller we mentioned earlier. You do this by defining the REPRAP DISCOUNT FULL GRAPHIC SMART CONTROLLER.
 
-I made an easy access case for the MKS Gen board.
+Now, a critical note on DRV8825 calibration. The formula is VREF equals rated motor current divided by two. So, a standard NEMA 17 motor is rated at 1.68 amps. Divided by two, that’s 0.84 volts. However, I burned out an extruder stepper following this rule. I dropped it to 0.6 volts. The steppers were less hot, and there was no performance difference.
 
-I added a filament sensor.
+You also need to replace the display. Be careful here: the connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out, so keep that in mind.
 
-I built a cover and mount for the power supply.
+You should also replace the power supply. I found a 30 Amp one for about 20 dollars. The current 20 Amp power supply is underpowered, and that’s a known issue with these printers.
 
-I tested manual LCD bed leveling using mesh bed leveling, probe manually, and LCD bed leveling. I uncommented the LCD assisted bed leveling settings, but I ended up reverting this.
+Other items on the list include replacing the Y bracket, building an easy access case for the MKS Gen board, adding a filament sensor, and creating a cover and mount for the power supply.
 
-Instead, I moved to auto bed leveling using a Z Probe Servo.
+I tested manual LCD bed leveling using mesh bed leveling, manual probing, and LCD bed leveling. I uncommented the LCD assisted bed leveling options. However, I ended up reverting this change.
 
-This involved several steps. First, the wiring. Second, the Marlin configuration. You can find a video tutorial and the documentation links on the blog post. I uncommented the following lines in the configuration.
+Instead, we are moving to Auto Bed Leveling using a Z Probe Servo. This involves wiring changes and Marlin configuration.
 
-I defined auto bed leveling linear. I set the number of servos to 3. I set the Z probe servo number to 0. I set the Z servo angles to 80 and 0. This one is important for the servo arm deploy and retraction. I used the Z max plug because I have an extra Z max to use, so this is used for the switch on the servo arm. I set the Z clearance between probes to 10. I set the Z clearance multi probe to 10. I set the Z probe low point to negative 10, which is the farthest distance below the trigger point to go before stopping. I set Z min probe uses Z min endstop pin to true. And I set the Z min probe pin to 19. Pin 32 is the RAMPS default, but we are using an MKS Gen 1.4 board.
+For the firmware, you need to uncomment specific lines. This includes defining AUTO_BED_LEVELING_LINEAR, setting the number of servos to 3, setting the Z probe servo number to 0, and setting the Z servo angles to 80 and 0. The 80 to 0 angle is important for the servo arm deploy and retraction.
 
-There are a few important G-code commands to remember. M280 is important! This controls the servo. You can use this for testing. The link is on the blog post. Use the values gathered here to set the Z servo angles property. To get servo 0 angle, use M280 P0. To move servo 0 to a 90-degree angle, use M280 P0 S90. To move servo 0 to a 0-degree angle, use M280 P0 S0.
+You also use the Z max plug, which I have an extra one for, so it’s used for the switch on the servo arm. Set the Z clearance between probes to 10, the Z clearance multi-probe to 10, and the Z probe low point to negative 10, which is the farthest distance below the trigger point to go before stopping. Enable Z min probe uses Z min endstop pin, and set the Z min probe pin to 19. Pin 32 is the RAMPS default, but we are using an MKS Gen 1.4 board.
 
-I set the Marlin configuration of the Z probe offset to negative 1, negative 40, and negative 7.7.
+There is a command called M280 that is very important here. This controls the servo. You can use this for testing. You can look up the specific values on the Marlin documentation page for G-code M280. Use the values you gather there to set the Z servo angles property.
 
-M420 is used to get or set the bed level state. You can find the link on the blog post.
+To test it, you get servo 0 angle using M280 P0. Move servo 0 to a 90-degree angle using M280 P0 S90. Move servo 0 to a 0-degree angle using M280 P0 S0.
 
-M119 shows the endstop states.
+You also set the Marlin config of the Z probe offset to negative 1, negative 40, and negative 7.7.
 
-G29 starts the auto bed leveling routine.
+There are other commands to know: M420 gets or sets the bed level state. M119 checks endstop states. And G29 starts the auto bed leveling routine.
 
-You can find the full Marlin config difference on the blog post.
+If you want to see the full Marlin config difference, you can find that link on the blog post.
 
-Let’s look at some of the images from the project.
+Let me describe a few things visually since you can’t see them right now.
 
-There is an image showing a 3-pin JST to 2-pin JST adapter. This is what was used for the connector mismatch.
+First, there’s an image showing a 3-pin JST connector being adapted to a 2-pin JST connector. This is one of those adapters I mentioned earlier.
 
-There is another image showing the MKS Gen 1.4 board wired up. This gives you an idea of how the connections were made.
+Next, there’s a photo of the MKS Gen 1.4 board fully wired up inside the printer. You can see all the connections made to the new controller.
 
-And finally, there is a model of the Z probe. This shows the mechanical setup I used for the auto leveling.
+Finally, there’s a 3D model render of the Z probe. This shows the custom part I designed for the servo arm mechanism.
 
-So, what did I learn?
+So, what did I learn? Well, I learned how to configure and almost build a 3D printer using an existing one as a base. And honestly, I spent way more time on this than I expected.
 
-First, I learned how to configure and almost build a 3d printer using an existing one.
+If you want to dive deeper, there are some great resources. The Marlin firmware website is a must-read. There’s also a specific wiki page for the Wanhao Duplicator i3 on 3dprinterwiki.info. And if you’re curious about the DRV8825 datasheet, Texas Instruments has that available online as well.
 
-Second, I spent way more time than expected.
-
-For resources, you can find the Marlin firmware website, the Wanhao Duplicator i3 wiki, a Gist with the configuration details, and the DRV8825 datasheet. You can find all these links on the blog post.
+I hope this helps if you’re thinking about giving your old printer a new life.

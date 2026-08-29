@@ -12,6 +12,33 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/sony-a6000-a6400-research/",
+      "url": "https://docodethatmatters.com/sony-a6000-a6400-research/",
+      "title": "Sony A6000 and A6400 Research: Hacks, Mods and Community Resources",
+      "summary": "Deep-dive reference on hacking, modding, and community resources for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400) — OpenMemories-Tweak, PMCA-RE firmware dumping, clean HDMI/webcam hacks, IR & full-spectrum conversions, power/battery mods, S-Log video, timelapse, and the Sony PlayMemories app archive.",
+      "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
+      "date_published": "2026-08-29T00:00:00.000Z",
+      "date_modified": "2026-08-29T00:00:00.000Z",
+      "tags": [
+        "Sony A6000",
+        "Sony a6400",
+        "Camera hacking",
+        "OpenMemories",
+        "firmware reverse engineering",
+        "IR conversion",
+        "full spectrum",
+        "astrophotography",
+        "time lapse",
+        "clean HDMI output"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ],
+      "word_count": 6448
+    },
+    {
       "id": "https://docodethatmatters.com/running-local-llms-for-coding/",
       "url": "https://docodethatmatters.com/running-local-llms-for-coding/",
       "title": "How I Run Local LLMs for Coding (and Why the Quant Matters)",

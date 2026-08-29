@@ -1,11 +1,13 @@
-Linux Wifi Hotspot with PiHole. This post is still a work in progress, so come back for updates.
+So, this post is still a work in progress, so do come back for updates.
 
-Here is the TLDR. You can use an Alfa AC1900 WiFi Adapter to broadcast the hotspot. This adapter serves as a long-range dual-band 802.11ac hotspot access point. If you want to buy one, you can find it on Amazon.
+Let's jump right into the short version. We are using an Alfa AC1900 WiFi adapter to broadcast the hotspot. You can find the link to that specific adapter on the blog post.
 
-Next, we look at the starting script, which is called onstart.sh. This script disables power saving on the wireless interface, sets the transmit power to a fixed level, switches the USB mode for the specific driver, and then launches the create_ap tool in daemon mode. It configures the network to use a specific IP range for DHCP, sets the country to the US, and enables various advanced Wi-Fi capabilities like 802.11n and 802.11ac on the 5-gigahertz band. It creates a network named TestNetwork with the password testing123.
+Here is a quick breakdown of the components. First, you have the Alfa AC1900 WiFi adapter. Its purpose is to act as a long-range, dual-band 802.11ac hotspot access point, and you can purchase it from Amazon.
 
-Moving on to the next section: Disable IPv6. To do this, you need to edit the sysctl.conf file. Inside that file, you add three lines of configuration to disable IPv6 for all interfaces, the default interface, and the loopback interface.
+Next, we have the starting script. There is a file called onstart.sh that runs when you boot up. Since I cannot read the actual code block verbatim, I'll just tell you that you should check out that script on the blog post to see exactly how it configures the interface and launches the access point daemon with your specific network settings.
 
-Then, we move to installing and configuring Pi-hole. You run a command that downloads the installation script from Pi-hole’s official website and executes it, skipping the operating system check. After that, you need to set up the DHCP server to use the 192.168.12.1 address range.
+After that, we need to disable IPv6. You would open your sysctl configuration file using a text editor. There are three lines you need to add or verify there. First, set net dot ipv6 conf all disable ipv6 to 1. Second, set net dot ipv6 conf default disable ipv6 to 1. And third, set net dot ipv6 conf lo disable ipv6 to 1.
 
-Finally, for resources, there is a link to a GitHub repository called linux-wifi-hotspot by lakinduakash, which contains scripts and documentation related to this setup. You can find that link in the blog post.
+Then, we move on to installing and configuring Pi-hole. There is a one-line command in the blog post that downloads and runs the installer. You can find that exact command on the blog post. Once that is done, you need to make sure your DHCP server is set up to use the 192.168.12.1 range.
+
+Finally, for resources, there is a link to a GitHub repository called linux-wifi-hotspot that contains more detailed scripts and documentation. You can find that link on the blog post as well.

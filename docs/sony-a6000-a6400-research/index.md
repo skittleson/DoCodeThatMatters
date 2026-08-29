@@ -1,0 +1,589 @@
+TLDR; This is research blog post for Sony's A6000 (ILCE-6000) and A6400 (ILCE-6400).  Both cameras I personally own and shoot with on a regular basis.  Most of this is automated researched reviewed.
+
+
+## 1. OpenMemories: Tweak (Primary Hack Tool for A6000)
+
+**Repo:** <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera's settings">ma1co/OpenMemories-Tweak</a>  
+**Status:** Does NOT work on A6400 (confirmed by user + GitHub issue #381)
+
+### What it does
+- Remove the 30-minute video recording limit
+- Unlock the language menu (all 30+ languages)
+- Disable the NTSC nag screen
+- Enable telnet and adb daemons (developer mode)
+
+### How it works
+The PMCA-RE project reverse engineered how Sony PlayMemories Camera Apps (PMCA) are installed. With knowledge from firmware dumps, settings are stored in a file called `Backup.bin`. The app can change these settings directly, including ones locked by Sony.
+
+### Installation
+Requires the Sony-PMCA-RE tool to install the APK onto the camera:
+1. Install PMCA-RE (Windows/macOS/Linux)
+2. Connect camera via USB
+3. Use `pmca-console install -i` or the GUI to install OpenMemories-Tweak.apk
+4. App appears in "Application List" on camera
+
+### A6400 Incompatibility
+- GitHub issue #381: "Tweak do not work on Sony a6400" — users report "No tweaks available" error
+- The A6400 uses a newer USB service protocol that the current PMCA-RE doesn't fully support
+- Related technical write-up: <a href="https://github.com/ma1co/Sony-PMCA-RE/issues/733" title="ILCE-6400: BACKUP_PDT_READ crashes USB, but per-property readBackup/writeBackup + unlock works as a workaround">ma1co/Sony-PMCA-RE</a>
+
+**Important caveat (2025):** The A6400 is a Sony-camera electron / service-mode oddity. GitHUb issue #513 ("Figured it out for my setup (a6400) (windows)") documents that after entering service mode the device *disconnects* — that is part of the process. At that point you run **Zadig** again and the camera re-appears as a "Sony USB Device" in Zadig. This same flow works on the **ILCE-A6700**, meaning the service-mode entry is shared across newer Alpha bodies even where the app-install path (PMCA) is unsupported.
+
+### Workaround for A6400 Language Unlock
+**Gist:** <a href="https://gist.github.com/gibilli111/eed521cfa7c0be8be8032225da890daa" title="Unlock all languages on Sony a6400/a6600 (region-locked cameras) — step-by-step guide + ready-to-use script">gist (gibilli111)</a>  
+**Method:** Uses a different USB service mode approach that bypasses the PMCA-RE limitation. Tested and confirmed working on ILCE-6400. Should also work on a6600 and possibly other cameras of the same generation.
+
+Steps (high-level):
+1. Install Zadig drivers (<a href="https://zadig.akeo.ie/" title="Zadig — USB driver installation made easy (for PMCA firmware-development workflow)">zadig.akeo.ie</a>)
+2. Put camera in mass storage mode
+3. Switch to service mode via PMCA-RE `serviceshell` (device will appear to disconnect — this is expected, see issue #513)
+4. Re-run Zadig to pick up the camera again as "Sony USB Device"
+5. Apply language unlock patch directly to settings file
+6. Reboot camera
+
+**Additional coverage:** This unlock has been confirmed working on a much wider range of newer Alpha bodies than just the A6400/a6600 — the Reddit thread "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)" <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a> reports success on A6400, A6600, A7C, A7M3, A7RM3, and A7RM4. A February 2025 YouTube tutorial ("Unlock ALL Languages on Sony A7III, A7IV, A7C, 6400, 6600 & More!") demonstrates the same method and notes it also removes the 30-minute record limit — a step-by-step service-mode walkthrough of unlocking the language menu on region-locked Alpha bodies, download the two files, enter service mode, and apply the patch: [Unlock all languages on Sony A7III / A7IV / A7C / A6400 / A6600 (Feb 2025 tutorial)](https://www.youtube.com/watch?v=WM_PoshgLPY)
+
+> **Scope note:** These service-mode unlocks work on cameras that share the A6400's generation, but the classic **app-install** route (opening the "Application List" menu and installing OpenMemories-Tweak APKs) remains the path for older Android-based bodies like the A6000, which do have the full Android subsystem.
+
+---
+
+## 2. Sony-PMCA-RE (Reverse Engineering Toolkit)
+
+**Repo:** <a href="https://github.com/ma1co/Sony-PMCA-RE" title="Reverse Engineering Sony Digital Cameras — SDK tools, driver helpers, PMCA app install">ma1co/Sony-PMCA-RE</a>  
+**Purpose:** Interfaces with Sony cameras through USB to tweak settings, dump firmware, and install custom Android apps
+
+### Three Main Modes
+
+#### App Installer
+- For cameras supporting PlayMemories Camera Apps (PMCA)
+- Install custom Android apps (OpenMemories-Tweak, etc.)
+- A6000: Supported  
+- A6400: Limited support (see language unlock workaround above)
+
+#### Firmware Updater Mode
+- Sony cameras can boot from a secondary partition for firmware updates
+- Using a custom firmware file, execute code in this mode
+- Camera firmware itself remains untouched
+- **Not compatible with CXD90045 and CXD90057 architectures** (firmware is cryptographically signed)
+- A6000: Likely compatible (older architecture)  
+- A6400: Needs verification
+
+#### Service Mode
+- USB mode called "senser mode" used during servicing for calibration
+- Can execute code on the running system
+- Best camera compatibility
+- Requires custom USB drivers (Zadig on Windows)
+- Commands available to dump firmware and execute Linux commands
+
+### Installation
+**Windows:** Download pre-built binaries from releases  
+**macOS:** Pre-built binaries, may need Sony Camera Driver for mass storage  
+**Linux:** `pip install -r requirements.txt && ./pmca-console.py`
+
+### Firmware Dumping
+```bash
+# Via telnet (if OpenMemories-Tweak is installed)
+dd if=/dev/nflasha of=/android/mnt/sdcard/DUMP.DAT bs=1M  # Android 2
+dd if=/dev/nflasha of=/android/storage/sdcard0/DUMP.DAT bs=1M  # Android 4
+
+# Then unpack with fwtool.py
+# https://github.com/ma1co/fwtool.py
+```
+
+### A6000 runs Android internally — key finding (2025)
+A dedicated reverse-engineering project by **CliffVale** — `sony-a6000-firmware-research` (<a href="https://github.com/CliffVale/sony-a6000-firmware-research/" title="Sony ILCE-6000 (A6000) firmware research — official firmware unpacking, raw NAND dump methodology via pmca updatershell">CliffVale/sony-a6000-firmware-research</a>) — confirms the A6000 is a **fully Android-powered camera**. Working from Sony's official updater to a byte-verified raw NAND dump, it documented:
+
+- The camera boots Android with a Sony "scalar/launcher" UI layer on top
+- The **updatershell route** is a clean, **non-destructive** way to dump the firmware (no soldering, no hardware opening)
+- The physical **OK-press gotcha** is documented so others can reproduce the dump reliably
+
+This matters for anyone doing deeper mods (custom apps, extracting settings, exploring hidden firmware features): because the A6000 is Android-based, the toolchain for extracting and modifying its internals is far more mature than for the A6400.
+
+---
+
+## 3. Clean HDMI Output (Webcam Hack)
+
+### A6400
+**Official method:** The A6400 has a native clean HDMI out option in the menu:
+- MENU → (Setup) → [HDMI Settings] → [HDMI Info. Display] → OFF
+- This removes all on-screen display overlays from the HDMI signal
+- Works perfectly for webcam use with an HDMI capture device (Elgato Cam Link 4K, etc.)
+
+**Webcam software:** Sony provides official **Imaging Edge Webcam** software — the A6400 works as a clean USB webcam (no capture card needed).
+- Official app: <a href="https://support.d-imaging.sony.co.jp/app/webcam/en/" title="Imaging Edge Webcam — Sony official support page">support.d-imaging.sony.co.jp: en</a>
+- Download: <a href="https://support.d-imaging.sony.co.jp/app/webcam/en/download/" title="Imaging Edge Webcam download page">support.d-imaging.sony.co.jp: download</a>
+
+### A6000
+**Issue:** The A6000 has a software bug that applies a beauty filter to the HDMI output, making it unsuitable for clean video conferencing.
+
+**Workarounds:**
+1. **PMCA-HDMICam app:** <a href="https://github.com/dired/PMCA-HDMICam" title="A clean-HDMI-Output PMCA application for Sony cameras">dired/PMCA-HDMICam</a>  
+   - A clean-HDMI-Output PMCA application for Sony cameras
+   - Use case: webcam, streaming, surveillance, timelapse
+   - Install via PMCA-RE (same method as OpenMemories-Tweak)
+
+2. **HDMI capture device:** Route through an Elgato Cam Link or similar device to strip overlays in software
+
+3. **Sony official Imaging Edge Webcam app:** Limited support for A6000 — the official app primarily targets newer bodies (incl. A6400); for the A6000 the PMCA-HDMICam / capture-card routes are the reliable path
+
+### Comparison
+| Feature | A6000 | A6400 |
+|---------|-------|-------|
+| Native clean HDMI | No (beauty filter bug) | Yes (menu option) |
+| PMCA-HDMICam workaround | Yes | Yes |
+| Official webcam software | Limited | Yes |
+| Best for webcam use | With workaround | Native |
+
+---
+
+## 4. Astrophotography Mods (IR Filter Removal)
+
+### What it is
+Removing or replacing the internal hot mirror / IR filter to capture infrared wavelengths, particularly Hydrogen-Alpha (Hα) at 656nm for astrophotography.
+
+### A6000
+**DIY Tutorial:** <a href="https://www.lifepixel.com/tutorials/infrared-diy-tutorials/life-pixel-sony-a6000-diy-digital-infrared-conversion-tutorial" title="Life Pixel — Sony A6000 DIY Digital Infrared Conversion Tutorial (warranty-voiding; for experienced users only)">lifepixel.com</a>
+
+**Key hardware detail:** The A6000 has only a **single 1.33 mm-thick filter** in front of the sensor (per Cloudy Nights "Modding Sony a6000": <a href="https://www.cloudynights.com/forums/topic/884368-modding-sony-a6000/" title="Modding Sony a6000 — how to keep shooting in daylight post-mod (OWB filter vs custom WB)">cloudynights.com: modding sony a6000</a>). For an **H-alpha mod** you replace that one filter with an **astro-grade UV/IR cut filter of the same 1.33 mm thickness** — this preserves infinity focus. Removing it entirely (full spectrum) changes optical path thickness and affects focus.
+
+**Infinity-focus shim gotcha:** In an A6400-conversion video (Dec 2024) the converter notes that after sensor mods you may need **new, slightly thinner shims** so the sensor shifts forward and focuses to infinity — essential for astrophotography. The clip below is a full narrated **Sony A6000-to-astro conversion** teardown that shows exactly how to swap the hot mirror for an **H-α (Hydrogen-Alpha 656nm) + visible pass filter**, re-shim the sensor to hold infinity focus, and reassemble — the practical reference for anyone converting an A6000 for H-alpha nebula work: [Convert your Sony A6000 into an astrophotography camera — full disassembly and H-α filter install](https://www.youtube.com/watch?v=83sJoiK3VnE)
+
+**Tools needed:**
+- Custom glass infrared filter (to replace hot mirror)
+- Soldering iron and desoldering wick/gun
+- Small Phillips screwdriver
+- Tweezers
+- Canned air
+- Lens cleaning solution & tissue
+
+**Process:**
+1. Disassemble camera body
+2. Remove sensor assembly
+3. Desolder/remove the hot mirror filter
+4. Install replacement IR filter (or remove entirely for full spectrum)
+5. Reassemble (adjust shims if needed for infinity focus) and calibrate white balance
+
+**Commercial options:**
+- Life Pixel: <a href="https://www.lifepixel.com/shop/converted-cameras/sony-converted-cameras/sony-a6400-camera-conversion" title="Sony A6400 Camera & Conversion — new camera converted and tailored to your order (Life Pixel)">lifepixel.com: sony a6400 camera conversion</a> (old `…/sony-converted-cameras/` listing page now 404s — this A6400 conversion page still works)
+- Kolarivision: <a href="https://kolarivision.com/product/sony-dslr-mirrorless-astrophotography-conversion-service/" title="Sony DSLR and Mirrorless Astrophotography Conversion Service — Kolari Vision">kolarivision.com</a>
+- Full Spectrum UK: <a href="https://fullspectrumuk.com/sony-a6000-toastro-camera/" title="Turning the Sony A6000 into an Astro Camera — Full Spectrum UK disassembly guide">fullspectrumuk.com: sony a6000 toastro camera</a>
+- Full Spectrum UK astro filter (DIY, for A6000/A6100/A6300/A6400/A6500/A6600): <a href="https://www.fullspectrumuk.com/shop1/astroa6000filterdiy" title="Astro Filter for Sony A6000/A6100/A6300/A6400/A6500/A6600 — DIY Visible + Ha 656.28nm Hydrogen Alpha Pass">fullspectrumuk.com: astroa6000filterdiy</a> — "Visible + Ha 656.28nm Hydrogen Alpha Pass"; when fitting, sensor must face you with the marked corner lower-right
+
+**Ha mod vs full spectrum:** Cloudy Nights thread "Sony a6000 — Ha mod or full spectrum?" (<a href="https://www.cloudynights.com/forums/topic/759980-sony-a6000-ha-mod-or-full-spectrum/" title="Sony a6000 — Ha mod or full spectrum? comparing IR-only vs IR+UV removal for dedicated astro on FPL53 doublets">cloudynights.com: sony a6000 ha mod or full spectrum</a>) compares removing just the IR filter vs both IR + UV for dedicated astro use on an FPL53 refractor. The decision hinges on whether you want native full-spectrum flexibility (with clip-on/en-lens filters) vs a cleaner Hα response for nebula work.
+
+**YouTube:**
+- **Sony A6000 IR filter removal (IR conversion)** — a real-world look at shooting with a converted A6000, showing IR/video results and the kind of IR photography (tones, foliage, sky) you can expect once the internal hot mirror is gone: [IR conversion shoot with a Sony A6000](https://www.youtube.com/watch?v=Vta_E7uXOPg)
+- **Converting the Sony A6000 to an Astro Camera** — complete narrated disassembly/reassembly guide: remove the single hot-mirror filter, install an **H-α (Hydrogen-Alpha 656nm) + visible pass** astro filter, and re-shim the sensor with three 0.1 mm shims to keep infinity focus for deep-sky work: [Full A6000 astrophotography conversion tutorial](https://www.youtube.com/watch?v=83sJoiK3VnE) (▶ downloaded — see summary in §10)
+
+### A6400
+**Community discussions:**
+- Reddit r/AskAstrophotography: <a href="https://www.reddit.com/r/AskAstrophotography/comments/l4dw15/planning_on_removing_my_ir_filter_from_my_sony/" title="Planning on removing my IR filter from my Sony a6400 — which filter to reinstall for everyday use?">r/AskAstrophotography thread</a>
+- Cloudy Nights forum: <a href="https://www.cloudynights.com/forums/topic/786824-modify-sony-alpha-6400-uk/" title="Modify Sony Alpha 6400? (UK) — anyone done astro modding the A6400 in the UK?">cloudynights.com: modify sony alpha 6400 uk</a>
+
+**Note:** The A6400 uses the same NP-FW50 battery and similar internal layout to the A6000, so the mod process is likely similar. However, the A6400 is newer and may have slightly different sensor assembly construction.
+
+**Commercial conversion:**
+- Life Pixel offers A6400 conversion: <a href="https://www.lifepixel.com/shop/converted-cameras/sony-converted-cameras/sony-a6400-camera-conversion" title="Sony A6400 Camera & Conversion — new camera converted and tailored to your order (Life Pixel)">lifepixel.com: sony a6400 camera conversion</a>
+- Kolarivision offers A6400 full-spectrum conversion: <a href="https://kolarivision.com/product/sony-a6400-infrared-converted-mirrorless-camera-body/" title="Sony A6400 Full Spectrum Infrared Converted Mirrorless Camera — Kolari Vision">kolarivision.com</a>
+- IRreCams (EU) — converted A6400 or IR/Astro conversion service: <a href="https://irrecams.de/en/shop/sony-a6400-converted-new/" title="Sony A6400 converted — infrared or astro camera with built-in filter of your choice (IRreCams)">irrecams.de: sony a6400 converted new</a> and <a href="https://irrecams.de/en/shop/infrared-conversion-service-sony-aps-c/" title="Infrared conversion service for Sony APS-C — A6000, A6100, A6300, A6400, A6500, A6600, NEX (IRreCams, EU)">irrecams.de: infrared conversion service sony aps c</a>
+- Full Spectrum UK DIY astro filter also fits A6400 (see A6000 section above)
+
+### Considerations
+- **Full spectrum vs. IR-only:** Full spectrum removes the hot mirror entirely, allowing UV + visible + IR. Requires external filters for normal photography.
+- **Hα-specific filter:** Passes Hydrogen-Alpha wavelengths (656nm) plus visible light. Better for nebula astrophotography.
+- **White balance:** Must be recalibrated after mod. Shoot a white card reference frame.
+- **Warranty:** Voided by any internal mod
+- **Risk:** Sensor is fragile. Professional modding recommended if not experienced
+
+---
+
+## 5. Battery / Power Mods
+
+### A6000
+**Extended battery hack:** <a href="https://www.dpreview.com/forums/threads/sony-a6000-extended-battery-hack.3978932/" title="Sony a6000 Extended Battery Hack — for timelapse without an AC adapter">dpreview.com: sony a6000 extended battery hack.3978932</a>
+
+**Options:**
+1. **Battery grip with extended battery:**  
+   - Custom Battery Grips: <a href="https://www.custombatterygrips.com/store/product/cage-and-red-battery-add-on-for-sony-a6000-a6300-a6400-a6500" title="Cage and Red Battery Add-On for Sony A6000 A6300 A6400 A6500 — cage + red extended battery">custombatterygrips.com</a>
+   - Cage + Red Battery add-on allows use of extended batteries
+
+2. **DC coupler (dummy battery):**  
+   - Sony AC-PW20 power adapter: continuous power from wall outlet
+   - Amazon: NP-FW50 Dummy Battery for A6000/A6400: https://amzn.to/4xvUtVy
+
+3. **Power bank hack:**  
+   - Connect 3000mAh+ power bank via USB to camera
+   - A6400: <a href="https://www.dpreview.com/forums/threads/a6400-power-hack.4744793/" title="A6400 Power Hack — battery life complaint and battery grip discussion">dpreview.com: a6400 power hack.4744793</a>
+   - A6000: Similar approach, may need adapter
+
+**Important A6000 gotcha:** The A6000 has **no "supply power via USB while shooting" option** (confirmed in r/a6000, "Using Sony A6000 with USB power supply": <a href="https://www.reddit.com/r/a6000/comments/15dg64t/" title="Using Sony A6000 with USB power supply — confirmed: no 'supply power via USB while shooting' option">r/a6000 thread</a>). USB on the A6000 is primarily for charging/transfer, not sustained in-use power — so for extended shoots you must use a **dummy battery / DC coupler** rather than relying on the USB port. Use a dummy battery (NP-FW50 → AC-PW20 coupler) or a cage + extended-battery add-on instead.
+
+### A6400
+**Power hack details:**
+- 3000mAh power bank = at least 2 full charges of NP-FW50 (1080mAh)
+- Sony BC-TRW battery charger for overnight charging
+- Carry spare battery for critical shoots
+- Note: users who switch to an AC dummy battery often find they no longer need USB charging at all (Reddit a6000/a-series thread). Dummy-battery + AC power is the most reliable path for desk/webcam use.
+
+**High-capacity replacement batteries:**
+- 3-pack upgraded batteries: https://amzn.to/4h0uaAR
+
+---
+
+## 6. S-Log / Video Hacks
+
+### A6400
+**S-Log2 vs S-Log3:**
+- A6400 is 8-bit only (internal recording)
+- **S-Log2 is recommended** for 8-bit cameras (PP7: S-Gamut/S-Log2)
+- S-Log3 is designed for 10-bit systems (a7S III, FX3, etc.) — not ideal on A6400
+- **Hack:** Use S-Log2 with ITU709 color space for better 8-bit results
+
+**Picture Profiles:**
+- PP7: S-Gamut / S-Log2 (best for A6400)
+- PP8: S-Gamut3.cine / S-Log3
+- PP9: S-Gamut3 / S-Log3
+
+**Exposure tips:**
+- Shoot +1 to +2 stops overexposed when using S-Log
+- Use waveform monitor or zebra to avoid clipping highlights
+- 8-bit footage is more prone to banding in shadows — avoid heavy shadow lifting
+
+**External recorder for 10-bit:**
+- Use clean HDMI out (native on A6400) + external recorder (Atomos Ninja V, etc.)
+- Can record 10-bit 4:2:2 from A6400 via HDMI
+- This is the best "hack" for video quality on A6400
+
+### A6000
+**S-Log support:** Limited. A6000 does NOT have S-Log2/S-Log3 picture profiles.
+- Use PP1-PP11 (standard gamma curves)
+- For log-like footage, use external LUTs in post-production
+- Clean HDMI out workaround (PMCA-HDMICam) + external recorder for best quality
+
+**Video limitations:**
+- 30-minute recording limit (removable via OpenMemories-Tweak if it works)
+- 1080p60 / 1080p30 / 720p60 (no 4K)
+- No S-Log
+
+---
+
+## 7. Timelapse / Intervalometer
+
+### A6400
+**Built-in intervalometer:** The A6400 has a native internal intervalometer (added in firmware).
+- Setup: MENU → (Movie) → [Interv. Shooting]
+- Set interval, number of shots, and shooting time
+- Can shoot 999 frames at intervals from 1 second to 99 minutes 59 seconds
+
+**Guides:**
+- AlphaShooters: <a href="https://www.alphashooters.com/cameras/a6400/time-lapse-setup-guide/" title="Sony A6400 Time-lapse Setup, Recording and Editing Guide — AlphaShooters">alphashooters.com: time lapse setup guide</a>
+- YouTube: **"SONY A6400 AWESOME TIME LAPSE"** (Andy Hornby) — field vlog-style demonstration of the **A6400's built-in intervalometer** in action, capturing sunrise time-lapse sequences with the camera's native interval timer to show real-world results and settings in use: [Sony A6400 built-in intervalometer time-lapse example](https://www.youtube.com/watch?v=_h_oTxTgYTY) (▶ downloaded — see summary in §10)
+
+### A6000
+**No built-in intervalometer.** Options:
+
+1. **PMCA Time-lapse app:**  
+   - Was sold through PlayMemories Camera Apps store
+   - Shot up to 990 frames at set intervals
+   - Discontinued by Sony, but can be installed via PMCA-RE if you have the APK
+
+2. **timelapse-sony (Android WiFi intervalometer):**  
+   - <a href="https://github.com/ThibaudM/timelapse-sony" title="Android WiFi intervalometer for Sony cameras">ThibaudM/timelapse-sony</a>
+   - Android app that controls Sony camera over WiFi
+   - Works as an external intervalometer
+   - Also distributed on **F-Droid** (free & open source): <a href="https://f-droid.org/packages/com.thibaudperso.sonycamera/" title="TimeLapse — F-Droid open-source app to control a Sony camera over Wi-Fi">f-droid.org: com.thibaudperso.sonycamera</a>
+
+3. **TimeLapse (OpenMemories app):**  
+   - <a href="https://github.com/jonasjuffinger/TimeLapse" title="A time lapse app for Sony Alpha camera using the OpenMemories framework">jonasjuffinger/TimeLapse</a>
+   - A time-lapse app built on the **OpenMemories: Framework** specifically for Sony Alpha cameras
+   - Author primarily tested on the a6300 (same PMCA generation as A6000) — installable via PMCA-RE like the discontinued Sony app
+
+4. **External intervalometer:**  
+   - Physical device that triggers the camera via remote port
+   - Options: CamBee, Holy-Light, etc.
+
+5. **Sony Imaging Edge Desktop:**  
+   - Computer software that can trigger interval shooting over USB/WiFi
+   - <a href="https://support.d-imaging.sony.co.jp/support/tutorial/ilc/ilce-6400/en/08.php" title="Sony tutorial: Creating time-lapse movies on the A6400">support.d-imaging.sony.co.jp: 08.php</a>
+
+---
+
+## 8. Firmware Updates
+
+### A6400
+**Latest firmware: v2.00** (released June 2019)
+- Adds real-time Eye AF for animals
+- Support for RMT-P1BT wireless remote commander
+- Stability improvements
+
+**Download:**
+- Windows: <a href="https://www.sony.com/electronics/support/downloads/00016147" title="ILCE-6400 System Software (Firmware) Update Ver. 2.00 (Windows) — Adds real-time Eye AF for animals">sony.com: 00016147</a>
+- Mac: <a href="https://www.sony.com/electronics/support/downloads/00016148" title="ILCE-6400 System Software (Firmware) Update Ver. 2.00 (Mac) — Adds real-time Eye AF for animals">sony.com: 00016148</a>
+
+**No further firmware updates** have been released since v2.00. Sony has moved on to newer models (A6600, A6700).
+
+### A6000
+**Latest firmware: v2.00** (released 2015)
+- No significant new features added in later updates
+- Camera is EOL (end of life) from Sony's perspective
+
+**Note:** Firmware updates may remove some custom tweaks (OpenMemories-Tweak settings, etc.). Back up your camera settings before updating.
+
+### Firmware update gotchas
+- **A6400 USB connection issue:** Many users hit "camera not recognized by firmware updater." Changing the **USB LUN setting** (USB LUN → Single) often resolves it. There is a June 2025 YouTube walkthrough that shows the exact fix — **MENU → Setup section (yellow) → USB LUN → Single** — so the camera is recognized by firmware updaters and computers again: [Fix Sony A6400 USB not recognized by firmware updater (USB LUN → Single)](https://www.youtube.com/watch?v=yhaawhKqQOo) (▶ downloaded — see summary in §10)
+- **A8000 / a6100A / a6400A (2025):** In January 2025 Sony *silently* launched the **Alpha a6100A and a6400A** — updated namespaced re-releases of the entry/mid APS-C line (likely a display-panel supply change, per TheNewCamera.co). Anyone buying "new" A6400-stock should be aware the A6400A suffix exists and is essentially the same body. Not relevant to modding, but useful when sourcing a camera to mod.
+  - <a href="https://www.digitalcameraworld.com/cameras/sony-stealth-launches-two-new-mirrorless-aps-c-cameras" title="Sony stealth-launches two new mirrorless APS-C cameras — A6400A/A6100A re-release (Digital Camera World)">digitalcameraworld.com</a>
+
+---
+
+## 9. Custom App Development (PMCA)
+
+### Overview
+Sony cameras (including A6000) run an Android 2.3.7 subsystem for PlayMemories Camera Apps. Developers can create custom apps using:
+- **OpenMemories: Framework:** <a href="https://github.com/ma1co/OpenMemories-Framework" title="Build Android apps for your favorite Sony camera">ma1co/OpenMemories-Framework</a>  
+  - Special Sony APIs for camera control
+  - Take photos, access settings, etc.
+
+- **PMCADemo:** <a href="https://github.com/ma1co/PMCADemo" title="A demo app for Sony cameras">ma1co/PMCADemo</a>  
+  - Demo app for PMCA development
+
+### App List
+**Available apps:** <a href="https://github.com/ma1co/OpenMemories-AppList" title="App list for OpenMemories' app store">ma1co/OpenMemories-AppList</a>
+
+### PlayMemories App Store shutdown & archive (for A6000)
+Sony has fully shut down the PlayMemories Camera App store:
+- **Sep 30, 2023:** Paid app *purchases* ended
+- **Aug 31, 2025:** Paid and **free** app *download* service entirely ended
+  - Official notice: <a href="https://www.sony.com/electronics/support/articles/00289030" title="PlayMemories Camera Apps Ending — official Sony notice">sony.com: 00289030</a>
+
+Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touchless Shutter, etc.) can no longer be downloaded from Sony. Two paths remain:
+
+1. **Internet Archive community backup:** The `sony-playmemories-camera-apps` collection preserves the APKs. The A6000 apps live at <a href="https://archive.org/download/sony-playmemories-camera-apps/Sony%20A6000/" title="Sony A6000 PlayMemories apps — archived app downloads (Internet Archive)">archive.org: Sony%20A6000</a>
+2. **Install archived APKs via PMCA-RE** (`pmca-console install -i`) — the exact same mechanics as OpenMemories-Tweak. Community posts on Reddit r/a6000 document loading these discontinued apps back onto cameras this way.
+
+> This makes owning an A6000 (an Android-based body) significantly more viable for modding in 2026 than newer bodies, since the full app ecosystem + OpenMemories toolchain still works on it.
+
+### Development Requirements
+- Android SDK (API level 10 / Android 2.3.7)
+- Sony's proprietary APIs (via OpenMemories-Framework)
+- Debug or release certificates accepted by camera
+- Install via PMCA-RE tool
+
+### A6400 Limitations
+- A6400 does NOT support PMCA app installation (newer architecture)
+- Custom apps only work on A6000 and older models
+- A6400 mods are limited to:
+  - Language unlock (via service mode workaround)
+  - Clean HDMI out (native menu option)
+  - External recording via HDMI
+  - Physical mods (IR filter, battery, etc.)
+
+---
+
+## 10. Community Resources
+
+### Forums
+- **Sony Alpha Forum** (the biggest Sony Alpha community — A7III, A7R IV, A6000, etc.): <a href="https://www.sonyalphaforum.com/" title="Sony Alpha Forum — the biggest community about Sony Alpha Cameras (A7III, A7R IV, A6000, etc.)">sonyalphaforum.com</a>  
+  - OpenMemories-Tweak thread: <a href="https://www.sonyalphaforum.com/topic/6396-openmemories-tweak/" title="OpenMemories Tweak thread — troubleshooting OMT install on A6500 via USB/MTP">sonyalphaforum.com: openmemories tweak</a> — users troubleshooting OMT install on A6500 (USB/MTP connection)
+  - A6400 discussions, firmware, mods
+
+- **DPReview Forums:** <a href="https://www.dpreview.com/forums/" title="DPReview Forums — digital photography community">dpreview.com: forums</a>  
+  - "Can we mod/hack Sony cameras?": <a href="https://www.dpreview.com/forums/threads/can-we-mod-hack-sony-cameras.4261645/" title="Can we mod/hack Sony cameras? — custom firmware feasibility discussion">dpreview.com: can we mod hack sony cameras.4261645</a> — feasibility of custom firmware for Sony cams (e.g. custom resolution on A7R2/A7R3)
+  - "A6400 Power Hack": <a href="https://www.dpreview.com/forums/threads/a6400-power-hack.4744793/" title="A6400 Power Hack — battery life complaint and battery grip discussion">dpreview.com: a6400 power hack.4744793</a> — battery life complaint; battery grip that can't run a full shoot
+  - "Sony a6000 Extended Battery Hack": <a href="https://www.dpreview.com/forums/threads/sony-a6000-extended-battery-hack.3978932/" title="Sony a6000 Extended Battery Hack — for timelapse without an AC adapter">dpreview.com: sony a6000 extended battery hack.3978932</a> — bumping past the a6000's battery limits for timelapse without an AC adapter
+
+- **AlphaShooters** (Sony Alpha community; A5XX/A6000/A6100/A6300/A6400/A6500 E-mount APS-C): <a href="https://www.alphashooters.com/community/" title="Sony Alpha Forums — AlphaShooters.com community hub">alphashooters.com: community</a>  
+  - Sony E-mount APS-C forum: <a href="https://www.alphashooters.com/community/forums/sony-e-mount-aps-c/" title="Sony E-mount APS-C Cameras Forum — post images, share videos, discuss A5XX/A6000/A6100/A6300/A6400/A6500">alphashooters.com: sony e mount aps c</a> — post images, share videos, discuss E-mount APS-C cams
+  - A6400 astrophotography (noob): <a href="https://www.alphashooters.com/community/threads/a6400-astrophotography-noob.2402/" title="A6400 astrophotography noob — first attempt under dark Vermont skies">alphashooters.com: a6400 astrophotography noob.2402</a> — trying astro under dark Vermont skies
+  - A6400 time-lapse setup/recording/editing guide: <a href="https://www.alphashooters.com/cameras/a6400/time-lapse-setup-guide/" title="Sony A6400 Time-lapse Setup, Recording and Editing Guide — AlphaShooters">alphashooters.com: time lapse setup guide</a> — first time-lapse on the A6400, upload-ready movie
+
+- **Cloudy Nights (Astrophotography):** <a href="https://www.cloudynights.com/forums/" title="Cloudy Nights forums — DSLR, Mirrorless & General-Purpose Digital Camera DSO Imaging">cloudynights.com: forums</a>  
+  - "Sony a6000 — Ha mod or full spectrum?" (DSLR/DSO Imaging): <a href="https://www.cloudynights.com/forums/topic/759980-sony-a6000-ha-mod-or-full-spectrum/" title="Sony a6000 — Ha mod or full spectrum? comparing IR-only vs IR+UV removal for dedicated astro on FPL53 doublets">cloudynights.com: sony a6000 ha mod or full spectrum</a> — asks whether to remove just the IR filter or IR+UV for dedicated astro on FPL53 doublets
+  - "Modify Sony Alpha 6400? (UK)": <a href="https://www.cloudynights.com/forums/topic/786824-modify-sony-alpha-6400-uk/" title="Modify Sony Alpha 6400? (UK) — anyone done astro modding the A6400 in the UK?">cloudynights.com: modify sony alpha 6400 uk</a> — anyone in the UK done/modded an A6400 astro; what mod types exist
+  - "Modding Sony a6000": <a href="https://www.cloudynights.com/forums/topic/884368-modding-sony-a6000/" title="Modding Sony a6000 — how to keep shooting in daylight post-mod (OWB filter vs custom WB)">cloudynights.com: modding sony a6000</a> — how to keep shooting in daylight post-mod (OWB filter vs custom WB); Q&A before astro-modding
+
+### Reddit
+- **r/a6000:** <a href="https://www.reddit.com/r/a6000/" title="r/a6000 — Sony a6000 subreddit">r/a6000</a>  
+  - "Open Memories : Tweak" discussion: <a href="https://www.reddit.com/r/a6000/comments/12taiv3/open_memories_tweak/" title="Open Memories : Tweak — r/a6000 discussion">r/a6000 thread</a>
+  - "Here's a post on how to load discontinued apps onto your A6000" (works, keep the knowledge alive): <a href="https://www.reddit.com/r/a6000/comments/1c8phhk/heres_a-post-on-how-to-load-discontinued-apps/" title="Here's how to load discontinued apps onto your A6000 — step-by-step that works">r/a6000 thread</a>
+  - "Using Sony A6000 with USB power supply": <a href="https://www.reddit.com/r/a6000/comments/15dg64t/" title="Using Sony A6000 with USB power supply — confirmed: no 'supply power via USB while shooting' option">r/a6000 thread</a>
+
+- **r/a6400:** <a href="https://www.reddit.com/r/a6400/" title="r/a6400 — Sony a6400 subreddit">r/a6400</a>
+
+- **r/SonyAlpha** (FE/E mount, A mount & legacy Minolta venue): <a href="https://www.reddit.com/r/SonyAlpha/" title="r/SonyAlpha — Sony Alpha Cameras: FE/E Mount, A Mount, & legacy Minolta welcome here">r/SonyAlpha</a>  
+  - "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)": <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/language_unlock_on_newer_alpha_cameras_a6400/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a>
+  - "Is S-Log viable on the a6400": <a href="https://www.reddit.com/r/SonyAlpha/comments/1coc90x/is_slog_viable_on_the_a6400/" title="Is S-Log viable on the a6400 — r/SonyAlpha discussion">r/SonyAlpha thread</a>
+
+> **Link-health note (verified 2026-08-29):** All links in §4, §8 and §10 checked. `sony.com` (firmware downloads + PlayMemories-ending article), `cloudynights.com`, `dpreview.com` and `reddit.com` all return **403 to curl** (anti-bot) but were **confirmed live via a real browser (CDP port 9223)** in the same session — e.g. Sony firmware v2.00 (Windows `/00016147`, Mac `/00016148`, "Adds real-time Eye AF for animals"), "PlayMemories Camera Apps Ending", and each Cloudy Nights / DPReview / Reddit thread opened with its real title. Two genuinely broken links were found and fixed: the `niemczuk.tech` OpenMemories post (404 → moved to `/2022/10/09/…`) and the `lifepixel.com …/sony-converted-cameras/` listing page (404 → the A6400 conversion product page still works).
+
+### YouTube
+
+- <details>
+  <summary>**OpenMemories-Tweak explained — how to remove the 30-min record limit, NTSC nag & language lock on Sony cameras:** [watch the OpenMemories-Tweak explained tutorial](https://www.youtube.com/watch?v=_cWjNHz6AR8)</summary>
+  Channel: **Shooting Range**. Walks through exactly what OpenMemories-Tweak does and how to use it:
+  - Disables the "running in NTSC" message (for 24p/120p shooters with non-NTSC-region cameras)
+  - Removes the 29:59 video-recording cap (card size becomes the only limit)
+  - On the RX100M4, removes the 5-minute 4K cap
+  - Unlocks all available languages on region-locked cameras
+  - Explains *why* it works: Sony used **Android** as the OS on these cameras (A6000 and older A7 series), and Android can install apps — but the **newer** models (A9, A7R III, RX10 IV) dropped Android, which is why they can't be unlocked this way
+  </details>
+
+- <details>
+  <summary>**A6000 IR filter removal (IR conversion) — what IR photography looks like with a converted camera:** [watch the Sony A6000 IR conversion video](https://www.youtube.com/watch?v=Vta_E7uXOPg)</summary>
+  An informal, conversational IR/astro shoot video (two people getting set up to test IR tubes/cameras, discussing cloud cover and composition on the day). Focus is less on step-by-step disassembly and more on real-world the-idea of IR/astro shooting with a converted A6000. For a *complete* disassembly walkthrough, see the FullSpectrumUK video below (EtAOJoTK4pw).
+  </details>
+
+- <details>
+  <summary>**Converting the Sony A6000 to an Astro Camera (Adrian, narrated) — full H-α filter + shim disassembly:** [watch the A6000 astro conversion tutorial](https://www.youtube.com/watch?v=83sJoiK3VnE)</summary>
+  Full narrated **A6000 → astro conversion** disassembly/reassembly:
+  - Removes one filter and installs an **H-α (Hydrogen-Alpha 656nm) + visible** pass filter
+  - Details the whole teardown: exterior screws, battery-compartment screws, flash cable (still holds charge — be careful), ribbon cables, black insulation, viewfinder, hotshoe, logic board, sensor
+  - **Shims (key tip):** removes all original shims (typically ~0.3mm) and replaces with **three 0.1mm shims** so the sensor shifts forward and reaches **infinity focus** — essential for astro
+  - Warns the sensor ribbon-cable connectors are fragile; if the black latch breaks, cut a small piece of a screen protector, slide it over the ribbon, and tape it down
+  - The filter is attached with 3M double-sided tape (covered in a follow-up video)
+  </details>
+
+- <details>
+  <summary>**Clean HDMI out (A6000/A6400) — how to remove on-screen overlays for webcam/streaming:** [watch the clean HDMI output tutorial](https://www.youtube.com/watch?v=WD_Zz31dAAA)</summary>
+  Quick tutorial on getting a clean HDMI output: with the A6400 plugged into HDMI showing all the on-screen icons, go **MENU → Setup 1 → page 4 → HDMI Settings → HDMI Info. Display → OFF**. The output then shows only the camera image with no overlays — ready for webcam/streaming use.
+  </details>
+
+- <details>
+  <summary>**A6400 S-Log color grading — short teaser clip only (for real guidance use the written S-Log section):** [watch the A6400 S-Log clip](https://www.youtube.com/watch?v=tj3U_l3PQik)</summary>
+  Very short clip (≈9s) — essentially a channel outro ("Thanks for watching!"). Not a substantive S-Log grading tutorial; treat as a teaser only. For real S-Log guidance use the written S-Log section in this doc (S-Log2/PP7 on 8-bit).
+  </details>
+
+- <details>
+  <summary>**A6400 timelapse (Andy Hornby) — built-in intervalometer field demo capturing sunrise:** [watch the A6400 timelapse video](https://www.youtube.com/watch?v=_h_oTxTgYTY)</summary>
+  Channel: **Andy Hornby** (UK wedding/landscape photographer & filmmaker). Field vlog-style video using the **A6400's built-in intervalometer** to capture sunrise/time-lapse sequences — setting up on location to shoot the sun rising through fog, framing on the horizon, and running multiple time-lapse passes through the day. Demonstrates real-world use of the camera's native interval timer rather than a menu-teardown tutorial.
+  </details>
+
+- <details>
+  <summary>**Unlock ALL languages (A7III/A7IV/A7C/6400/6600, Feb 2025) — service-mode language + 30-min record limit unlock:** [watch the language unlock tutorial](https://www.youtube.com/watch?v=WM_PoshgLPY)</summary>
+  2025 tutorial showing the **service-mode language unlock** for the newer Alpha generation (A7III, A7IV, A7C, A6000-series, etc.). Confirms the process: download two files, put the camera in service mode, apply the patch — and notes it **also removes the 30-minute record limit**. Concrete walkthrough of the same method documented in the A6400 workaround gist above.
+  </details>
+
+- <details>
+  <summary>**A6000 full-spectrum disassembly guide (FullSpectrumUK, Mar 2025) — complete teardown, filter removal & shim tips:** [watch the A6000 full-spectrum conversion guide](https://www.youtube.com/watch?v=EtAOJoTK4pw)</summary>
+  Full narrated **A6000 → full-spectrum** conversion (FullSpectrumUK):
+  - Complete teardown: battery/SD out, exterior screws (keep separate — varying type/length), flash screws, top separation, flash connector **insulation** (holds charge), viewfinder, ribbon cables, insulation, hotshoe, main board (contains flash capacitor frame — be careful), silver bracket, sensor
+  - **Filter:** removes the hot mirror from the sensor; also shows the **ultrasonic resonator** re-attached to the sensor (in case a future firmware needs it to work)
+  - **Shims:** discards the original shims; if all three are equal thickness nothing extra is needed, but if a shim is ~1mm thicker it should be replaced with a matching one so **astro corners stay in focus**
+  - **Disables the sensor-cleaning feature** before reassembly
+  </details>
+
+- <details>
+  <summary>**Clean HDMI recording on A6400 (Jun 2025) — turn off HDMI Info Display for overlays-free external recording:** [watch the clean HDMI recording fix](https://www.youtube.com/watch?v=GTlPGI5Z6U4)</summary>
+  Channel: **Hadeset Info**. Shows the "clean HDMI output" problem on the A6400 — when connected to a TV/recorder with default settings you see every on-screen icon. Fix: **MENU → HDMI Settings → HDMI Info. Display → OFF**, producing a clean HDMI feed for external recording / webcam use.
+  </details>
+
+- <details>
+  <summary>**A6400 USB connection fix (USB LUN, Jun 2025) — make the camera recognized by firmware updaters & PCs:** [watch the A6400 USB connection fix](https://www.youtube.com/watch?v=yhaawhKqQOo)</summary>
+  Channel: **HarvRec**. Shows how to fix A6400 USB connection problems by changing the **USB LUN setting**: **MENU → Setup section (yellow) → USB LUN → Single**. Useful when the camera isn't recognized by firmware updaters or computers.
+  </details>
+
+### GitHub
+- **OpenMemories-Tweak:** <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera's settings">ma1co/OpenMemories-Tweak</a>
+- **Sony-PMCA-RE:** <a href="https://github.com/ma1co/Sony-PMCA-RE" title="Reverse Engineering Sony Digital Cameras — SDK tools, driver helpers, PMCA app install">ma1co/Sony-PMCA-RE</a>
+- **OpenMemories-Framework:** <a href="https://github.com/ma1co/OpenMemories-Framework" title="Build Android apps for your favorite Sony camera">ma1co/OpenMemories-Framework</a>
+- **PMCADemo:** <a href="https://github.com/ma1co/PMCADemo" title="A demo app for Sony cameras">ma1co/PMCADemo</a>
+- **PMCA-HDMICam:** <a href="https://github.com/dired/PMCA-HDMICam" title="A clean-HDMI-Output PMCA application for Sony cameras">dired/PMCA-HDMICam</a>
+- **timelapse-sony:** <a href="https://github.com/ThibaudM/timelapse-sony" title="Android WiFi intervalometer for Sony cameras">ThibaudM/timelapse-sony</a>
+- **TimeLapse (OpenMemories):** <a href="https://github.com/jonasjuffinger/TimeLapse" title="A time lapse app for Sony Alpha camera using the OpenMemories framework">jonasjuffinger/TimeLapse</a> — Sony Alpha time-lapse app on the OpenMemories Framework
+- **fwtool.py:** <a href="https://github.com/ma1co/fwtool.py" title="A tool to unpack Sony camera firmware images">ma1co/fwtool.py</a>
+- **sony-a6400-js-control:** <a href="https://github.com/hackerwannabe69/sony-a6400-js-control" title="Node.js USB control of Sony A6400 camera settings">hackerwannabe69/sony-a6400-js-control</a> (Node.js USB control)
+- **sony-a6000-firmware-research (CliffVale):** <a href="https://github.com/CliffVale/sony-a6000-firmware-research/" title="Sony ILCE-6000 (A6000) firmware research — official firmware unpacking, raw NAND dump methodology via pmca updatershell">CliffVale/sony-a6000-firmware-research</a> — full A6000 firmware RE + Android runtime discovery, updatershell dump + OK-press gotcha
+
+### Archives / Datasets
+- **PlayMemories app archive (Internet Archive):** <a href="https://archive.org/download/sony-playmemories-camera-apps" title="PlayMemories Camera Apps archive — community backup of the discontinued PMCA store (Internet Archive)">archive.org: sony playmemories camera apps</a> — community backup of the discontinued PMCA store (incl. `Sony A6000/` folder)
+
+### Commercial Services
+- **Language unlock:** <a href="https://language-unlock.com/en/" title="Unlock any language and any settings on your Sony camera (remote, 15 minutes, retains after firmware updates)">language-unlock.com: en</a> (remote, 15 minutes, retains after firmware updates)
+- **IR conversion (Life Pixel):** <a href="https://www.lifepixel.com/shop/converted-cameras/sony-converted-cameras/sony-a6400-camera-conversion" title="Sony A6400 Camera & Conversion — new camera converted and tailored to your order (Life Pixel)">lifepixel.com: sony a6400 camera conversion</a>
+- **IR conversion (Kolarivision):** <a href="https://kolarivision.com/product/sony-dslr-mirrorless-astrophotography-conversion-service/" title="Sony DSLR and Mirrorless Astrophotography Conversion Service — Kolari Vision">kolarivision.com</a>
+- **IR conversion (IRreCams, EU):** <a href="https://irrecams.de/en/shop/sony-a6400-converted-new/" title="Sony A6400 converted — infrared or astro camera with built-in filter of your choice (IRreCams)">irrecams.de: sony a6400 converted new</a> — A6400 converted w/ built-in filter of choice
+- **IR conversion (Spencers Camera):** <a href="https://www.spencerscamera.com/store/store_product_detail.cfm?Product_ID=13&Category_ID=1&Sub_Category_ID=1" title="Spencers Camera — Sony SLR/Mirrorless IR Conversions, full-spectrum conversion incl. on-lens IR filter">spencerscamera.com</a> — full-spectrum conversion incl. on-lens IR filter flexibility
+- **Battery grips:** <a href="https://www.custombatterygrips.com/store/product/cage-and-battery-add-on-for-sony-a6000-a6300-a6400-a6500" title="Cage and Battery Add-On for Sony A6000 A6300 A6400 A6500 — extended-battery cage combo">custombatterygrips.com</a>
+
+### Blog Posts / Tutorials
+- **Hacking Sony A6000 (Part 1):** <a href="https://docodethatmatters.com/hacking-sony-a6000-for-modernization/" title="Hacking my Sony A6000 Camera Adding Modern Features — DoCodeThatMatters (Part 1)">docodethatmatters.com: hacking sony a6000 for modernization</a>
+- **Hacking Sony A6000 (Part 2):** <a href="https://docodethatmatters.com/hacking-sony-a6000-more/" title="Part 2 of Hacking my Sony A6000 Camera — DoCodeThatMatters (Part 2)">docodethatmatters.com: hacking sony a6000 more</a>
+- **Installing OpenMemories on A6000 (Linux):** <a href="https://niemczuk.tech/2022/10/09/installing-openmemories-on-sony-a6000" title="Installing OpenMemories on Sony a6000 — step-by-step Linux guide blog post">niemczuk.tech: installing openmemories on sony a6000</a>
+- **A6400 language unlock gist:** <a href="https://gist.github.com/gibilli111/eed521cfa7c0be8be8032225da890daa" title="Unlock all languages on Sony a6400/a6600 (region-locked cameras) — step-by-step guide + ready-to-use script">gist (gibilli111)</a>
+- **A6400 English tweak (Japanese camera):** <a href="https://gist.github.com/tikg/df0722b281691bbb9d8127de47e26850" title="Sony a6400 tweak to enable English on a Japanese camera">gist (tikg)</a>
+
+---
+
+## 11. Quick Reference: What Works on Each Camera
+
+| Feature | A6000 | A6400 |
+|---------|-------|-------|
+| OpenMemories-Tweak | ✅ Yes | ❌ No (issue #381) |
+| PMCA app install | ✅ Yes | ❌ No |
+| Language unlock | ✅ Via Tweak | ⚠️ Via service mode workaround |
+| Clean HDMI out | ⚠️ PMCA-HDMICam | ✅ Native menu option |
+| Webcam (USB) | ⚠️ Limited | ✅ Official software |
+| IR filter removal | ✅ DIY or commercial | ✅ DIY or commercial |
+| Battery grip / DC coupler | ✅ Yes | ✅ Yes |
+| S-Log2 | ❌ No | ✅ PP7 |
+| S-Log3 | ❌ No | ⚠️ Possible (not ideal, 8-bit) |
+| Built-in intervalometer | ❌ No | ✅ Yes |
+| Timelapse app (PMCA) | ✅ Yes | ❌ No |
+| Telnet / ADB access | ✅ Via Tweak | ❌ No |
+| Firmware dump | ✅ Via telnet | ⚠️ Service mode only |
+| External 10-bit recording | ⚠️ Via HDMI workaround | ✅ Native clean HDMI |
+| 4K video | ❌ No (1080p max) | ✅ Yes (4K30) |
+| Eye AF (human) | ❌ No | ✅ Yes |
+| Eye AF (animal) | ❌ No | ✅ Firmware 2.00 |
+
+---
+
+## 12. Recommendations
+
+### For A6000 Owners
+1. **Install OpenMemories-Tweak** via PMCA-RE to unlock hidden features (30-min limit, language, telnet/adb)
+2. **Use PMCA-HDMICam** for clean HDMI out / webcam use
+3. **Consider IR mod** if interested in astrophotography (DIY or Life Pixel)
+4. **Add a battery grip** for extended shooting sessions
+5. **Use timelapse-sony** or an external intervalometer for timelapse work
+
+### For A6400 Owners
+1. **Use native clean HDMI out** for webcam / external recording (best option)
+2. **Use S-Log2 (PP7)** for log video — avoid S-Log3 on 8-bit
+3. **Record to external device** (Atomos Ninja V, etc.) for 10-bit 4:2:2
+4. **Language unlock** via service mode workaround if needed (see gist)
+5. **Consider IR mod** for astrophotography (commercial service recommended)
+6. **Use built-in intervalometer** for timelapse
+7. **Add high-capacity batteries** (2250mAh) or DC coupler for extended power
+
+### For Both
+- **Back up firmware** before any mods (use PMCA-RE `updatershell` to dump)
+- **Test in a safe environment** — some mods are irreversible
+- **Join community forums** for support and latest developments
+- **Check GitHub issues** for known bugs and workarounds
+
+---
+
+## 13. Risks & Warnings
+
+1. **Warranty void:** Any internal mod (IR filter, etc.) voids warranty
+2. **Brick risk:** Incorrect firmware dump or settings change can brick the camera
+3. **Data loss:** Factory reset may remove custom tweaks
+4. **Firmware updates:** Sony updates may break custom mods or remove unlocked features
+5. **Sensor damage:** IR mod requires careful disassembly — sensor is fragile
+6. **No official support:** All hacks are unofficial and unsupported by Sony
+
+**If you break your camera, you get to keep both pieces.** — OpenMemories-Tweak README
+
+---
+
+## 14. Further Research Directions
+
+1. **A6400 PMCA compatibility:** Track Sony-PMCA-RE issue #733 for potential A6400 support
+2. **Firmware analysis:** Dump and analyze A6400 firmware for hidden settings (the A6000 now has a full RE project — CliffVale's repo — as a template; a comparable A6400 dump is the natural next step)
+3. **Custom app for A6400:** If PMCA support is added, develop custom apps for A6400
+4. **USB service protocol:** Reverse engineer the A6400's USB service mode for more tweaks — issue #513 confirms a shared service-mode entry with the A6700, widening the target set beyond the A6400
+5. **Sensor modding:** Explore full-spectrum conversion options for both cameras (Life Pixel, Kolarivision, IRreCams, Spencers Camera, plus DIY disassembly guides)
+6. **Power management:** Develop better battery / power solutions for extended use (DC coupler, USB-C power hack, high-capacity NP-FW50 replacements)
+7. **A6000 as an Android platform:** Because the A6000 is confirmed to be Android-powered, explore deeper root/side-loading beyond PMCA (LineageOS-style alternatives are theoretically in scope)
+8. **PlayMemories app preservation:** Contribute to / maintain the Internet Archive backup since Sony permanently ended downloads (Aug 31, 2025)

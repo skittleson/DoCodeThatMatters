@@ -169,6 +169,36 @@ AUDIO_DIR = "public/audio"
 DOCS_AUDIO_DIR = "docs/audio"
 
 
+def _audio_enabled(slug):
+    """
+    Return whether a blog post should get audio generated.
+
+    Reads the frontmatter of src/content/blog/<slug>.md and returns False only
+    when it explicitly sets `audio: false`. Posts with no source markdown, no
+    frontmatter, or no `audio` key default to True (audio enabled).
+    """
+    import yaml
+
+    src_path = f"src/content/blog/{slug}.md"
+    if not os.path.exists(src_path):
+        return True
+
+    with open(src_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    if not content.startswith("---"):
+        return True
+
+    try:
+        end = content.index("\n---", 3)
+        frontmatter = yaml.safe_load(content[3:end])
+    except Exception:
+        return True
+
+    audio = (frontmatter or {}).get("audio", True)
+    return audio not in (False, "false")
+
+
 def _mirror_to_docs_audio(slug, filename):
     """
     Mirror a generated artifact from public/audio/<slug>/<filename> into
@@ -332,6 +362,9 @@ def generate_tts_scripts(slug_filter=None):
         if not os.path.exists(src_path):
             print(f"Skipping script for {folder} (no source markdown)")
             continue
+        if not _audio_enabled(folder):
+            print(f"Skipping script for {folder} (audio: false in frontmatter)")
+            continue
 
         with open(src_path, "rb") as f:
             src_bytes = f.read()
@@ -436,6 +469,10 @@ def text_to_speech_on_plain_text(slug_filter=None):
 
         # Apply slug filter when testing a single post
         if slug_filter and folder != slug_filter:
+            continue
+
+        if not _audio_enabled(folder):
+            print(f"Skipping audio for {folder} (audio: false in frontmatter)")
             continue
 
         with open(txt_path, "r", encoding="utf-8") as f:

@@ -1,93 +1,128 @@
-There’s a picture here of a window with a hole where a bullet has hit the glass. It’s a bit of a metaphor, I suppose, for the kind of breakage you encounter when you’re trying to force two very different operating systems to work together.
+Here is the spoken script based on the blog post.
 
-So, here is the short version of what I’m about to tell you. I built a custom proxy using the Rust programming language. The goal was to keep my internet traffic private and, more importantly, to give myself remote access to my home devices. It’s lightweight, it doesn’t require installing a heavy application on every device, and it works on anything that can point its network settings at a proxy server. In this post, I’ll walk you through the privacy benefits, how I use it to access local services, and why I still rely on it even when I have a full-tunnel VPN connected.
+The image in the post shows a broken window with a hole where a bullet has impacted the glass. It serves as a visual metaphor for the friction and "breakage" I experienced when trying to force two incompatible operating systems to work together.
 
-It started because I wanted to switch to a minimalist operating system. But there was a catch. My job didn’t support Linux, or even Macs at the time. I was locked into Windows for the corporate VPN and a bunch of specific policies. I couldn’t just flip a switch and be done with it. So, I got creative.
+**Title: Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows**
 
-Let’s look at the problem first. I wanted Linux to be my daily driver. But work required Windows for the VPN and certain tools. I tried using WSL2, which is the Windows Subsystem for Linux. It was okay, but honestly, it felt like I was fighting the operating system half the time. USB devices were a nightmare, graphical apps were temperamental, and doing file operations in bulk was just slow or wouldn’t work the way I expected.
+**Introduction**
 
-I needed a way to run Linux full-time but still access my work’s Windows environment seamlessly.
+To give you the long, short version: I built a proxy written in Rust. My goal was twofold. First, I wanted to keep my internet traffic private. Second, I needed remote access to my home devices. The result is lightweight, requires no dedicated app, and works on any device that can be configured to point to a proxy.
 
-My first attempts were a bit rough. I tried using Squid proxy first. It worked, mostly. But I’d get random issues from time to time that I couldn’t quite pin down. Then I wrote a Python script to handle the proxying. That was better, but it felt hacky. I knew I could do better. And, to be honest, I wanted to learn Rust anyway.
+I want to walk you through the privacy benefits, how I use it for local services, and why I still use this setup even though I have access to a full-tunnel corporate VPN.
 
-So, I built a transparent HTTP and HTTPS forward proxy in Rust. It’s nothing fancy, but it solves my specific problem. It supports HTTP and HTTPS proxying via CONNECT tunneling. It has SSL and TLS error detection with helpful diagnostics, which is crucial because corporate certificates are such a pain. It integrates with the Windows firewall to auto-create rules for the proxy port. It comes with cross-platform binaries for Windows, Linux, and macOS. And it’s configurable for host, port, and logging levels.
+**The Problem**
 
-If you want to check out the code, you can find the link to the repository on the blog post. I did use an AI coding assistant to help me build it since I didn’t have a ton of experience with Rust at the time.
+This all started because I wanted to switch to a minimalist operating system. Specifically, I wanted Linux. But there was a catch-22. My job didn’t support Linux. At the time, it didn't even support macOS. I had to use Windows because of the corporate VPN and a bunch of strict security policies. I couldn’t just switch my computer over and be done with it. So, I had to get creative.
 
-Why Rust? The performance is solid. The async architecture with tokio handles plenty of concurrent connections without causing any problems.
+I wanted Linux as my daily driver. Work required Windows for the VPN and certain specific tools. I tried using WSL2—Windows Subsystem for Linux—which is okay, but honestly, it felt like fighting the operating system half the time. Handling USB devices, running GUI applications, and doing bulk file operations were all slow or just plain broken. They didn't work the way I expected.
 
-If you want to see a quick start, you would typically download the latest release for your architecture and run it with a specific host and port. Then, you just point your system or app proxy settings to that host and port. Simple.
+I needed a way to run Linux full-time on my personal machine, but still access my work’s Windows environment seamlessly.
 
-But here is where the real work started. The proxy was the easy part. Getting PopOS to play nice with my work setup? That took some doing.
+**First Attempts**
 
-Let’s start with Docker. Docker doesn’t come pre-installed on PopOS, so here is exactly what I had to do to get it set up.
+I tried using Squid proxy first. It worked… mostly. But I ran into random issues from time to time that I couldn't quite figure out. Then, I wrote a script in Python to handle the proxying. That was better, but it felt hacky.
 
-First, I updated the system packages. I ran the update and upgrade commands to make sure everything was current.
+I knew I could do better. And, honestly, I wanted to learn Rust anyway.
 
-Second, I installed the prerequisites. I needed the APT transport for HTTPS, CA certificates, curl, GPG, and the LSB release tool.
+**The Rust Proxy**
 
-Third, I added Docker’s official GPG key. I created a directory for the keyrings if it didn’t exist, and then I downloaded the GPG key and dearmored it into that folder.
+So, I built a transparent HTTP and HTTPS forward proxy in Rust. It’s nothing fancy, but it solves my specific problem perfectly.
 
-Fourth, I added the Docker repository. I echoed the Debian repository line, pointing to the stable release for my architecture, and saved that to the sources list.
+Here is what it does:
+First, it supports HTTP and HTTPS proxying via CONNECT tunneling.
+Second, it has SSL/TLS error detection with helpful diagnostics. This is crucial because corporate certificates are a pain to deal with.
+Third, it integrates with the Windows firewall and automatically creates rules for the proxy port.
+Fourth, it generates cross-platform binaries for Windows, Linux, and macOS.
+And fifth, it allows you to configure the host, port, and logging levels.
 
-Fifth, I updated the package list again and installed Docker. This included the community edition, the CLI, containerd, and the buildx and compose plugins.
+I did use an AI coding assistant to help me build this since I didn’t have a lot of experience with Rust at the time.
 
-Sixth, I started and enabled the Docker service so it would run on boot.
+Why did I choose Rust? The performance is solid. The async architecture, powered by Tokio, handles plenty of concurrent connections without causing any problems.
 
-Seventh, I added my user to the docker group so I wouldn’t have to use sudo for every command.
+If you want to see how to get it running, the process is simple. You download the latest release binary for your platform. Then, you run it with a specific host address and port. For example, I run it on all interfaces at port 3129. Once that’s running, you just point your system or app proxy settings to that host and port. That’s it.
 
-And eighth, I verified the installation by checking the versions of Docker and Docker Compose.
+**PopOS Setup: The Real Work**
 
-After that, you have to log out and back in, or run a command to apply the group changes, to make sure your user permissions are updated.
+The proxy was actually the easy part. Getting PopOS to play nice with my work setup? That took some doing.
 
-Next up is GitHub account switching. I have both a personal and a work GitHub account. Here’s how I switch between them. For work, I use the GitHub CLI command to switch to my work user. For personal, I switch to my personal user. It would be nice if there was a simpler alias, but this works for now.
+**Docker Install**
 
-I also had to deal with Flatpak and X11. Some Flatpak apps don’t work well with Wayland. Here’s how I forced X11 for VSCodium. I used the flatpak override command to disable the fallback X11 socket and enable the X11 socket specifically for that application.
+Docker doesn’t come pre-installed on PopOS, so I have to install it manually. Here is the general flow of what I do. First, I update my system packages. Second, I install the prerequisites like curl and GPG. Third, I add Docker’s official GPG key to my system. Fourth, I add the Docker repository to my sources list. Fifth, I update the package list again and install the actual Docker engine, the CLI, and the Compose plugin. Sixth, I start the Docker service and enable it to run on boot. Seventh, I add my user account to the Docker group so I don’t have to use sudo for every command. And finally, I verify the installation by checking the versions. After that, you need to log out and back in to apply the group changes.
 
-For .NET, I keep a local install but link it to the system path. I created a symbolic link from my home directory’s .dotnet folder to the system bin directory so that the dotnet command works globally.
+**GitHub Account Switching**
 
-For Node.js, I used NVM. I downloaded the install script from the NVM repository and piped it into bash to install it.
+I have both a personal GitHub account and a work account. To switch between them, I use the GitHub CLI. If I’m working on work stuff, I switch to my work user. If I’m doing personal projects, I switch to my personal user. It would be nice if there was a simpler alias for this, but for now, this works well enough.
 
-PopOS isn’t perfect, though. Here are the window and system issues I had to fix.
+**Flatpak X11 Fallback**
 
-First, Gnome Tweaks. I adjusted services startup using the gnome-session-properties tool. I found a way to change workspaces quickly by using the Super, Control, and Up or Down keys. And to restart the Gnome shell when it hangs, I press Alt plus F, then 2, type "r", and hit enter.
+Some Flatpak apps don’t work well with Wayland, the modern display server. I found that VSCodium, specifically, had issues. To fix this, I force it to use X11 by setting a specific override for that application’s sandbox environment. This forces the graphical interface to render through the older, more compatible protocol.
 
-Second, Bluetooth. I actually ditched my external Bluetooth adapter because it was old and caused issues with PopOS all the time. Instead, I disable the internal adapter when I don’t need it. I list the devices using hciconfig, and then I take the interface down using sudo.
+**.NET and Node.js**
 
-Third, Audio Power Saving. This was a common fix for audio issues. I set the power save parameter of the sound card driver to zero. I did this temporarily by writing to the sys module file, and permanently by creating a configuration file in the modprobe directory to disable power saving.
+For .NET, I keep a local install but link it to the system path so I can call the dotnet command from anywhere without worrying about paths. For Node.js, I use NVM, which is a version manager. I install it using the standard install script from GitHub. This allows me to switch between different versions of Node as needed.
 
-Fourth, Wireplumber Suspend. This was preventing unwanted suspension of audio streams. I edited the Wireplumber configuration file to set the suspend time to zero, and then I restarted the PipeWire service for my user.
+**PopOS Fun Window Issues**
 
-And finally, VSCodium GPU issues. If it’s crashing, I launch it with the GPU disabled.
+PopOS isn’t perfect. Here are some of the specific fixes I had to make to get it right.
 
-Now, here is the part that actually makes everything usable. The Chromium Proxy Setup. I run different work apps through different proxies. Here’s how I launch Chromium with specific proxy settings.
+**Gnome Tweaks**
+There are a few shortcuts and tweaks that help. You can adjust services that start up automatically by running a specific session properties command. You can change workspaces quickly using a combination of the Super key, Control, and Up or Down arrows. And if things get stuck, you can restart the Gnome shell interface by pressing Alt and F2, typing "r", and hitting enter. It’s a bit like a soft reboot for the desktop.
 
-I have a basic proxy command. I run the Flatpak instance of Chromium, point it to my proxy server address and port, and then disown the process so it keeps running in the background.
+**Bluetooth**
+I actually ditched my old Bluetooth adapter because it caused issues with PopOS all the time. To save power and avoid conflicts, I disable the internal adapter when I’m not using it. I use the HCI config tool to list devices and then bring the interface down.
 
-I also have a version with certificate errors ignored. This is useful for internal corporate certs that might not be trusted by the standard chain. I just add the flag to ignore certificate errors to the same command.
+**Audio Power Saving**
+This was a common fix for audio glitches. The sound card driver has a power-saving mode that can cause dropouts. You can disable this temporarily by writing a zero to a specific system file. Or, for a permanent fix, you create a configuration file in the modprobe directory that tells the sound driver to never enter power-save mode.
 
-I have multiple of these setup for different work contexts. It’s not elegant, but it works.
+**Wireplumber Suspend**
+There’s a service called Wireplumber that manages audio sessions. Sometimes it suspends too aggressively. I edited its configuration file to set the suspend time to zero, preventing unwanted suspensions. Then, I restarted the PipeWire service to apply the changes.
 
-For convenience, I set an alias that launches Chromium in a sandboxed Flatpak instance with the proxy already configured. This keeps the proxy settings isolated from your regular Chrome installation and ensures the sandboxed instance respects the corporate certificate chain.
+**VSCodium GPU**
+If VSCodium is crashing for you, try launching it with the GPU disabled. It’s a simple flag that tells the app not to use hardware acceleration for rendering.
 
-The Router Setup is another key piece. I use a travel router to connect my Linux machine to the work Windows machine via ethernet. It’s basically a home lab, but for work. The router runs Wi-Fi 7, which is nice since my work laptops are from 2019 and don’t support it. Since I’m proxying all traffic through the work laptop, this gives me low latency and fast file transfers.
+**Chromium Proxy Setup**
 
-It’s been over a year now. Here’s where I’m at. I’m running PopOS full time on my personal machine. My work machine is only running PopOS with the Cosmic desktop environment. The Rust proxy handles all my traffic routing to the Windows PC. I use the proxy to split internet traffic—work stuff goes through the corporate VPN, and everything else goes direct. And no more OneDrive. I use the web version, git, or my knowledge management system.
+This is the part that actually makes everything usable. I run different work apps through different proxies. Here is how I launch Chromium with specific proxy settings.
 
-Would I do anything differently? Maybe not have spent so much time optimizing Windows, especially when all of my work systems deploy to Linux containers in production anyways. The ecosystem lock-in is real. Once you’re in, it’s hard to get out. But with some creativity and custom code, you can make mixed-OS workflows work for you.
+I use a Flatpak instance of Chromium. I launch it with a command that specifies the profile directory and, crucially, the proxy server address. I point it to my local IP address and port 3129 for both HTTP and HTTPS traffic. Since I’m dealing with corporate certificates, I also add a flag to ignore certificate errors. This is useful for internal tools that might have self-signed or intermediate certs that the browser doesn’t trust.
 
-Let’s talk about Work VPN Conflicts. I use a full-tunnel work VPN, which can be problematic for development. NPM, NuGet, and pip can be extremely slow because all traffic is forced through the corporate network. SSL certificates can also be an issue. With a full VPN, an intermediate certificate is installed and becomes part of the chain. I’m not a TLS expert, but it can cause headaches.
+I have multiple of these setups for different work contexts. It’s not elegant, but it works.
 
-Companies may not even like proxies installed on the PC or allow them in general use. Route tables and routing traffic become interesting. I use a proxy in two different ways depending on the use case. I've been using an HTTPS proxy for over a year. It solved a few major issues for me. In the age of WireGuard and Tailscale, you might wonder why I still use it. Well, it’s about control and visibility.
+**Flatpak Sandbox Chrome Alias**
 
-So, here is the conclusion.
+For convenience, I set up an alias. When I type this alias in my terminal, it launches Chromium in a sandboxed Flatpak instance with the proxy already configured and certificate errors ignored. This keeps the proxy settings isolated from my regular browser installation and ensures the sandboxed instance respects the corporate certificate chain without messing up my personal browsing profile.
 
-Keep it simple. A single, lightweight proxy can solve a lot of headaches without the bloat of a full VPN client.
+**The Router Setup**
 
-Don’t over-optimize. I spent a lot of time tweaking Windows, but the real win was the Linux side. Focus on the part that actually matters to you.
+I use a travel router to connect my Linux machine to the work Windows machine via Ethernet. It’s basically a home lab, but for work. The router runs Wi-Fi 7, which is nice because my work laptops are from 2019 and don’t support that newer standard. Since I’m proxying all traffic through the work laptop, this gives me low latency and fast file transfers.
 
-Document early. The notes you keep for yourself become the next blog post. I'm still adding to this file, and that's why it's a living document.
+**15 Months In**
 
-Stay curious. The tech landscape changes fast. What worked for me last year might be obsolete next year, so keep experimenting.
+It’s been over a year now. Here is where I’m at:
+First, I’m running PopOS full time on my personal machine.
+Second, my work machine is also running PopOS Cosmic.
+Third, the Rust proxy handles all my traffic routing to a Windows PC that I keep around for legacy tools.
+Fourth, I use the proxy to split internet traffic. Work stuff goes through the corporate VPN, and everything else goes direct.
+And fifth, I no longer use OneDrive on my desktop. I use the web version, Git, or my personal knowledge management system instead.
 
-Bottom line: if you're juggling a corporate VPN and a personal workflow, a transparent forward proxy is a surprisingly powerful tool. It keeps your traffic private, gives you remote access to home services, and lets you sidestep the slowdowns of a full-tunnel VPN. Give it a shot and see how it changes your day-to-day dev life.
+Would I do anything differently? Maybe I wouldn't have spent so much time optimizing Windows when all work systems deploy to Linux containers in production anyway. The ecosystem lock-in is real. Once you’re in, it’s hard to get out. But with some creativity and a little custom code, you can make mixed-OS workflows work for you.
+
+**Work VPN Conflicts**
+
+I use a full-tunnel work VPN, which can be problematic for development. Tools like NPM, NuGet, and pip can be extremely slow because all traffic is forced through the corporate network. SSL certificates can also be an issue. With a full VPN, an intermediate certificate is installed and becomes part of the chain. I’m not a TLS expert, but it can cause headaches.
+
+Companies may not even like proxies installed on the PC or allow them in general use. Route tables and routing traffic become interesting puzzles. I use a proxy in two different ways depending on the use case. I’ve been using an HTTPS proxy for over a year. It solved a few major issues for me. In the age of WireGuard and Tailscale, you might wonder why I still use it. But for this specific corporate environment, it makes the most sense.
+
+**Conclusion**
+
+So, what are the takeaways?
+
+First, keep it simple. A single, lightweight proxy can solve a lot of headaches without the bloat of a full VPN client.
+
+Second, don’t over-optimize. I spent a lot of time tweaking Windows, but the real win was on the Linux side. Focus on the part that actually matters to you.
+
+Third, document early. The notes you keep for yourself become the next blog post. I’m still adding to my setup notes, and that’s why this is a living document.
+
+And fourth, stay curious. The tech landscape changes fast. What worked for me last year might be obsolete next year, so keep experimenting.
+
+Bottom line: if you’re juggling a corporate VPN and a personal workflow, a transparent forward proxy is a surprisingly powerful tool. It keeps your traffic private, gives you remote access to home services, and lets you sidestep the slowdowns of a full-tunnel VPN. Give it a shot and see how it changes your day-to-day dev life.

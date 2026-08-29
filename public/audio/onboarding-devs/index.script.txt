@@ -1,19 +1,17 @@
-Effective Onboarding for New Engineers
+Onboarding new engineers on a project can often feel like a time-consuming process. However, by implementing a structured approach, you can make that transition much smoother.
 
-Onboarding new engineers on a project can be a time-consuming process. However, by implementing a structured approach, the transition can be made smoother.
+So, what does an effective onboarding strategy actually look like? Let's walk through the key components.
 
-An effective onboarding strategy includes the following key elements.
+First, you want to provide a comprehensive overview of the project's architecture and make sure that relevant documentation is easily accessible to them.
 
-First, provide a comprehensive overview of the project's architecture and make relevant documentation easily accessible.
+Second, assign tasks or tickets that focus on the implementation of business logic. This gives the new engineer a clear understanding of the project's objectives.
 
-Second, assign tasks or tickets that focus on the implementation of business logic, giving the new engineer a clear understanding of the project's objectives.
+Third, collaborate with them on defining the main test cases. Be sure to include the happy path as well as potential exceptions.
 
-Third, collaborate on the definition of main test cases, including the happy path and potential exceptions.
+Fourth, delay the implementation of external dependencies by using techniques such as dependency injection or the dependency provider pattern. This approach allows the new engineer to focus on the core functionality of the project without getting bogged down in outside integrations right away.
 
-Fourth, delay the implementation of external dependencies by using techniques such as dependency injection or the dependency provider pattern. This approach allows the new engineer to focus on the core functionality of the project.
+Fifth, encourage the new engineer to submit a pull request early. This allows for timely feedback from senior engineers before they go too deep into potential issues.
 
-Fifth, encourage the new engineer to submit a pull request early, allowing for timely feedback from senior engineers.
-
-Finally, schedule regular pair programming, code swarming, or office hours sessions to provide additional support and guidance.
+And finally, schedule regular pair programming, code swarming, or office hours sessions. These provide additional support and guidance when they need it most.
 
 By following this approach, a new engineer can quickly become productive and contribute to the success of the project.

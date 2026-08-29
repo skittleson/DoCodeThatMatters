@@ -1,61 +1,57 @@
-Welcome to this guide on setting up a local first, cloud assisted smart home device. Specifically, we are looking at how to flash a NEO Coolcam Siren with a Temperature and Humidity Multisensor using Tasmota. The goal here is to get a local network first setup working.
+Here is the spoken script for your blog post.
 
-First, let’s look at the components you will need. The main device is the NEO Coolcam Siren Multisensor, which is the hardware we are going to modify. You will also need a Serial-to-USB Adapter to connect the ESP8266 chip on the device to your computer for the flashing process. You can find the specific links for these items on the blog post if you need to purchase them.
+***
 
-Now, regarding the wiring and physical setup. This is a condensed guide on flashing with Tasmota. If you are completely new to this, the official documentation is a great place to start for a full getting started guide.
+So, this guide is about flashing a NEO Coolcam Siren, which also has a temperature and humidity multisensor built in, with Tasmota. The goal here is to get a local-network-first setup running.
 
-To flash this device, you will need to do some soldering directly onto the PCB. There is a plate in the back of the device that needs to be rotated to expose the battery holder. Once you have that open, go ahead and remove the three screws. The tricky part is making all the connections via soldering.
+Let’s start by looking at the components you will need. First, you obviously need the NEO Coolcam Siren Multisensor itself; that is the device we are modifying. Second, you will need a serial-to-USB adapter. You can find this on Amazon if you need to buy one. Its purpose is to connect the ESP8266 chip inside the device to your PC so you can actually flash it.
 
-Here is the wiring map you need to follow. On the Neo Coolcam side, you have GPIO0, GND, TX, RX, and 3.3v. On the flasher side, which is your USB adapter, you have GND, GND, RX, TX, and 3.3v. So, you connect GPIO0 on the device to GND on the flasher. You connect GND on the device to GND on the flasher. You cross the serial lines: connect TX on the device to RX on the flasher, and RX on the device to TX on the flasher. Finally, you connect 3.3v on the device to 3.3v on the flasher.
+Now, for the wiring guide. This is a condensed version of the process. If you want a full getting-started guide, you can find that in the official Tasmota documentation online. To flash this specific device, you will need to solder onto the PCB. There is a plate on the back that needs to be rotated to expose the battery holder. Once that is open, go ahead and remove the three screws.
 
-I have included an image showing the soldering points, which depicts the specific locations on the circuit board where these connections are made. Another image shows the finalized soldering and how the device is wired to the flasher adapter.
+The tricky part is making all the connections via soldering. Remember, you need that serial-to-USB adapter. Here is how the connections should look between the device and the flasher:
+First, connect GPIO0 on the Neo Coolcam to Ground, or GND, on the flasher.
+Second, connect GND on the Neo Coolcam to GND on the flasher.
+Third, connect TX on the Neo Coolcam to RX on the flasher.
+Fourth, connect RX on the Neo Coolcam to TX on the flasher.
+And finally, connect 3.3 volts on the Neo Coolcam to 3.3 volts on the flasher.
 
-It is important to note that GPIO0 must be connected to ground in order for the device to boot into flash mode.
+There is an image in the post showing the soldering points marked up on the device, and another one showing the finalized soldering job where everything is wired to the flasher.
 
-Next, let’s talk about the flashing process itself. First, you need to install esptool. You can do this quickly using PyPi. The command to install it is simply pip install esptool.
+Next, let’s talk about flashing. First, you need to install esptool. You can do this quickly using PyPi. In your terminal, just run the command: pip install esptool.
 
-Once that is installed, it is time to flash. You will need to identify your port and run a specific command in your terminal. This command works on Mac, Linux, or Windows as long as you are using PyPi. The command is esptool, specify your port (for example COM3), then write flash, set the flash size to 1 megabyte, set the flash mode to dout, and point to the tasmota-sensors.bin file.
+Once that is installed, it is time to flash. Change the port to whatever COM port or serial port your device is on, and then run the following command in the terminal. This works whether you are on a Mac, Linux, or Windows when using PyPi. The command is: esptool, then dash-dash-port, then your port number like COM3, then write_flash, then dash-f-s 1MB, then dash-f-m dout, then 0x0, and finally the filename tasmota-sensors.bin.
 
-There is an image here that shows the terminal output during the flashing process, confirming that the Neo Coolcam Multisensor is being flashed successfully.
+There is an image in the post showing what this looks like in the terminal while it is flashing. If you prefer a graphical interface instead of the command line, you can use a GUI tool called Tasmotizer.
 
-If you prefer a graphical interface, there is an alternative tool called Tasmotizer that you can use instead of the command line.
+After flashing, you need to connect to the access point that the device creates to configure its default WiFi so it connects to your local network.
 
-After flashing, connect to the access point that the device creates to configure the default WiFi settings so it can connect to your local network.
+Now, for configuration. In the "Configure Other" section of the Tasmota web interface, you need to apply a template. The specific template for this Neo Coolcam can be found on Blakadder’s templates page. If you copy and paste that template in, it will set up the GPIOs correctly.
 
-Now, moving on to configuration. You need to apply a specific template. You can find this template on the blog post. The template code defines the device as a Neo Siren 3in1 and sets up the GPIO mappings.
+Next, there are some specific Tasmota console commands you should run to configure the sensor behavior. Let’s go through them one by one.
+First, run: Backlog SetOption65 1; SetOption66 1; Module 54. This enables fast power cycle and registers the device as a Tuya module with module ID 54.
+Second, run: TuyaMCU 11,104. This maps the alarm siren and LED to a toggle switch.
+Third, run: TuyaMCU 71,105. This maps the indoor temperature reading.
+Fourth, run: TuyaMCU 73,106. This maps the indoor humidity reading.
+Fifth, run: TempRes 1. This sets the temperature resolution so that instead of seeing a value like 291, you will see 29.1 degrees.
+Sixth, run: TuyaSend2 113,0. This disables the built-in temperature alarm, as you want to handle that logic with a rule instead.
+And seventh, run: TuyaSend2 114,0. This disables the built-in humidity alarm for the same reason.
 
-Here are the Tasmota Console Commands you need to run to get everything working. I will walk you through each one and why it is used.
+All of this assumes you have MQTT configured. The temperature and humidity data will not show up in the UI unless MQTT is set up. If you ever want to undo that specific setting, you can use SetOption66 0. It is also optional but good practice to ensure the dpId states are set by running TuyaSend0.
 
-First, run a backlog command that sets Option 65 to 1 and Option 66 to 1, and sets the module to 54. This enables fast power cycling and registers the device as a Tuya module.
+Once everything is hooked up, the data will be polled and reported every so often. However, there is a caveat: it does not always send both temperature and humidity; sometimes one might be missing. We have to account for that later in our logic.
 
-Second, run TuyaMCU with arguments 11 and 104. This maps the alarm siren and LED to a toggle switch.
+In the post, there is a log snippet that shows what the MQTT message looks like when it arrives. It shows a time stamp and the TuyaSNS object containing the Temperature and Humidity values.
 
-Third, run TuyaMCU with arguments 71 and 105. This maps the indoor temperature sensor.
+There is also a screenshot of the final result in the Tasmota Web UI, showing the Tuya temperature, humidity, and the siren/LED power toggle all working locally.
 
-Fourth, run TuyaMCU with arguments 73 and 106. This maps the indoor humidity sensor.
+I have also considered using rules to catch the Tuya event and then publish the MQTT message within that rule, but let’s look at NodeRed next.
 
-Fifth, run TempRes 1. This adjusts the temperature resolution so that instead of showing a raw value like 291, it displays it as 29.1 degrees.
+For NodeRed and other smart logic: First, set up an MQTT node. You need to subscribe to the topic tele/tasmota, followed by the ID of your device, slash SENSOR. You can find the correct ID on the Tasmota Information screen under "MQTT Full Topic."
 
-Sixth, run TuyaSend2 with arguments 113 and 0. This disables the built-in temperature alarm. We want to handle alarms with a rule instead.
+Next, add a function node. This node needs to handle cases where temperature and/or humidity are undefined. It is also optional to add metadata such as a measurement name for use in Graphana.
 
-Seventh, run TuyaSend2 with arguments 114 and 0. This disables the built-in humidity alarm, again allowing us to use our own rules.
+The code inside that function node does a few things. It sets a measurement variable to 'siren-tv'. Then, it tries to parse the JSON payload. If the TuyaSNS object exists, it initializes a new payload object. It checks if there is a Temperature value and copies it over. It also checks for a Humidity value; if it exists, it multiplies that humidity value by 10 before copying it to the new payload. If anything goes wrong during this parsing, it logs an error saying "unable to get temp and humidity" and stops. Finally, it returns the message.
 
-All of this assumes that you have MQTT configured. The temperature and humidity data will not show up unless this is set up. If you ever want to undo the Tuya specific settings, you can use the command SetOption66 0. It is also optional but recommended to ensure the dpId states are set by running TuyaSend0.
+To turn on the siren remotely, you can send either "ON" or "OFF" to the MQTT topic cmnd/tasmota, followed by your device ID, slash POWER. When you do this, a return MQTT message will be sent back with the status at stat/tasmota, your device ID, slash POWER.
 
-Now that everything is hooked up, the data will be polled and reported every so often. The caveat is that it is not always temperature and humidity data; you must account for this in your logic later.
-
-Here is an example of what the MQTT log looks like. It shows a timestamp and a JSON payload containing the time, the Tuya SNS data with temperature at 28.5 and humidity at 4.3, and the temperature unit set to Celsius.
-
-There is a screenshot of the Tasmota Web UI here. It shows the Tuya temperature, humidity, and the siren LED power toggle, confirming that the configuration was successful.
-
-I have also considered using rules to catch the Tuya event and then publish the MQTT message in that rule.
-
-Moving on to Node-RED and other smart logic. You should set up an MQTT node in Node-RED. The topic should be tele/tasmota_replace_with_id/sensor. You need to replace the ID part with the actual MQTT ID from the Tasmota information screen. You can find this under Information and then MQTT Full Topic.
-
-Next, add a function node that can handle cases where the temperature or humidity might be undefined. It is optional, but you can add metadata such as a measurement tag for use with Grafana.
-
-Here is the logic for that function node. It sets the measurement variable to siren-tv. It tries to parse the JSON payload. If it finds TuyaSNS data, it creates a new payload object. If there is a temperature, it copies that value over. If there is a humidity, it copies that value over but multiplies it by 10. If there is an error, it logs that it was unable to get the temp and humidity.
-
-To turn on the siren remotely, you simply send either ON or OFF to the MQTT topic cmnd/tasmota_replace_with_id/POWER. You will receive a return MQTT message on the topic stat/tasmota_replace_with_id/POWER to confirm the action.
-
-Finally, here are some resources for further reading. You can find the template link, a gist with more details, and the Tasmota documentation on TuyaMCU commands all on the blog post.
+For further reading, you can check out the Blakadder templates page, the Tasmota TuyaMCU documentation, or a gist shared by Patrickdk77 on GitHub for more details on these configurations.
