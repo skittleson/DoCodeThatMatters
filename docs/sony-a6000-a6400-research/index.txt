@@ -246,7 +246,9 @@ Video limitations:
 - No S-Log
 7. Timelapse / Intervalometer
 
-A6400
+The short version: the A6400 has a native built-in intervalometer, while the A6000 does not — it needs an app (or external trigger) to shoot intervals.
+
+A6400 (native)
 Built-in intervalometer: The A6400 has a native internal intervalometer (added in firmware).
 - Setup: MENU → (Movie) → [Interv. Shooting]
 - Set interval, number of shots, and shooting time
@@ -256,8 +258,8 @@ Guides:
 - AlphaShooters: <a href="https://www.alphashooters.com/cameras/a6400/time-lapse-setup-guide/" title="Sony A6400 Time-lapse Setup, Recording and Editing Guide — AlphaShooters">alphashooters.com: time lapse setup guide</a>
 - YouTube: "SONY A6400 AWESOME TIME LAPSE" (Andy Hornby) — field vlog-style demonstration of the A6400's built-in intervalometer in action, capturing sunrise time-lapse sequences with the camera's native interval timer to show real-world results and settings in use: Sony A6400 built-in intervalometer time-lapse example (https://www.youtube.com/watch?v=hoTxTgYTY) (▶ downloaded — see summary in §10)
 
-A6000
-No built-in intervalometer. Options:
+A6000 (with app)
+No built-in intervalometer — you need an app or external trigger. Options:
 
 1. PMCA Time-lapse app:  
    - Was sold through PlayMemories Camera Apps store
@@ -387,7 +389,7 @@ Link-health note (verified 2026-08-29): All links in §4, §8 and §10 checked. 
 YouTube
 
 - <details>
-  <summary>OpenMemories-Tweak explained — how to remove the 30-min record limit, NTSC nag & language lock on Sony cameras: watch the OpenMemories-Tweak explained tutorial (https://www.youtube.com/watch?v=_cWjNHz6AR8)</summary>
+  <summary>OpenMemories-Tweak explained — how to remove the 30-min record limit, NTSC nag & language lock on Sony cameras: <a href="https://www.youtube.com/watch?v=_cWjNHz6AR8">watch the OpenMemories-Tweak explained tutorial</a></summary>
   Channel: Shooting Range. Walks through exactly what OpenMemories-Tweak does and how to use it:
   - Disables the "running in NTSC" message (for 24p/120p shooters with non-NTSC-region cameras)
   - Removes the 29:59 video-recording cap (card size becomes the only limit)
@@ -397,12 +399,12 @@ YouTube
   </details>
 
 - <details>
-  <summary>A6000 IR filter removal (IR conversion) — what IR photography looks like with a converted camera: watch the Sony A6000 IR conversion video (https://www.youtube.com/watch?v=Vta_E7uXOPg)</summary>
+  <summary>A6000 IR filter removal (IR conversion) — what IR photography looks like with a converted camera: <a href="https://www.youtube.com/watch?v=Vta_E7uXOPg">watch the Sony A6000 IR conversion video</a></summary>
   An informal, conversational IR/astro shoot video (two people getting set up to test IR tubes/cameras, discussing cloud cover and composition on the day). Focus is less on step-by-step disassembly and more on real-world the-idea of IR/astro shooting with a converted A6000. For a complete disassembly walkthrough, see the FullSpectrumUK video below (EtAOJoTK4pw).
   </details>
 
 - <details>
-  <summary>Converting the Sony A6000 to an Astro Camera (Adrian, narrated) — full H-α filter + shim disassembly: watch the A6000 astro conversion tutorial (https://www.youtube.com/watch?v=83sJoiK3VnE)</summary>
+  <summary>Converting the Sony A6000 to an Astro Camera (Adrian, narrated) — full H-α filter + shim disassembly: <a href="https://www.youtube.com/watch?v=83sJoiK3VnE">watch the A6000 astro conversion tutorial</a></summary>
   Full narrated A6000 → astro conversion disassembly/reassembly:
   - Removes one filter and installs an H-α (Hydrogen-Alpha 656nm) + visible pass filter
   - Details the whole teardown: exterior screws, battery-compartment screws, flash cable (still holds charge — be careful), ribbon cables, black insulation, viewfinder, hotshoe, logic board, sensor
@@ -412,27 +414,27 @@ YouTube
   </details>
 
 - <details>
-  <summary>Clean HDMI out (A6000/A6400) — how to remove on-screen overlays for webcam/streaming: watch the clean HDMI output tutorial (https://www.youtube.com/watch?v=WD_Zz31dAAA)</summary>
+  <summary>Clean HDMI out (A6000/A6400) — how to remove on-screen overlays for webcam/streaming: <a href="https://www.youtube.com/watch?v=WD_Zz31dAAA">watch the clean HDMI output tutorial</a></summary>
   Quick tutorial on getting a clean HDMI output: with the A6400 plugged into HDMI showing all the on-screen icons, go MENU → Setup 1 → page 4 → HDMI Settings → HDMI Info. Display → OFF. The output then shows only the camera image with no overlays — ready for webcam/streaming use.
   </details>
 
 - <details>
-  <summary>A6400 S-Log color grading — short teaser clip only (for real guidance use the written S-Log section): watch the A6400 S-Log clip (https://www.youtube.com/watch?v=tj3U_l3PQik)</summary>
+  <summary>A6400 S-Log color grading — short teaser clip only (for real guidance use the written S-Log section): <a href="https://www.youtube.com/watch?v=tj3U_l3PQik">watch the A6400 S-Log clip</a></summary>
   Very short clip (≈9s) — essentially a channel outro ("Thanks for watching!"). Not a substantive S-Log grading tutorial; treat as a teaser only. For real S-Log guidance use the written S-Log section in this doc (S-Log2/PP7 on 8-bit).
   </details>
 
 - <details>
-  <summary>A6400 timelapse (Andy Hornby) — built-in intervalometer field demo capturing sunrise: watch the A6400 timelapse video (https://www.youtube.com/watch?v=hoTxTgYTY)</summary>
+  <summary>A6400 timelapse (Andy Hornby) — built-in intervalometer field demo capturing sunrise: <a href="https://www.youtube.com/watch?v=hoTxTgYTY">watch the A6400 timelapse video</a></summary>
   Channel: Andy Hornby (UK wedding/landscape photographer & filmmaker). Field vlog-style video using the A6400's built-in intervalometer to capture sunrise/time-lapse sequences — setting up on location to shoot the sun rising through fog, framing on the horizon, and running multiple time-lapse passes through the day. Demonstrates real-world use of the camera's native interval timer rather than a menu-teardown tutorial.
   </details>
 
 - <details>
-  <summary>Unlock ALL languages (A7III/A7IV/A7C/6400/6600, Feb 2025) — service-mode language + 30-min record limit unlock: watch the language unlock tutorial (https://www.youtube.com/watch?v=WM_PoshgLPY)</summary>
+  <summary>Unlock ALL languages (A7III/A7IV/A7C/6400/6600, Feb 2025) — service-mode language + 30-min record limit unlock: <a href="https://www.youtube.com/watch?v=WM_PoshgLPY">watch the language unlock tutorial</a></summary>
   2025 tutorial showing the service-mode language unlock for the newer Alpha generation (A7III, A7IV, A7C, A6000-series, etc.). Confirms the process: download two files, put the camera in service mode, apply the patch — and notes it also removes the 30-minute record limit. Concrete walkthrough of the same method documented in the A6400 workaround gist above.
   </details>
 
 - <details>
-  <summary>A6000 full-spectrum disassembly guide (FullSpectrumUK, Mar 2025) — complete teardown, filter removal & shim tips: watch the A6000 full-spectrum conversion guide (https://www.youtube.com/watch?v=EtAOJoTK4pw)</summary>
+  <summary>A6000 full-spectrum disassembly guide (FullSpectrumUK, Mar 2025) — complete teardown, filter removal & shim tips: <a href="https://www.youtube.com/watch?v=EtAOJoTK4pw">watch the A6000 full-spectrum conversion guide</a></summary>
   Full narrated A6000 → full-spectrum conversion (FullSpectrumUK):
   - Complete teardown: battery/SD out, exterior screws (keep separate — varying type/length), flash screws, top separation, flash connector insulation (holds charge), viewfinder, ribbon cables, insulation, hotshoe, main board (contains flash capacitor frame — be careful), silver bracket, sensor
   - Filter: removes the hot mirror from the sensor; also shows the ultrasonic resonator re-attached to the sensor (in case a future firmware needs it to work)
@@ -441,12 +443,12 @@ YouTube
   </details>
 
 - <details>
-  <summary>Clean HDMI recording on A6400 (Jun 2025) — turn off HDMI Info Display for overlays-free external recording: watch the clean HDMI recording fix (https://www.youtube.com/watch?v=GTlPGI5Z6U4)</summary>
+  <summary>Clean HDMI recording on A6400 (Jun 2025) — turn off HDMI Info Display for overlays-free external recording: <a href="https://www.youtube.com/watch?v=GTlPGI5Z6U4">watch the clean HDMI recording fix</a></summary>
   Channel: Hadeset Info. Shows the "clean HDMI output" problem on the A6400 — when connected to a TV/recorder with default settings you see every on-screen icon. Fix: MENU → HDMI Settings → HDMI Info. Display → OFF, producing a clean HDMI feed for external recording / webcam use.
   </details>
 
 - <details>
-  <summary>A6400 USB connection fix (USB LUN, Jun 2025) — make the camera recognized by firmware updaters & PCs: watch the A6400 USB connection fix (https://www.youtube.com/watch?v=yhaawhKqQOo)</summary>
+  <summary>A6400 USB connection fix (USB LUN, Jun 2025) — make the camera recognized by firmware updaters & PCs: <a href="https://www.youtube.com/watch?v=yhaawhKqQOo">watch the A6400 USB connection fix</a></summary>
   Channel: HarvRec. Shows how to fix A6400 USB connection problems by changing the USB LUN setting: MENU → Setup section (yellow) → USB LUN → Single. Useful when the camera isn't recognized by firmware updaters or computers.
   </details>
 
