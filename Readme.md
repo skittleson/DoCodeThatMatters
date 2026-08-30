@@ -47,18 +47,23 @@ draft: false
 
 The site is served from the `docs/` directory on the `master` branch.
 
-1. `npm run build` — builds the site, generates audio for changed posts, and patches `docs/rss.xml`
-2. `git add docs/` — stage the build output
-3. `git commit -m "your message"`
-4. `git push` — GitHub Pages picks up the changes automatically
+1. `npm run build` — builds the site only (no audio is generated)
+2. `npm run audio` — optional: generate TTS scripts + audio for changed posts
+3. `git add docs/` — stage the build output
+4. `git commit -m "your message"`
+5. `git push` — GitHub Pages picks up the changes automatically
 
 To preview the build locally before pushing: `npm run preview`
 
 The build pipeline runs three steps automatically:
 ```
-astro build       → generates docs/ including per-post index.txt files
-python main.py    → generates index.mp3 for new/changed posts, patches docs/rss.xml
+astro build                  → generates docs/ including per-post index.txt files
+scripts/generate-epub.mjs    → generates the site epub
+validate scripts (xml + pwa) → validation gates
 ```
+
+Audio generation is never part of `npm run build` — run `npm run audio`
+whenever you want the TTS scripts and mp3/opus files refreshed.
 
 ## Python Setup (uv)
 
@@ -91,13 +96,21 @@ uv run pytest
 
 ### Generating audio (TTS)
 
-```sh
-# Single post (for testing/previewing)
-uv run python main.py --slug your-post-slug
+Audio is explicit — it never runs as part of `npm run build`. `npm run audio`
+calls out which posts changed, then generates only those (hash-cached).
 
-# All posts (run automatically as part of npm run build)
-uv run python main.py
+```sh
+# All changed posts (calls out what changed, then generates)
+npm run audio
+
+# Single post (for testing/previewing)
+npm run audio -- --slug your-post-slug
 ```
+
+Unchanged posts are skipped via the sidecar hashes (`audio-hashes.json` /
+`script-hashes.json`); a post is re-voiced only when its source markdown
+changed or its audio files are missing. Setting `audio: false` in the
+frontmatter skips a post entirely.
 
 ## Resources
 

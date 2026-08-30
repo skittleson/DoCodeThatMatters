@@ -333,9 +333,12 @@ def generate_tts_scripts(slug_filter=None):
     Caching: skip the LLM call when script-hashes.json holds the current
     sha256 of the source .md AND index.script.txt already exists.
 
+    Two passes: first scan all posts and call out which ones changed and will
+    get a fresh script, then generate scripts for just those posts.
+
     Failure handling: any LLM error is caught per-post. A cached script is
     kept as-is; otherwise a warning is logged and no script is written so audio
-    falls back to index.tts. This step never aborts the build.
+    falls back to index.tts. This step never aborts the run.
 
     Args:
         slug_filter: if set, only process the post with this slug name.
@@ -345,8 +348,9 @@ def generate_tts_scripts(slug_filter=None):
 
     base_url, model, api_key = _llm_config()
     script_hashes = _load_audio_hashes(SCRIPT_HASHES_PATH)
-    updates = {}
 
+    # Pass 1: find posts whose source changed and so need a fresh spoken script.
+    pending = []
     for folder in sorted(os.listdir("docs")):
         if "." in folder:
             continue
@@ -374,8 +378,21 @@ def generate_tts_scripts(slug_filter=None):
             print(f"Skipping script for {folder} (source unchanged)")
             continue
 
-        print(f"Generating TTS script for {folder}...")
-        markdown = src_bytes.decode("utf-8")
+        pending.append((folder, src_bytes.decode("utf-8"), src_hash))
+
+    if not pending:
+        print("No posts changed — all TTS scripts up to date.")
+        return
+
+    print(f"\nChanged and needing a regenerated TTS script ({len(pending)}):")
+    for folder, _, _ in pending:
+        print(f"  - {folder}")
+    print()
+
+    # Pass 2: generate scripts for just the changed posts.
+    updates = {}
+    for folder, markdown, src_hash in pending:
+        script_path = f"{AUDIO_DIR}/{folder}/index.script.txt"
         try:
             script = _request_tts_script(markdown, base_url, model, api_key)
         except (requests.RequestException, ValueError, KeyError) as e:
@@ -403,7 +420,7 @@ def generate_tts_scripts(slug_filter=None):
         _save_audio_hashes(updates, SCRIPT_HASHES_PATH)
         print(f"Generated {len(updates)} script(s); updated {SCRIPT_HASHES_PATH}")
     else:
-        print("Nothing to generate — all TTS scripts up to date.")
+        print("No scripts generated — LLM errors left cached scripts in place.")
 
 
 def _select_audio_source(slug):
@@ -426,6 +443,9 @@ def text_to_speech_on_plain_text(slug_filter=None):
     For each docs/<slug>/index.tts, generate docs/<slug>/index.mp3 using
     Kokoro-82M with the af_jessica voice. Runs on CUDA if a GPU is
     available, otherwise falls back to CPU.
+
+    Two passes: first scan all posts and call out which ones changed and will
+    get fresh audio, then synthesize audio for just those posts.
 
     Skip regeneration if BOTH conditions are true:
       - The SHA-256 hash of src/content/blog/<slug>.md matches the hash stored
@@ -451,9 +471,8 @@ def text_to_speech_on_plain_text(slug_filter=None):
     # Load persisted hashes from sidecar
     audio_hashes = _load_audio_hashes()
 
-    model = None  # lazy-load — only instantiate if something needs generating
-    updates = {}  # slugs that were (re)generated this run: { slug: { length, hash } }
-
+    # Pass 1: find posts whose source changed and so need fresh audio.
+    pending = []
     for folder in sorted(os.listdir("docs")):
         # Skip non-post entries (files like rss.xml, feed.json, _astro/, etc.)
         if "." in folder:
@@ -498,76 +517,94 @@ def text_to_speech_on_plain_text(slug_filter=None):
             and os.path.exists(opus_path)
         ):
             print(f"Skipping {folder} (content unchanged)")
-        else:
-            print(f"Generating audio for {folder}...")
+            continue
 
-            if model is None:
-                # Prefer the GPU (Kokoro is ~16x faster on CUDA); fall back to CPU.
-                try:
-                    import torch
+        pending.append((folder, text, txt_hash))
 
-                    device = "cuda" if torch.cuda.is_available() else "cpu"
-                except ImportError:
-                    device = "cpu"
-                _resolve_model("hexgrad/Kokoro-82M")
-                print(f"Loading Kokoro-82M model on {device}...")
-                model = KPipeline(lang_code="a", device=device)
+    if not pending:
+        print("No posts changed — all audio up to date.")
+        return
 
-            audio_chunks = []
-            for chunk in _split_text_for_tts(text):
-                # Skip chunks with no real word content — URLs, punctuation-only
-                # lines, or code remnants produce no phonemes and cause the model
-                # to return no audio, crashing numpy.concatenate.
-                if not any(c.isalpha() for c in chunk):
-                    continue
-                try:
-                    for _, _, result in model(chunk, voice=VOICE):
-                        if result is None:
-                            continue
-                        # Kokoro yields a torch tensor; convert to numpy.
-                        result = numpy.asarray(result)
-                        if result.size > 0:
-                            audio_chunks.append(result)
-                except Exception as e:
-                    print(f"  Warning: skipping chunk ({e!r}): {chunk[:60]!r}")
+    print(f"\nThese {len(pending)} post(s) changed and will get fresh audio:")
+    for folder, _, _ in pending:
+        print(f"  - {folder}")
+    print()
 
-            if not audio_chunks:
-                print(f"  Warning: no audio generated for {folder}, skipping.")
+    # Pass 2: generate audio for just the changed posts.
+    model = None  # lazy-load — only instantiate if something needs generating
+    updates = {}  # slugs that were (re)generated this run: { slug: { length, hash } }
+
+    for folder, text, txt_hash in pending:
+        mp3_path = f"{AUDIO_DIR}/{folder}/index.mp3"
+        opus_path = f"{AUDIO_DIR}/{folder}/index.opus"
+
+        if model is None:
+            # Prefer the GPU (Kokoro is ~16x faster on CUDA); fall back to CPU.
+            try:
+                import torch
+
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+            except ImportError:
+                device = "cpu"
+            _resolve_model("hexgrad/Kokoro-82M")
+            print(f"Loading Kokoro-82M model on {device}...")
+            model = KPipeline(lang_code="a", device=device)
+
+        audio_chunks = []
+        for chunk in _split_text_for_tts(text):
+            # Skip chunks with no real word content — URLs, punctuation-only
+            # lines, or code remnants produce no phonemes and cause the model
+            # to return no audio, crashing numpy.concatenate.
+            if not any(c.isalpha() for c in chunk):
                 continue
+            try:
+                for _, _, result in model(chunk, voice=VOICE):
+                    if result is None:
+                        continue
+                    # Kokoro yields a torch tensor; convert to numpy.
+                    result = numpy.asarray(result)
+                    if result.size > 0:
+                        audio_chunks.append(result)
+            except Exception as e:
+                print(f"  Warning: skipping chunk ({e!r}): {chunk[:60]!r}")
 
-            audio = numpy.concatenate(audio_chunks, axis=-1)
+        if not audio_chunks:
+            print(f"  Warning: no audio generated for {folder}, skipping.")
+            continue
 
-            buf = io.BytesIO()
-            sf.write(buf, audio, 24000, format="WAV")
-            buf.seek(0)
-            os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
-            # MP3 for the RSS enclosure + universal fallback; Opus (speech-tuned
-            # 24 kbps, ~25% smaller than the 32 kbps MP3) as the modern web
-            # source. -application voip optimises libopus for single-voice speech.
-            _wav_to_audio(
-                buf,
-                [
-                    (mp3_path, []),
-                    (
-                        opus_path,
-                        ["-c:a", "libopus", "-b:a", "24k", "-application", "voip"],
-                    ),
-                ],
-            )
+        audio = numpy.concatenate(audio_chunks, axis=-1)
 
-            # Mirror both encodings into docs/audio/ (the served build copy) so
-            # they can't drift stale relative to these fresh public/ copies.
-            _mirror_to_docs_audio(folder, "index.mp3")
-            _mirror_to_docs_audio(folder, "index.opus")
+        buf = io.BytesIO()
+        sf.write(buf, audio, 24000, format="WAV")
+        buf.seek(0)
+        os.makedirs(f"{AUDIO_DIR}/{folder}", exist_ok=True)
+        # MP3 for the RSS enclosure + universal fallback; Opus (speech-tuned
+        # 24 kbps, ~25% smaller than the 32 kbps MP3) as the modern web
+        # source. -application voip optimises libopus for single-voice speech.
+        _wav_to_audio(
+            buf,
+            [
+                (mp3_path, []),
+                (
+                    opus_path,
+                    ["-c:a", "libopus", "-b:a", "24k", "-application", "voip"],
+                ),
+            ],
+        )
 
-            # RSS enclosure length is the MP3 byte size (see rss.xml.ts).
-            mp3_size = os.path.getsize(mp3_path)
-            opus_size = os.path.getsize(opus_path)
-            updates[folder] = {"length": mp3_size, "hash": txt_hash}
-            print(
-                f"  -> {mp3_path} ({mp3_size:,} bytes), "
-                f"{opus_path} ({opus_size:,} bytes)"
-            )
+        # Mirror both encodings into docs/audio/ (the served build copy) so
+        # they can't drift stale relative to these fresh public/ copies.
+        _mirror_to_docs_audio(folder, "index.mp3")
+        _mirror_to_docs_audio(folder, "index.opus")
+
+        # RSS enclosure length is the MP3 byte size (see rss.xml.ts).
+        mp3_size = os.path.getsize(mp3_path)
+        opus_size = os.path.getsize(opus_path)
+        updates[folder] = {"length": mp3_size, "hash": txt_hash}
+        print(
+            f"  -> {mp3_path} ({mp3_size:,} bytes), "
+            f"{opus_path} ({opus_size:,} bytes)"
+        )
 
     if updates:
         # Persist hashes so the next build can skip unchanged posts.
@@ -577,7 +614,7 @@ def text_to_speech_on_plain_text(slug_filter=None):
         _save_audio_hashes({slug: info["hash"] for slug, info in updates.items()})
         print(f"Generated audio for {len(updates)} post(s); updated audio-hashes.json")
     else:
-        print("Nothing to generate — all audio up to date.")
+        print("No audio generated — synthesis errors left existing files in place.")
 
 
 if __name__ == "__main__":

@@ -48,6 +48,10 @@
       "default": false,
       "type": "boolean"
     },
+    "audio": {
+      "default": true,
+      "type": "boolean"
+    },
     "$schema": {
       "type": "string"
     }

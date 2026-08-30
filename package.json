@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && node scripts/generate-epub.mjs && uv run python main.py && node scripts/validate-xml.mjs && node scripts/validate-pwa.mjs",
+    "build": "astro build && node scripts/generate-epub.mjs && node scripts/validate-xml.mjs && node scripts/validate-pwa.mjs",
+    "audio": "uv run python main.py",
     "validate:xml": "node scripts/validate-xml.mjs",
     "validate:pwa": "node scripts/validate-pwa.mjs",
     "preview": "astro preview",
