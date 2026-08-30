@@ -4,7 +4,7 @@ TLDR; This is research blog post for Sony's A6000 (ILCE-6000) and A6400 (ILCE-64
 ## 1. OpenMemories: Tweak (Primary Hack Tool for A6000)
 
 **Repo:** <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera's settings">ma1co/OpenMemories-Tweak</a>  
-**Status:** Does NOT work on A6400 (confirmed by user + GitHub issue #381)
+**Status:** Does NOT work on A6400 (confirmed by user + GitHub issue #381 on Sony-PMCA-RE)
 
 ### What it does
 - Remove the 30-minute video recording limit
@@ -23,11 +23,11 @@ Requires the Sony-PMCA-RE tool to install the APK onto the camera:
 4. App appears in "Application List" on camera
 
 ### A6400 Incompatibility
-- GitHub issue #381: "Tweak do not work on Sony a6400" — users report "No tweaks available" error
+- Sony-PMCA-RE issue #381: "Tweak do not work on Sony a6400" — users report "No Tweaks found" error (the latest Zadig libUSB version is too new and doesn't work for tweaking)
 - The A6400 uses a newer USB service protocol that the current PMCA-RE doesn't fully support
 - Related technical write-up: <a href="https://github.com/ma1co/Sony-PMCA-RE/issues/733" title="ILCE-6400: BACKUP_PDT_READ crashes USB, but per-property readBackup/writeBackup + unlock works as a workaround">ma1co/Sony-PMCA-RE</a>
 
-**Important caveat (2025):** The A6400 is a Sony-camera electron / service-mode oddity. GitHUb issue #513 ("Figured it out for my setup (a6400) (windows)") documents that after entering service mode the device *disconnects* — that is part of the process. At that point you run **Zadig** again and the camera re-appears as a "Sony USB Device" in Zadig. This same flow works on the **ILCE-A6700**, meaning the service-mode entry is shared across newer Alpha bodies even where the app-install path (PMCA) is unsupported.
+**Important caveat (2025):** The A6400 is a Sony-camera electron / service-mode oddity. Sony-PMCA-RE issue #513 ("Figured it out for my setup (a6400) (windows)") documents that after entering service mode the device *disconnects* — that is part of the process. At that point you run **Zadig** again and the camera re-appears as a "Sony USB Device" in Zadig. This same flow works on the **ILCE-A6700**, meaning the service-mode entry is shared across newer Alpha bodies even where the app-install path (PMCA) is unsupported.
 
 ### Workaround for A6400 Language Unlock
 **Gist:** <a href="https://gist.github.com/gibilli111/eed521cfa7c0be8be8032225da890daa" title="Unlock all languages on Sony a6400/a6600 (region-locked cameras) — step-by-step guide + ready-to-use script">gist (gibilli111)</a>  
@@ -36,7 +36,7 @@ Requires the Sony-PMCA-RE tool to install the APK onto the camera:
 Steps (high-level):
 1. Install Zadig drivers (<a href="https://zadig.akeo.ie/" title="Zadig — USB driver installation made easy (for PMCA firmware-development workflow)">zadig.akeo.ie</a>)
 2. Put camera in mass storage mode
-3. Switch to service mode via PMCA-RE `serviceshell` (device will appear to disconnect — this is expected, see issue #513)
+3. Switch to service mode via PMCA-RE `serviceshell` (device will appear to disconnect — this is expected, see Sony-PMCA-RE issue #513)
 4. Re-run Zadig to pick up the camera again as "Sony USB Device"
 5. Apply language unlock patch directly to settings file
 6. Reboot camera
@@ -249,9 +249,9 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 - Use waveform monitor or zebra to avoid clipping highlights
 - 8-bit footage is more prone to banding in shadows — avoid heavy shadow lifting
 
-**External recorder for 10-bit:**
+**External recorder for higher quality:**
 - Use clean HDMI out (native on A6400) + external recorder (Atomos Ninja V, etc.)
-- Can record 10-bit 4:2:2 from A6400 via HDMI
+- Can record 8-bit 4:2:2 from A6400 via HDMI (10-bit requires newer cameras like the A7S III or FX3)
 - This is the best "hack" for video quality on A6400
 
 ### A6000
@@ -325,7 +325,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 **No further firmware updates** have been released since v2.00. Sony has moved on to newer models (A6600, A6700).
 
 ### A6000
-**Latest firmware: v2.00** (released 2015)
+**Latest firmware: v3.21**
 - No significant new features added in later updates
 - Camera is EOL (end of life) from Sony's perspective
 
@@ -416,7 +416,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
   - "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)": <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/language_unlock_on_newer_alpha_cameras_a6400/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a>
   - "Is S-Log viable on the a6400": <a href="https://www.reddit.com/r/SonyAlpha/comments/1coc90x/is_slog_viable_on_the_a6400/" title="Is S-Log viable on the a6400 — r/SonyAlpha discussion">r/SonyAlpha thread</a>
 
-> **Link-health note (verified 2026-08-29):** All links in §4, §8 and §10 checked. `sony.com` (firmware downloads + PlayMemories-ending article), `cloudynights.com`, `dpreview.com` and `reddit.com` all return **403 to curl** (anti-bot) but were **confirmed live via a real browser (CDP port 9223)** in the same session — e.g. Sony firmware v2.00 (Windows `/00016147`, Mac `/00016148`, "Adds real-time Eye AF for animals"), "PlayMemories Camera Apps Ending", and each Cloudy Nights / DPReview / Reddit thread opened with its real title. Two genuinely broken links were found and fixed: the `niemczuk.tech` OpenMemories post (404 → moved to `/2022/10/09/…`) and the `lifepixel.com …/sony-converted-cameras/` listing page (404 → the A6400 conversion product page still works).
+> **Link-health note (verified 2026-08-29):** All links in §4, §8 and §10 checked. `sony.com` (firmware downloads + PlayMemories-ending article), `cloudynights.com`, `dpreview.com` and `reddit.com` all return **403 to curl** (anti-bot) but were **confirmed live via a real browser (CDP port 9223)** in the same session — e.g. Sony firmware v3.21 (Windows `/00015954`), "PlayMemories Camera Apps Ending", and each Cloudy Nights / DPReview / Reddit thread opened with its real title. Two genuinely broken links were found and fixed: the `niemczuk.tech` OpenMemories post (404 → moved to `/2022/10/09/…`) and the `lifepixel.com …/sony-converted-cameras/` listing page (404 → the A6400 conversion product page still works).
 
 ### YouTube
 
@@ -533,7 +533,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 | Timelapse app (PMCA) | ✅ Yes | ❌ No |
 | Telnet / ADB access | ✅ Via Tweak | ❌ No |
 | Firmware dump | ✅ Via telnet | ⚠️ Service mode only |
-| External 10-bit recording | ⚠️ Via HDMI workaround | ✅ Native clean HDMI |
+| External HDMI recording (8-bit 4:2:2) | ⚠️ Via HDMI workaround | ✅ Native clean HDMI |
 | 4K video | ❌ No (1080p max) | ✅ Yes (4K30) |
 | Eye AF (human) | ❌ No | ✅ Yes |
 | Eye AF (animal) | ❌ No | ✅ Firmware 2.00 |
@@ -552,7 +552,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 ### For A6400 Owners
 1. **Use native clean HDMI out** for webcam / external recording (best option)
 2. **Use S-Log2 (PP7)** for log video — avoid S-Log3 on 8-bit
-3. **Record to external device** (Atomos Ninja V, etc.) for 10-bit 4:2:2
+3. **Record to external device** (Atomos Ninja V, etc.) for 8-bit 4:2:2 (10-bit requires A7S III or newer)
 4. **Language unlock** via service mode workaround if needed (see gist)
 5. **Consider IR mod** for astrophotography (commercial service recommended)
 6. **Use built-in intervalometer** for timelapse
@@ -584,7 +584,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 1. **A6400 PMCA compatibility:** Track Sony-PMCA-RE issue #733 for potential A6400 support
 2. **Firmware analysis:** Dump and analyze A6400 firmware for hidden settings (the A6000 now has a full RE project — CliffVale's repo — as a template; a comparable A6400 dump is the natural next step)
 3. **Custom app for A6400:** If PMCA support is added, develop custom apps for A6400
-4. **USB service protocol:** Reverse engineer the A6400's USB service mode for more tweaks — issue #513 confirms a shared service-mode entry with the A6700, widening the target set beyond the A6400
+4. **USB service protocol:** Reverse engineer the A6400's USB service mode for more tweaks — Sony-PMCA-RE issue #513 confirms a shared service-mode entry with the A6700, widening the target set beyond the A6400
 5. **Sensor modding:** Explore full-spectrum conversion options for both cameras (Life Pixel, Kolarivision, IRreCams, Spencers Camera, plus DIY disassembly guides)
 6. **Power management:** Develop better battery / power solutions for extended use (DC coupler, USB-C power hack, high-capacity NP-FW50 replacements)
 7. **A6000 as an Android platform:** Because the A6000 is confirmed to be Android-powered, explore deeper root/side-loading beyond PMCA (LineageOS-style alternatives are theoretically in scope)
