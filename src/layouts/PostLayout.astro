@@ -34,6 +34,45 @@ const latestPosts = allPosts
 const tfidfModel = buildTFIDF(allPosts.map((p) => p.body));
 const relatedPosts = getRelatedPosts(post, allPosts, tfidfModel, 3);
 
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': postUrl,
+    url: postUrl,
+    headline: title,
+    ...(description ? { description } : {}),
+    image: image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : undefined,
+    datePublished: date ? date.toISOString() : undefined,
+    dateModified: modified ? modified.toISOString() : undefined,
+    wordCount,
+    author: { '@id': `${siteUrl}/about/#person` },
+    publisher: { '@id': `${siteUrl}/about/#organization` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${siteUrl}/about/#person`,
+    name: 'Spencer Kittleson',
+    url: `${siteUrl}/about/`,
+    jobTitle: 'Software Engineer',
+    sameAs: [
+      'https://github.com/skittleson',
+      'https://www.linkedin.com/in/skittleson/',
+      'https://stackoverflow.com/users/2414540/spencer',
+      'https://twitter.com/skittleson',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${siteUrl}/about/#organization`,
+    name: 'Do Code That Matters',
+    url: `${siteUrl}/`,
+    logo: `${siteUrl}/images/agile.jpg`,
+  },
+]);
+
 const issueTitle = encodeURIComponent(`Post - ${title}`);
 
 // Responsive image helpers
@@ -54,6 +93,7 @@ const localWebp = isLocalImage
   ogType="article"
   twitterCard="summary_large_image"
 >
+  <script type="application/ld+json" set:html={jsonLd} />
   <main class="container mx-auto px-4 py-8 max-w-4xl">
     <div class="lg:grid lg:grid-cols-4 lg:gap-8">
       <!-- Main Article -->
