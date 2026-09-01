@@ -154,36 +154,6 @@
     {
       "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
       "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
-      "title": "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows",
-      "summary": "How I built a Rust-powered transparent HTTP(S) proxy to seamlessly route my Linux traffic through a Windows work machine, with PopOS setup, Docker config, and Chromium proxy tips.",
-      "image": "/images/broken-window.jpeg",
-      "date_published": "2026-03-16T00:00:00.000Z",
-      "date_modified": "2026-03-16T00:00:00.000Z",
-      "tags": [
-        "rust",
-        "proxy",
-        "http",
-        "https",
-        "networking",
-        "linux",
-        "windows",
-        "mixed-OS",
-        "development workflow",
-        "popos",
-        "wsl2",
-        "developer tools",
-        "transparent proxy"
-      ],
-      "authors": [
-        {
-          "name": "Spencer Kittleson"
-        }
-      ],
-      "word_count": 1427
-    },
-    {
-      "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
-      "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
       "title": "Custom HTTP Proxy in Rust for Mixed-OS Workflows",
       "summary": "I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no-app, works on any device that can point to a proxy.",
       "image": "/images/broken-window.jpeg",
