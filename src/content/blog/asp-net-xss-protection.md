@@ -1,6 +1,6 @@
 ---
 title: ASP.NET XSS protection
-description: "\"Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).\""
+description: Hardening an ASP.NET Web API for PCI XSS testing — web.config headers, input validation, and OWASP mitigations.
 date: 2017-09-06
 modified: 2026-07-16
 image: /images/SSL-Featured.png

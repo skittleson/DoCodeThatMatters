@@ -1,5 +1,5 @@
 ---
-title: Automate Cleaning of Air Conditioner Condensate Drain Line 
+title: Automate AC Condensate Drain Line Cleaning
 keywords: 
     - tasmota water pump
     - AC condensate drain line

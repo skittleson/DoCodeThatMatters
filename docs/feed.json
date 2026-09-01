@@ -14,7 +14,7 @@
     {
       "id": "https://docodethatmatters.com/sony-a6000-a6400-research/",
       "url": "https://docodethatmatters.com/sony-a6000-a6400-research/",
-      "title": "Sony A6000 and A6400 Research: Hacks, Mods and Community Resources",
+      "title": "Sony A6000/A6400 Hacks, Mods and Community Resources",
       "summary": "Deep-dive reference on hacking, modding, and community resources for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400) — OpenMemories-Tweak, PMCA-RE firmware dumping, clean HDMI/webcam hacks, IR & full-spectrum conversions, power/battery mods, S-Log video, timelapse, and the Sony PlayMemories app archive.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2026-08-29T00:00:00.000Z",
@@ -72,7 +72,7 @@
     {
       "id": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
       "url": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
-      "title": "I scanned the BLE devices around my house - they are sharing everything",
+      "title": "BLE Devices Around My House Are Sharing Everything",
       "summary": "An inspired project from DEFCON 2024 of the Wall of Sheep with ble devices",
       "image": "/images/ble_wall_of_sheep.jpg",
       "date_published": "2026-06-17T00:00:00.000Z",
@@ -102,7 +102,7 @@
     {
       "id": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
       "url": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
-      "title": "The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key",
+      "title": "The Infinite Echo: A Tasmota State-Mirror Bug",
       "summary": "A state-mirror rule that updates the relay but never the dedup key guarantees an infinite echo, the same failure shape as replication storms and webhook retry loops. I found it live in two MQTT-linked light switches.",
       "image": "/images/tasmota-runaway-loop-before.png",
       "date_published": "2026-06-01T00:00:00.000Z",
@@ -129,7 +129,7 @@
     {
       "id": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
       "url": "https://docodethatmatters.com/oauth-token-exchange-sso-demo/",
-      "title": "I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions.",
+      "title": "OAuth Token Exchange with Authentik: The Security Tradeoff",
       "summary": "Authentik does not support RFC 8693 token exchange. The workaround works, but it shifts a security assumption most people never notice. Here is what I found and how it compares to Keycloak.",
       "image": "/images/oauth-token-exchange-network.jpg",
       "date_published": "2026-03-23T00:00:00.000Z",
@@ -184,7 +184,7 @@
     {
       "id": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
       "url": "https://docodethatmatters.com/building-custom-http-proxy-rust-mixed-os-workflows/",
-      "title": "Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows",
+      "title": "Custom HTTP Proxy in Rust for Mixed-OS Workflows",
       "summary": "I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no-app, works on any device that can point to a proxy.",
       "image": "/images/broken-window.jpeg",
       "date_published": "2026-03-15T00:00:00.000Z",
@@ -345,7 +345,7 @@
     {
       "id": "https://docodethatmatters.com/skateboard-gear/",
       "url": "https://docodethatmatters.com/skateboard-gear/",
-      "title": "Parametric Belt Driven 3D Printed Spur Gear for Electric Skateboards",
+      "title": "3D Printed Spur Gear for Electric Skateboards",
       "summary": "Update on using a parametric 3D printed gear for my DIY electric skateboard after 100+ hours of riding.",
       "image": "https://preview.redd.it/0zl39s6dcjd51.png?width=640&crop=smart&auto=webp&s=48567f3f2aad79c253526693e60a65888728c953",
       "date_published": "2022-06-20T00:00:00.000Z",
@@ -391,7 +391,7 @@
     {
       "id": "https://docodethatmatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line/",
       "url": "https://docodethatmatters.com/automate-cleaning-of-air-conditioner-condensate-drain-line/",
-      "title": "Automate Cleaning of Air Conditioner Condensate Drain Line",
+      "title": "Automate AC Condensate Drain Line Cleaning",
       "summary": "Flash a smart wifi dual water pump to automate cleaning the air conditioner line.  A common home maintenance task that is easily forgotten to do each month.",
       "image": "https://templates.blakadder.com/assets/device_images/WD-01ADE.webp",
       "date_published": "2021-12-31T00:00:00.000Z",
@@ -628,7 +628,7 @@
       "id": "https://docodethatmatters.com/asp-net-xss-protection/",
       "url": "https://docodethatmatters.com/asp-net-xss-protection/",
       "title": "ASP.NET XSS protection",
-      "summary": "\"Securing an ASP.NET WebApi for PCI application tests is no trivial matter.  It can take weeks of planning and the app to be analyzed.  After reviewing OWASP and other related XSS sites, the web.config was the first to be updated to prevent against attacks (MIIM & XSS).\"",
+      "summary": "Hardening an ASP.NET Web API for PCI XSS testing — web.config headers, input validation, and OWASP mitigations.",
       "image": "/images/SSL-Featured.png",
       "date_published": "2017-09-06T00:00:00.000Z",
       "date_modified": "2026-07-16T00:00:00.000Z",

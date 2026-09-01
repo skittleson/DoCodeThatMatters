@@ -1,5 +1,5 @@
 ---
-title: "I scanned the BLE devices around my house - they are sharing everything"
+title: "BLE Devices Around My House Are Sharing Everything"
 keywords:
     - bluetooth
     - ble

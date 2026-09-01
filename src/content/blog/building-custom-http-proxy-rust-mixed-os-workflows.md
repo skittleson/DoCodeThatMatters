@@ -1,5 +1,5 @@
 ---
-title: Building a Custom HTTP Proxy in Rust for Mixed-OS Workflows
+title: Custom HTTP Proxy in Rust for Mixed-OS Workflows
 keywords:
   - rust
   - proxy

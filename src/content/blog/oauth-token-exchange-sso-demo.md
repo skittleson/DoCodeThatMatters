@@ -1,5 +1,5 @@
 ---
-title: "I tried to do OAuth token exchange with Authentik. Here is the security tradeoff nobody mentions."
+title: "OAuth Token Exchange with Authentik: The Security Tradeoff"
 keywords:
   - oauth
   - token exchange

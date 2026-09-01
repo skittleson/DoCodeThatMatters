@@ -1,5 +1,5 @@
 ---
-title: 'The Infinite Echo: a State-Mirror Bug That Applies the Effect but Not the Dedup Key'
+title: 'The Infinite Echo: A Tasmota State-Mirror Bug'
 keywords:
     - smart home
     - Tasmota

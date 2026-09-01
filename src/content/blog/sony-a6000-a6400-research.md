@@ -1,5 +1,5 @@
 ---
-title: "Sony A6000 and A6400 Research: Hacks, Mods and Community Resources"
+title: "Sony A6000/A6400 Hacks, Mods and Community Resources"
 keywords:
   - Sony A6000
   - Sony a6400
