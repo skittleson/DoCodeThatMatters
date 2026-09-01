@@ -29,6 +29,25 @@ const author = 'Spencer Kittleson';
 const pageUrl = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).href;
 const keywordsStr = keywords.join(', ');
+
+const jsonLd = JSON.stringify([
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: `${siteUrl}/`,
+    name: company,
+    publisher: { '@id': `${siteUrl}/about/#organization` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${siteUrl}/about/#organization`,
+    name: company,
+    url: `${siteUrl}/`,
+    logo: `${siteUrl}/images/agile.jpg`,
+  },
+]);
 ---
 
 <!DOCTYPE html>
@@ -76,6 +95,9 @@ const keywordsStr = keywords.join(', ');
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:creator" content="@skittleson" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json" set:html={jsonLd} />
 
   <!-- Feeds -->
   <link type="application/rss+xml" rel="alternate" title={`${company} - ${author}`} href="/rss.xml" />
