@@ -29,24 +29,62 @@ import ContactInfo from '../../components/ContactInfo.astro';
     </h1>
 
     <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
-      As a software engineer with a wealth of experience in software development and database design,
-      I am well-versed in a wide range of modern computer languages, with a particular focus on .NET
-      technologies. My expertise extends to building and scaling systems to work seamlessly across
-      multiple platforms, with a strong emphasis on testing and ensuring the success of my fellow
-      developers.
+      I like to make things work... in software, on the bench, and around the house.
+      I'm a software engineer who spends most of my days building and scaling systems
+      with a focus on .NET, authentication, and database design. When the compiler
+      stops yelling at me, I'm usually 3D printing something, wiring up a Raspberry Pi,
+      or automating another part of the house.
     </p>
 
-    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
-      In addition to my professional pursuits, I am also deeply passionate about a variety of
-      technology-related hobbies. I enjoy experimenting with 3D printing, working with Raspberry Pi
-      and Arduino microcontrollers, and exploring the world of home automation. I also enjoy
-      organizing and hosting hackathons, providing an opportunity for others to share in my passion
-      for technology.
+    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      This site is where I write down what i build and what i learn along the way.
+      The name says it: do code that matters. Build something real, ship it, and make
+      sure it helps someone.
     </p>
 
-    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
-      My ultimate goal is to develop software that is efficient, reliable, and user-friendly, and to
-      empower developers to achieve success in their work.
+    <h2 class="text-xl font-bold mb-4">Things i've built</h2>
+
+    <ul class="mb-6 space-y-3 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      <li>
+        <span class="text-[#f5f5f5]">OAuth / SSO.</span>
+        Worked through token exchange and SSO flows end to end.
+        <a href="/blog/oauth-token-exchange-sso-demo/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+      </li>
+      <li>
+        <span class="text-[#f5f5f5]">Rust + mixed-OS tooling.</span>
+        Built a custom HTTP proxy in Rust to get corporate VPN working on Linux.
+        <a href="/blog/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+      </li>
+      <li>
+        <span class="text-[#f5f5f5]">Home automation.</span>
+        Sprinklers, sensors, and smart switches that run local first.
+        <a href="/blog/small-home-automations/" class="text-[#9da2ff] hover:underline">Small automations</a>
+        and
+        <a href="/blog/automate-sprinkler-with-tasmota/" class="text-[#9da2ff] hover:underline">the sprinkler build</a>.
+      </li>
+      <li>
+        <span class="text-[#f5f5f5]">Hardware that ships.</span>
+        A DIY electric skateboard with a 3D printed parametric gear.
+        <a href="/blog/diy-electric-skateboard/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+      </li>
+    </ul>
+
+    <h2 class="text-xl font-bold mb-4">How i got here</h2>
+
+    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      I started out wanting to understand how things worked, and the only way to find
+      out was to take them apart. That turned into a career building software for a
+      living, and a habit of building stuff for fun that never really went away. The
+      line between the two got blurry fast... a camera hack needs Python and OpenCV, a
+      sprinkler needs MQTT and Grafana, and a proxy needs Rust. i dont separate them.
+    </p>
+
+    <h2 class="text-xl font-bold mb-4">What im after</h2>
+
+    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+      My goal is simple: build software that's efficient, reliable, and a joy for other
+      developers to use. Then write down what i learned so it helps someone else. If
+      you're reading this, you're probably one of those someones.
     </p>
 
     <p class="mb-6 text-[#f5f5f5] font-mono text-sm">Interested in consulting?</p>
@@ -101,7 +139,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
         &check; Message sent
       </p>
       <p class="font-mono text-sm text-[#a0aec0]">
-        Thanks for reaching out — I'll get back to you soon.
+        Thanks for reaching out... i'll get back to you soon.
       </p>
     </div>
 
