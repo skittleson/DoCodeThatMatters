@@ -30,7 +30,7 @@
 - [Research on Bluetooth Proximity](https://docodethatmatters.com/research-bluetooth-proximity/) (2019-10-19): Research on bluetooth proximity using open tools such as hcitool, l2ping, and hcidump
 - [Software Engineering Lessons](https://docodethatmatters.com/software-engineering-lessons/) (2018-10-23): In the field notes and lessons learned as a software engineer.
 - [Yet Another Garage Door Opener](https://docodethatmatters.com/yet-another-garage-door-opener/) (2018-05-11): Just another garage door opener using a raspberry pi
-- [ASP.NET XSS protection](https://docodethatmatters.com/asp-net-xss-protection/) (2017-09-06): Hardening an ASP.NET Web API for PCI XSS testing — web.config headers, input validation, and OWASP mitigations.
+- [ASP.NET XSS protection](https://docodethatmatters.com/asp-net-xss-protection/) (2017-09-06): Hardening an ASP.NET Web API for PCI XSS testing — web.config security headers, strict input validation, and OWASP-aligned mitigations.
 - [Raspberry Pi Bluetooth Proximity Detector - A Simple Guide](https://docodethatmatters.com/raspberry-pi-bluetooth-proximity/) (2017-05-26): Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.
 
 ## Machine-readable formats

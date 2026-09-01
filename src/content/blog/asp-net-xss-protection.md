@@ -1,6 +1,6 @@
 ---
 title: ASP.NET XSS protection
-description: Hardening an ASP.NET Web API for PCI XSS testing — web.config headers, input validation, and OWASP mitigations.
+description: Hardening an ASP.NET Web API for PCI XSS testing — web.config security headers, strict input validation, and OWASP-aligned mitigations.
 date: 2017-09-06
 modified: 2026-07-16
 image: /images/SSL-Featured.png

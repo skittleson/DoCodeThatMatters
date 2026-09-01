@@ -628,7 +628,7 @@
       "id": "https://docodethatmatters.com/asp-net-xss-protection/",
       "url": "https://docodethatmatters.com/asp-net-xss-protection/",
       "title": "ASP.NET XSS protection",
-      "summary": "Hardening an ASP.NET Web API for PCI XSS testing — web.config headers, input validation, and OWASP mitigations.",
+      "summary": "Hardening an ASP.NET Web API for PCI XSS testing — web.config security headers, strict input validation, and OWASP-aligned mitigations.",
       "image": "/images/SSL-Featured.png",
       "date_published": "2017-09-06T00:00:00.000Z",
       "date_modified": "2026-07-16T00:00:00.000Z",
