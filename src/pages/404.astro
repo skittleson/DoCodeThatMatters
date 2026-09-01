@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog/', label: 'All posts' },
+  { href: '/about/', label: 'About' },
+];
+---
+
+<BaseLayout title="Page not found — Do Code That Matters">
+  <main class="container mx-auto px-4 py-24 text-center max-w-xl">
+    <h1 class="text-3xl font-bold mb-4" style="color: var(--color-text);">
+      Page not found
+    </h1>
+    <p class="font-mono mb-8" style="color: var(--color-text-muted);">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+    <nav class="flex justify-center gap-6 font-mono text-sm">
+      {links.map((l) => (
+        <a href={l.href} style="color: var(--color-accent);" class="hover:underline">
+          {l.label} &rarr;
+        </a>
+      ))}
+    </nav>
+  </main>
+</BaseLayout>
