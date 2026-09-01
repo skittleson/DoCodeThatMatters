@@ -3,19 +3,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const links = [
   { href: '/', label: 'Home' },
-  { href: '/blog/', label: 'All posts' },
   { href: '/about/', label: 'About' },
+  { href: '/blog.epub', label: 'EPUB' },
+  { href: '/rss.xml', label: 'RSS' },
 ];
 ---
 
 <BaseLayout title="Page not found — Do Code That Matters">
   <main class="container mx-auto px-4 py-24 text-center max-w-xl">
+    <figure class="mb-8">
+      <picture>
+        <source type="image/webp" srcset="/images/cold-solder-joint.webp" />
+        <img
+          src="/images/cold-solder-joint.jpg"
+          alt="A cold solder joint on a circuit board"
+          width="700"
+          height="520"
+          class="rounded-md w-full max-w-[480px] mx-auto object-cover"
+          loading="eager"
+        />
+      </picture>
+      <figcaption class="mt-2 font-mono text-xs" style="color: var(--color-text-muted);">
+        Photo:
+        <a
+          href="https://commons.wikimedia.org/wiki/File:Cold_solder_joint.jpg"
+          style="color: var(--color-accent);"
+          class="hover:underline"
+          target="_blank"
+          rel="noopener"
+        >
+          Coronium / Wikimedia Commons (CC BY-SA 3.0)
+        </a>
+      </figcaption>
+    </figure>
+
     <h1 class="text-3xl font-bold mb-4" style="color: var(--color-text);">
-      Page not found
+      404 — Connection Reset by Hardware
     </h1>
     <p class="font-mono mb-8" style="color: var(--color-text-muted);">
-      The page you're looking for doesn't exist or has been moved.
+      This page hit the same fate as my first PCB: a cold solder joint. It looked fine, but it
+      wasn't making contact.
     </p>
+
     <nav class="flex justify-center gap-6 font-mono text-sm">
       {links.map((l) => (
         <a href={l.href} style="color: var(--color-accent);" class="hover:underline">
