@@ -16,8 +16,8 @@ keywords:
   - vllm
   - speculative decoding
 date: 2026-08-19
-modified: 2026-08-19
-description: How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, and the quant type and sampler flag that quietly bit me.
+modified: 2026-09-24
+description: How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me, and the repetition fix that came undone during a model swap.
 image: /images/rtx-3090.jpg
 alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.
 imageWidth: 1200
@@ -52,9 +52,9 @@ If there is one meta-lesson from all of that: measure on your own box. Nearly ev
 
 The rig is a Pop!_OS box with an RTX 3090 Ti (24GB, Ampere). It runs [llama.cpp](https://github.com/ggml-org/llama.cpp) as a systemd service, exposing an OpenAI-compatible API on port 8080. My editor (OpenCode) points a provider at `http://<box>:8080/v1` and never knows the difference.
 
-The model is a 27B Qwen3.8 coder variant, quantized to `Q4_K_M` (about 16GB on disk). That leaves just enough VRAM for a 200K token context window with a q4_0 KV cache and MTP speculative decoding turned on. It runs around 70 tokens/second. On a coding agent that fires a lot of tool calls, that is plenty.
+The model is a 27B Qwen3.8 coder variant, quantized to `Q4_K_M` (about 16GB on disk). That leaves just enough VRAM for a 200K token context window with a q4_0 KV cache and MTP speculative decoding turned on. It runs around 62 tokens/second on the current llama.cpp build. On a coding agent that fires a lot of tool calls, that is plenty.
 
-Here is the actual command, pulled straight from the systemd unit that runs it:
+Here is the actual command, pulled straight from the systemd unit that runs it (updated since first publishing — see the follow-ups below):
 
 ```sh
 llama-server \
@@ -62,6 +62,7 @@ llama-server \
   -c 200000 \
   --parallel 1 \
   -ngl 99 \
+  --ubatch-size 2048 \
   --cache-type-k q4_0 \
   --cache-type-v q4_0 \
   --flash-attn on \
@@ -69,6 +70,7 @@ llama-server \
   --cache-ram 32768 \
   --ctx-checkpoints 8 \
   --jinja \
+  --chat-template-file ~/llm-units/qwen38-chat-template.jinja \
   --spec-type draft-mtp \
   --spec-draft-n-max 4 \
   --reasoning off \
@@ -77,6 +79,7 @@ llama-server \
   --top-k 20 \
   --min-p 0 \
   --presence-penalty 1.0 \
+  --dry-multiplier 0.8 \
   --alias Qwen3.8-27B \
   --host 0.0.0.0 \
   --port 8080
@@ -88,15 +91,16 @@ Every one of those flags is doing something specific:
 - **`-c 200000`** — the context window, in tokens. This is the ceiling for prompt + tool output + reply combined, and it is the number everything else below is tuned around, to make it fit in 24GB of VRAM.
 - **`--parallel 1`** — one request slot, not the default of several. I'm the only client (OpenCode, over the LAN), so reserving KV cache for concurrent requests I'll never make would just waste VRAM I need for context.
 - **`-ngl 99`** — the one that matters most. It offloads every layer to the GPU ("number of GPU layers"). Get this wrong and llama.cpp falls back to CPU for the rest — the difference between ~170 tok/s and ~2 tok/s.
+- **`--ubatch-size 2048`** — the physical batch size llama.cpp uses internally for prompt processing. Bumping this from the default 512 sped up prefill noticeably on long agentic prompts, confirmed with `llama-bench` before adopting it.
 - **`--cache-type-k q4_0` / `--cache-type-v q4_0`** — quantizes the KV cache itself, not just the model weights, down to 4-bit. This is the flag that actually makes a 200K context window possible at all; at full-precision KV it would run out of VRAM long before 200K.
 - **`--flash-attn on`** — the fused flash-attention kernel instead of the naive implementation. Faster, lower memory, no downside on Ampere.
 - **`--no-context-shift`** — turns off llama.cpp's default behavior of silently sliding old tokens out of the context window once you hit the limit. For a coding agent that depends on everything it has read and decided so far, I want a hard error at 200K, not a session that quietly forgets its first half.
-- **`--cache-ram 32768` / `--ctx-checkpoints 8`** — these two work together. llama.cpp can checkpoint prompt-cache state to host RAM so a long agentic session doesn't have to re-process the entire prompt on every turn. `--cache-ram` caps that at 32GB of RAM; `--ctx-checkpoints 8` is how many checkpoint slots it keeps around.
-- **`--jinja`** — use the chat template baked into the GGUF's metadata (a real Jinja2 template) instead of a hardcoded one. Needed for tool-calling to format correctly.
-- **`--spec-type draft-mtp` / `--spec-draft-n-max 4`** — turns on speculative decoding using the model's own Multi-Token Prediction head as the draft model, drafting up to 4 tokens ahead per step. This is what gets a dense 27B to ~70 tok/s instead of ~20-25.
+- **`--cache-ram 32768` / `--ctx-checkpoints 8`** — these two work together. llama.cpp can checkpoint prompt-cache state to host RAM so a long agentic session doesn't have to re-process the entire prompt on every turn. `--cache-ram` caps that at 32GB of RAM; `--ctx-checkpoints 8` is how many checkpoint slots it keeps around. I've watched this cache absorb a 97K-token prompt down to 294 tokens of actual reprocessing — worth every megabyte of host RAM.
+- **`--jinja` / `--chat-template-file`** — use a real Jinja2 chat template instead of a hardcoded one, loaded from a file I control rather than whatever's baked into the GGUF. Needed for tool-calling to format correctly, and easier to patch when a model's shipped template has a bug.
+- **`--spec-type draft-mtp` / `--spec-draft-n-max 4`** — turns on speculative decoding using the model's own Multi-Token Prediction head as the draft model, drafting up to 4 tokens ahead per step. This is what gets a dense 27B well past what plain autoregressive decoding would manage.
 - **`--reasoning off`** — Qwen3.8 defaults to an aggressive "xhigh" thinking mode that burns tokens overthinking simple requests. A coding agent just needs the answer.
 - **`--temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0`** — the sampler settings straight from Qwen's own model card for non-thinking/instruct mode.
-- **`--presence-penalty 1.0`** — the repetition fix from the next section. Penalizes tokens that have already shown up, so long sessions can't loop forever.
+- **`--presence-penalty 1.0` / `--dry-multiplier 0.8`** — the repetition fix, now in two parts instead of one. More on why in the section below.
 - **`--alias Qwen3.8-27B`** — the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
 - **`--host 0.0.0.0 --port 8080`** — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 

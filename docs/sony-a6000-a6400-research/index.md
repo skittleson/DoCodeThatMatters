@@ -1,5 +1,6 @@
 TLDR; This is research blog post for Sony's A6000 (ILCE-6000) and A6400 (ILCE-6400).  Both cameras I personally own and shoot with on a regular basis.  Most of this is automated researched reviewed.
 
+If you want a starting point, read [this post first about modernization of this camera](https://docodethatmatters.com/hacking-sony-a6000-for-modernization/) 
 
 ## 1. OpenMemories: Tweak (Primary Hack Tool for A6000)
 
