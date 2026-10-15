@@ -304,11 +304,16 @@ def _request_tts_script(markdown, base_url, model, api_key=""):
             # Allow long spoken scripts — a full post rewrite can be lengthy.
             # 8192 is ample for a blog post and safer than the model's max.
             "max_tokens": 8192,
+            # Thinking servers (Strata) otherwise spend the budget thinking.
+            "reasoning_effort": "none",
         },
         timeout=600,
     )
     resp.raise_for_status()
-    content = resp.json()["choices"][0]["message"]["content"].strip()
+    content = resp.json()["choices"][0]["message"]["content"]
+    if content is None:
+        raise ValueError("LLM returned no content (thinking used the output budget?)")
+    content = content.strip()
 
     # Defensive: some chain-of-thought models wrap output in <think>...</think>.
     # This model has thinking off (verified), but if a </think> marker appears,

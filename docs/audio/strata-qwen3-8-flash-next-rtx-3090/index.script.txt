@@ -1,0 +1,89 @@
+AI disclaimer: This post was written with AI assistance, then edited by me. The research, commands, and numbers are from my own computer.
+
+Here is the short version. On the same RTX 3090 Ti, a 125 billion parameter model now reads an 86,000-token prompt in 32 seconds. My old 27 billion parameter model took 83 seconds to do the same. The new model generates at about 100 tokens per second, whereas the old one did between 49 and 70. The engine is Strata, and the model is Qwen 3.8 Flash Next. This is the research I did to pick the settings and the configuration I ended up with, so you can copy it.
+
+This follows up on how I run local large language models for coding. That previous setup, which used a dense Qwen 3.8 27B on llama.cpp, is still on my disk and is just one command away. I am giving Strata a week as my daily coding model before I decide what to keep.
+
+First, let me describe my box. The GPU is an RTX 3090 Ti with 24 gigabytes of memory, running driver version 580.173. The CPU is a Ryzen 9 5950X, which supports AVX2 instructions but not AVX-512. I have 62 gigabytes of DDR4 RAM, split into two 32 gigabyte sticks. The motherboard is a Gigabyte B450 Aorus M, which means the GPU is connected via PCIe 3.0 at 16 lanes. The disk is a Samsung 980 Pro with 2 terabytes of storage. The operating system is Pop OS 22.04. The network connection is Wi-Fi, which matters because the model download is 82 gigabytes.
+
+For context, picture the image associated with this post: it is an NVIDIA GeForce RTX 3090 Ti Founders Edition with 24 gigabytes of memory. This is the graphics card running both models in this discussion.
+
+OpenCode runs on my laptop and talks to this computer over the local network through a tool called OmniRoute.
+
+Now, let’s look at the research. How does a 125 billion parameter model fit on 24 gigabytes of video memory? Flash Next is a Mixture-of-Experts model. It has 125 billion parameters, but only about 6 billion are active for each token generated. Most of the model consists of thousands of small experts, and each token uses only a few of them.
+
+Strata keeps the experts you use most frequently in the GPU's video memory. It keeps all of them in system RAM, and the CPU computes the ones the GPU does not have. A 29 gigabyte n-gram lookup table stays on the solid-state drive. llama.cpp can run this model too, but it places experts on the GPU by layer, not by how often they are used. That approach costs a lot of resources.
+
+The best comparison I found is from a site called InsiderLLM. They measured Strata at 78 tokens per second versus llama.cpp at 18 tokens per second on a 3090 with 64 gigabytes of DDR4 RAM. With drafting enabled, Strata reached about 119 tokens per second and read a 32,000-token prompt in about 12 seconds. In their run, 98.7 percent of expert lookups during decoding hit the card. That computer is close enough to mine that I stopped looking at other engines.
+
+Next, which size of the model should I use? Strata offers four sizes of the original model, taken from ISTA-DASLab quantizations. I will read them out item by item. First is Q2_0, which needs 37.6 gigabytes of combined RAM and video memory, and is the fastest in Strata’s tables. Second is IQ2_XS, which needs 39.2 gigabytes and is Strata’s general recommendation. Third is IQ3_XXS, which needs 47 gigabytes, and is what InsiderLLM benchmarked on a 3090. Fourth is IQ3_S, which needs 54.8 gigabytes, and matches the full model on published tests.
+
+I started with Q2_0 and stopped the download at 20.7 gigabytes. Two things changed my mind. First, part of Q2_0’s speed comes from an AVX-512 CPU kernel, and my Ryzen 5950X does not have AVX-512. Second, people testing real coding tasks on the subreddit LocalLLM rated the 3-bit sizes clearly above the 2-bit ones. One commenter daily drove IQ3_XXS and IQ3_S and said IQ3_S is noticeably better for coding.
+
+IQ3_S needs about 55 gigabytes for its experts, and I have 62 gigabytes. That is too tight. So I went with IQ3_XXS. The second shard of the model, which is the n-gram table, is the same file for all four sizes. Changing the size only costs you the first shard.
+
+I also looked at what people on Reddit did, and what I chose to skip. The most detailed post I found was on the r/LocalLLaMA subreddit. That user achieved 1,650 tokens per second prompt reading and 38 to 61 tokens per second decoding, with no tool-call errors in OpenCode. The author rebuilt Strata with MMQ, set an environment variable called STRATA_PF_FUSED to zero to stop a crash, and repacked an Unsloth quantization with a compatibility flag.
+
+I skipped all of that. Those changes are for Unsloth’s specific quantizations, and that person has 128 gigabytes of RAM. On the ISTA quantizations Strata ships, you do not need them. Two things from Reddit I did use were the sampling values, which I will cover soon, and a note that Strata maps the thinking level "high" to the model’s "xhigh," so you don’t have to worry about that mismatch.
+
+Regarding sampling, the Qwen model card gives two profiles. First, for thinking mode, which is the default, the values are temperature 1.0, top-p 0.95, top-k 20, min-p 0, and presence penalty 0. Second, for non-thinking mode, the values are temperature 0.7, top-p 0.8, top-k 20, min-p 0, and presence penalty 1.5. I use thinking mode. The benchmark poster on Reddit recommends the same values.
+
+Now, onto the configuration. For the install, on a clean Ubuntu system, Strata’s setup script is usually one command. Mine needed three fixes. First, the system was missing the Python virtual environment package. The setup script tries to install it using sudo, but I was running it over SSH without a terminal, so sudo could not ask for a password. Strata has a supported path using a tool called uv. I installed uv for my user and set an environment variable called STRATA_UV to 1.
+
+Second, the CMake version on Pop OS 22.04 was too old. It was version 3.22, but Strata needs 3.24 or newer. The setup script had already installed a newer CMake into its own Python virtual environment, so I put that virtual environment’s bin directory first in my system path.
+
+Third, there was no prebuilt engine available. The release download returned a 404 error for that version. The setup script then compiled the engine for the specific GPU architecture using my CUDA toolkit. That worked with no changes.
+
+The commands I ran to clone the repository, install uv, generate an API key, and run the setup script are included in the blog post, but I won’t read the code aloud. The important notes are these. The family flag sets the original model. Without it, the setup might pick the Coder version, which has half the experts, depending on your RAM. The host flag setting it to listen on all interfaces requires an API key. Do not expose it to your local network without one. The draft vocabulary flag limits the draft layer to English and code only, saving about 110 megabytes of video memory. I used the no-start flag because I wanted systemd to start the server later.
+
+The download is about 82 gigabytes. Mine ran at about 15 megabytes per second. I assumed Hugging Face was slow and opened four extra range requests to test that. Strata’s download speed dropped to half, but the total speed stayed at 15 megabytes per second. It was my Wi-Fi causing the bottleneck.
+
+I also lost a night due to my own mistake with a process kill command. I used a pattern match that matched its own command line and killed the shell that was supposed to start the next download. The fix is to use brackets in the pattern so it does not match itself.
+
+Next, there is a sampling block that Strata does not write for you. This would have caused issues. The setup writes a JSON configuration file with no sampling block, and Strata’s documentation says that with no block at all, a request without sampling keys decodes greedily. So a client that does not send its own temperature always gets the single most likely token. I added the block myself. I also added three opt-in keys from the same documentation page.
+
+The keys are in a JSON structure in the blog post. First is temperature 1.0, top-p 0.95, top-k 20, and min-p 0.0. The other keys are expert profile save, fit max tokens, reasoning close retry, and aliases. Here is what they do. Expert profile save saves what the expert cache learned about your usage, so a restart doesn’t start cold. Fit max tokens shortens an agent’s requested maximum output tokens to the room left in the context, instead of returning an error. Reasoning close retry catches a reply that ends inside its thinking block with no answer. Without it, the agent just stops. Aliases adds extra names in the model list.
+
+Running the setup again rewrites this file, so I keep these keys in a small script and run it after every setup.
+
+Setup also turned key-value streaming off automatically. It estimated about 60 gigabytes of RAM for this model plus 1.8 gigabytes for streaming, and I have 63 gigabytes. So the key-value cache stays in video memory, and there is a bit less room for experts.
+
+Then comes calibration. I ran the setup script with the calibrate flag. This tests a few engine settings, running three rounds each. It keeps a setting only if it beats the default by more than 3 percent. It took about 10 minutes and leaves the server running when it finishes.
+
+Here are the results. For PCIe share, which determines how much off-GPU expert work gets copied to the card versus computed on the CPU, the best setting was 0.2, achieving 99.6 tokens per second. Performance dropped hard after 0.75, going down to 84 tokens per second at 1.0. That fits my PCIe 3.0 slot. The engine measured 13.1 gigabytes per second host-to-device transfer speed.
+
+For the draft floor, 0.7 won its sweep with 103.6 versus 96.6 at 0.5. However, neither setting beat the defaults in the final head-to-head comparison, so the config kept 0.5.
+
+The kept settings were pool workers 4, adapt every 1, adapt swaps 80, and adapt decay 0.97. This resulted in 105.4 tokens per second. These settings are saved per PC and model in a configuration file, so updates keep them.
+
+I also had to check for other servers on the port. When I stopped the llama-server process, the system monitor still showed 20 gigabytes in use. A different llama-server had started 18 seconds earlier. It was a Qwen 3.6 35B model from months ago.
+
+It was a systemd user unit, enabled, with restart on failure set, bound to port 8080. While the system-level llama-server held the port, it failed and retried forever. When the port was free, it took it. I had to list all user units, find the old one, and disable it. If you have been swapping models on one box, check the user units too.
+
+To manage the servers, I used systemd for a one-command switch. Both servers need the whole GPU and port 8080, so only one runs at a time. I created a systemd service file for Strata. In the blog, this is shown as an INI configuration. The key points are: it conflicts with the llama-server service. It runs as my user. It starts with a command to kill any process using port 8080 first. It has an infinite memory lock limit because Strata pins tens of gigabytes of RAM for the GPU. I also set the memory lock limit to unlimited for my user in the system security limits file. The default was about 8 gigabytes. It has a timeout stop of 120 seconds because releasing that pinned memory takes longer than the llama-server’s shutdown. I also added a conflict entry to the llama-server service file.
+
+On top of that is a small script called llm-switch. I will read the commands out. First, llm-switch strata stops the 27B model, starts Strata, and waits for it to be healthy. Second, llm-switch qwen27 does the reverse. Third, llm-switch off frees the GPU and RAM. Fourth, running just llm-switch tells you which one is running.
+
+The script disables one unit, waits for port 8080 to be free, enables the other, then polls the health endpoint until it’s ready. A sudoers drop-in allows only those four systemctl commands without a password. Whichever one I switched to last starts at boot. Strata takes 35 to 45 seconds to come up and the 27B model takes about 15 seconds.
+
+Finally, for OpenCode through OmniRoute. OmniRoute already had a provider for my computer’s IP address on port 8080. Strata accepts any model name, so the provider path for Strata routed without re-syncing the model list. I added the Strata API key to that connection. llama-server ignores the header, so the 27B path kept working with no change. I tested both, plus a real tool call, before I changed the default.
+
+In the OpenCode configuration file, under the OmniRoute provider, I added a entry for Strata. The name is Qwen 3.8 Flash Next IQ3_XXS. It sets a context limit of 131,072 and an output limit of 32,768. It enables tool calls and reasoning. The default option sets reasoning effort to high. It also defines variants for medium, low, and none reasoning effort. At the top level of the config, I set the model to that OmniRoute path.
+
+The variants come from Strata’s own example. None answers immediately and is nice for small edits. If you point OpenCode at Strata directly, you must set the API key on the provider. I used a file reference so the key isn’t written directly in the config.
+
+Now, the results. I ran the same script against both servers. Streaming was enabled, 512 output tokens were requested, and a random nonce was added at the start of every prompt so nothing came from a prompt cache. I ran each test twice.
+
+First, for a prompt of about 925 tokens. The 27B model took 1.2 seconds for the first token, while Strata took 2.0 seconds. The 27B read the prompt at 1,166 tokens per second, while Strata read it at 530. The 27B generated at 70 tokens per second, while Strata generated at 96.
+
+Second, for a prompt of about 27,000 tokens. The 27B took 21.0 seconds for the first token, while Strata took 11.5 seconds. The 27B read at 1,332 tokens per second, while Strata read at 2,400. The 27B generated at 62 tokens per second, while Strata generated at 102.
+
+Third, for a prompt of about 86,000 tokens. The 27B took 83.1 seconds for the first token, while Strata took 32.2 seconds. The 27B read at 1,059 tokens per second, while Strata read at 2,724. The 27B generated at 49 tokens per second, while Strata generated at 101.
+
+The 27B model is Qwen 3.8 27B quantized to 4-bit on llama.cpp at 200,000 context.
+
+The 27B still wins on tiny prompts. What surprised me was the other end. Strata’s own 3090 table shows about 500 tokens per second prompt reading, so I expected that to be its weak spot. Past a few thousand tokens, it is about 2.5 times faster than llama.cpp. And generation barely changes as context grows: about 100 tokens per second at 86,000 context, where the 27B drops from 70 to 49. A coding agent resends a big prompt every turn, so the long rows are where I spend my time.
+
+These are speed numbers only. I also started an agent benchmark, which included a refactor, a feature with tests, and a long-context question, all in a specific code checkout. The 27B got the refactor right in 5.5 minutes, but the full set took too long, so I stopped it. Quality is what the trial week is for.
+
+What I am watching this week are loops, malformed tool calls, empty replies after thinking, first-token time on big prompts, and RAM pressure on the box, which sits at about 44 gigabytes of 62. Every issue goes in a log. On the 21st, I either keep Strata or switch back to the 27B model.

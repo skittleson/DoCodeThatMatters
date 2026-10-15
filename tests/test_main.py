@@ -233,6 +233,22 @@ class TestRequestTtsScript:
         assert out == "Actual spoken script."
         assert "<think>" not in out and "</think>" not in out
 
+    def test_requests_no_thinking(self):
+        # Thinking servers (Strata / Qwen3.8-Flash-Next) default to thinking
+        # and can spend the whole max_tokens budget before the answer.
+        with patch("main.requests.post", return_value=self._resp("ok")) as post:
+            _request_tts_script("md", "http://host/v1", "m")
+        _, kwargs = post.call_args
+        assert kwargs["json"]["reasoning_effort"] == "none"
+
+    def test_null_content_raises_value_error(self):
+        with patch("main.requests.post", return_value=self._resp(None)):
+            try:
+                _request_tts_script("md", "http://host/v1", "m")
+                assert False, "expected ValueError"
+            except ValueError as e:
+                assert "no content" in str(e)
+
     def test_connection_error_propagates(self):
         with patch(
             "main.requests.post",
