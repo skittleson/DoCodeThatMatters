@@ -41,7 +41,9 @@ This was about 100+ hours of riding. It's hard to take a picture with it mounted
 - Amount of material the bolt and nut can hold unto (or lack of it).  It could "rip off" the end of the plastic gear.  Using longer bolts then removing the inner "cut out cone" could help with that.  As well an additional nut for surface area tension.  No concerns as of yet since the wearing has been nominal.
 - [Use double wall bearings.](https://www.amazon.com/Bearings-Skateboard-Shielded-Miniature-Skateboards/dp/B07R7PR72H?crid=NKG7B4O4BVEI&keywords=double+wall+skateboard+bearing&qid=1655758884&sprefix=double+wall+skateboard+bearing%2Caps%2C130&sr=8-4&linkCode=ll1&tag=dctm-20&linkId=2cbdc66d04d6f268439ba46e61195716&language=en_US&ref_=as_li_ss_tl) Even a little water and dirty can cause the bearings to crack at higher speeds.  That was a hard lesson. 😥
 
-![Gear nomenclature reference](https://upload.wikimedia.org/wikipedia/commons/2/28/Gear_words.png)
+![Gear nomenclature reference](/images/Gear_words.png)
+
+*Image: [Gear words](https://commons.wikimedia.org/wiki/File:Gear_words.png), Wikimedia Commons, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).*
 
 ## Next Possible Experiment
 

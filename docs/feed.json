@@ -12,6 +12,35 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/",
+      "url": "https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/",
+      "title": "Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next",
+      "summary": "The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B.",
+      "image": "/images/rtx-3090.jpg",
+      "date_published": "2026-10-15T00:00:00.000Z",
+      "date_modified": "2026-10-15T00:00:00.000Z",
+      "tags": [
+        "AI;DR",
+        "local llm",
+        "strata",
+        "qwen3.8-flash-next",
+        "mixture of experts",
+        "rtx 3090",
+        "opencode",
+        "omniroute",
+        "llama.cpp",
+        "quantization",
+        "systemd",
+        "homelab"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ],
+      "word_count": 2371
+    },
+    {
       "id": "https://docodethatmatters.com/sony-a6000-a6400-research/",
       "url": "https://docodethatmatters.com/sony-a6000-a6400-research/",
       "title": "Sony A6000/A6400 Hacks, Mods and Community Resources",
@@ -333,7 +362,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 415
+      "word_count": 423
     },
     {
       "id": "https://docodethatmatters.com/top-nuget-packages/",

@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en-US" data-theme="dark" itemscope itemtype="http://schema.org/Blog"><head><!-- Flash-of-wrong-theme prevention: runs before first paint --><script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch (_) {}
+    })();
+  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com"><title>Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next — Do Code That Matters</title><link rel="canonical" href="https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/"><meta name="description" content="The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B."><meta itemprop="description" content="The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B."><meta name="keywords" content="AI;DR, local llm, strata, qwen3.8-flash-next, mixture of experts, rtx 3090, opencode, omniroute, llama.cpp, quantization, systemd, homelab"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next — Do Code That Matters"><meta property="og:description" content="The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/rtx-3090.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next — Do Code That Matters"><meta name="twitter:description" content="The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B."><meta name="twitter:creator" content="@skittleson"><!-- Structured data --><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","@id":"https://docodethatmatters.com/#website","url":"https://docodethatmatters.com/","name":"Do Code That Matters","publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><script src="/register-sw.js" defer></script><link rel="author" href="/humans.txt"><link rel="resume" type="application/json" href="/resume.json"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ');
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.IipbS8mx.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  (function () {
+    function syncIcons(theme) {
+      var isDark = theme === 'dark';
+      // mobile
+      var sunM = document.getElementById('icon-sun');
+      var moonM = document.getElementById('icon-moon');
+      // desktop
+      var sunD = document.getElementById('icon-sun-desktop');
+      var moonD = document.getElementById('icon-moon-desktop');
+
+      if (sunM) sunM.style.display = isDark ? '' : 'none';
+      if (moonM) moonM.style.display = isDark ? 'none' : '';
+      if (sunD) sunD.style.display = isDark ? '' : 'none';
+      if (moonD) moonD.style.display = isDark ? 'none' : '';
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.dataset.theme || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (_) {}
+      syncIcons(next);
+    }
+
+    // Sync icons on initial load
+    var initialTheme = document.documentElement.dataset.theme || 'dark';
+    syncIcons(initialTheme);
+
+    var btn = document.getElementById('theme-toggle');
+    var btnD = document.getElementById('theme-toggle-desktop');
+    if (btn) btn.addEventListener('click', toggleTheme);
+    if (btnD) btnD.addEventListener('click', toggleTheme);
+  })();
+</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/","url":"https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/","headline":"Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next","description":"The research and the exact config I used to run the 125B Qwen3.8-Flash-Next on one RTX 3090 Ti with Strata, as an OpenCode coding model. Which quant and why, the install fixes Pop!_OS 22.04 needed, the sampling block Strata does not write for you, calibration results, a one-command switch back to llama.cpp, and a side-by-side speed probe against my old Qwen3.8-27B.","image":"https://docodethatmatters.com/images/rtx-3090.jpg","datePublished":"2026-10-15T00:00:00.000Z","wordCount":2371,"author":{"@id":"https://docodethatmatters.com/about/#person"},"publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Person","@id":"https://docodethatmatters.com/about/#person","name":"Spencer Kittleson","url":"https://docodethatmatters.com/about/","jobTitle":"Software Engineer","sameAs":["https://github.com/skittleson","https://www.linkedin.com/in/skittleson/","https://stackoverflow.com/users/2414540/spencer","https://twitter.com/skittleson"]},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="wordCount" content="2371"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2026-10-15T00:00:00.000Z">Oct 2026</time><span aria-hidden="true">·</span><span>2371 words</span><span aria-hidden="true">·</span><span>12 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mb-6"><audio controls preload="metadata" class="w-full"><source src="/audio/strata-qwen3-8-flash-next-rtx-3090/index.opus" type="audio/ogg; codecs=opus"><source src="/audio/strata-qwen3-8-flash-next-rtx-3090/index.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><a href="/audio/strata-qwen3-8-flash-next-rtx-3090/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div><figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"><picture><source type="image/webp" srcset="/images/rtx-3090.webp"><img itemprop="url contentUrl" src="/images/rtx-3090.jpg" alt="An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU running both models in this post." width="1200" height="800" class="rounded-md w-full object-cover" loading="eager" fetchpriority="high" decoding="async"></picture><figcaption itemprop="caption" class="text-xs mt-1 text-center" style="color: var(--color-text-muted);">An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU running both models in this post.</figcaption></figure></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><blockquote>
+<p><strong>AI;DR</strong> — This post was written with AI assistance, then edited by me. The research, commands, and numbers are from my own box.</p>
+</blockquote>
+<p>TLDR; On the same RTX 3090 Ti, a 125B model now reads an 86K-token prompt in 32 seconds. My old 27B took 83. It generates at ~100 tok/s where the 27B did 49-70. The engine is <a href="https://github.com/Niko1221/Strata">Strata</a> and the model is <a href="https://huggingface.co/Qwen/Qwen3.8-Flash-Next">Qwen3.8-Flash-Next</a>. This is the research I did to pick the settings and the config I ended up with, so you can copy it.</p>
+<p>This follows <a href="/running-local-llms-for-coding/">how I run local LLMs for coding</a>. That setup (dense Qwen3.8-27B on llama.cpp) is still on disk and one command away. I’m giving Strata a week as my daily OpenCode model before I decide.</p>
+<h2 id="my-box">My box</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Part</th><th>What I have</th></tr></thead><tbody><tr><td>GPU</td><td>RTX 3090 Ti, 24GB, driver 580.173</td></tr><tr><td>CPU</td><td>Ryzen 9 5950X (AVX2, no AVX-512)</td></tr><tr><td>RAM</td><td>62GiB DDR4 (2x32GB, running at 2400 — more on that later)</td></tr><tr><td>Board</td><td>Gigabyte B450 AORUS M, so the GPU is on PCIe 3.0 x16</td></tr><tr><td>Disk</td><td>Samsung 980 PRO 2TB</td></tr><tr><td>OS</td><td>Pop!_OS 22.04</td></tr><tr><td>Network</td><td>Wi-Fi. This matters for an 82GB download.</td></tr></tbody></table>
+<p>OpenCode runs on my laptop and talks to the box over the LAN through <a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a>.</p>
+<h2 id="research">Research</h2>
+<h3 id="how-a-125b-model-fits-on-24gb">How a 125B model fits on 24GB</h3>
+<p>Flash-Next is a Mixture-of-Experts model. It has 125B parameters, but only about 6B are active for each token. Most of the model is thousands of small experts, and each token uses only a few of them.</p>
+<p>Strata keeps the experts you use most in VRAM. It keeps all of them in system RAM, and the CPU computes the ones the GPU does not have. A 29GB n-gram lookup table stays on the SSD. llama.cpp can run this model too, but it puts experts on the GPU by layer, not by how often they get used. That costs a lot.</p>
+<p>The best comparison I found is from InsiderLLM: <a href="https://insiderllm.com/guides/strata-vs-llama-cpp-rtx-3090/">Strata at 78 tok/s vs llama.cpp at 18</a>, on a 3090 with 64GB of DDR4. With drafting on, Strata did ~119 tok/s and read a 32K prompt in ~12 seconds. In their run, 98.7% of expert lookups during decode hit the card. That box is close enough to mine that I stopped looking at other engines.</p>
+<h3 id="which-size">Which size</h3>
+<p>Strata offers four sizes of the original model, from ISTA-DASLab’s GSQ-RCO quants:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Size</th><th>RAM + VRAM it needs</th><th>Notes</th></tr></thead><tbody><tr><td>Q2_0</td><td>37.6GB</td><td>Fastest in Strata’s tables</td></tr><tr><td>IQ2_XS</td><td>39.2GB</td><td>Strata’s general recommendation</td></tr><tr><td>IQ3_XXS</td><td>47.0GB</td><td>What InsiderLLM benchmarked on a 3090</td></tr><tr><td>IQ3_S</td><td>54.8GB</td><td>”Matches the full model on the published tests”</td></tr></tbody></table>
+<p>I started with Q2_0 and stopped the download at 20.7GB. Two things changed my mind.</p>
+<ul>
+<li>Part of Q2_0’s speed comes from an AVX-512 CPU kernel. The 5950X does not have AVX-512.</li>
+<li>The people testing real coding tasks on <a href="https://www.reddit.com/r/LocalLLM/comments/1x1pvkt/benchmarked_some_strata_qwen38flashnext_quants/">r/LocalLLM</a> rated the 3-bit sizes clearly above the 2-bit ones. One commenter daily-drove IQ3_XXS and IQ3_S and said IQ3_S is “noticeably better” for coding.</li>
+</ul>
+<p>IQ3_S needs ~55GB for its experts, and I have 62GiB. Too tight. So I went with <strong>IQ3_XXS</strong>.</p>
+<p>The second shard (the n-gram table) is the same file for all four sizes. Changing size only costs you the first shard.</p>
+<h3 id="what-i-copied-from-reddit-and-what-i-didnt">What I copied from Reddit, and what I didn’t</h3>
+<p>The most detailed 3090 post is <a href="https://www.reddit.com/r/LocalLLaMA/comments/1wwamjw/strata_rtx_3090_128_ram_qwen_38_flash_next/">this one on r/LocalLLaMA</a>: 1,650 t/s prompt read, 38-61 t/s decode, no tool-call errors in OpenCode. The author rebuilt Strata with MMQ, set <code>STRATA_PF_FUSED=0</code> to stop a crash, and repacked an Unsloth quant with <code>--compat-bf16</code>.</p>
+<p>I skipped all of that. Those changes are for Unsloth’s K-quants, and that person has 128GB of RAM. On the ISTA quants Strata ships, you don’t need them. Two things from Reddit I did use: the sampling values (below), and a note that Strata maps the thinking level <code>high</code> to the model’s <code>xhigh</code>, so you don’t have to care about that mismatch.</p>
+<h3 id="sampling">Sampling</h3>
+<p>The <a href="https://huggingface.co/Qwen/Qwen3.8-Flash-Next">Qwen model card</a> gives two profiles:</p>
+<ul>
+<li><strong>Thinking mode</strong> (the default): <code>temperature=1.0, top_p=0.95, top_k=20, min_p=0, presence_penalty=0</code></li>
+<li><strong>Non-thinking mode:</strong> <code>temperature=0.7, top_p=0.8, top_k=20, min_p=0, presence_penalty=1.5</code></li>
+</ul>
+<p>I use thinking mode. The r/LocalLLM benchmarker recommends the same values.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="install">Install</h3>
+<p>On a clean Ubuntu box, Strata’s <code>./setup.sh</code> is one command. Mine needed three fixes:</p>
+<ol>
+<li><strong>No <code>python3-venv</code>.</strong> Setup wants to <code>sudo apt install</code> it. I was running it over SSH without a terminal, so sudo could not ask for a password. Strata has a supported uv path. I installed uv for my user and set <code>STRATA_UV=1</code>.</li>
+<li><strong>CMake too old.</strong> Pop!_OS 22.04 has CMake 3.22. Strata needs 3.24 or newer. Setup had already pip-installed a newer CMake into its <code>.venv</code>, so I put <code>.venv/bin</code> first on <code>PATH</code>.</li>
+<li><strong>No prebuilt engine.</strong> The release download returned 404 for v0.1.44.1. Setup then compiled the engine for sm_86 with my CUDA 12.8 toolkit. That worked with no changes.</li>
+</ol>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">git</span><span style="color:#032F62;--shiki-dark:#98C379"> clone</span><span style="color:#032F62;--shiki-dark:#98C379"> https://github.com/Niko1221/Strata</span><span style="color:#032F62;--shiki-dark:#98C379"> ~/src/Strata</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#56B6C2">cd</span><span style="color:#032F62;--shiki-dark:#98C379"> ~/src/Strata</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">curl</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -LsSf</span><span style="color:#032F62;--shiki-dark:#98C379"> https://astral.sh/uv/install.sh</span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> |</span><span style="color:#6F42C1;--shiki-dark:#61AFEF"> sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">mkdir</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -p</span><span style="color:#032F62;--shiki-dark:#98C379"> ~/.config/strata</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> &#x26;&#x26; (</span><span style="color:#005CC5;--shiki-dark:#56B6C2">umask</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 077</span><span style="color:#24292E;--shiki-dark:#ABB2BF">; </span><span style="color:#6F42C1;--shiki-dark:#61AFEF">openssl</span><span style="color:#032F62;--shiki-dark:#98C379"> rand</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -hex</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 24</span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> ></span><span style="color:#032F62;--shiki-dark:#98C379"> ~/.config/strata/api-key</span><span style="color:#24292E;--shiki-dark:#ABB2BF">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E07C82">PATH</span><span style="color:#D73A49;--shiki-dark:#56B6C2">=</span><span style="color:#24292E;--shiki-dark:#E07C82">$HOME</span><span style="color:#032F62;--shiki-dark:#98C379">/src/Strata/.venv/bin:</span><span style="color:#24292E;--shiki-dark:#E07C82">$HOME</span><span style="color:#032F62;--shiki-dark:#98C379">/.local/bin:</span><span style="color:#24292E;--shiki-dark:#E07C82">$PATH</span><span style="color:#24292E;--shiki-dark:#E07C82"> STRATA_UV</span><span style="color:#D73A49;--shiki-dark:#56B6C2">=</span><span style="color:#032F62;--shiki-dark:#98C379">1</span><span style="color:#6F42C1;--shiki-dark:#61AFEF"> \</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">./setup.sh </span><span style="color:#005CC5;--shiki-dark:#D19A66">--family</span><span style="color:#032F62;--shiki-dark:#98C379"> qwen</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --model</span><span style="color:#032F62;--shiki-dark:#98C379"> IQ3_XXS</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --context</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 131072</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --vision</span><span style="color:#032F62;--shiki-dark:#98C379"> no</span><span style="color:#005CC5;--shiki-dark:#56B6C2"> \</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#D19A66">  --host</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 0.0.0.0</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --port</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 8080</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --api-key</span><span style="color:#032F62;--shiki-dark:#98C379"> "$(</span><span style="color:#6F42C1;--shiki-dark:#61AFEF">cat</span><span style="color:#032F62;--shiki-dark:#98C379"> ~/.config/strata/api-key)"</span><span style="color:#005CC5;--shiki-dark:#56B6C2"> \</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#D19A66">  --draft-vocab</span><span style="color:#032F62;--shiki-dark:#98C379"> en</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --no-browser</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --no-start</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --yes</span></span></code></pre>
+<ul>
+<li><code>--family qwen</code> is the original model. Without it, setup can pick the Coder version (half the experts) depending on your RAM.</li>
+<li><code>--host 0.0.0.0</code> needs <code>--api-key</code>. Don’t expose it to your LAN without one.</li>
+<li><code>--draft-vocab en</code> is English and code only for the draft layer. About 110MB less VRAM.</li>
+<li><code>--no-start</code> because systemd starts it later.</li>
+</ul>
+<p>The download is ~82GB. Mine ran at ~15MB/s. I assumed Hugging Face was slow and opened four extra range requests to test that. Strata’s download dropped to half speed and the total stayed at 15MB/s. It was my Wi-Fi.</p>
+<p>I also lost a night to my own <code>pkill -f "setup.py --family qwen"</code>. It matched its own command line and killed the shell that was supposed to start the next download. Use <code>pkill -f "setup[.]py"</code>. The brackets stop the pattern from matching itself.</p>
+<h3 id="the-sampling-block-strata-doesnt-write">The sampling block Strata doesn’t write</h3>
+<p>This one would have bitten me. Setup writes <code>strata-iq3_xxs.json</code> with no <code>sampling</code> block, and Strata’s docs say:</p>
+<blockquote>
+<p>with no block at all a request without sampling keys decodes greedy.</p>
+</blockquote>
+<p>So a client that does not send its own temperature always gets the single most likely token. Add the block yourself. I also added three opt-in keys from the same docs page:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">{</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "sampling"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"temperature"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">1.0</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#005CC5;--shiki-dark:#E07C82">"top_p"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">0.95</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#005CC5;--shiki-dark:#E07C82">"top_k"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">20</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#005CC5;--shiki-dark:#E07C82">"min_p"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">0.0</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "expert_profile_save"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"expert-profile-learned.bin"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "fit_max_tokens"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">true</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "reasoning_close_retry"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">true</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "aliases"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: [</span><span style="color:#032F62;--shiki-dark:#98C379">"strata"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#032F62;--shiki-dark:#98C379">"Qwen3.8-Flash-Next"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">}</span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>What it does</th></tr></thead><tbody><tr><td><code>expert_profile_save</code></td><td>Saves what the expert cache learned about your usage, so a restart doesn’t start cold</td></tr><tr><td><code>fit_max_tokens</code></td><td>Shortens an agent’s requested <code>max_tokens</code> to the room left in context, instead of a 400 error</td></tr><tr><td><code>reasoning_close_retry</code></td><td>Catches a reply that ends inside its thinking with no answer. Without it, the agent just stops.</td></tr><tr><td><code>aliases</code></td><td>Extra names in <code>/v1/models</code></td></tr></tbody></table>
+<p>Running <code>./setup.sh --setup</code> again rewrites this file, so I keep these keys in a small script and run it after every setup.</p>
+<p>Setup also turned <strong>KV streaming off</strong> by itself. It estimated ~60GB of RAM for IQ3_XXS plus 1.8GB for streaming, and I have 63. So the KV cache stays in VRAM, and there is a bit less room for experts.</p>
+<h3 id="calibrate">Calibrate</h3>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">./setup.sh</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --calibrate</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --yes</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --no-browser</span></span></code></pre>
+<p>This tests a few engine settings, three rounds each. It keeps a setting only if it beats the default by more than 3%. It took about 10 minutes and leaves the server running when it finishes.</p>
+<ul>
+<li><strong>PCIe share</strong> (how much off-GPU expert work gets copied to the card vs computed on the CPU): best at 0.2 with 99.6 tok/s. It dropped hard after 0.75, down to 84 at 1.0. That fits my PCIe 3.0 slot. The engine measures 13.1GB/s host-to-device.</li>
+<li><strong>Draft floor:</strong> 0.7 won its sweep (103.6 vs 96.6 at 0.5). Neither setting beat the defaults in the final head-to-head, so the config kept 0.5.</li>
+<li><strong>Kept:</strong> <code>--pool-workers 4 --adapt-every 1 --adapt-swaps 80 --adapt-decay 0.97</code>, at <strong>105.4 tok/s</strong>.</li>
+</ul>
+<p>It saves these per PC and model in <code>~/.config/strata/settings.json</code>, so updates keep them.</p>
+<h3 id="check-for-other-servers-on-the-port">Check for other servers on the port</h3>
+<p>When I stopped llama-server, <code>nvidia-smi</code> still showed 20GB in use. A different llama-server had started 18 seconds earlier. It was a Qwen3.6-35B from months ago.</p>
+<p>It was a systemd <strong>user</strong> unit, enabled, with <code>Restart=on-failure</code>, bound to port 8080. While the system llama-server held the port, it failed and retried forever. When the port was free, it took it.</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">systemctl</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --user</span><span style="color:#032F62;--shiki-dark:#98C379"> list-units</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --all</span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> |</span><span style="color:#6F42C1;--shiki-dark:#61AFEF"> grep</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -iE</span><span style="color:#032F62;--shiki-dark:#98C379"> "llama|qwen|strata"</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">systemctl</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --user</span><span style="color:#032F62;--shiki-dark:#98C379"> disable</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --now</span><span style="color:#032F62;--shiki-dark:#98C379"> qwen36-claude47</span></span></code></pre>
+<p>If you have been swapping models on one box, check the user units too.</p>
+<h3 id="systemd-and-a-one-command-switch">systemd and a one-command switch</h3>
+<p>Both servers need the whole GPU and port 8080, so only one runs at a time. <code>/etc/systemd/system/strata.service</code>:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="ini"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">[Unit]</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">Description</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">Strata (Qwen3.8-Flash-Next)</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">After</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">network-online.target</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">Wants</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">network-online.target</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">Conflicts</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">llama-server.service</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">[Service]</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">Type</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">simple</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">User</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">spencerkittleson</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">WorkingDirectory</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">/home/spencerkittleson/src/Strata</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">ExecStartPre</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">-/usr/bin/fuser -k 8080/tcp</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">ExecStart</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">/home/spencerkittleson/src/Strata/run-strata.sh</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">LimitMEMLOCK</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">infinity</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">KillSignal</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">SIGTERM</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">TimeoutStopSec</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">120</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">Restart</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">on-failure</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">RestartSec</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">10</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">[Install]</span></span>
+<span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">WantedBy</span><span style="color:#24292E;--shiki-dark:#ABB2BF">=</span><span style="color:#24292E;--shiki-dark:#98C379">multi-user.target</span></span></code></pre>
+<ul>
+<li><code>run-strata.sh</code> is a symlink to the <code>run-iq3_xxs.sh</code> that setup wrote. If I change size, I only move the symlink.</li>
+<li><code>LimitMEMLOCK=infinity</code> because Strata pins tens of GB of RAM for the GPU. I also set <code>memlock unlimited</code> for my user in <code>/etc/security/limits.d/90-strata.conf</code>. The default was ~8GB.</li>
+<li><code>TimeoutStopSec=120</code> because releasing that pinned memory takes longer than llama-server’s shutdown.</li>
+<li>I added <code>Conflicts=strata.service</code> to <code>llama-server.service</code> too.</li>
+</ul>
+<p>On top of that is a small <code>llm-switch</code> script in <code>/usr/local/bin</code>:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">llm-switch</span><span style="color:#032F62;--shiki-dark:#98C379"> strata</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # stop the 27B, start Strata, wait for /health</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">llm-switch</span><span style="color:#032F62;--shiki-dark:#98C379"> qwen27</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # the reverse</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">llm-switch</span><span style="color:#032F62;--shiki-dark:#98C379"> off</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">      # free the GPU and RAM</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">llm-switch</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">          # which one is running</span></span></code></pre>
+<p>It disables one unit, waits for port 8080 to be free, enables the other, then polls <code>/health</code> until it’s ready. A sudoers drop-in allows only those four <code>systemctl enable/disable --now</code> commands without a password. Whichever one I switched to last starts at boot. Strata takes 35-45 seconds to come up and the 27B takes about 15.</p>
+<h3 id="opencode-through-omniroute">OpenCode through OmniRoute</h3>
+<p>OmniRoute already had a <code>gpupc</code> provider for <code>http://&#x3C;box>:8080/v1</code>. Strata accepts any model name, so <code>gpupc/strata</code> routed without re-syncing the model list. I added the Strata API key to that connection. llama-server ignores the header, so the 27B path kept working with no change. I tested both, plus a real tool call, before I changed the default.</p>
+<p>In <code>opencode.json</code>, under the <code>omniroute</code> provider:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#98C379">"gpupc/strata"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "name"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"Qwen3.8-Flash-Next IQ3_XXS (Strata, gaming pc)"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "limit"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"context"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">131072</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#005CC5;--shiki-dark:#E07C82">"output"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">32768</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "tool_call"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">true</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "reasoning"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">true</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "options"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"reasoningEffort"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"high"</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "variants"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: {</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">    "medium"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"reasoningEffort"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"medium"</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">    "low"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"reasoningEffort"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"low"</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> },</span></span>
+<span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">    "none"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"reasoningEffort"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#032F62;--shiki-dark:#98C379">"none"</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">  }</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">}</span></span></code></pre>
+<p>and <code>"model": "omniroute/gpupc/strata"</code> at the top level. The variants come from Strata’s own OpenCode example. <code>none</code> answers immediately and is nice for small edits. If you point OpenCode at Strata directly, set <code>apiKey</code> on the provider. I used <code>"{file:~/.config/strata/api-key}"</code> so the key isn’t in the config.</p>
+<h2 id="results">Results</h2>
+<p>I ran the same script against both servers. Streamed, 512 output tokens, a random nonce at the start of every prompt so nothing came from a prompt cache, two runs each.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt</th><th>27B first token</th><th>Strata first token</th><th>27B prompt read</th><th>Strata prompt read</th><th>27B generate</th><th>Strata generate</th></tr></thead><tbody><tr><td>~925 tokens</td><td><strong>1.2 s</strong></td><td>2.0 s</td><td><strong>1,166 t/s</strong></td><td>530 t/s</td><td>70 t/s</td><td><strong>96 t/s</strong></td></tr><tr><td>~27K tokens</td><td>21.0 s</td><td><strong>11.5 s</strong></td><td>1,332 t/s</td><td><strong>2,400 t/s</strong></td><td>62 t/s</td><td><strong>102 t/s</strong></td></tr><tr><td>~86K tokens</td><td>83.1 s</td><td><strong>32.2 s</strong></td><td>1,059 t/s</td><td><strong>2,724 t/s</strong></td><td>49 t/s</td><td><strong>101 t/s</strong></td></tr></tbody></table>
+<p>The 27B is Qwen3.8-27B-MTP-Q4_K_M on llama.cpp at 200K context, the command from the last post.</p>
+<p>The 27B still wins on tiny prompts. What surprised me was the other end. Strata’s own 3090 table shows ~500 t/s prompt reading, so I expected that to be its weak spot. Past a few thousand tokens it’s about 2.5x faster than llama.cpp. And generation barely changes as context grows: ~100 t/s at 86K, where the 27B drops from 70 to 49. A coding agent resends a big prompt every turn, so the long rows are where I spend my time.</p>
+<p>These are speed numbers only. I also started an agent benchmark (a refactor, a feature with tests, and a long-context question, all in a pinned more-itertools checkout). The 27B got the refactor right in 5.5 minutes, but the full set took too long, so I stopped it. Quality is what the trial week is for.</p>
+<h2 id="my-ram-has-been-running-at-2400-the-whole-time">My RAM has been running at 2400 the whole time</h2>
+<p>While I was deciding whether to buy more RAM, I ran <code>dmidecode</code>. Two 32GB TEAMGROUP DDR4-3600 sticks, two empty slots, and a configured speed of <strong>2400 MT/s</strong>. XMP is off.</p>
+<p>I wanted to fix that over SSH. You can’t. On Ryzen, the BIOS sets the memory clock at boot. The Linux tools I found (amdctl, ryzen_smu, RyzenAdj) only change CPU power and clocks. The closest you get is rebooting straight into the BIOS from SSH, then walking over with a keyboard:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">llm-switch</span><span style="color:#032F62;--shiki-dark:#98C379"> off</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> &#x26;&#x26; </span><span style="color:#6F42C1;--shiki-dark:#61AFEF">sudo</span><span style="color:#032F62;--shiki-dark:#98C379"> systemctl</span><span style="color:#032F62;--shiki-dark:#98C379"> reboot</span><span style="color:#005CC5;--shiki-dark:#D19A66"> --firmware-setup</span></span></code></pre>
+<p>It probably doesn’t matter much for Strata. Most expert lookups come from the GPU, and prompt reading is limited by the PCIe 3.0 slot. But it’s free.</p>
+<p>I ordered a matching <a href="https://www.amazon.com/dp/B0924QGX1K">TEAMGROUP T-Force Vulcan Z 2x32GB DDR4-3600 CL18 kit</a> for 128GB total. With four dual-rank sticks I expect ~3200, not 3600, and that’s fine. The point is IQ3_S, the size that didn’t fit, with KV streaming back on. When it’s in, I’ll run the same probe again.</p>
+<h2 id="what-im-watching-this-week">What I’m watching this week</h2>
+<p>Loops, malformed tool calls, empty replies after thinking, first-token time on big prompts, and RAM pressure on the box, which sits at ~44GB of 62. Every issue goes in a log. On the 21st, I either keep Strata or run <code>llm-switch qwen27</code>.</p></section></article><hr class="my-8"><p class="text-sm font-mono" style="color: var(--color-text-muted);">See something inaccurate or need more detail? <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Strata%20on%20an%20RTX%203090%20Ti%3A%20Research%20and%20Config%20Guide%20for%20Qwen3.8-Flash-Next" style="color: var(--color-accent);" class="underline">Submit a Pull Request</a> to help me out!</p><p class="text-sm font-mono mt-2"><a href="https://www.buymeacoffee.com/skittles" style="color: var(--color-accent);" class="hover:underline">Buy me a ☕ to support!</a></p></div><!-- Sidebar --><aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"><h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">Related Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/running-local-llms-for-coding/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">How I Run Local LLMs for Coding (and Why the Quant Matters)</a><time datetime="2026-08-19T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/sony-camera-part3/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Tethered Raspberry Pi for Modern Camera Functionality</a><time datetime="2024-06-28T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Jun 2024</time></li><li><a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Custom HTTP Proxy in Rust for Mixed-OS Workflows</a><time datetime="2026-03-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Mar 2026</time></li></ul><h3 class="text-xs font-bold font-mono mt-6 mb-3 uppercase tracking-wide" style="color: var(--color-text);">Latest Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/strata-qwen3-8-flash-next-rtx-3090/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</a><time datetime="2026-10-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/sony-a6000-a6400-research/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Sony A6000/A6400 Hacks, Mods and Community Resources</a><time datetime="2026-08-29T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/running-local-llms-for-coding/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">How I Run Local LLMs for Coding (and Why the Quant Matters)</a><time datetime="2026-08-19T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/i-scanned-the-ble-devices-around-my-house/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">BLE Devices Around My House Are Sharing Everything</a><time datetime="2026-06-17T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Jun 2026</time></li><li><a href="/the-infinite-echo-state-mirror-bug/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">The Infinite Echo: A Tasmota State-Mirror Bug</a><time datetime="2026-06-01T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">May 2026</time></li></ul></aside></div></main><footer class="mt-12 py-6" style="border-top: 1px solid var(--color-border);"><div class="container mx-auto px-4 text-center text-sm font-mono" style="color: var(--color-text-muted);"><div class="flex items-center justify-center gap-4"><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a></div><p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p></div></footer></body></html>
