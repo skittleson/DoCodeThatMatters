@@ -10,7 +10,7 @@ My box
 |---|---|
 | GPU | RTX 3090 Ti, 24GB, driver 580.173 |
 | CPU | Ryzen 9 5950X (AVX2, no AVX-512) |
-| RAM | 62GiB DDR4 (2x32GB, running at 2400 — more on that later) |
+| RAM | 62GiB DDR4 (2x32GB) |
 | Board | Gigabyte B450 AORUS M, so the GPU is on PCIe 3.0 x16 |
 | Disk | Samsung 980 PRO 2TB |
 | OS | Pop!_OS 22.04 |
@@ -211,17 +211,6 @@ The 27B is Qwen3.8-27B-MTP-Q4KM on llama.cpp at 200K context, the command from t
 The 27B still wins on tiny prompts. What surprised me was the other end. Strata's own 3090 table shows ~500 t/s prompt reading, so I expected that to be its weak spot. Past a few thousand tokens it's about 2.5x faster than llama.cpp. And generation barely changes as context grows: ~100 t/s at 86K, where the 27B drops from 70 to 49. A coding agent resends a big prompt every turn, so the long rows are where I spend my time.
 
 These are speed numbers only. I also started an agent benchmark (a refactor, a feature with tests, and a long-context question, all in a pinned more-itertools checkout). The 27B got the refactor right in 5.5 minutes, but the full set took too long, so I stopped it. Quality is what the trial week is for.
-
-My RAM has been running at 2400 the whole time
-
-While I was deciding whether to buy more RAM, I ran dmidecode. Two 32GB TEAMGROUP DDR4-3600 sticks, two empty slots, and a configured speed of 2400 MT/s. XMP is off.
-
-I wanted to fix that over SSH. You can't. On Ryzen, the BIOS sets the memory clock at boot. The Linux tools I found (amdctl, ryzen_smu, RyzenAdj) only change CPU power and clocks. The closest you get is rebooting straight into the BIOS from SSH, then walking over with a keyboard:
-
-llm-switch off && sudo systemctl reboot --firmware-setup
-It probably doesn't matter much for Strata. Most expert lookups come from the GPU, and prompt reading is limited by the PCIe 3.0 slot. But it's free.
-
-I ordered a matching TEAMGROUP T-Force Vulcan Z 2x32GB DDR4-3600 CL18 kit (https://www.amazon.com/dp/B0924QGX1K) for 128GB total. With four dual-rank sticks I expect ~3200, not 3600, and that's fine. The point is IQ3_S, the size that didn't fit, with KV streaming back on. When it's in, I'll run the same probe again.
 
 What I'm watching this week
 
