@@ -2,6 +2,8 @@
 
 TLDR; On the same RTX 3090 Ti, a 125B model now reads an 86K-token prompt in 32 seconds. My old 27B took 83. It generates at ~100 tok/s where the 27B did 49-70. The engine is [Strata](https://github.com/Niko1221/Strata) and the model is [Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next). This is the research I did to pick the settings and the config I ended up with, so you can copy it.
 
+I updated this after the first day of real agent work. The config below is now 200K context with a conversation cache, and the new section near the end covers what broke and what it cost.
+
 This follows [how I run local LLMs for coding](/running-local-llms-for-coding/). That setup (dense Qwen3.8-27B on llama.cpp) is still on disk and one command away. I'm giving Strata a week as my daily OpenCode model before I decide.
 
 ## My box
@@ -90,6 +92,7 @@ PATH=$HOME/src/Strata/.venv/bin:$HOME/.local/bin:$PATH STRATA_UV=1 \
 - `--host 0.0.0.0` needs `--api-key`. Don't expose it to your LAN without one.
 - `--draft-vocab en` is English and code only for the draft layer. About 110MB less VRAM.
 - `--no-start` because systemd starts it later.
+- I started at 128K (`131072`). The 200K command I run now is [further down](#moving-to-200k-context).
 
 The download is ~82GB. Mine ran at ~15MB/s. I assumed Hugging Face was slow and opened four extra range requests to test that. Strata's download dropped to half speed and the total stayed at 15MB/s. It was my Wi-Fi.
 
@@ -109,6 +112,7 @@ So a client that does not send its own temperature always gets the single most l
   "expert_profile_save": "expert-profile-learned.bin",
   "fit_max_tokens": true,
   "reasoning_close_retry": true,
+  "reasoning_budget_tokens": 16384,
   "aliases": ["strata", "Qwen3.8-Flash-Next"]
 }
 ```
@@ -118,9 +122,10 @@ So a client that does not send its own temperature always gets the single most l
 | `expert_profile_save` | Saves what the expert cache learned about your usage, so a restart doesn't start cold |
 | `fit_max_tokens` | Shortens an agent's requested `max_tokens` to the room left in context, instead of a 400 error |
 | `reasoning_close_retry` | Catches a reply that ends inside its thinking with no answer. Without it, the agent just stops. |
+| `reasoning_budget_tokens` | Closes the thinking at 16,384 tokens and makes the model answer. I added it after two turns ran out of tokens mid-thought. |
 | `aliases` | Extra names in `/v1/models` |
 
-Running `./setup.sh --setup` again rewrites this file, so I keep these keys in a small script and run it after every setup.
+Running `./setup.sh --setup` again rewrites this file, so I keep these keys in a small script and run it after every setup. That script also puts back the calibrated engine args and the conversation cache flags, for reasons that come up below.
 
 Setup also turned **KV streaming off** by itself. It estimated ~60GB of RAM for IQ3_XXS plus 1.8GB for streaming, and I have 63. So the KV cache stays in VRAM, and there is a bit less room for experts.
 
@@ -136,7 +141,22 @@ This tests a few engine settings, three rounds each. It keeps a setting only if 
 - **Draft floor:** 0.7 won its sweep (103.6 vs 96.6 at 0.5). Neither setting beat the defaults in the final head-to-head, so the config kept 0.5.
 - **Kept:** `--pool-workers 4 --adapt-every 1 --adapt-swaps 80 --adapt-decay 0.97`, at **105.4 tok/s**.
 
-It saves these per PC and model in `~/.config/strata/settings.json`, so updates keep them.
+It saves these per PC and model in `~/.config/strata/settings.json`, so updates keep them. Setup only re-applies a saved calibration for the same context, though.
+
+### Moving to 200K context
+
+`--setup` re-runs setup without downloading anything again:
+
+```sh
+./setup.sh --setup --family qwen --model IQ3_XXS --context 204800 --kv k8v4 \
+  --vram-reserve-mib 1024 --vision no --host 0.0.0.0 --port 8080 \
+  --api-key "$(cat ~/.config/strata/api-key)" --draft-vocab en \
+  --no-browser --no-start --yes
+```
+
+- `--kv k8v4` stores keys as INT8 and values as 4-bit. That's 23% less KV memory than int8. Strata's docs show a 3090 at 198K going from 85 to 99 tok/s with the same needle results.
+- At 128K with int8 KV, only 461 MiB of VRAM was free after load, and Strata printed `WARNING: only 461 MiB of VRAM free … (below 512 MiB)`. Below that the driver can page GPU memory out to RAM. With this command it's 785 MiB. The expert cache went from 9,746 slots to 9,227 (15.79 to 14.95 GiB).
+- The context changed, so the calibration from the last section didn't come back. I carry `--pool-workers 4 --adapt-every 1 --adapt-swaps 80 --adapt-decay 0.97` over by hand in the patch script.
 
 ### Check for other servers on the port
 
@@ -181,7 +201,7 @@ WantedBy=multi-user.target
 - `run-strata.sh` is a symlink to the `run-iq3_xxs.sh` that setup wrote. If I change size, I only move the symlink.
 - `LimitMEMLOCK=infinity` because Strata pins tens of GB of RAM for the GPU. I also set `memlock unlimited` for my user in `/etc/security/limits.d/90-strata.conf`. The default was ~8GB.
 - `TimeoutStopSec=120` because releasing that pinned memory takes longer than llama-server's shutdown.
-- I added `Conflicts=strata.service` to `llama-server.service` too.
+- I added `Conflicts=strata.service` to `llama-server.service` too, and to the old llama.cpp unit templates I copy over it. They didn't have it.
 
 On top of that is a small `llm-switch` script in `/usr/local/bin`:
 
@@ -194,6 +214,8 @@ llm-switch          # which one is running
 
 It disables one unit, waits for port 8080 to be free, enables the other, then polls `/health` until it's ready. A sudoers drop-in allows only those four `systemctl enable/disable --now` commands without a password. Whichever one I switched to last starts at boot. Strata takes 35-45 seconds to come up and the 27B takes about 15.
 
+If `llm-switch` prints `Usage: llm-switch qwopus|qwen38|status`, that's not this script. An old `~/bin/llm-switch` from my llama.cpp days was shadowing it in interactive shells. `type -a llm-switch` shows which one wins. I renamed the old one.
+
 ### OpenCode through OmniRoute
 
 OmniRoute already had a `gpupc` provider for `http://<box>:8080/v1`. Strata accepts any model name, so `gpupc/strata` routed without re-syncing the model list. I added the Strata API key to that connection. llama-server ignores the header, so the 27B path kept working with no change. I tested both, plus a real tool call, before I changed the default.
@@ -203,7 +225,7 @@ In `opencode.json`, under the `omniroute` provider:
 ```json
 "gpupc/strata": {
   "name": "Qwen3.8-Flash-Next IQ3_XXS (Strata, gaming pc)",
-  "limit": { "context": 131072, "output": 32768 },
+  "limit": { "context": 204800, "output": 32768 },
   "tool_call": true,
   "reasoning": true,
   "options": { "reasoningEffort": "high" },
@@ -216,6 +238,23 @@ In `opencode.json`, under the `omniroute` provider:
 ```
 
 and `"model": "omniroute/gpupc/strata"` at the top level. The variants come from Strata's own OpenCode example. `none` answers immediately and is nice for small edits. If you point OpenCode at Strata directly, set `apiKey` on the provider. I used `"{file:~/.config/strata/api-key}"` so the key isn't in the config.
+
+OmniRoute had its own context limit for `gpupc/strata` that I didn't know about. A 130K prompt came back HTTP 400, `Input exceeds context window … limit 128000`. I set a manual context override of 204,800 through OmniRoute's `PUT /api/provider-models` (the 27B already had a manual 200,000 override). After that a 130,433-token prompt went through OmniRoute in 65 seconds, 51.6 of them reading the prompt at 2,527 t/s.
+
+OmniRoute also gives up on a request if the first event takes too long. That "readiness" timeout defaults to 80 seconds, with bumps for big or thinking requests, and a queued request on a one-at-a-time server blows through it. In `~/.omniroute/.env`, then restart OmniRoute:
+
+```sh
+STREAM_READINESS_TIMEOUT_MS=240000
+STREAM_READINESS_MAX_TIMEOUT_MS=420000
+```
+
+Last, compaction. OpenCode compacts at roughly the context limit minus the output reserve minus `compaction.buffer`, and the buffer defaults to 10% of the limit. At 204,800 and 32,768 that works out to ~151K. One session compacted at 163,875. I tried a buffer of 4096, which compacted at 182.9K, and settled on this in the global config (it applies to every model):
+
+```json
+"compaction": { "buffer": 16384 }
+```
+
+That compacts near ~155K. Why I don't squeeze out the last 30K is [below](#what-the-first-day-of-real-use-changed).
 
 ## Results
 
@@ -233,6 +272,38 @@ The 27B still wins on tiny prompts. What surprised me was the other end. Strata'
 
 These are speed numbers only. I also started an agent benchmark (a refactor, a feature with tests, and a long-context question, all in a pinned more-itertools checkout). The 27B got the refactor right in 5.5 minutes, but the full set took too long, so I stopped it. Quality is what the trial week is for.
 
+I ran the same probe again after moving to 200K and k8v4:
+
+| Prompt | Strata first token | Strata prompt read | Strata generate |
+|---|---|---|---|
+| ~1K tokens (968) | 7.0 s | 371 t/s | 83 t/s |
+| ~27K tokens (26,969) | 12.2 s | 2,258 t/s | 97 t/s |
+| ~86K tokens (86,044) | 34.5 s | 2,525 t/s | 94 t/s |
+
+On the long prompts 200K costs 5-8% against the 128K int8 run. Generation there is still 1.5-1.9x the 27B's 62 and 49 t/s. The ~1K row is odd. Its two runs were 4.6 and 9.4 seconds. My guess, which I haven't confirmed, is that Strata was parking the previous conversation into the RAM cache with only ~9GB free. Small prompts aren't where an agent spends its time, so I left it.
+
+## What the first day of real use changed
+
+My first real session was a long "review this project" run with subagents: 406 requests, 14.2M prompt tokens, and only 35.5% of them reused from cache. 308 requests reused nothing at all. That's ~57 minutes of the session spent just reading prompts.
+
+Strata keeps one conversation cached at a time. The main session (~35K tokens) and a subagent (~75K) took turns, so every switch read the prompt again from token 0. 14 seconds one way, 30 the other. The fix is two engine flags, opt-in and off by default:
+
+```sh
+--conversation-cache-mib 6144 --conversation-cache-slots 4
+```
+
+That parks up to four conversations in RAM. It doesn't run them in parallel. On the same workload afterward, 92.5% was reused, zero-reuse requests went from 308 to 8, and prompt reading dropped from 57 minutes to 12 for 15.5M tokens. A 68-72K prompt starts in 2-3 seconds instead of ~30. A later session hit 91%, with 94K-token turns reading only 97-678 new tokens in 1-2 seconds. Median time to first token across a 421-turn session was 8.3 seconds, where that first session sat at 48. The cost is up to 6GB of RAM.
+
+Parallel subagents had a second problem. They queued behind a server that handles one request at a time, and OmniRoute stopped waiting. It logged 28 `stream content stall: no model output within 110000ms` errors that day (some at 130000ms and 145000ms), against 179 requests that went through. Then it answered `No active credentials for provider …` with a 401. Nothing was wrong with the credentials, but that fake auth error killed three subagents. That's what the readiness timeouts in the OmniRoute section are for. Even so, run subagents one after another against a single-request local server.
+
+Thinking ran out twice. Two turns ended with `length` and Strata logged "the reply reached max tokens while still thinking, so it has no answer", at 4,343 and 315 tokens. That's what `reasoning_budget_tokens` is for. The same habit broke this blog's audio step, which calls the box to write the spoken script: Strata thinks by default and burned the whole 8,192-token budget before answering, so that call now sends `"reasoning_effort": "none"`.
+
+The real quality problem shows up near the top of the context. In the 421-turn session there were 13 tool-call errors. 7 were invalid JSON, and every one of those came at the highest contexts right before a compaction: 111-114K back when the limit was 131K, then 163K (three in a row) and 183K (two). Below ~110K there were almost none. The other six were 3 empty `write {}` calls, 3 `edit` calls whose search text didn't match, and one `background` flag sent as a string instead of a boolean. It always recovered. But at 160K+ every retry costs a full turn, which is why my compaction buffer stays at 16K.
+
+One compaction summary went wrong. In the first long session, at ~115K of 131K, the summary Flash-Next wrote began with "No development task has been stated yet." It treated OpenChamber's injected system instructions as the objective and dropped what I'd actually asked for. The six compactions after that all got the objective right. Once, a stray `</think>` leaked into a visible answer.
+
+The rest held up all day. Decode stayed at ~90-120 tok/s and prompt read at ~2.5K tok/s, with a 92-96% expert-cache hit rate. No loops, no repeat-token stops, no NaN guards, no empty replies after thinking. Tool calls of 16-19K tokens (big JSON writes) came through intact.
+
 ## What I'm watching this week
 
-Loops, malformed tool calls, empty replies after thinking, first-token time on big prompts, and RAM pressure on the box, which sits at ~44GB of 62. Every issue goes in a log. On the 21st, I either keep Strata or run `llm-switch qwen27`.
+Loops, malformed tool calls past ~110K, bad compaction summaries, first-token time on big prompts, and RAM pressure on the box now that the conversation cache can take up to 6GB of it. Every issue goes in a log. On the 21st, I either keep Strata or run `llm-switch qwen27`.
