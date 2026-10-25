@@ -76,6 +76,19 @@ The results were clear enough to act on:
 Speed was identical across all three, so there was no performance cost either way. I landed on 1.0, not the recommended 1.5 — it fixed the failure without the format-drift. One flag:
 Unsloth's number was a good starting point, but the right value for my workload was milder. Test it against the thing you actually do, not the thing the docs assume you do.
 
+Follow-up: unlocking the 3090 Ti, and a faster llama.cpp
+
+A while after publishing, I swapped the daily driver to a newer dense Qwen3.8 build — bytkim's Qwen3.8-27B-pi (https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF), an agentic-coding fine-tune. Unlike the Jackrong model, its MTP head ships as a separate draft GGUF you load with -md, so the draft model wants its own slice of VRAM. At -c 200000 it would not even start — cudaMalloc failed: out of memory before the first token. The fix was three flags that shrink the draft's footprint without touching the main model's context:
+The draft's KV cache was defaulting to full f16 while the main model ran at q4_0. Quantizing the draft cache and halving its batch (plus dropping the main --ubatch-size to 1024) brought a 200K window back, with about 1GB of headroom left on the card. The model reads a ~188K-token prompt without falling over, which is the whole reason I run this thing instead of renting one.
+
+The thing I actually got nerd-sniped by: unlocking the card
+
+GA102 Ampere cards — the 3090, 3090 Ti, 3080 — ship with their FP16/BF16 tensor-core issue rate halved in firmware relative to the pro-grade A-series silicon. Someone reverse-engineered a kernel module (https://github.com/Zagitta/gpu-unlock) that writes the pro speed selectors before the NVIDIA driver binds the card. I installed it. A raw 8192³ GEMM confirmed it took: BF16 with FP32 accumulate went from the stock ~87 TFLOPS to 142, TF32 from ~43 to 75. That part worked exactly as advertised.
+
+Here is the catch, and it is a good lesson in not trusting a headline number. It barely helped llama.cpp. For quantized weights, llama.cpp's matmul path either uses its own INT8 kernels or dequantizes to FP16 and accumulates in FP16 — and FP16-accumulate math was never throttled on consumer cards, so the unlock has nothing to speed up. There is an env var (GGMLCUDACUBLASCOMPUTETYPE=bf16) that switches to the BF16-plus-FP32-accumulate path the unlock does touch, and at a large batch size it won about 11% on prefill. But at the batch size my 200K context actually needs (--ubatch-size 1024), that gain evaporated and small prompts got 30% slower. For an agent that sends a lot of small follow-up turns, that is a net loss, so I left it off.
+
+What did move the needle was boring: I rebuilt llama.cpp from a months-old checkout to current master. That alone bought 14-19% faster prefill across every prompt size, from the upstream kernel work, not from anything I tuned. The unlock is a neat trick and the card is genuinely faster at FP32-accumulate math now — it just is not the math this workload leans on. Measure the thing you run, not the benchmark on the box.
+
 Would I Do It Again?
 
 Yes. Once it is dialed in, a local coding model is genuinely useful and costs nothing per token. But it is not plug-and-play. The two things that cost me the most time were not "which model is best" — they were the quant type interacting badly with my specific GPU, and a sampler default I never set.

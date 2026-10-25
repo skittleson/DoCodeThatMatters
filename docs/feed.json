@@ -74,7 +74,7 @@
       "summary": "How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me, and the repetition fix that came undone during a model swap.",
       "image": "/images/rtx-3090.jpg",
       "date_published": "2026-08-19T00:00:00.000Z",
-      "date_modified": "2026-09-24T00:00:00.000Z",
+      "date_modified": "2026-10-25T00:00:00.000Z",
       "tags": [
         "AI;DR",
         "local llm",
@@ -96,7 +96,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1961
+      "word_count": 2422
     },
     {
       "id": "https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/",
