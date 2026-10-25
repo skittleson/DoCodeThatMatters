@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const updated = 'October 25, 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy — Do Code That Matters"
+  description="Privacy policy for docodethatmatters.com."
+>
+  <main class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-2xl font-bold mb-4">Privacy Policy</h1>
+
+    <p class="mb-6 font-mono text-sm leading-relaxed" style="color: var(--color-text-muted);">
+      Last updated: {updated}
+    </p>
+
+    <div class="space-y-6 font-mono text-sm leading-relaxed" style="color: var(--color-text-muted);">
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Short version</h2>
+        <p>
+          This is a personal blog. It uses Google Analytics to understand how people use the site, and
+          it collects only what you send through the contact form. There are no ads, no data sales,
+          and no accounts.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Google Analytics</h2>
+        <p>
+          The site uses Google Analytics to collect anonymous usage statistics, such as which pages
+          are visited, where visitors come from, and what kind of device they use. Google stores this
+          data in the United States and may set cookies on your browser. You can opt out by installing
+          the <a href="https://tools.google.com/dlpage/gaoptout" class="hover:underline" style="color: var(--color-accent);">Google Analytics opt-out browser add-on</a>.
+          Google's own privacy policy is at
+          <a href="https://policies.google.com/privacy" class="hover:underline" style="color: var(--color-accent);">policies.google.com/privacy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Contact form</h2>
+        <p>
+          The contact form on the
+          <a href="/about/" class="hover:underline" style="color: var(--color-accent);">About page</a>
+          collects the email address and message you submit, and uses them only to reply to you.
+          Messages are relayed through a third-party service (AWS API Gateway) on their way to me; I
+          do not keep a database of submitted messages.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Local storage</h2>
+        <p>
+          The site stores your light/dark theme preference in your browser's local storage. It never
+          leaves your device.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Cookies</h2>
+        <p>
+          The only cookies this site sets are the ones set by Google Analytics. There are no
+          advertising or marketing cookies.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Your choices</h2>
+        <p>
+          You can block cookies entirely in your browser settings; the site will still work. You can
+          also opt out of Google Analytics with the add-on linked above.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Changes</h2>
+        <p>
+          I may update this policy from time to time. The "last updated" date above reflects the most
+          recent change.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Contact</h2>
+        <p>
+          Questions about this policy? Use the
+          <a href="/about/" class="hover:underline" style="color: var(--color-accent);">contact form on the About page</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+</BaseLayout>

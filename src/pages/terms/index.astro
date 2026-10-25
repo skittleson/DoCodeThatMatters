@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const updated = 'October 25, 2026';
+---
+
+<BaseLayout
+  title="Terms of Use — Do Code That Matters"
+  description="Terms of use for docodethatmatters.com."
+>
+  <main class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-2xl font-bold mb-4">Terms of Use</h1>
+
+    <p class="mb-6 font-mono text-sm leading-relaxed" style="color: var(--color-text-muted);">
+      Last updated: {updated}
+    </p>
+
+    <div class="space-y-6 font-mono text-sm leading-relaxed" style="color: var(--color-text-muted);">
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">The site</h2>
+        <p>
+          This site (docodethatmatters.com, "Do Code That Matters") is a personal blog written and
+          maintained by Spencer Kittleson. By using the site you agree to these terms. If you do not
+          agree, do not use the site.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Content</h2>
+        <p>
+          The posts, code, and other content on this site are provided for general information and
+          education. Code samples are shared so you can learn from them; reuse them in your own
+          projects at your own discretion. Content linked to from this site is not mine, and I am not
+          responsible for what third-party sites say or do.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Use of the site</h2>
+        <p>
+          Please use the site the way a normal visitor would. Do not attempt to disrupt it, scrape it
+          at scale, impersonate me or the site, or use it to send unsolicited messages through the
+          contact form.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">No warranty</h2>
+        <p>
+          The site and its content are provided "as is", without warranty of any kind. I do my best to
+          keep things accurate, but code changes, products change, and I make mistakes. Nothing here
+          is professional, legal, or financial advice.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Liability</h2>
+        <p>
+          To the maximum extent permitted by law, I am not liable for any damages arising from your use
+          of this site or reliance on its content.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Changes</h2>
+        <p>
+          I may update these terms from time to time. The "last updated" date above reflects the most
+          recent change. Continued use of the site after a change means you accept the updated terms.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-lg font-bold mb-2" style="color: var(--color-text);">Contact</h2>
+        <p>
+          Questions about these terms? Use the
+          <a href="/about/" class="hover:underline" style="color: var(--color-accent);">contact form on the About page</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+</BaseLayout>
