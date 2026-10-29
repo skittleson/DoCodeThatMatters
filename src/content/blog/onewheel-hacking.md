@@ -13,12 +13,12 @@ keywords:
   - reverse engineering
   - telemetry
   - hacker project
-date: 2026-10-02
+date: 2026-10-12
 description: How I read live telemetry off my Onewheel Pint S from a Linux laptop, no phone and no Future Motion cloud. Capturing the GemAuth unlock handshake with an Android HCI snoop log, then replaying it from Python with bleak at ~200 Hz.
-image: /images/rtx-3090.jpg
-alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.
-imageWidth: 1200
-imageHeight: 800
+image: /images/onewheel-golden-hour.jpg
+alt: My Onewheel Pint S parked on a wood-chip path at golden hour, shot from above as the sun drops behind the tree line.
+imageWidth: 900
+imageHeight: 1906
 draft: true
 ---
 
@@ -26,9 +26,13 @@ The unlock token is a **static 20-byte signature bound to the board**, not a per
 
 I can capture the following: pitch, RPM, motor amps, battery voltage, controller temp, straight to a CSV file at about 200 Hz. It's part 1 of building a small device I can mount on the board itself so I can look down at the stats while riding.
 
+![Onewheel Pint S on a wood-chip path at golden hour](/images/onewheel-golden-hour.jpg)
+
 ## Discovery process
 
 The board talks plain BLE GATT with about 30 characteristics, mostly 2-byte big-endian values, under one primary service with a UUID that has been stable since the version 1. The hard part is the unlock handshake Future Motion added on XR and later (thank you online forums!)
+
+![The same board in flat afternoon light before the session got started](/images/onewheel-daytime.jpg)
 
 
 ## What the board exposes
