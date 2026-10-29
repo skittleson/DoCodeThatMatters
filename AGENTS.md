@@ -17,6 +17,8 @@ Run these in order:
    spoken scripts + `index.mp3`/`index.opus` for posts whose content changed (hash-cached
    via `audio-hashes.json` / `script-hashes.json`). Supports `npm run audio -- --slug <slug>`.
    It prints which posts changed ("These N post(s) changed and will get fresh audio") before generating.
+   Audio lands in `public/audio/<slug>/`, so run `npm run build` again afterwards to copy it
+   into `docs/audio/`. Also stage `public/audio/<slug>/`, `audio-hashes.json`, `script-hashes.json`.
 3. `git add docs/` — stage the build output (this is the served artifact).
 4. `git commit -m "..."` — concise message (see history style: `feat:`, `fix:`, `build:`).
 5. `git push` — Push requires the active gh account to be **`skittleson`**, NOT `spencerkittleson`.
@@ -30,7 +32,7 @@ Repo is `skittleson/DoCodeThatMatters`. The default active gh account is
 Fix before pushing:
 
 ```sh
-gh auth switch --hostname github.com   # pick skittleson as the active account
+gh auth switch --hostname github.com --user skittleson   # non-interactive
 git push origin master
 ```
 
