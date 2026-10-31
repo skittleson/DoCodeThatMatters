@@ -55,9 +55,9 @@ The advantages:
 
 | Component | Purpose | Buy |
 |---|---|---|
-| [Wemos D1 Mini](https://amzn.to/2zI2nUf) or similar esp8266 / esp32 device | WiFi MCU that reads the power state | [Amazon](https://amzn.to/2zI2nUf) |
+| [Wemos D1 Mini](https://www.amazon.com/dp/B081PX9YFV?tag=dctm-20) or similar esp8266 / esp32 device | WiFi MCU that reads the power state | [Amazon](https://www.amazon.com/dp/B081PX9YFV?tag=dctm-20) |
 | 2 x resistors (any two usually works, i used 10k) | Voltage divider for the power sense pin | — |
-| [BME280](https://amzn.to/2U2qCTM) or [BME680](https://amzn.to/2XL2C8U) *(optional)* | Temperature / humidity sensing | [Amazon](https://amzn.to/2U2qCTM) · [Amazon](https://amzn.to/2XL2C8U) |
+| [BME280](https://amzn.to/2U2qCTM) or [BME680](https://www.amazon.com/dp/B0CDWXZNY7?tag=dctm-20) *(optional)* | Temperature / humidity sensing | [Amazon](https://amzn.to/2U2qCTM) · [Amazon](https://www.amazon.com/dp/B0CDWXZNY7?tag=dctm-20) |
 
 Other material: wire, solder, led, 2 x 5v usb wall chargers, 1 male usb plugin, 1 regular usb charging cable for the esp32.
 

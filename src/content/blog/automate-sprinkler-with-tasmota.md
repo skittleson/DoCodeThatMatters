@@ -61,7 +61,7 @@ At the lowest level, the IoT hardware should be the following:
 
 \$20 USD over-the-shelf Sonoff hardware that does those 3 out of 4 easily. The 4th point needs to have special programming. There are multiple options out there but this fulfills the need of an "over-the-shelf" device that can be used with open source software.
 
-[![Sonoff device](/images/sonoff_temp.jpg)](https://amzn.to/3jKFeT8)
+[![Sonoff device](/images/sonoff_temp.jpg)](https://www.amazon.com/dp/B0B5GM1LTG?tag=dctm-20)
 
 The easiest way to wire this up is using an existing extension cord, cut into it, then follow the directions of wiring Sonoff guide. Plug one into the [24 VAC power supply](https://amzn.to/3DcQpiY) of an existing water sprinkler adapter.
 
@@ -69,9 +69,9 @@ Alternative hardware that I ended up using:
 
 | Component | Purpose | Buy |
 |---|---|---|
-| [Esp8266 microcontroller](https://amzn.to/3oWMCNZ) | WiFi MCU that runs Tasmota | [Amazon](https://amzn.to/3oWMCNZ) |
+| [Esp8266 microcontroller](https://www.amazon.com/dp/B081CSJV2V?tag=dctm-20) | WiFi MCU that runs Tasmota | [Amazon](https://www.amazon.com/dp/B081CSJV2V?tag=dctm-20) |
 | [oled screen](https://amzn.to/3oTJUZj) | Status display for sprinkler state | [Amazon](https://amzn.to/3oTJUZj) |
-| [solid state relay](https://amzn.to/2TNYaoe) | Switches the 24 VAC sprinkler valve | [Amazon](https://amzn.to/2TNYaoe) |
+| [solid state relay](https://www.amazon.com/dp/B00HV974KC?tag=dctm-20) | Switches the 24 VAC sprinkler valve | [Amazon](https://www.amazon.com/dp/B00HV974KC?tag=dctm-20) |
 | [BME280 (temperature, humidity, and pressure)](https://amzn.to/365HD4Z) | Skips watering when too cold/humid | [Amazon](https://amzn.to/365HD4Z) |
 
 ![Sprinkler PCB 3D](/images/sprinklerPcb3d.jpg)

@@ -41,9 +41,9 @@ To be honest, I know some of this will be hacky but that's okay to us get moving
 
 | Component | Purpose | Buy |
 |---|---|---|
-| [GL.iNet Flint 2 router](https://www.amazon.com/dp/B0BZL2DLL1?tag=dctm-20) | Runs OpenWrt + MQTT broker locally | [Amazon](https://www.amazon.com/dp/B0BZL2DLL1?tag=dctm-20) |
-| [Martin Jerry smart switches](https://amzn.to/49xMQnw) | Tasmota-loaded ESP32 light/fan switches | [Amazon](https://amzn.to/49xMQnw) |
-| [Sonoff S31 smart plugs](https://www.amazon.com/dp/B073F9T9TM?tag=dctm-20) | Power watchdog for the cable modem | [Amazon](https://www.amazon.com/dp/B073F9T9TM?tag=dctm-20) |
+| [GL.iNet Flint 2 router](https://www.amazon.com/dp/B0CP7S3117?tag=dctm-20) | Runs OpenWrt + MQTT broker locally | [Amazon](https://www.amazon.com/dp/B0CP7S3117?tag=dctm-20) |
+| [Martin Jerry smart switches](https://www.amazon.com/dp/B0DP6NKJ5B?tag=dctm-20) | Tasmota-loaded ESP32 light/fan switches | [Amazon](https://amzn.to/49xMQnw) |
+| [Sonoff S31 smart plugs](https://www.amazon.com/dp/B08TNF4835?tag=dctm-20) | Power watchdog for the cable modem | [Amazon](https://www.amazon.com/dp/B08TNF4835?tag=dctm-20) |
 [Cheap tuya vacuum](https://amzn.to/4pQVtk9) | To clean the floor | [Amazon](https://amzn.to/4pQVtk9) |
 [Cheap Tablet](https://amzn.to/4zcyjcj) | Mounted to wall for dashboard | [Amazon](https://amzn.to/4zcyjcj) |
 [Fan humidity switches](https://amzn.to/4g7vYaJ) | Trigger when humidity is too hight | [Amazon](https://amzn.to/4g7vYaJ) |

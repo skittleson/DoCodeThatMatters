@@ -30,7 +30,7 @@ Each device applied the incoming change and then re-announced it. That made the 
 
 The mechanism is general. A state-mirroring protocol where the receiver applies the *effect* but never updates the *dedup key* it uses to suppress its own echo. Every incoming message looks new. So the system amplifies instead of settling.
 
-I built this into two light switches with [Tasmota](https://tasmota.github.io/docs/) and MQTT while getting a new house's smart-home stack ready. The switches are [Martin Jerry](https://amzn.to/49xMQnw) units talking to my own broker, [mqtt_broker_esp](https://github.com/skittleson/mqtt_broker_esp). The goal was a virtual 3-way: flip either switch and the other follows. It worked great for months. Then a power blip hit. Both rebooted and started screaming at each other.
+I built this into two light switches with [Tasmota](https://tasmota.github.io/docs/) and MQTT while getting a new house's smart-home stack ready. The switches are [Martin Jerry](https://www.amazon.com/dp/B0DP6NKJ5B?tag=dctm-20) units talking to my own broker, [mqtt_broker_esp](https://github.com/skittleson/mqtt_broker_esp). The goal was a virtual 3-way: flip either switch and the other follows. It worked great for months. Then a power blip hit. Both rebooted and started screaming at each other.
 
 This is how the bug works, how I found it live instead of guessing, and the one-line fix that killed it.
 
@@ -128,8 +128,8 @@ The hallway is quiet now. For a smart home project, that's the highest praise th
 
 | Gear | Purpose | Buy |
 |---|---|---|
-| [Martin Jerry smart switch](https://amzn.to/49xMQnw) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://amzn.to/49xMQnw) |
-| [Martin Jerry smart switch](https://amzn.to/435hVLR) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://amzn.to/435hVLR) |
-| [Martin Jerry smart switch](https://amzn.to/4udkmqC) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://amzn.to/4udkmqC) |
+| [Martin Jerry humidity fan switch](https://amzn.to/49xMQnw) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://amzn.to/49xMQnw) |
+| [Martin Jerry smart dimmer switch](https://amzn.to/435hVLR) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://amzn.to/435hVLR) |
+| [Martin Jerry smart switch](https://www.amazon.com/dp/B0DP6NKJ5B?tag=dctm-20) | Wi-Fi relay switch, Tasmota-flashed | [Amazon](https://www.amazon.com/dp/B0DP6NKJ5B?tag=dctm-20) |
 
 - Broker / provisioning: <https://github.com/skittleson/mqtt_broker_esp>

@@ -9,11 +9,11 @@ Ever have your central AC unit turn off all of sudden?  If your a home owner, th
   
 ## Water Pump Preparation
 
-I ordered this [wifi dual water pump](https://www.amazon.com/dp/B08T9KLDHD?&linkCode=ll1&tag=dctm-20&linkId=da5e68dd8503f9f127b2e0c5222d3424&language=en_US&ref_=as_li_ss_tl) from Amazon then flashed it using [this guide](https://templates.blakadder.com/WD-01ADE.html).  The only tricky part was soldering wires to those tiny connections shown in the guide's image. I followed the traces for two of them then soldered unto those instead.  More room to work with.
+I ordered this wifi dual water pump (WD-01ADE, no longer sold on Amazon) from Amazon then flashed it using [this guide](https://templates.blakadder.com/WD-01ADE.html).  The only tricky part was soldering wires to those tiny connections shown in the guide's image. I followed the traces for two of them then soldered unto those instead.  More room to work with.
 
 | Component | Purpose | Buy |
 |---|---|---|
-| [Wifi dual water pump (WD-01ADE)](https://www.amazon.com/dp/B08T9KLDHD?&linkCode=ll1&tag=dctm-20&linkId=da5e68dd8503f9f127b2e0c5222d3424&language=en_US&ref_=as_li_ss_tl) | Flushes the condensate line on a schedule | [Amazon](https://www.amazon.com/dp/B08T9KLDHD?&linkCode=ll1&tag=dctm-20&linkId=da5e68dd8503f9f127b2e0c5222d3424&language=en_US&ref_=as_li_ss_tl) |
+| Wifi dual water pump (WD-01ADE) | Flushes the condensate line on a schedule | No longer sold on Amazon |
 
 Flashed it with [Tasmotizer](https://github.com/tasmota/tasmotizer/releases). Send the wifi configuration then grab the IP address.  Make sure to set the template defined in the guide at this point in `Configuration > Configure Other`.
 

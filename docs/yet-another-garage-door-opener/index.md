@@ -14,11 +14,11 @@ Another tutorial for building a garage door opener with a raspberry pi. I've lef
 
 | Component | Purpose | Buy |
 |---|---|---|
-| [Channel DC 5V Relay Module for Arduino](https://amzn.to/2RP4zNC) | Simulates the button press to toggle the door | [Amazon](https://amzn.to/2RP4zNC) |
+| [Channel DC 5V Relay Module for Arduino](https://www.amazon.com/dp/B00E0NTPP4?tag=dctm-20) | Simulates the button press to toggle the door | [Amazon](https://www.amazon.com/dp/B00E0NTPP4?tag=dctm-20) |
 | [Cheap containers to throw everything into](https://amzn.to/2NEdWwB) | Holds the electronics | [Amazon](https://amzn.to/2NEdWwB) |
 | [Liftmaster 41A5273-1 Multi-Function Control Panel](https://amzn.to/2pShUrK) | Bypasses the anti-tamper wiring | [Amazon](https://amzn.to/2pShUrK) |
 | [Raspberry Pi 3](https://amzn.to/2RMxQc5) | Runs Docker + the web API | [Amazon](https://amzn.to/2RMxQc5) |
-| [Sony Play Station Eye Camera for PS3](https://amzn.to/2CIAmvF) *(optional)* | Cheap camera with 2 zoom modes + 4 mics | [Amazon](https://amzn.to/2CIAmvF) |
+| [Sony Play Station Eye Camera for PS3](https://www.amazon.com/dp/B0072I2240?tag=dctm-20) *(optional)* | Cheap camera with 2 zoom modes + 4 mics | [Amazon](https://www.amazon.com/dp/B0072I2240?tag=dctm-20) |
 
 ## Research & Discover
 
