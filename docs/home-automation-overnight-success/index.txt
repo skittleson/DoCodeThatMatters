@@ -228,3 +228,46 @@ A soldering iron for permanent connections, a 3D printer for enclosures and brac
 That's both talks, ten-plus years apart. The rules barely changed between them, while the list of problems they had to handle kept growing.
 
 A third talk is coming, and this one is built around agentic use cases. The same rules still apply when an AI agent is the one flipping the switches, and I expect a few new ones once it is.
+
+Gear I've used
+
+<small>(This section has Amazon affiliate links. If you buy through them, I may earn a small commission at no extra cost to you.)</small>
+
+These are the parts from my home automation builds, grouped by project.
+
+Sprinkler controller
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| ESP8266 NodeMCU board (https://amzn.to/3oWMCNZ) | Wi-Fi microcontroller that runs Tasmota | Amazon (https://amzn.to/3oWMCNZ) |
+| SSD1306 OLED screen (https://amzn.to/3oTJUZj) | Status display for the sprinkler state | Amazon (https://amzn.to/3oTJUZj) |
+| Solid state relay (https://amzn.to/2TNYaoe) | Switches the 24 VAC sprinkler valve | Amazon (https://amzn.to/2TNYaoe) |
+| BME280 sensor (https://amzn.to/365HD4Z) | Temperature, humidity and pressure | Amazon (https://amzn.to/365HD4Z) |
+| 24 VAC power supply (https://amzn.to/3DcQpiY) | Powers the sprinkler valve | Amazon (https://amzn.to/3DcQpiY) |
+
+Lights, switches and plugs
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| Martin Jerry smart switch (Tasmota pre-flashed) (https://amzn.to/435hVLR) | Wall light switch that runs Tasmota out of the box | Amazon (https://amzn.to/435hVLR) |
+| Martin Jerry humidity fan switch (https://amzn.to/49xMQnw) | Runs the bathroom fan when humidity gets too high | Amazon (https://amzn.to/49xMQnw) |
+| Sonoff S31 smart plug (https://www.amazon.com/dp/B073F9T9TM?tag=dctm-20) | Power watchdog for the cable modem | Amazon (https://www.amazon.com/dp/B073F9T9TM?tag=dctm-20) |
+| Serial-to-USB adapter (https://amzn.to/3sW2QaW) | Connects an ESP8266 to your PC for flashing Tasmota | Amazon (https://amzn.to/3sW2QaW) |
+
+Garage door
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| Raspberry Pi 3 (https://amzn.to/2RMxQc5) | Runs Docker and the web API | Amazon (https://amzn.to/2RMxQc5) |
+| 2-channel 5V relay module (https://amzn.to/2RP4zNC) | Simulates the button press to toggle the door | Amazon (https://amzn.to/2RP4zNC) |
+| Liftmaster 41A5273-1 control panel (https://amzn.to/2pShUrK) | Bypasses the anti-tamper wiring | Amazon (https://amzn.to/2pShUrK) |
+| PlayStation Eye camera (https://amzn.to/2CIAmvF) (optional) | Cheap camera with 2 zoom modes and 4 mics | Amazon (https://amzn.to/2CIAmvF) |
+
+Around the house
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| GL.iNet Flint 2 router (https://www.amazon.com/dp/B0BZL2DLL1?tag=dctm-20) | Runs OpenWrt and an MQTT broker locally | Amazon (https://www.amazon.com/dp/B0BZL2DLL1?tag=dctm-20) |
+| Cheap tablet (https://amzn.to/4zcyjcj) | Mounted on the wall as the dashboard | Amazon (https://amzn.to/4zcyjcj) |
+| Tuya robot vacuum (https://amzn.to/4pQVtk9) | Cleans the floors | Amazon (https://amzn.to/4pQVtk9) |
+| Wi-Fi dual water pump (WD-01ADE) (https://www.amazon.com/dp/B08T9KLDHD?&linkCode=ll1&tag=dctm-20&linkId=da5e68dd8503f9f127b2e0c5222d3424&language=enUS&ref=aslisstl) | Flushes the AC condensate line on a schedule | Amazon (https://www.amazon.com/dp/B08T9KLDHD?&linkCode=ll1&tag=dctm-20&linkId=da5e68dd8503f9f127b2e0c5222d3424&language=enUS&ref=aslisstl) |
