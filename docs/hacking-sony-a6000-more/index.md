@@ -20,7 +20,7 @@ After a bit of hacking the [power adapter](https://amzn.to/4afC0jy) version of t
 | [USB-C NP-FW50 batteries](https://amzn.to/4bBDFBc) | Rechargeable on-the-go batteries | [Amazon](https://amzn.to/4bBDFBc) |
 | [AC-PW20 power adapter](https://amzn.to/4afC0jy) | Dummy battery, cannibalized for the shell | [Amazon](https://amzn.to/4afC0jy) |
 | [USB-C female tail](https://amzn.to/44Kd0jk) | Input for the external battery bank | [Amazon](https://amzn.to/44Kd0jk) |
-| [SanDisk Extreme SD card reader](https://amzn.to/3UJHEVi) | Fast on-the-go card dumps | [Amazon](https://amzn.to/3UJHEVi) |
+| [Anker USB-C SD card reader](https://www.amazon.com/dp/B07NW8RPYN?tag=dctm-20) | Fast on-the-go card dumps | [Amazon](https://www.amazon.com/dp/B07NW8RPYN?tag=dctm-20) |
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uRE7KQktJBk?si=iQUhHBQ98gUw4M6L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -30,7 +30,7 @@ A follow up from my previous post.
 
 ### Using a Card Reader
 
-On the go, I keep this [card reader](https://amzn.to/3UJHEVi) near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.
+On the go, I keep this [card reader](https://www.amazon.com/dp/B07NW8RPYN?tag=dctm-20) near the camera bag. It allows for the sd card to plugged into the computer or phone in a small package. Sometimes I just need a few pictures on my phone to edit and send.  All the other files get dumped.
 
 ### Using the FTP uploader within the camera
 

@@ -6,9 +6,9 @@ The "To-Do" List
 
 | Part | Purpose | Buy |
 |---|---|---|
-| MKS Gen 1.4 board (https://amzn.to/2yT1NlY) | Replaces the stock Melzi board | Amazon (https://amzn.to/2yT1NlY) |
-| RepRap Discount Full Smart Controller (https://amzn.to/2JygbSy) | LCD display for the new board | Amazon (https://amzn.to/2JygbSy) |
-| 30A power supply (https://amzn.to/2XP8wpz) | Replaces the under-powered 20A unit | Amazon (https://amzn.to/2XP8wpz) |
+| MKS Gen 1.4 board | Replaces the stock Melzi board | No longer sold on Amazon |
+| RepRap Discount Full Smart Controller (https://www.amazon.com/dp/B07X378P8X?tag=dctm-20) | LCD display for the new board | Amazon (https://www.amazon.com/dp/B07X378P8X?tag=dctm-20) |
+| 30A power supply (https://www.amazon.com/dp/B01LATMSGS?tag=dctm-20) | Replaces the under-powered 20A unit | Amazon (https://www.amazon.com/dp/B01LATMSGS?tag=dctm-20) |
 
 - Glass bed
 - 1/16 to 1/32 steps for steppers. This provides cleaner and smoother prints.
@@ -50,11 +50,11 @@ The "To-Do" List
 
     - Set Z travel limit. #define ZMAXPOS 180
     - SD Card Support #define SDSUPPORT.
-    - LCD Support for RepRap Discount Full Smart Controller (https://amzn.to/2JygbSy) #define REPRAPDISCOUNTFULLGRAPHICSMART_CONTROLLER
+    - LCD Support for RepRap Discount Full Smart Controller (https://www.amazon.com/dp/B07X378P8X?tag=dctm-20) #define REPRAPDISCOUNTFULLGRAPHICSMART_CONTROLLER
 
 - DRV8825 calibration. The formula is VREF = Rated motor current / 2 . So a standard NEMA 17 motor is rated at 1.68 amps. Divided by 2 it's .84 volts. I burned out an extruder stepper following this. I dropped it to .6 volts. The steppers were less hot and no performance difference. Checkout
 - Replace display. The connectors are backwards for the standard RepRap Discount Full Smart Controller. Some Amazon reviews pointed this out.
-- Replace power supply. Found a 30A on Amazon for \$20 (https://amzn.to/2XP8wpz). The current 20A power supply is under powered. It's a known issue with these printers.
+- Replace power supply. Found a 30A on Amazon for \$20 (https://www.amazon.com/dp/B01LATMSGS?tag=dctm-20). The current 20A power supply is under powered. It's a known issue with these printers.
 - Replace Y bracket.
 <!-- - OctoPrint works but there is a bug where you need to set the serial speed to Auto otherwise it fails to connect. -->
 - Easy access case for MKS Gen board

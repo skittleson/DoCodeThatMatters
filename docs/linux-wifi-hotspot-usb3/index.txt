@@ -2,11 +2,12 @@ this post is still a working in progress, come back for updates!
 
 TLDR
 
-Using a Alfa AC1900 WiFi Adapter (https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=enUS&ref=asliss_tl) to broadcast the hotspot:
+Using an Alfa AC1900 WiFi Adapter to broadcast the hotspot:
 
 | Component | Purpose | Buy |
 |---|---|---|
-| Alfa AC1900 WiFi Adapter (https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=enUS&ref=aslisstl) | Long-range dual-band 802.11ac hotspot AP | Amazon (https://www.amazon.com/dp/B01MZD7Z76?amp=&crid=2HY6YU1HZ234Z&amp=&sprefix=alfa+usb&linkCode=ll1&tag=dctm-20&linkId=e01a9f4013d15a4836acba0234c34c76&language=enUS&ref=aslisstl) |
+| Alfa AC1900 WiFi Adapter | Long-range dual-band 802.11ac hotspot AP | No longer sold on Amazon |
+| Alfa AC1200 WiFi Adapter (USB 3.0) (https://www.amazon.com/dp/B00VEEBOPG?tag=dctm-20) | Closest current Alfa alternative | Amazon (https://www.amazon.com/dp/B00VEEBOPG?tag=dctm-20) |
 starting script: onstart.sh
 
 #!/bin/bash

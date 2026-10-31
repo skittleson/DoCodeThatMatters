@@ -54,9 +54,9 @@ To deal with the camera heating over time open the screen to help dissipate it. 
 
 | Gear | Purpose | Buy |
 |---|---|---|
-| [Sony A6000 body](https://amzn.to/3oW4qO1) | 24.3 MP mirrorless camera | [Amazon](https://amzn.to/3oW4qO1) |
+| [Sony A6000 body](https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20) | 24.3 MP mirrorless camera | [Amazon](https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20) |
 | [AC-PW20 power adapter](https://amzn.to/4afC0jy) | Dummy battery for continuous power | [Amazon](https://amzn.to/4afC0jy) |
-| [HDMI to USB3 capture adapter](https://amzn.to/3P84lBr) | Camera output shows up as a webcam | [Amazon](https://amzn.to/3P84lBr) |
+| [HDMI to USB3 capture adapter](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) | Camera output shows up as a webcam | [Amazon](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) |
 
 - [How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling](https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link)
 

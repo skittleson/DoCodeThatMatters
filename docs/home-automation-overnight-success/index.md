@@ -1,3 +1,5 @@
+Thank you for reading, and for all the shares and comments on this one. If you're in a hurry, [skip to the devices I've used](#devices-ive-used).
+
 TLDR; If a light switch in my house needs someone else's server to work, it doesn't go in. That has been rule one for ten years of home automation, and the other rules I follow grew out of it. Below are the rules and why I keep them, followed by both talks I've given on this, slide by slide.
 
 ## The cloud is the weak link
@@ -229,7 +231,7 @@ That's both talks, ten-plus years apart. The rules barely changed between them, 
 
 A third talk is coming, and this one is built around agentic use cases. The same rules still apply when an AI agent is the one flipping the switches, and I expect a few new ones once it is.
 
-## Gear I've used
+## Devices I've used
 
 <small>(This section has Amazon affiliate links. If you buy through them, I may earn a small commission at no extra cost to you.)</small>
 
