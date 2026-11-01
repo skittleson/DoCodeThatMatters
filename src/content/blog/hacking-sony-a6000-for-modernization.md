@@ -18,6 +18,9 @@ priority: 0.9
 
 
 ## Introduction
+
+**Sony A6000/A6400 series:** Part 1 (this post) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · [Research & Community Resources](/sony-a6000-a6400-research/)
+
 Hey there! In this blog post, I'm diving into a fun project: bringing my Sony A6000 camera into the modern era. This camera is a gem, even though it was made way back in 2013/3014. I snagged it on eBay as a second-hand purchase, and now I want to give it a modern makeover by improving its data transfer capabilities, increasing resolution and possibly even adding GPS functionality. 
 
 There are a few hurdles I've come across. The main challenge is finding a way to directly connect and communicate with the camera. It has Wi-Fi hotspot, which sounds great, but unfortunately, it enters a "dumb mode" when I try to use it for data transfer. It also limits a cell phone to no internet. Another option is the USB mass storage mode, but it turns out to be a bit problematic. Whenever pulling data too quickly, it just freezes up. Plus, it's pretty sluggish with its USB 2.0 connection which can take hours to download data.

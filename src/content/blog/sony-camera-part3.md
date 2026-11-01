@@ -22,7 +22,9 @@ priority: 0.9
 
 ## Introduction
 
-As in my other posts, i've made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts ([hacking-sony-a6000-for-modernization.md](hacking-sony-a6000-for-modernization.md)) and 2 ([hacking-sony-a6000-more.md](hacking-sony-a6000-more.md)): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.
+**Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · Part 3 (this post) · [Research & Community Resources](/sony-a6000-a6400-research/)
+
+As in my other posts, i've made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts ([Part 1](/hacking-sony-a6000-for-modernization/)) and 2 ([Part 2](/hacking-sony-a6000-more/)): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.
 
 
 So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.

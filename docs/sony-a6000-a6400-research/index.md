@@ -2,6 +2,8 @@ TLDR; This is research blog post for Sony's A6000 (ILCE-6000) and A6400 (ILCE-64
 
 If you want a starting point, read [this post first about modernization of this camera](https://docodethatmatters.com/hacking-sony-a6000-for-modernization/) 
 
+**Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · Research & Community Resources (this post)
+
 ## 0. Recommended Gear for A6000/A6400 Mods
 
 Things that make the mods and sessions in this post actually usable day-to-day:
