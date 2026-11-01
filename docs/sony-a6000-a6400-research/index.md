@@ -2,6 +2,17 @@ TLDR; This is research blog post for Sony's A6000 (ILCE-6000) and A6400 (ILCE-64
 
 If you want a starting point, read [this post first about modernization of this camera](https://docodethatmatters.com/hacking-sony-a6000-for-modernization/) 
 
+## 0. Recommended Gear for A6000/A6400 Mods
+
+Things that make the mods and sessions in this post actually usable day-to-day:
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| [AC-PW20 power adapter](https://amzn.to/4afC0jy) | Dummy battery for continuous power during long service-mode/firmware sessions (§5, §8) | [Amazon](https://amzn.to/4afC0jy) |
+| [NP-FW50 dummy battery](https://amzn.to/4xvUtVy) | Pairs with the AC-PW20 coupler on both A6000 and A6400 | [Amazon](https://amzn.to/4xvUtVy) |
+| [3-pack NP-FW50 replacement batteries](https://amzn.to/4h0uaAR) | High-capacity spares for timelapse/astro sessions away from an outlet (§5, §7) | [Amazon](https://amzn.to/4h0uaAR) |
+| [HDMI to USB3 capture adapter](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) | Clean HDMI capture for the webcam workarounds in §3 | [Amazon](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) |
+
 ## 1. OpenMemories: Tweak (Primary Hack Tool for A6000)
 
 **Repo:** <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera's settings">ma1co/OpenMemories-Tweak</a>  
@@ -209,8 +220,8 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
    - Cage + Red Battery add-on allows use of extended batteries
 
 2. **DC coupler (dummy battery):**  
-   - Sony AC-PW20 power adapter: continuous power from wall outlet
-   - Amazon: NP-FW50 Dummy Battery for A6000/A6400: https://amzn.to/4xvUtVy
+   - [Sony AC-PW20 power adapter](https://amzn.to/4afC0jy): continuous power from wall outlet
+   - [NP-FW50 Dummy Battery for A6000/A6400](https://amzn.to/4xvUtVy) (Amazon)
 
 3. **Power bank hack:**  
    - Connect 3000mAh+ power bank via USB to camera
@@ -227,7 +238,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 - Note: users who switch to an AC dummy battery often find they no longer need USB charging at all (Reddit a6000/a-series thread). Dummy-battery + AC power is the most reliable path for desk/webcam use.
 
 **High-capacity replacement batteries:**
-- 3-pack upgraded batteries: https://amzn.to/4h0uaAR
+- [3-pack upgraded NP-FW50 batteries](https://amzn.to/4h0uaAR) (Amazon)
 
 ---
 

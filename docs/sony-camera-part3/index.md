@@ -9,6 +9,15 @@ As in my other posts, i've made further progress with getting my camera to a mod
 
 So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.
 
+## Gear for This Build
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| [Raspberry Pi Zero 2 W](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) | The brains of the tethered setup; BLE notify needs the 2 W, not the original Zero W | [Amazon](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) |
+| [Micro-USB OTG host adapter (2-pack)](https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) | Breaks the Pi Zero's micro-USB OTG port out to full-size USB-A for the camera cable | [Amazon](https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) |
+| [SanDisk 32GB Ultra A1 microSD card](https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) | OS card for the Pi; A1 rating keeps gphoto2 + copyparty responsive | [Amazon](https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) |
+| [Anker PowerCore Slim 10000 USB-C battery](https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) | Powers the Pi untethered in the field | [Amazon](https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) |
+| [AC-PW20 power adapter](https://amzn.to/4afC0jy) | Dummy battery so the camera itself doesn't die mid-session | [Amazon](https://amzn.to/4afC0jy) |
 
 ## The Dead Ends
 

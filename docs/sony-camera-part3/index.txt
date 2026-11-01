@@ -6,6 +6,17 @@ Introduction
 
 As in my other posts, i've made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts (hacking-sony-a6000-for-modernization.md (hacking-sony-a6000-for-modernization.md)) and 2 (hacking-sony-a6000-more.md (hacking-sony-a6000-more.md)): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.
 So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.
+
+Gear for This Build
+
+| Gear | Purpose | Buy |
+|---|---|---|
+| Raspberry Pi Zero 2 W (https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) | The brains of the tethered setup; BLE notify needs the 2 W, not the original Zero W | Amazon (https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) |
+| Micro-USB OTG host adapter (2-pack) (https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) | Breaks the Pi Zero's micro-USB OTG port out to full-size USB-A for the camera cable | Amazon (https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) |
+| SanDisk 32GB Ultra A1 microSD card (https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) | OS card for the Pi; A1 rating keeps gphoto2 + copyparty responsive | Amazon (https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) |
+| Anker PowerCore Slim 10000 USB-C battery (https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) | Powers the Pi untethered in the field | Amazon (https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) |
+| AC-PW20 power adapter (https://amzn.to/4afC0jy) | Dummy battery so the camera itself doesn't die mid-session | Amazon (https://amzn.to/4afC0jy) |
+
 The Dead Ends
 
 Using the Sony App is kind of slow. I know they did a general good job on it. It's just really flaky to get going. I tried a bunch of ways but it could be my phone or the camera itself. Not sure but i dont see Sony making a ton of improvements on it.
