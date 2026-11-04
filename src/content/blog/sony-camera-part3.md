@@ -33,7 +33,7 @@ So why is this post a bit different?  We are using additiional hardware for on-t
 
 | Gear | Purpose | Buy |
 |---|---|---|
-| [Raspberry Pi Zero 2 W](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) | The brains of the tethered setup; BLE notify needs the 2 W, not the original Zero W | [Amazon](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) |
+| [Raspberry Pi Zero 2 W](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) | The brains of the tethered setup; quad-core, so the gphoto2 build and JPEG compression run much faster than on the original Zero W (which also works) | [Amazon](https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20) |
 | [Micro-USB OTG host adapter (2-pack)](https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) | Breaks the Pi Zero's micro-USB OTG port out to full-size USB-A for the camera cable | [Amazon](https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20) |
 | [SanDisk 32GB Ultra A1 microSD card](https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) | OS card for the Pi; A1 rating keeps gphoto2 + copyparty responsive | [Amazon](https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20) |
 | [Anker PowerCore Slim 10000 USB-C battery](https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) | Powers the Pi untethered in the field | [Amazon](https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20) |
@@ -74,7 +74,7 @@ Sony a6400 (PC Remote mode)
 
 ## Tethered Capture
 
-**Goal:** The most fragile part of the system. Real engineering pain points.
+This is the most fragile part of the system.
 
 Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can get those realtime events to stream over.  As well as the full image. its only there for temporary so we need to grab while its still possible to get it.
 
@@ -86,7 +86,21 @@ Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can g
 - systemd restart is fast enough to collide with the camera still holding the USB device → "Could not claim the USB device"
 - Solution: Lua script maintains one persistent gphoto2 session; kills `gvfs-gphoto2-volume-monitor`, waits 5 seconds, relaunches
 - systemd sees a healthy Lua process and never triggers its own restart logic
-- Show the Lua loop snippet
+
+The loop from [`sony_camera_capture.lua`](https://github.com/skittleson/pi_sony_remote/blob/master/services/sony_camera_capture.lua):
+
+```lua
+while true do
+    local startnum = next_filenumber()
+    emit(string.format("[*] Tethered session starting (next file: %05d).", startnum))
+
+    os.execute(build_capture_command(startnum))
+
+    emit("[*] gphoto2 exited; releasing USB device, reconnecting in 5s...")
+    kill_competitors()
+    sleep(5)
+end
+```
 
 **Sequential filenames:**
 - gphoto2's `%Y%m%d%H%M%S.jpg` sorts wrong on mobile
@@ -98,13 +112,14 @@ Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can g
 - Default systemd CWD is `/`, not writable by service user
 - Result: gphoto2 exits 0, photo never appears in download directory
 - Fix: `WorkingDirectory=/home/dietpi/downloads` in systemd unit
-- *This one wasted hours* — emphasize this
+
+This one wasted hours. Nothing fails, gphoto2 says it's fine, and the folder stays empty.
 
 ---
 
 ## The USB Mode-Switching Bug
 
-**Goal:** The most annoying physical bug in the system. Not software — physics.
+The most annoying bug in the system, and no code change fixes it. It's physics.
 
 **References:**
 - [`README.md`](https://github.com/skittleson/pi_sony_remote/blob/master/README.md) — troubleshooting section
@@ -116,16 +131,15 @@ Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can g
 
 ## The Bluetooth Binary Protocol
 
-**Goal:** The technical deep-dive. This is the HN-worthy section.
-
 The easiest approach [`was to use RFCOMM`](https://github.com/skittleson/pi_sony_remote/blob/master/services/sony_camera_bt_server.py) but i know its a bit slower so compression is required.  I suspect this is why the Sony android is so slow. OBEX/OPP is bloated; HTTP over Bluetooth PAN/DUN is finicky on both sides
 
 So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 byte opcode] [4 bytes big-endian length] [payload]`
 
 **Commands:**
-- `0x01 LIST` — no payload, returns `0x81` with newline-delimited filenames
-- `0x02 GET` — payload is `<quality byte><filename>`, returns `0x82` with JPEG data
-- `0xFE` — error responses with ASCII messages (`FILE_NOT_FOUND`, `BAD_QUALITY`, etc.)
+- `0x01 LIST`: no payload, returns `0x81` with newline-delimited filenames
+- `0x02 GET`: payload is `<quality byte><filename>`, returns `0x82` with JPEG data
+- `0x03 WAIT`: no payload. The server then pushes `0x83 NOTIFY` with the filename of each new capture, so the phone knows the moment the shutter fires
+- `0xFE`: error responses with ASCII messages (`FILE_NOT_FOUND`, `BAD_QUALITY`, etc.)
 
 **Quality tiers (server-side compression with Pillow/LANCZOS):**
 
@@ -144,7 +158,7 @@ So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 
 
 ## Copyparty: Zero-Config LAN Browsing
 
-**Goal:** Quick section — the alternative to Bluetooth for LAN setups.
+The alternative to Bluetooth when everything is on the same network.
 
 **References:**
 - [`scripts/copyparty-setup.sh`](https://github.com/skittleson/pi_sony_remote/blob/master/scripts/copyparty-setup.sh)
@@ -159,8 +173,6 @@ So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 
 
 ## Lessons Learned
 
-**Goal:** The section HN loves. Concrete takeaways from real pain.
-
 1. **Build gphoto2 from source** — distro package is too old; plan for build time
 2. **Use a Lua wrapper, not a raw systemd service** — gphoto2 exits; the Lua monitor handles the USB race condition that systemd restarts can't fix
 3. **Set `WorkingDirectory` in your systemd unit** — the silent failure is the most expensive bug in this project
@@ -173,8 +185,6 @@ So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 
 
 ## Use Cases
 
-**Goal:** Who is this for? Make it concrete.
-
 - **Product photography** — camera on tripod, Pi on shelf, check phone over Bluetooth. No desk, no laptop cable.
 - **Wildlife** — remote trigger, instant photo availability. You're in the field, not at a desk.
 - **Events** — hands-free capture station. Attendees review on LAN browser, collect originals later.
@@ -184,14 +194,8 @@ So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 
 
 ## Conclusion
 
-**Goal:** Wrap up and invite discussion.
+A ~$15 Pi Zero replaced the laptop in my tethered setup. It runs three services off one Lua monitor and talks to the phone with a 5 byte header. The parts that hurt (USB mode switching, `WorkingDirectory=/`, the gphoto2 version) are written down now so you don't have to find them the hard way.
 
-- TL;DR: $35 Pi replaced a laptop in my tethered workflow
-- Three services, one Lua monitor, one custom protocol — it works
-- The parts that hurt (USB mode-switching, `WorkingDirectory=/`, gphoto2 version) are documented now
-- The protocol is open — fork the repo, add remote shutter control over Bluetooth, tell me what you build
-- Discussion prompts:
-  - Anyone else reverse-engineer a camera protocol?
-  - BLE vs RFCOMM for file transfer — which would you use?
-  - What other cameras would this work on? (gphoto2 camera list is extensive)
-  - The super-resolution hack from Part 1 — worth a Part 4?
+The protocol is open. Fork the repo, add remote shutter control over Bluetooth, and tell me what you build. It was built around the a6400, but gphoto2 supports a long list of cameras.
+
+The super-resolution hack from Part 1 might be worth a Part 4.

@@ -247,7 +247,7 @@ A GPS module doesn't exist for this camera.  I've done a few proof of concepts b
 - Use your phone to generate a QR code then take a picture of it in the camera. It can be posted processed.
 - Use something like google maps history to match images times with GPS location
 - Use hardware device like [Neo 6m](https://amzn.to/44Mfexf) hooked up to a raspberry pi/microcontroller to collect time/location then post process.
-- My favorite is a combination of methods. Is to add a [super small GPS device](https://amzn.to/3X2tOOF) that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I've tried.   The other major issue is something like a Raspberry Zero W 2 has a limit of 64GB of storage.  So it should be offloaded quickly.
+- My favorite is a combination of methods. Is to add a [super small GPS device](https://amzn.to/3X2tOOF) that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I've tried.   The other major issue is the Pi's microSD card fills up fast with 7-10MB JPEGs.  So it should be offloaded quickly.
 
 | Gear | Purpose | Buy |
 |---|---|---|

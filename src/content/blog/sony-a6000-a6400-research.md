@@ -60,8 +60,8 @@ Requires the Sony-PMCA-RE tool to install the APK onto the camera:
 4. App appears in "Application List" on camera
 
 ### A6400 Incompatibility
-- Sony-PMCA-RE issue #381: "Tweak do not work on Sony a6400" — users report "No Tweaks found" error (the latest Zadig libUSB version is too new and doesn't work for tweaking)
-- The A6400 uses a newer USB service protocol that the current PMCA-RE doesn't fully support
+- Sony-PMCA-RE issue #381: "Tweak do not work on Sony a6400" — users report a "No Tweaks found" error from PMCA-RE's service-mode `tweak` with Zadig 2.9's libusb; reinstalling the driver with Zadig 2.8 fixes it for several of them
+- OpenMemories-Tweak itself can't install: the A6400 (CXD90045) has no PlayMemories app support, and installs fail with MTP error 0x2006
 - Related technical write-up: <a href="https://github.com/ma1co/Sony-PMCA-RE/issues/733" title="ILCE-6400: BACKUP_PDT_READ crashes USB, but per-property readBackup/writeBackup + unlock works as a workaround">ma1co/Sony-PMCA-RE</a>
 
 **Important caveat (2025):** The A6400 is a Sony-camera electron / service-mode oddity. Sony-PMCA-RE issue #513 ("Figured it out for my setup (a6400) (windows)") documents that after entering service mode the device *disconnects* — that is part of the process. At that point you run **Zadig** again and the camera re-appears as a "Sony USB Device" in Zadig. This same flow works on the **ILCE-A6700**, meaning the service-mode entry is shared across newer Alpha bodies even where the app-install path (PMCA) is unsupported.
@@ -151,25 +151,25 @@ This matters for anyone doing deeper mods (custom apps, extracting settings, exp
 - Download: <a href="https://support.d-imaging.sony.co.jp/app/webcam/en/download/" title="Imaging Edge Webcam download page">support.d-imaging.sony.co.jp: download</a>
 
 ### A6000
-**Issue:** The A6000 has a software bug that applies a beauty filter to the HDMI output, making it unsuitable for clean video conferencing.
+The A6000 has the same native setting as the A6400 (it's in Sony's A6000 Help Guide): **MENU → Setup (toolbox) page 3 → HDMI Info. Display → OFF**. Pair it with a capture card.
 
-**Workarounds:**
+**Options:**
 1. **PMCA-HDMICam app:** <a href="https://github.com/dired/PMCA-HDMICam" title="A clean-HDMI-Output PMCA application for Sony cameras">dired/PMCA-HDMICam</a>  
    - A clean-HDMI-Output PMCA application for Sony cameras
    - Use case: webcam, streaming, surveillance, timelapse
    - Install via PMCA-RE (same method as OpenMemories-Tweak)
 
-2. **HDMI capture device:** Route through an Elgato Cam Link or similar device to strip overlays in software
+2. **HDMI capture device:** HDMI Info. Display off, then route through an Elgato Cam Link or similar
 
-3. **Sony official Imaging Edge Webcam app:** Limited support for A6000 — the official app primarily targets newer bodies (incl. A6400); for the A6000 the PMCA-HDMICam / capture-card routes are the reliable path
+3. **Sony official Imaging Edge Webcam app:** doesn't list the A6000 (it does list the A6400 and A5100), so the capture-card route is the only webcam path
 
 ### Comparison
 | Feature | A6000 | A6400 |
 |---------|-------|-------|
-| Native clean HDMI | No (beauty filter bug) | Yes (menu option) |
-| PMCA-HDMICam workaround | Yes | Yes |
-| Official webcam software | Limited | Yes |
-| Best for webcam use | With workaround | Native |
+| Native clean HDMI | Yes (HDMI Info. Display → Off) | Yes (menu option) |
+| PMCA-HDMICam | Yes | No (no PMCA app support; not needed) |
+| Official webcam software | No | Yes |
+| Best for webcam use | HDMI + capture card | USB, no capture card |
 
 ---
 
@@ -206,7 +206,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 - Full Spectrum UK: <a href="https://fullspectrumuk.com/sony-a6000-toastro-camera/" title="Turning the Sony A6000 into an Astro Camera — Full Spectrum UK disassembly guide">fullspectrumuk.com: sony a6000 toastro camera</a>
 - Full Spectrum UK astro filter (DIY, for A6000/A6100/A6300/A6400/A6500/A6600): <a href="https://www.fullspectrumuk.com/shop1/astroa6000filterdiy" title="Astro Filter for Sony A6000/A6100/A6300/A6400/A6500/A6600 — DIY Visible + Ha 656.28nm Hydrogen Alpha Pass">fullspectrumuk.com: astroa6000filterdiy</a> — "Visible + Ha 656.28nm Hydrogen Alpha Pass"; when fitting, sensor must face you with the marked corner lower-right
 
-**Ha mod vs full spectrum:** Cloudy Nights thread "Sony a6000 — Ha mod or full spectrum?" (<a href="https://www.cloudynights.com/forums/topic/759980-sony-a6000-ha-mod-or-full-spectrum/" title="Sony a6000 — Ha mod or full spectrum? comparing IR-only vs IR+UV removal for dedicated astro on FPL53 doublets">cloudynights.com: sony a6000 ha mod or full spectrum</a>) compares removing just the IR filter vs both IR + UV for dedicated astro use on an FPL53 refractor. The decision hinges on whether you want native full-spectrum flexibility (with clip-on/en-lens filters) vs a cleaner Hα response for nebula work.
+**Ha mod vs full spectrum:** Cloudy Nights thread "Sony a6000 — Ha mod or full spectrum?" (<a href="https://www.cloudynights.com/forums/topic/759980-sony-a6000-ha-mod-or-full-spectrum/" title="Sony a6000 — Ha mod or full spectrum? comparing IR-only vs IR+UV removal for dedicated astro on FPL53 doublets">cloudynights.com: sony a6000 ha mod or full spectrum</a>) compares removing just the IR filter vs both IR + UV for dedicated astro use on an FPL53 refractor. The decision hinges on whether you want native full-spectrum flexibility (with clip-on/on-lens filters) vs a cleaner Hα response for nebula work.
 
 **YouTube:**
 - **Sony A6000 IR filter removal (IR conversion)** — a real-world look at shooting with a converted A6000, showing IR/video results and the kind of IR photography (tones, foliage, sky) you can expect once the internal hot mirror is gone: [IR conversion shoot with a Sony A6000](https://www.youtube.com/watch?v=Vta_E7uXOPg)
@@ -257,7 +257,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 
 ### A6400
 **Power hack details:**
-- 3000mAh power bank = at least 2 full charges of NP-FW50 (1080mAh)
+- A 10,000mAh power bank recharges the NP-FW50 (1080mAh, ~7.7Wh) about 3 times; a 3,000mAh bank, about once
 - Sony BC-TRW battery charger for overnight charging
 - Carry spare battery for critical shoots
 - Note: users who switch to an AC dummy battery often find they no longer need USB charging at all (Reddit a6000/a-series thread). Dummy-battery + AC power is the most reliable path for desk/webcam use.
@@ -292,14 +292,14 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 - This is the best "hack" for video quality on A6400
 
 ### A6000
-**S-Log support:** Limited. A6000 does NOT have S-Log2/S-Log3 picture profiles.
-- Use PP1-PP11 (standard gamma curves)
+**S-Log support:** None. The A6000 has no Picture Profiles at all, so no S-Log2/S-Log3.
+- Use Creative Style (e.g. Neutral, contrast −3, saturation −2) for a flatter look
 - For log-like footage, use external LUTs in post-production
-- Clean HDMI out workaround (PMCA-HDMICam) + external recorder for best quality
+- Clean HDMI out (HDMI Info. Display → Off) + external recorder for best quality
 
 **Video limitations:**
 - 30-minute recording limit (removable via OpenMemories-Tweak if it works)
-- 1080p60 / 1080p30 / 720p60 (no 4K)
+- Full HD (1080) up to 60p, no 4K
 - No S-Log
 
 ---
@@ -310,9 +310,9 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 
 ### A6400 (native)
 **Built-in intervalometer:** The A6400 has a native internal intervalometer (added in firmware).
-- Setup: MENU → (Movie) → [Interv. Shooting]
+- Setup: MENU → (Camera Settings1) → [Interval Shoot Func.]
 - Set interval, number of shots, and shooting time
-- Can shoot 999 frames at intervals from 1 second to 99 minutes 59 seconds
+- Can shoot 1–9999 frames at intervals of 1–60 seconds, with a start delay of up to 99 minutes 59 seconds
 
 **Guides:**
 - AlphaShooters: <a href="https://www.alphashooters.com/cameras/a6400/time-lapse-setup-guide/" title="Sony A6400 Time-lapse Setup, Recording and Editing Guide — AlphaShooters">alphashooters.com: time lapse setup guide</a>
@@ -338,11 +338,10 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
    - Author primarily tested on the a6300 (same PMCA generation as A6000) — installable via PMCA-RE like the discontinued Sony app
 
 4. **External intervalometer:**  
-   - Physical device that triggers the camera via remote port
-   - Options: CamBee, Holy-Light, etc.
+   - A wired timer remote for Sony's Multi/Micro USB terminal
 
 5. **Sony Imaging Edge Desktop:**  
-   - Computer software that can trigger interval shooting over USB/WiFi
+   - Sony's tutorial for turning the A6400's interval shots into a time-lapse movie
    - <a href="https://support.d-imaging.sony.co.jp/support/tutorial/ilc/ilce-6400/en/08.php" title="Sony tutorial: Creating time-lapse movies on the A6400">support.d-imaging.sony.co.jp: 08.php</a>
 
 ---
@@ -370,7 +369,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 
 ### Firmware update gotchas
 - **A6400 USB connection issue:** Many users hit "camera not recognized by firmware updater." Changing the **USB LUN setting** (USB LUN → Single) often resolves it. There is a June 2025 YouTube walkthrough that shows the exact fix — **MENU → Setup section (yellow) → USB LUN → Single** — so the camera is recognized by firmware updaters and computers again: [Fix Sony A6400 USB not recognized by firmware updater (USB LUN → Single)](https://www.youtube.com/watch?v=yhaawhKqQOo) (▶ downloaded — see summary in §10)
-- **A8000 / a6100A / a6400A (2025):** In January 2025 Sony *silently* launched the **Alpha a6100A and a6400A** — updated namespaced re-releases of the entry/mid APS-C line (likely a display-panel supply change, per TheNewCamera.co). Anyone buying "new" A6400-stock should be aware the A6400A suffix exists and is essentially the same body. Not relevant to modding, but useful when sourcing a camera to mod.
+- **A8000 / a6100A / a6400A (2025):** In January 2025 Sony *silently* launched the **Alpha a6100A and a6400A** — updated namespaced re-releases of the entry/mid APS-C line (Sony says the "A" models drop in-camera USB charging to meet EU charger rules; they ship with a BC-TRW charger instead). Anyone buying "new" A6400-stock should be aware the A6400A suffix exists and is essentially the same body. Not relevant to modding, but useful when sourcing a camera to mod.
   - <a href="https://www.digitalcameraworld.com/cameras/sony-stealth-launches-two-new-mirrorless-aps-c-cameras" title="Sony stealth-launches two new mirrorless APS-C cameras — A6400A/A6100A re-release (Digital Camera World)">digitalcameraworld.com</a>
 
 ---
@@ -459,7 +458,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 
 - <details>
   <summary>**OpenMemories-Tweak explained — how to remove the 30-min record limit, NTSC nag & language lock on Sony cameras:** <a href="https://www.youtube.com/watch?v=_cWjNHz6AR8">watch the OpenMemories-Tweak explained tutorial</a></summary>
-  Channel: **Shooting Range**. Walks through exactly what OpenMemories-Tweak does and how to use it:
+  Channel: **DAVISION (en)**. Walks through exactly what OpenMemories-Tweak does and how to use it:
   - Disables the "running in NTSC" message (for 24p/120p shooters with non-NTSC-region cameras)
   - Removes the 29:59 video-recording cap (card size becomes the only limit)
   - On the RX100M4, removes the 5-minute 4K cap
@@ -507,18 +506,18 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
   Full narrated **A6000 → full-spectrum** conversion (FullSpectrumUK):
   - Complete teardown: battery/SD out, exterior screws (keep separate — varying type/length), flash screws, top separation, flash connector **insulation** (holds charge), viewfinder, ribbon cables, insulation, hotshoe, main board (contains flash capacitor frame — be careful), silver bracket, sensor
   - **Filter:** removes the hot mirror from the sensor; also shows the **ultrasonic resonator** re-attached to the sensor (in case a future firmware needs it to work)
-  - **Shims:** discards the original shims; if all three are equal thickness nothing extra is needed, but if a shim is ~1mm thicker it should be replaced with a matching one so **astro corners stay in focus**
+  - **Shims:** discards the original shims; if all three are equal thickness nothing extra is needed, but if one shim is noticeably thicker it should be replaced with a matching one so **astro corners stay in focus**
   - **Disables the sensor-cleaning feature** before reassembly
   </details>
 
 - <details>
   <summary>**Clean HDMI recording on A6400 (Jun 2025) — turn off HDMI Info Display for overlays-free external recording:** <a href="https://www.youtube.com/watch?v=GTlPGI5Z6U4">watch the clean HDMI recording fix</a></summary>
-  Channel: **Hadeset Info**. Shows the "clean HDMI output" problem on the A6400 — when connected to a TV/recorder with default settings you see every on-screen icon. Fix: **MENU → HDMI Settings → HDMI Info. Display → OFF**, producing a clean HDMI feed for external recording / webcam use.
+  Channel: **HardReset.Info**. Shows the "clean HDMI output" problem on the A6400 — when connected to a TV/recorder with default settings you see every on-screen icon. Fix: **MENU → HDMI Settings → HDMI Info. Display → OFF**, producing a clean HDMI feed for external recording / webcam use.
   </details>
 
 - <details>
   <summary>**A6400 USB connection fix (USB LUN, Jun 2025) — make the camera recognized by firmware updaters & PCs:** <a href="https://www.youtube.com/watch?v=yhaawhKqQOo">watch the A6400 USB connection fix</a></summary>
-  Channel: **HarvRec**. Shows how to fix A6400 USB connection problems by changing the **USB LUN setting**: **MENU → Setup section (yellow) → USB LUN → Single**. Useful when the camera isn't recognized by firmware updaters or computers.
+  Channel: **HardReset.Info**. Shows how to fix A6400 USB connection problems by changing the **USB LUN setting**: **MENU → Setup section (yellow) → USB LUN → Single**. Useful when the camera isn't recognized by firmware updaters or computers.
   </details>
 
 ### GitHub
@@ -560,8 +559,8 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 | OpenMemories-Tweak | ✅ Yes | ❌ No (issue #381) |
 | PMCA app install | ✅ Yes | ❌ No |
 | Language unlock | ✅ Via Tweak | ⚠️ Via service mode workaround |
-| Clean HDMI out | ⚠️ PMCA-HDMICam | ✅ Native menu option |
-| Webcam (USB) | ⚠️ Limited | ✅ Official software |
+| Clean HDMI out | ✅ Native menu option | ✅ Native menu option |
+| Webcam (USB) | ❌ Not supported (use HDMI + capture card) | ✅ Official software |
 | IR filter removal | ✅ DIY or commercial | ✅ DIY or commercial |
 | Battery grip / DC coupler | ✅ Yes | ✅ Yes |
 | S-Log2 | ❌ No | ✅ PP7 |
@@ -581,7 +580,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 
 ### For A6000 Owners
 1. **Install OpenMemories-Tweak** via PMCA-RE to unlock hidden features (30-min limit, language, telnet/adb)
-2. **Use PMCA-HDMICam** for clean HDMI out / webcam use
+2. **Turn HDMI Info. Display off** and use a capture card for webcam use (PMCA-HDMICam is an alternative)
 3. **Consider IR mod** if interested in astrophotography (DIY or Life Pixel)
 4. **Add a battery grip** for extended shooting sessions
 5. **Use timelapse-sony** or an external intervalometer for timelapse work
