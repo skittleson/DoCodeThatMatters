@@ -51,7 +51,7 @@ Goal: The most fragile part of the system. Real engineering pain points.
 
 Most Sony cameras support PC mode. The magic of this happens here.  ghoto2 can get those realtime events to stream over.  As well as the full image. its only there for temporary so we need to grab while its still possible to get it.
 
- I rebuilt gphoto2 from source. it takes awhile on the pi but more stable at 2.5.32+ . Use setup.sh to build from source. 
+ I rebuilt gphoto2 from source. it takes awhile on the pi but more stable at 2.5.32+ . Use scripts/setup.sh (https://github.com/skittleson/pisonyremote/blob/master/scripts/setup.sh) to build from source. 
 The Lua monitor pattern (not a systemd Restart trap):
 - gphoto2 exits when the USB link blips
 - systemd restart is fast enough to collide with the camera still holding the USB device → "Could not claim the USB device"
@@ -88,7 +88,7 @@ Goal: The technical deep-dive. This is the HN-worthy section.
 
 The easiest approach was to use RFCOMM (https://github.com/skittleson/pisonyremote/blob/master/services/sonycamerabt_server.py) but i know its a bit slower so compression is required.  I suspect this is why the Sony android is so slow. OBEX/OPP is bloated; HTTP over Bluetooth PAN/DUN is finicky on both sides
 
-So a simple custom protocal was made, only 3 bytes of overhead per message! [1 byte opcode] [2 bytes big-endian length] [payload]
+So a simple custom protocal was made, only 5 bytes of overhead per message! [1 byte opcode] [4 bytes big-endian length] [payload]
 
 Commands:
 - 0x01 LIST — no payload, returns 0x81 with newline-delimited filenames
@@ -111,9 +111,9 @@ Copyparty: Zero-Config LAN Browsing
 Goal: Quick section — the alternative to Bluetooth for LAN setups.
 
 References:
-- copyparty-setup.sh (https://github.com/skittleson/pisonyremote/blob/master/copyparty-setup.sh)
+- scripts/copyparty-setup.sh (https://github.com/skittleson/pisonyremote/blob/master/scripts/copyparty-setup.sh)
 
-- bash copyparty-setup.sh && sudo systemctl enable --now copyparty
+- bash scripts/copyparty-setup.sh installs copyparty and enables + starts the copyparty service
 - No nginx, no Apache, no config files
 - http://<pi-ip>:8080 → full file browser with thumbnails and grid view
 - Default login: admin/admin
@@ -127,7 +127,7 @@ Goal: The section HN loves. Concrete takeaways from real pain.
 3. Set WorkingDirectory in your systemd unit — the silent failure is the most expensive bug in this project
 4. Quality cable, powered hub, or neither — USB mode-switching is physics, not software
 5. Compress server-side for Bluetooth — Pi has the CPU; use it
-6. Three bytes beats HTTP on RFCOMM — length-prefixed packets are simpler and faster
+6. Five bytes beats HTTP on RFCOMM — length-prefixed packets are simpler and faster
 7. Sequential filenames for mobile — timestamps sort wrong on phone galleries
 Use Cases
 
