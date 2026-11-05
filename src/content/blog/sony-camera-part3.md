@@ -143,12 +143,12 @@ So a simple custom protocal was made, only 5 bytes of overhead per message! `[1 
 
 **Quality tiers (server-side compression with Pillow/LANCZOS):**
 
-| Quality | Resize | JPEG quality | Typical size |
+| Quality | Resize | JPEG quality | Size (one 6000×3376 a6400 shot) |
 |---------|--------|-------------|-------------|
-| 0 | None (original) | — | ~7-10 MB |
-| 1 | Half-size | 75 | ~1 MB |
-| 2 | 1200px wide | 75 | ~300 KB |
-| 3 | 1200px wide | 40 | ~100 KB |
+| 0 | None (original) | — | 11.4 MB |
+| 1 | Half-size | 75 | 350 KB |
+| 2 | 1200px wide | 75 | 51 KB |
+| 3 | 1200px wide | 40 | 28 KB |
 
 - Quality 3 = preview in under 10 seconds over Bluetooth
 - Pi does the CPU work; phone receives final compressed JPEG

@@ -445,7 +445,7 @@ YouTube
 
 - <details>
   <summary>Unlock ALL languages (A7III/A7IV/A7C/6400/6600, Feb 2025) — service-mode language + 30-min record limit unlock: <a href="https://www.youtube.com/watch?v=WM_PoshgLPY">watch the language unlock tutorial</a></summary>
-  2025 tutorial showing the service-mode language unlock for the newer Alpha generation (A7III, A7IV, A7C, A6000-series, etc.). Confirms the process: download two files, put the camera in service mode, apply the patch — and notes it also removes the 30-minute record limit. Concrete walkthrough of the same method documented in the A6400 workaround gist above.
+  2025 tutorial showing the service-mode language unlock for the newer Alpha generation (A7III, A7IV, A7C, a6400, a6600, ZV-E10, etc.). The steps: download the files, set USB to Mass Storage, swap the driver with Zadig, then unlock with PMCA-GUI. The description notes the same tool also removes the 30-minute record limit. Concrete walkthrough of the same method documented in the A6400 workaround gist above.
   </details>
 
 - <details>
