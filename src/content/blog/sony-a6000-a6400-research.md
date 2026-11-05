@@ -569,9 +569,9 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 | Timelapse app (PMCA) | ✅ Yes | ❌ No |
 | Telnet / ADB access | ✅ Via Tweak | ❌ No |
 | Firmware dump | ✅ Via telnet | ⚠️ Service mode only |
-| External HDMI recording (8-bit 4:2:2) | ⚠️ Via HDMI workaround | ✅ Native clean HDMI |
+| External HDMI recording (8-bit 4:2:2) | ⚠️ 1080 only (HDMI Info. Display → Off) | ✅ Native clean HDMI |
 | 4K video | ❌ No (1080p max) | ✅ Yes (4K30) |
-| Eye AF (human) | ❌ No | ✅ Yes |
+| Eye AF (human) | ✅ Yes (assign [Eye AF] to a custom key) | ✅ Yes (Eye AF) |
 | Eye AF (animal) | ❌ No | ✅ Firmware 2.00 |
 
 ---
