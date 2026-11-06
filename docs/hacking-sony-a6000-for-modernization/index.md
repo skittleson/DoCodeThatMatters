@@ -254,6 +254,22 @@ while True:
 
 
 
+## Get the full field guide (early release)
+
+<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
+
+Everything in this post, plus what I worked out after it, is in my field guide for the A6000 and A6400. Every hack is ordered from safe to irreversible, with the commands that work and the dead ends I already hit.
+
+- The super-resolution trick from this post, rebuilt as a five-step workflow: Sony's own burst settings for both cameras, then a merge in [Burst Super-Res](https://github.com/skittleson/burst-superres), the free desktop app I built for it
+- The Smart Remote postview hack and gphoto2 PC Remote, with the exact settings
+- Clean HDMI and webcam setup, GPS geotagging, and the 30-minute recording limit
+
+It launched at $39. During the early release it's **$23.47**, or **$18.47** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
+
+<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $23.47</a>
+
+Full disclosure: this is my own guide, and the money comes to me. Some of the mods in it are irreversible, so read the risk notes before you start.
+
 ## Conclusion
 
 In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  

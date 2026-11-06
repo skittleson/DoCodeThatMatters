@@ -240,7 +240,7 @@
       "summary": "How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2024-06-28T00:00:00.000Z",
-      "date_modified": "2024-06-28T00:00:00.000Z",
+      "date_modified": "2026-11-06T00:00:00.000Z",
       "tags": [
         "Sony a6400",
         "Sony a6000",
@@ -256,7 +256,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1514
+      "word_count": 1718
     },
     {
       "id": "https://docodethatmatters.com/emails_out_of_control/",
@@ -285,7 +285,7 @@
       "summary": "Second part of hacking a Sony A6000 series camera and upgrading data transfer capabilities.  This one is about free apps with time lapse, ftp uploader, and building usb-c power adapter for on the go.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2024-05-14T00:00:00.000Z",
-      "date_modified": "2024-05-14T00:00:00.000Z",
+      "date_modified": "2026-11-06T00:00:00.000Z",
       "tags": [
         "Sony A6000",
         "Camera hacking",
@@ -300,7 +300,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 462
+      "word_count": 670
     },
     {
       "id": "https://docodethatmatters.com/hacking-sony-a6000-for-modernization/",
@@ -309,7 +309,7 @@
       "summary": "Discover how to modernize your Sony A6000 camera by upgrading its data transfer capabilities and post process images for super high resolution. Join the journey of enhancing your camera's features in this comprehensive blog post.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2023-07-17T00:00:00.000Z",
-      "date_modified": "2024-06-28T00:00:00.000Z",
+      "date_modified": "2026-11-06T00:00:00.000Z",
       "tags": [
         "Sony A6000",
         "Camera hacking",
@@ -322,7 +322,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2252
+      "word_count": 2477
     },
     {
       "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3/",
