@@ -12,7 +12,7 @@ keywords:
   - time lapse
   - clean HDMI output
 date: 2026-08-29
-modified: 2026-08-29
+modified: 2026-11-06
 description: "Deep-dive reference on hacking, modding, and community resources for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400) — OpenMemories-Tweak, PMCA-RE firmware dumping, clean HDMI/webcam hacks, IR & full-spectrum conversions, power/battery mods, S-Log video, timelapse, and the Sony PlayMemories app archive."
 image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6000
@@ -451,8 +451,6 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 - **r/SonyAlpha** (FE/E mount, A mount & legacy Minolta venue): <a href="https://www.reddit.com/r/SonyAlpha/" title="r/SonyAlpha — Sony Alpha Cameras: FE/E Mount, A Mount, & legacy Minolta welcome here">r/SonyAlpha</a>  
   - "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)": <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/language_unlock_on_newer_alpha_cameras_a6400/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a>
   - "Is S-Log viable on the a6400": <a href="https://www.reddit.com/r/SonyAlpha/comments/1coc90x/is_slog_viable_on_the_a6400/" title="Is S-Log viable on the a6400 — r/SonyAlpha discussion">r/SonyAlpha thread</a>
-
-> **Link-health note (verified 2026-08-29):** All links in §4, §8 and §10 checked. `sony.com` (firmware downloads + PlayMemories-ending article), `cloudynights.com`, `dpreview.com` and `reddit.com` all return **403 to curl** (anti-bot) but were **confirmed live via a real browser (CDP port 9223)** in the same session — e.g. Sony firmware v3.21 (Windows `/00015954`), "PlayMemories Camera Apps Ending", and each Cloudy Nights / DPReview / Reddit thread opened with its real title. Two genuinely broken links were found and fixed: the `niemczuk.tech` OpenMemories post (404 → moved to `/2022/10/09/…`) and the `lifepixel.com …/sony-converted-cameras/` listing page (404 → the A6400 conversion product page still works).
 
 ### YouTube
 

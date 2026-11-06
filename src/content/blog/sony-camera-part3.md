@@ -30,6 +30,22 @@ As in my other posts, i've made further progress with getting my camera to a mod
 
 So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.
 
+## Get the full field guide (early release)
+
+<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
+
+This build is chapter 9 of my field guide for the A6000 and A6400. The guide version has the corrected script paths, the 5 byte wire format and compression sizes I measured on a real a6400 photo.
+
+- Getting photos off the camera fast without the Pi: gphoto2, the postview hack, and card renaming
+- OpenMemories-Tweak on the A6000 and the language unlock on the A6400
+- Burst super-resolution, with a free desktop app (Burst Super-Res) to do the merge
+
+It launched at $39. During the early release it's **$23.47**, or **$18.47** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
+
+<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $23.47</a>
+
+Full disclosure: this is my own guide, and the money comes to me. Some of the mods in it are irreversible, so read the risk notes before you start.
+
 ## Gear for This Build
 
 | Gear | Purpose | Buy |
@@ -192,22 +208,6 @@ The alternative to Bluetooth when everything is on the same network.
 - **Booths and displays** — self-contained photo station. Pi hides behind the setup. No laptop footprint = looks like magic.
 
 ---
-
-## Get the full field guide (early release)
-
-<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" loading="lazy" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
-
-This build is chapter 9 of my field guide for the A6000 and A6400. The guide version has the corrected script paths, the 5 byte wire format and compression sizes I measured on a real a6400 photo.
-
-- Getting photos off the camera fast without the Pi: gphoto2, the postview hack, and card renaming
-- OpenMemories-Tweak on the A6000 and the language unlock on the A6400
-- Burst super-resolution, with a free desktop app (Burst Super-Res) to do the merge
-
-It launched at $39. During the early release it's **$23.47**, or **$18.47** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
-
-<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $23.47</a>
-
-Full disclosure: this is my own guide, and the money comes to me. Some of the mods in it are irreversible, so read the risk notes before you start.
 
 ## Conclusion
 
