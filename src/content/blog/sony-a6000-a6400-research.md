@@ -27,6 +27,26 @@ If you want a starting point, read [this post first about modernization of this 
 
 **Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · Research & Community Resources (this post)
 
+<div class="guide-card" style="margin:2rem 0;padding:1.25rem 1.5rem 0.5rem;border:1px solid var(--color-accent, #9da2ff);border-radius:12px;background-color:var(--color-surface, #1e262f);box-shadow:0 0 0 4px rgba(157,162,255,0.10);">
+<span style="display:inline-block;padding:2px 10px;border:1px solid var(--color-accent, #9da2ff);border-radius:999px;color:var(--color-accent, #9da2ff);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Early release</span>
+<h2 id="get-the-full-field-guide" style="margin-top:0.75rem;">Get the full field guide</h2>
+
+<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
+
+This page is my raw research: links, threads and notes. The field guide is the version I'd hand a friend. The same material, fact-checked against Sony's own Help Guides and the tool repos, put in order from safe to irreversible, with the steps written out.
+
+- Step-by-step chapters for each hack listed here: OpenMemories-Tweak, the A6400 language unlock, clean HDMI, timelapse, power, S-Log, IR and astro conversion
+- Sony's burst settings for both cameras, then a merge in [Burst Super-Res](https://github.com/skittleson/burst-superres), the free desktop app I built for it
+- A troubleshooting index for the errors people hit most, like "No Tweaks found" and the A6400 dropping into charging mode
+
+It launched at $39. During the early release it's **$23.47**, or **$18.47** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
+
+<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $23.47</a>
+
+Full disclosure: this is my own guide, and the money comes to me. Some of the mods in it are irreversible, so read the risk notes before you start.
+
+</div>
+
 ## 0. Recommended Gear for A6000/A6400 Mods
 
 Things that make the mods and sessions in this post actually usable day-to-day:
