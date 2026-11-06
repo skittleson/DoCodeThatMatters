@@ -34,12 +34,13 @@ The free apps, the USB-C battery hack and the FTP uploader from this post all ma
 - Timelapse on both bodies: the A6400's built-in menu, and app or trigger options for the A6000
 - Power options compared: the AC-PW20 dummy battery, battery grips and power banks, with the real charge math
 - The discontinued PlayMemories apps, and where the archived copies live now that Sony's store is gone
+- Only in the guide: the chapter 2 firmware backup and risk notes, and a troubleshooting index for the errors people hit most, like "No Tweaks found" and the A6400 dropping into charging mode
 
 It launched at $39. During the early release it's **$23.47**, or **$18.47** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
 
 <a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $23.47</a>
 
-Full disclosure: this is my own guide, and the money comes to me. Some of the mods in it are irreversible, so read the risk notes before you start.
+Full disclosure: this is my own guide, and the money comes to me. If it doesn't help you, reply to the delivery email within 30 days and I'll refund you. Some of the mods in it are irreversible, so read the risk notes before you start.
 
 </div>
 
