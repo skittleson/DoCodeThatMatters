@@ -1,5 +1,5 @@
 ---
-title: "My Home Automation Rules After 10 Years"
+title: "Smart home devices should work without the internet"
 keywords:
   - AI;DR
   - home automation
@@ -21,8 +21,6 @@ priority: 0.8
 ---
 
 > **AI;DR** — This post was written with AI assistance, then edited by me. The rules, setups, and talks are my own.
-
-Thank you for reading, and for all the shares and comments on this one. If you're in a hurry, [skip to the devices I've used](#devices-ive-used).
 
 TLDR; If a light switch in my house needs someone else's server to work, it doesn't go in. That has been rule one for ten years of home automation, and the other rules I follow grew out of it. Below are the rules and why I keep them, followed by both talks I've given on this, slide by slide.
 
