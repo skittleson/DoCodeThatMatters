@@ -14,8 +14,8 @@
     {
       "id": "https://docodethatmatters.com/burst-superres/",
       "url": "https://docodethatmatters.com/burst-superres/",
-      "title": "Burst Super-Res: The What, Why, and How",
-      "summary": "I turned a Python/OpenCV burst merge from my Sony A6000 field guide into a free desktop app for macOS, Windows and Linux. What it does, why the gain is only about 1 dB, and how an agent in opencode built it from a one-page brief.",
+      "title": "I Built Photo Super-Resolution Without AI",
+      "summary": "Burst Super-Res merges a burst of photos into one image with twice the width and height, using sub-pixel alignment and plain math, no AI. What it does, why the gain is only about 1 dB, and the research that got it there.",
       "image": "/images/burst-superres/app-real-burst.webp",
       "date_published": "2026-11-09T00:00:00.000Z",
       "date_modified": "2026-11-09T00:00:00.000Z",
@@ -27,16 +27,15 @@
         "image stacking",
         "sub-pixel alignment",
         "Sony ARW",
-        "tinyjs",
-        "opencode",
-        "AI coding agent"
+        "RAW decoder",
+        "tinyjs"
       ],
       "authors": [
         {
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2388
+      "word_count": 2027
     },
     {
       "id": "https://docodethatmatters.com/home-automation-overnight-success/",
