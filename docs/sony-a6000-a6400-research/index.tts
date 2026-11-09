@@ -2,7 +2,7 @@ TLDR; This is my research dump for the Sony A6000 (ILCE-6000) and A6400 (ILCE-64
 
 If you want a starting point, read this post first about modernization of this camera (https://docodethatmatters.com/hacking-sony-a6000-for-modernization/) 
 
-Sony A6000/A6400 series: Part 1: Modernization (/hacking-sony-a6000-for-modernization/) · Part 2: More Hacks (/hacking-sony-a6000-more/) · Part 3: Tethered Raspberry Pi (/sony-camera-part3/) · Research & Community Resources (this post)
+Sony A6000/A6400 series: Part 1: Modernization (/hacking-sony-a6000-for-modernization/) · Part 2: More Hacks (/hacking-sony-a6000-more/) · Part 3: Tethered Raspberry Pi (/sony-camera-part3/) · Research & Community Resources (this post) · Burst Super-Res (/burst-superres/)
 
 <div class="guide-card" style="margin:2rem 0;padding:1.25rem 1.5rem 0.5rem;border:1px solid var(--color-accent, #9da2ff);border-radius:12px;background-color:var(--color-surface, #1e262f);box-shadow:0 0 0 4px rgba(157,162,255,0.10);">
 <span style="display:inline-block;padding:2px 10px;border:1px solid var(--color-accent, #9da2ff);border-radius:999px;color:var(--color-accent, #9da2ff);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Early release</span>

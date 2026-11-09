@@ -1,6 +1,6 @@
 ## Introduction
 
-**Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · Part 2 (this post) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · [Research & Community Resources](/sony-a6000-a6400-research/)
+**Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · Part 2 (this post) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · [Research & Community Resources](/sony-a6000-a6400-research/) · [Burst Super-Res](/burst-superres/)
 
 This is a smaller continuation of the previous blog post on [hacking the Sony A6000 camera](/hacking-sony-a6000-for-modernization/) (come back for more updates).
 

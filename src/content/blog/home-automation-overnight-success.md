@@ -1,6 +1,7 @@
 ---
 title: "My Home Automation Rules After 10 Years"
 keywords:
+  - AI;DR
   - home automation
   - IoT
   - Node-RED
@@ -18,6 +19,8 @@ imageWidth: 1500
 imageHeight: 844
 priority: 0.8
 ---
+
+> **AI;DR** — This post was written with AI assistance, then edited by me. The rules, setups, and talks are my own.
 
 Thank you for reading, and for all the shares and comments on this one. If you're in a hurry, [skip to the devices I've used](#devices-ive-used).
 

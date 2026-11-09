@@ -12,6 +12,33 @@
   ],
   "items": [
     {
+      "id": "https://docodethatmatters.com/burst-superres/",
+      "url": "https://docodethatmatters.com/burst-superres/",
+      "title": "Burst Super-Res: The What, Why, and How",
+      "summary": "I turned a Python/OpenCV burst merge from my Sony A6000 field guide into a free desktop app for macOS, Windows and Linux. What it does, why the gain is only about 1 dB, and how an agent in opencode built it from a one-page brief.",
+      "image": "/images/burst-superres/app-real-burst.webp",
+      "date_published": "2026-11-09T00:00:00.000Z",
+      "date_modified": "2026-11-09T00:00:00.000Z",
+      "tags": [
+        "super-resolution",
+        "burst photography",
+        "Sony A6000",
+        "Sony A6400",
+        "image stacking",
+        "sub-pixel alignment",
+        "Sony ARW",
+        "tinyjs",
+        "opencode",
+        "AI coding agent"
+      ],
+      "authors": [
+        {
+          "name": "Spencer Kittleson"
+        }
+      ],
+      "word_count": 2388
+    },
+    {
       "id": "https://docodethatmatters.com/home-automation-overnight-success/",
       "url": "https://docodethatmatters.com/home-automation-overnight-success/",
       "title": "My Home Automation Rules After 10 Years",
@@ -20,6 +47,7 @@
       "date_published": "2026-10-28T00:00:00.000Z",
       "date_modified": "2026-10-28T00:00:00.000Z",
       "tags": [
+        "AI;DR",
         "home automation",
         "IoT",
         "Node-RED",
@@ -35,7 +63,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 4356
+      "word_count": 4378
     },
     {
       "id": "https://docodethatmatters.com/strata-qwen3-8-flash-next-rtx-3090/",
@@ -91,7 +119,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 7097
+      "word_count": 7100
     },
     {
       "id": "https://docodethatmatters.com/running-local-llms-for-coding/",
@@ -256,7 +284,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1790
+      "word_count": 1793
     },
     {
       "id": "https://docodethatmatters.com/emails_out_of_control/",
@@ -300,7 +328,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 742
+      "word_count": 745
     },
     {
       "id": "https://docodethatmatters.com/hacking-sony-a6000-for-modernization/",
@@ -322,7 +350,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2589
+      "word_count": 2592
     },
     {
       "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3/",
