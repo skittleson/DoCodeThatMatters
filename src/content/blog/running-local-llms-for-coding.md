@@ -16,8 +16,8 @@ keywords:
   - vllm
   - speculative decoding
 date: 2026-08-19
-modified: 2026-10-25
-description: How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me, and the repetition fix that came undone during a model swap.
+modified: 2026-11-09
+description: How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side.
 image: /images/rtx-3090.jpg
 alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.
 imageWidth: 1200
@@ -52,19 +52,23 @@ If there is one meta-lesson from all of that: measure on your own box. Nearly ev
 
 The rig is a Pop!_OS box with an RTX 3090 Ti (24GB, Ampere). It runs [llama.cpp](https://github.com/ggml-org/llama.cpp) as a systemd service, exposing an OpenAI-compatible API on port 8080. My editor (OpenCode) points a provider at `http://<box>:8080/v1` and never knows the difference.
 
-The model is a 27B Qwen3.8 coder variant, quantized to `Q4_K_M` (about 16GB on disk). That leaves just enough VRAM for a 200K token context window with a q4_0 KV cache and MTP speculative decoding turned on. It runs around 62 tokens/second on the current llama.cpp build. On a coding agent that fires a lot of tool calls, that is plenty.
+The model is [bytkim's `Qwen3.8-27B-pi`](https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF), an agentic-coding fine-tune of the dense 27B, quantized to `Q4_K_M` (about 16.5GB) with its MTP head in a separate ~2GB draft file. With a q4_0 KV cache on both the main model and the draft, it fits a 200K token context window and leaves about 1GB of the card free. Generation runs about 95 tokens/second on a 6.7K-token prompt and drops to about 52 at 107K. On a coding agent that fires a lot of tool calls, that is plenty.
 
-Here is the actual command, pulled straight from the systemd unit that runs it (updated since first publishing — see the follow-ups below):
+Here is the actual command, pulled from the systemd unit that runs it today (it changed when I swapped to the pi model; see the follow-ups below):
 
 ```sh
 llama-server \
-  -m ~/models/qwen3.8-27b-jackrong/Qwen3.8-27B-MTP-Q4_K_M.gguf \
+  -m ~/models/qwen3.8-27b-pi/Qwen3.8-27B-pi-Q4_K_M.gguf \
+  -md ~/models/qwen3.8-27b-pi/mtp/mtp-Qwen3.8-27B-pi-Q4_0.gguf \
   -c 200000 \
   --parallel 1 \
   -ngl 99 \
-  --ubatch-size 2048 \
+  --ubatch-size 1024 \
+  --spec-draft-n-ubatch 512 \
   --cache-type-k q4_0 \
   --cache-type-v q4_0 \
+  --cache-type-k-draft q4_0 \
+  --cache-type-v-draft q4_0 \
   --flash-attn on \
   --no-context-shift \
   --cache-ram 32768 \
@@ -73,35 +77,36 @@ llama-server \
   --chat-template-file ~/llm-units/qwen38-chat-template.jinja \
   --spec-type draft-mtp \
   --spec-draft-n-max 4 \
-  --reasoning off \
+  --reasoning-effort low \
+  --reasoning-budget 16384 \
   --temperature 0.7 \
   --top-p 0.8 \
   --top-k 20 \
   --min-p 0 \
   --presence-penalty 1.0 \
-  --dry-multiplier 0.8 \
-  --alias Qwen3.8-27B \
+  --alias Qwen3.8-27B-pi \
   --host 0.0.0.0 \
   --port 8080
 ```
 
 Every one of those flags is doing something specific:
 
-- **`-m`** — path to the GGUF model file on disk (Jackrong's `Q4_K_M` quant, ~16GB).
+- **`-m` / `-md`**: the main model GGUF and the separate MTP draft GGUF. The Jackrong build I ran before had its MTP heads inside the main file. The pi model ships them as their own file, so the draft needs its own slice of VRAM.
 - **`-c 200000`** — the context window, in tokens. This is the ceiling for prompt + tool output + reply combined, and it is the number everything else below is tuned around, to make it fit in 24GB of VRAM.
 - **`--parallel 1`** — one request slot, not the default of several. I'm the only client (OpenCode, over the LAN), so reserving KV cache for concurrent requests I'll never make would just waste VRAM I need for context.
 - **`-ngl 99`** — the one that matters most. It offloads every layer to the GPU ("number of GPU layers"). Get this wrong and llama.cpp falls back to CPU for the rest — the difference between ~170 tok/s and ~2 tok/s.
-- **`--ubatch-size 2048`** — the physical batch size llama.cpp uses internally for prompt processing. Bumping this from the default 512 sped up prefill noticeably on long agentic prompts, confirmed with `llama-bench` before adopting it.
+- **`--ubatch-size 1024`**: the physical batch size llama.cpp uses internally for prompt processing. I ran 2048 on the old model. I dropped it to 1024 to make room for the draft model at 200K, and prefill barely noticed (1,366 tok/s at 50K, 1,165 at 95K).
+- **`--spec-draft-n-ubatch 512` / `--cache-type-k-draft q4_0` / `--cache-type-v-draft q4_0`**: the same batch and KV tricks, applied to the draft model. Its KV cache defaults to full `f16`. Without all three, the server OOMs at 200K before the first token.
 - **`--cache-type-k q4_0` / `--cache-type-v q4_0`** — quantizes the KV cache itself, not just the model weights, down to 4-bit. This is the flag that actually makes a 200K context window possible at all; at full-precision KV it would run out of VRAM long before 200K.
 - **`--flash-attn on`** — the fused flash-attention kernel instead of the naive implementation. Faster, lower memory, no downside on Ampere.
 - **`--no-context-shift`** — turns off llama.cpp's default behavior of silently sliding old tokens out of the context window once you hit the limit. For a coding agent that depends on everything it has read and decided so far, I want a hard error at 200K, not a session that quietly forgets its first half.
 - **`--cache-ram 32768` / `--ctx-checkpoints 8`** — these two work together. llama.cpp can checkpoint prompt-cache state to host RAM so a long agentic session doesn't have to re-process the entire prompt on every turn. `--cache-ram` caps that at 32GB of RAM; `--ctx-checkpoints 8` is how many checkpoint slots it keeps around. I've watched this cache absorb a 97K-token prompt down to 294 tokens of actual reprocessing — worth every megabyte of host RAM.
 - **`--jinja` / `--chat-template-file`** — use a real Jinja2 chat template instead of a hardcoded one, loaded from a file I control rather than whatever's baked into the GGUF. Needed for tool-calling to format correctly, and easier to patch when a model's shipped template has a bug.
-- **`--spec-type draft-mtp` / `--spec-draft-n-max 4`** — turns on speculative decoding using the model's own Multi-Token Prediction head as the draft model, drafting up to 4 tokens ahead per step. This is what gets a dense 27B well past what plain autoregressive decoding would manage.
-- **`--reasoning off`** — Qwen3.8 defaults to an aggressive "xhigh" thinking mode that burns tokens overthinking simple requests. A coding agent just needs the answer.
-- **`--temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0`** — the sampler settings straight from Qwen's own model card for non-thinking/instruct mode.
-- **`--presence-penalty 1.0` / `--dry-multiplier 0.8`** — the repetition fix, now in two parts instead of one. More on why in the section below.
-- **`--alias Qwen3.8-27B`** — the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
+- **`--spec-type draft-mtp` / `--spec-draft-n-max 4`**: turns on speculative decoding with the MTP draft model, drafting up to 4 tokens ahead per step. Acceptance on the pi model sits between 61% and 73% depending on prompt size, and that is what gets a dense 27B well past what plain autoregressive decoding would manage.
+- **`--reasoning-effort low` / `--reasoning-budget 16384`**: on the old model I ran `--reasoning off`, because Qwen3.8 defaults to an aggressive "xhigh" thinking mode that burns tokens overthinking simple requests. With the pi model I turned thinking back on, at low effort and capped at 16K thinking tokens per reply, because the output was better with it.
+- **`--temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0`**: the [pi model card's](https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF) settings for non-thinking mode. I kept them after turning thinking back on. The card's thinking profile runs hotter, at temperature 1.0.
+- **`--presence-penalty 1.0`**: the repetition fix from the section below. I ran DRY (`--dry-multiplier 0.8`) alongside it on the old model and dropped it with the pi swap, because the output was better without it.
+- **`--alias Qwen3.8-27B-pi`**: the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
 - **`--host 0.0.0.0 --port 8080`** — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 
 ## The Quant Type Quietly Broke Things
@@ -157,6 +162,32 @@ GA102 Ampere cards — the 3090, 3090 Ti, 3080 — ship with their FP16/BF16 ten
 Here is the catch, and it is a good lesson in not trusting a headline number. **It barely helped llama.cpp.** For quantized weights, llama.cpp's matmul path either uses its own INT8 kernels or dequantizes to FP16 and accumulates in FP16 — and FP16-accumulate math was never throttled on consumer cards, so the unlock has nothing to speed up. There is an env var (`GGML_CUDA_CUBLAS_COMPUTE_TYPE=bf16`) that switches to the BF16-plus-FP32-accumulate path the unlock *does* touch, and at a large batch size it won about 11% on prefill. But at the batch size my 200K context actually needs (`--ubatch-size 1024`), that gain evaporated and small prompts got *30% slower*. For an agent that sends a lot of small follow-up turns, that is a net loss, so I left it off.
 
 What did move the needle was boring: I rebuilt llama.cpp from a months-old checkout to current `master`. That alone bought **14-19% faster prefill** across every prompt size, from the upstream kernel work, not from anything I tuned. The unlock is a neat trick and the card is genuinely faster at FP32-accumulate math now — it just is not the math this workload leans on. Measure the thing you run, not the benchmark on the box.
+
+## Follow-up, November: two weeks on the pi model
+
+I found out how hard the box was working by accident. OpenCode doesn't talk to llama.cpp directly. It goes through [OmniRoute](https://github.com/cheaper-inference/OmniRoute), a router on my laptop that also fronts my paid models. Its dashboard showed a constant stream of requests to qwen, so I went looking for whatever was hammering it.
+
+Nothing was broken. It was 1,080 calls in about 23 hours, steady at 100 to 200 an hour, each carrying 60K to 150K tokens of context. Almost all of that input was prompt-cache reads. This is what an agent looks like from the server side: one request per tool step, and every request re-sends the whole conversation. It is also why `--cache-ram` is worth the host RAM.
+
+Since the swap on October 25, 40 of my OpenCode sessions have run on the [pi model](https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF). That includes the scheduled morning check of my GitHub PRs, a set of subagents that worked through review threads on four PRs, and a lot of everyday research questions.
+
+I benchmarked the router before trusting it with all that. Going through OmniRoute instead of hitting llama.cpp directly added 0.1 to 0.9 seconds to time-to-first-token and under half a second of wall time. Generation speed moved both ways between runs, which is MTP draft acceptance being random, not the router.
+
+Two things in that path did bite me. The first is that OmniRoute *estimates* tokens at roughly four characters per token instead of counting them. Against the pi model's real tokenizer, code comes in about 13% heavier than the estimate (272K real tokens estimated at 237K). So a code-heavy prompt can pass the router as "under 200K" and still get rejected by llama.cpp. What actually keeps sessions under the limit is OpenCode's compaction, so I dropped the model's output limit in OpenCode from 32K to 16K. That makes it compact around 184K instead of 167K.
+
+The second was a confusing error the first time an image ended up in a session:
+
+```
+[500]: image input is not supported - hint: if this is unexpected, you may need to provide the mmproj
+```
+
+The pi model is text-only on my box, since I don't load a vision projector (`--mmproj`). But my OpenCode model entry didn't say what inputs it accepts, and when that's missing OpenCode assumes text *and* images. One line in `opencode.json` fixed it:
+
+```json
+"gpupc/Qwen3.8-27B-pi": {
+  "modalities": { "input": ["text"], "output": ["text"] }
+}
+```
 
 ## Would I Do It Again?
 
