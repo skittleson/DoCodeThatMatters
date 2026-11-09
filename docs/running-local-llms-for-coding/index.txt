@@ -75,7 +75,7 @@ Every one of those flags is doing something specific:
 - --spec-type draft-mtp / --spec-draft-n-max 4: turns on speculative decoding with the MTP draft model, drafting up to 4 tokens ahead per step. Acceptance on the pi model sits between 61% and 73% depending on prompt size, and that is what gets a dense 27B well past what plain autoregressive decoding would manage.
 - --reasoning-effort low / --reasoning-budget 16384: on the old model I ran --reasoning off, because Qwen3.8 defaults to an aggressive "xhigh" thinking mode that burns tokens overthinking simple requests. With the pi model I turned thinking back on, at low effort and capped at 16K thinking tokens per reply, because the output was better with it.
 - --temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0: the pi model card's (https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF) settings for non-thinking mode. I kept them after turning thinking back on. The card's thinking profile runs hotter, at temperature 1.0.
-- --presence-penalty 1.0: the repetition fix from the section below. I ran DRY (--dry-multiplier 0.8) alongside it on the old model and dropped it with the pi swap, because the output was better without it.
+- --presence-penalty 1.0: the repetition fix from the section below. I ran DRY (--dry-multiplier 0.8) alongside it for a while and dropped it, because the output was better without it. The test that settled it was asking the model to repeat a long file path five times. With DRY at 0.8 the path came back mangled (dropped /, stray spaces, a capital I in .venv). At 0.2 it was milder but still broken. With DRY off it came back clean 5 out of 5 times, and MTP accepted 68 of 68 drafted tokens. DRY penalizes repeated n-grams, and repeating an exact path is exactly what an agent has to do.
 - --alias Qwen3.8-27B-pi: the model name the OpenAI-compatible /v1/models endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
 - --host 0.0.0.0 --port 8080 — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 
@@ -147,6 +147,45 @@ The pi model is text-only on my box, since I don't load a vision projector (--mm
 "gpupc/Qwen3.8-27B-pi": {
   "modalities": { "input": ["text"], "output": ["text"] }
 }
+Speed history: six months on one card
+
+I went back through my OpenCode sessions and pulled every benchmark I ran on the 3090 Ti. These aren't apples to apples. The prompts, lengths, and quants changed along the way. But the shape of it holds up: MoE models were fast and I kept leaving them, and every dense model was slow until speculative decoding showed up.
+
+| When | Model | Type | Generation (tok/s) | Context | What I learned |
+|---|---|---|---|---|---|
+| May 31 | gpt-oss-120b, experts in system RAM | 117B MoE | ~11 | 128K | A 7K-token prompt took ~88 s before the first token. OpenCode gave up at 30 s. |
+| May 31 | gpt-oss-20b | MoE | 161 | 128K | Everything in VRAM. That ~88 s became ~1 s. |
+| Jun 1 | Gemma 4 31B, Q4KM | dense | 31 | 48K | Usable, but a 2,400-token answer took 77 s. |
+| Jun 1 | Gemma 4 26B-A4B | MoE | 122 | 48K | About 4x the dense 31B on the same card. |
+| Jun 10 | Qwen3.6 40B, partly on CPU | dense | 5.7 | — | A few layers spilled to the CPU. That's what it costs. |
+| Jun 13 | Qwen3.6-35B-A3B, Claude 4.7 distilled | MoE | ~165 | 128K | My first daily driver. |
+| Jun 16 | Gemma 4 26B-A4B + MTP | MoE | ~208 | 192K | The fastest thing I ever ran. 65% draft acceptance. |
+| Jun 16 | Qwen3.6-35B-A3B Wasserstein | MoE | 170.5, then 174 | 224K | +1500 MHz on the VRAM bought 2%. |
+| Jun 16 | Qwen3.6-27B | dense | 49.3 | 32K | Smarter, and 3.5x slower. |
+| Jun 17 | Qwopus3.6-27B v2 + MTP | dense | 108 clean, 68 on a real refactor | 128K | The first Qwen where MTP worked in llama.cpp. |
+| Jul 11 | Qwopus3.6-27B Coder + MTP, Q4KM | dense | 80 benchmark, ~61 real | 112K | Slower than v2, but tuned for agent work. |
+| Aug 17 | Same, q4_0 KV cache | dense | 60.7 | 200K | Gave up 8% of speed for 200K context. |
+| Aug 17 | Jackrong Qwen3.8-27B + MTP, Q4KM | dense hybrid | 76.7 | 200K | The k-quant that didn't corrupt. |
+| Sep 23 | Same, rebuilt llama.cpp | dense hybrid | 53–58, then 62.0 | 200K | Rebuild plus dropping --spec-draft-p-min. Also where I caught DRY corrupting paths. |
+| Oct 25 | Qwen3.8-27B-pi + MTP draft | dense hybrid | 95 at 6.7K, 52 at 107K | 200K | Faster than the Jackrong build at every prompt size. |
+
+Two things in that table stand out. Context size cost nothing until I hit the VRAM wall. The Qwopus Coder ran 60.9 tok/s at 150K, 60.7 at 200K, and 60.6 at 262K, because decode cost scales with the context you actually use, not what you allocate. The other one is how much "real work" numbers trail benchmark numbers. Qwopus v2 did 108 tok/s on a clean prompt and 68 on a 12K-token refactor.
+
+Where I'm at now
+
+Same service file as above, same llama.cpp build (2280f0fd, from October 25), measured November 9 straight against the server with prompt caching off and 256 generated tokens:
+
+| Prompt | Prompt reading, Oct 25 | Prompt reading, Nov 9 | Generation, Oct 25 | Generation, Nov 9 | Time to first token, Nov 9 |
+|---|---|---|---|---|---|
+| ~6.7K | 1,548 tok/s | 1,509 tok/s | 95.3 tok/s | 70.0 tok/s | 4.4 s |
+| ~27K | 1,517 tok/s | 1,448 tok/s | 77.0 tok/s | 65.3 tok/s | 18.7 s |
+| ~55K | 1,363 tok/s | 1,350 tok/s | 63.2 tok/s | 55.6 tok/s | 41 s |
+| ~110K | 1,124 tok/s | 1,087 tok/s | 51.8 tok/s | 47.7 tok/s | 102 s |
+
+Prompt reading is within a few percent of October. Generation is lower, and the reason is draft acceptance, not the box. Today's prompts were synthetic code, and MTP accepted about 50% of its drafts. The October runs landed between 61% and 73%. MTP speed depends heavily on how predictable the text is, so I treat generation as a range: roughly 50 to 95 tok/s, depending on how deep into the context the session is and what the model is writing.
+
+The card sits at 23.6 of 24.5GB with the model loaded, so about 1GB of headroom.
+
 Would I Do It Again?
 
 Yes. Once it is dialed in, a local coding model is genuinely useful and costs nothing per token. But it is not plug-and-play. The two things that cost me the most time were not "which model is best" — they were the quant type interacting badly with my specific GPU, and a sampler default I never set.

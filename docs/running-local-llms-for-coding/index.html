@@ -7,7 +7,7 @@
         }
       } catch (_) {}
     })();
-  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com https://gist.github.com; style-src 'self' 'unsafe-inline' https://github.githubassets.com https://news.google.com; font-src 'self' https://github.githubassets.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com; frame-src https://news.google.com https://www.youtube.com https://www.youtube-nocookie.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com"><title>How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters</title><link rel="canonical" href="https://docodethatmatters.com/running-local-llms-for-coding/"><meta name="description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side."><meta itemprop="description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side."><meta name="keywords" content="AI;DR, local llm, llama.cpp, qwen3, unsloth, gguf, quantization, rtx 3090, opencode, ampere, homelab, mixture of experts, vllm, speculative decoding"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters"><meta property="og:description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/running-local-llms-for-coding/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/rtx-3090.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters"><meta name="twitter:description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side."><meta name="twitter:creator" content="@skittleson"><!-- Structured data --><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","@id":"https://docodethatmatters.com/#website","url":"https://docodethatmatters.com/","name":"Do Code That Matters","publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><script src="/register-sw.js" defer></script><link rel="author" href="/humans.txt"><link rel="resume" type="application/json" href="/resume.json"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com https://gist.github.com; style-src 'self' 'unsafe-inline' https://github.githubassets.com https://news.google.com; font-src 'self' https://github.githubassets.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com; frame-src https://news.google.com https://www.youtube.com https://www.youtube-nocookie.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com"><title>How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters</title><link rel="canonical" href="https://docodethatmatters.com/running-local-llms-for-coding/"><meta name="description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me what two weeks of daily agent use looks like from the server side, and six months of speed numbers in one table."><meta itemprop="description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me what two weeks of daily agent use looks like from the server side, and six months of speed numbers in one table."><meta name="keywords" content="AI;DR, local llm, llama.cpp, qwen3, unsloth, gguf, quantization, rtx 3090, opencode, ampere, homelab, mixture of experts, vllm, speculative decoding"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="INDEX,FOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters"><meta property="og:description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me what two weeks of daily agent use looks like from the server side, and six months of speed numbers in one table."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/running-local-llms-for-coding/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/rtx-3090.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="How I Run Local LLMs for Coding (and Why the Quant Matters) — Do Code That Matters"><meta name="twitter:description" content="How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me what two weeks of daily agent use looks like from the server side, and six months of speed numbers in one table."><meta name="twitter:creator" content="@skittleson"><!-- Structured data --><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","@id":"https://docodethatmatters.com/#website","url":"https://docodethatmatters.com/","name":"Do Code That Matters","publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><script src="/register-sw.js" defer></script><link rel="author" href="/humans.txt"><link rel="resume" type="application/json" href="/resume.json"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -58,7 +58,7 @@
     if (btn) btn.addEventListener('click', toggleTheme);
     if (btnD) btnD.addEventListener('click', toggleTheme);
   })();
-</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://docodethatmatters.com/running-local-llms-for-coding/","url":"https://docodethatmatters.com/running-local-llms-for-coding/","headline":"How I Run Local LLMs for Coding (and Why the Quant Matters)","description":"How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me and what two weeks of daily agent use looks like from the server side.","image":"https://docodethatmatters.com/images/rtx-3090.jpg","datePublished":"2026-08-19T00:00:00.000Z","dateModified":"2026-11-09T00:00:00.000Z","wordCount":3013,"author":{"@id":"https://docodethatmatters.com/about/#person"},"publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Person","@id":"https://docodethatmatters.com/about/#person","name":"Spencer Kittleson","url":"https://docodethatmatters.com/about/","jobTitle":"Software Engineer","sameAs":["https://github.com/skittleson","https://www.linkedin.com/in/skittleson/","https://stackoverflow.com/users/2414540/spencer","https://twitter.com/skittleson"]},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="wordCount" content="3013"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/running-local-llms-for-coding/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">How I Run Local LLMs for Coding (and Why the Quant Matters)</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2026-08-19T00:00:00.000Z">Aug 2026</time><span aria-hidden="true">·</span><meta itemprop="dateModified" content="2026-11-09T00:00:00.000Z"><span>3013 words</span><span aria-hidden="true">·</span><span>16 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mb-6"><audio controls preload="metadata" class="w-full"><source src="/audio/running-local-llms-for-coding/index.opus" type="audio/ogg; codecs=opus"><source src="/audio/running-local-llms-for-coding/index.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><a href="/audio/running-local-llms-for-coding/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div><figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"><picture><source type="image/webp" srcset="/images/rtx-3090.webp"><img itemprop="url contentUrl" src="/images/rtx-3090.jpg" alt="An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on." width="1200" height="800" class="rounded-md w-full object-cover" loading="eager" fetchpriority="high" decoding="async"></picture><figcaption itemprop="caption" class="text-xs mt-1 text-center" style="color: var(--color-text-muted);">An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.</figcaption></figure></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><blockquote>
+</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://docodethatmatters.com/running-local-llms-for-coding/","url":"https://docodethatmatters.com/running-local-llms-for-coding/","headline":"How I Run Local LLMs for Coding (and Why the Quant Matters)","description":"How I run a coding LLM locally on a single RTX 3090 Ti — the model journey from Claude-distilled to a dense 27B coder, why MoE beat dense for speed, why I stayed on llama.cpp over vLLM on Ampere, the quant type and sampler flag that quietly bit me what two weeks of daily agent use looks like from the server side, and six months of speed numbers in one table.","image":"https://docodethatmatters.com/images/rtx-3090.jpg","datePublished":"2026-08-19T00:00:00.000Z","dateModified":"2026-11-09T00:00:00.000Z","wordCount":3856,"author":{"@id":"https://docodethatmatters.com/about/#person"},"publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Person","@id":"https://docodethatmatters.com/about/#person","name":"Spencer Kittleson","url":"https://docodethatmatters.com/about/","jobTitle":"Software Engineer","sameAs":["https://github.com/skittleson","https://www.linkedin.com/in/skittleson/","https://stackoverflow.com/users/2414540/spencer","https://twitter.com/skittleson"]},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="wordCount" content="3856"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/running-local-llms-for-coding/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">How I Run Local LLMs for Coding (and Why the Quant Matters)</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2026-08-19T00:00:00.000Z">Aug 2026</time><span aria-hidden="true">·</span><meta itemprop="dateModified" content="2026-11-09T00:00:00.000Z"><span>3856 words</span><span aria-hidden="true">·</span><span>20 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mb-6"><audio controls preload="metadata" class="w-full"><source src="/audio/running-local-llms-for-coding/index.opus" type="audio/ogg; codecs=opus"><source src="/audio/running-local-llms-for-coding/index.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><a href="/audio/running-local-llms-for-coding/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div><figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"><picture><source type="image/webp" srcset="/images/rtx-3090.webp"><img itemprop="url contentUrl" src="/images/rtx-3090.jpg" alt="An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on." width="1200" height="800" class="rounded-md w-full object-cover" loading="eager" fetchpriority="high" decoding="async"></picture><figcaption itemprop="caption" class="text-xs mt-1 text-center" style="color: var(--color-text-muted);">An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU I run local coding models on.</figcaption></figure></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><blockquote>
 <p><strong>AI;DR</strong> — This post was written with AI assistance from my own local model, then edited by me. The setup, tests, and numbers are all real.</p>
 </blockquote>
 <p>TLDR; I run a coding assistant entirely on my own hardware — a single RTX 3090 Ti with 24GB of VRAM, serving a 27B model to OpenCode over the LAN. No API bills, no data leaving the house. This post is about the two things that actually bit me: the quantization <em>type</em> silently corrupting output, and a single missing sampler flag causing repetition loops. Both had non-obvious fixes.</p>
@@ -124,7 +124,7 @@
 <li><strong><code>--spec-type draft-mtp</code> / <code>--spec-draft-n-max 4</code></strong>: turns on speculative decoding with the MTP draft model, drafting up to 4 tokens ahead per step. Acceptance on the pi model sits between 61% and 73% depending on prompt size, and that is what gets a dense 27B well past what plain autoregressive decoding would manage.</li>
 <li><strong><code>--reasoning-effort low</code> / <code>--reasoning-budget 16384</code></strong>: on the old model I ran <code>--reasoning off</code>, because Qwen3.8 defaults to an aggressive “xhigh” thinking mode that burns tokens overthinking simple requests. With the pi model I turned thinking back on, at low effort and capped at 16K thinking tokens per reply, because the output was better with it.</li>
 <li><strong><code>--temperature 0.7 --top-p 0.8 --top-k 20 --min-p 0</code></strong>: the <a href="https://huggingface.co/bytkim/Qwen3.8-27B-pi-GGUF">pi model card’s</a> settings for non-thinking mode. I kept them after turning thinking back on. The card’s thinking profile runs hotter, at temperature 1.0.</li>
-<li><strong><code>--presence-penalty 1.0</code></strong>: the repetition fix from the section below. I ran DRY (<code>--dry-multiplier 0.8</code>) alongside it on the old model and dropped it with the pi swap, because the output was better without it.</li>
+<li><strong><code>--presence-penalty 1.0</code></strong>: the repetition fix from the section below. I ran DRY (<code>--dry-multiplier 0.8</code>) alongside it for a while and dropped it, because the output was better without it. The test that settled it was asking the model to repeat a long file path five times. With DRY at 0.8 the path came back mangled (dropped <code>/</code>, stray spaces, a capital <code>I</code> in <code>.venv</code>). At 0.2 it was milder but still broken. With DRY off it came back clean 5 out of 5 times, and MTP accepted 68 of 68 drafted tokens. DRY penalizes repeated n-grams, and repeating an exact path is exactly what an agent has to do.</li>
 <li><strong><code>--alias Qwen3.8-27B-pi</code></strong>: the model name the OpenAI-compatible <code>/v1/models</code> endpoint reports, so OpenCode’s model picker shows something readable instead of the raw GGUF filename.</li>
 <li><strong><code>--host 0.0.0.0 --port 8080</code></strong> — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.</li>
 </ul>
@@ -169,6 +169,193 @@
 <pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#032F62;--shiki-dark:#98C379">"gpupc/Qwen3.8-27B-pi"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: {</span></span>
 <span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "modalities"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: { </span><span style="color:#005CC5;--shiki-dark:#E07C82">"input"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: [</span><span style="color:#032F62;--shiki-dark:#98C379">"text"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">], </span><span style="color:#005CC5;--shiki-dark:#E07C82">"output"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: [</span><span style="color:#032F62;--shiki-dark:#98C379">"text"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">] }</span></span>
 <span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">}</span></span></code></pre>
+<h2 id="speed-history-six-months-on-one-card">Speed history: six months on one card</h2>
+<p>I went back through my OpenCode sessions and pulled every benchmark I ran on the 3090 Ti. These aren’t apples to apples. The prompts, lengths, and quants changed along the way. But the shape of it holds up: MoE models were fast and I kept leaving them, and every dense model was slow until speculative decoding showed up.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>When</th><th>Model</th><th>Type</th><th>Generation (tok/s)</th><th>Context</th><th>What I learned</th></tr></thead><tbody><tr><td>May 31</td><td>gpt-oss-120b, experts in system RAM</td><td>117B MoE</td><td>~11</td><td>128K</td><td>A 7K-token prompt took ~88 s before the first token. OpenCode gave up at 30 s.</td></tr><tr><td>May 31</td><td>gpt-oss-20b</td><td>MoE</td><td>161</td><td>128K</td><td>Everything in VRAM. That ~88 s became ~1 s.</td></tr><tr><td>Jun 1</td><td>Gemma 4 31B, <code>Q4_K_M</code></td><td>dense</td><td>31</td><td>48K</td><td>Usable, but a 2,400-token answer took 77 s.</td></tr><tr><td>Jun 1</td><td>Gemma 4 26B-A4B</td><td>MoE</td><td>122</td><td>48K</td><td>About 4x the dense 31B on the same card.</td></tr><tr><td>Jun 10</td><td>Qwen3.6 40B, partly on CPU</td><td>dense</td><td>5.7</td><td>—</td><td>A few layers spilled to the CPU. That’s what it costs.</td></tr><tr><td>Jun 13</td><td>Qwen3.6-35B-A3B, Claude 4.7 distilled</td><td>MoE</td><td>~165</td><td>128K</td><td>My first daily driver.</td></tr><tr><td>Jun 16</td><td>Gemma 4 26B-A4B + MTP</td><td>MoE</td><td>~208</td><td>192K</td><td>The fastest thing I ever ran. 65% draft acceptance.</td></tr><tr><td>Jun 16</td><td>Qwen3.6-35B-A3B Wasserstein</td><td>MoE</td><td>170.5, then 174</td><td>224K</td><td>+1500 MHz on the VRAM bought 2%.</td></tr><tr><td>Jun 16</td><td>Qwen3.6-27B</td><td>dense</td><td>49.3</td><td>32K</td><td>Smarter, and 3.5x slower.</td></tr><tr><td>Jun 17</td><td>Qwopus3.6-27B v2 + MTP</td><td>dense</td><td>108 clean, 68 on a real refactor</td><td>128K</td><td>The first Qwen where MTP worked in llama.cpp.</td></tr><tr><td>Jul 11</td><td>Qwopus3.6-27B Coder + MTP, <code>Q4_K_M</code></td><td>dense</td><td>80 benchmark, ~61 real</td><td>112K</td><td>Slower than v2, but tuned for agent work.</td></tr><tr><td>Aug 17</td><td>Same, q4_0 KV cache</td><td>dense</td><td>60.7</td><td>200K</td><td>Gave up 8% of speed for 200K context.</td></tr><tr><td>Aug 17</td><td>Jackrong Qwen3.8-27B + MTP, <code>Q4_K_M</code></td><td>dense hybrid</td><td>76.7</td><td>200K</td><td>The k-quant that didn’t corrupt.</td></tr><tr><td>Sep 23</td><td>Same, rebuilt llama.cpp</td><td>dense hybrid</td><td>53–58, then 62.0</td><td>200K</td><td>Rebuild plus dropping <code>--spec-draft-p-min</code>. Also where I caught DRY corrupting paths.</td></tr><tr><td>Oct 25</td><td>Qwen3.8-27B-pi + MTP draft</td><td>dense hybrid</td><td>95 at 6.7K, 52 at 107K</td><td>200K</td><td>Faster than the Jackrong build at every prompt size.</td></tr></tbody></table>
+<p>Two things in that table stand out. Context size cost nothing until I hit the VRAM wall. The Qwopus Coder ran 60.9 tok/s at 150K, 60.7 at 200K, and 60.6 at 262K, because decode cost scales with the context you actually use, not what you allocate. The other one is how much “real work” numbers trail benchmark numbers. Qwopus v2 did 108 tok/s on a clean prompt and 68 on a 12K-token refactor.</p>
+<h2 id="where-im-at-now">Where I’m at now</h2>
+<p>Same service file as above, same llama.cpp build (<code>2280f0fd</code>, from October 25), measured November 9 straight against the server with prompt caching off and 256 generated tokens:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt</th><th>Prompt reading, Oct 25</th><th>Prompt reading, Nov 9</th><th>Generation, Oct 25</th><th>Generation, Nov 9</th><th>Time to first token, Nov 9</th></tr></thead><tbody><tr><td>~6.7K</td><td>1,548 tok/s</td><td>1,509 tok/s</td><td>95.3 tok/s</td><td>70.0 tok/s</td><td>4.4 s</td></tr><tr><td>~27K</td><td>1,517 tok/s</td><td>1,448 tok/s</td><td>77.0 tok/s</td><td>65.3 tok/s</td><td>18.7 s</td></tr><tr><td>~55K</td><td>1,363 tok/s</td><td>1,350 tok/s</td><td>63.2 tok/s</td><td>55.6 tok/s</td><td>41 s</td></tr><tr><td>~110K</td><td>1,124 tok/s</td><td>1,087 tok/s</td><td>51.8 tok/s</td><td>47.7 tok/s</td><td>102 s</td></tr></tbody></table>
+<p>Prompt reading is within a few percent of October. Generation is lower, and the reason is draft acceptance, not the box. Today’s prompts were synthetic code, and MTP accepted about 50% of its drafts. The October runs landed between 61% and 73%. MTP speed depends heavily on how predictable the text is, so I treat generation as a range: roughly 50 to 95 tok/s, depending on how deep into the context the session is and what the model is writing.</p>
+<p>The card sits at 23.6 of 24.5GB with the model loaded, so about 1GB of headroom.</p>
 <h2 id="would-i-do-it-again">Would I Do It Again?</h2>
 <p>Yes. Once it is dialed in, a local coding model is genuinely useful and costs nothing per token. But it is not plug-and-play. The two things that cost me the most time were not “which model is best” — they were the quant type interacting badly with my specific GPU, and a sampler default I never set.</p>
 <p>Both are the kind of thing you only find by testing on your own hardware with your own prompts. Which, honestly, is half the fun.</p></section></article><hr class="my-8"><p class="text-sm font-mono" style="color: var(--color-text-muted);">See something inaccurate or need more detail? <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20How%20I%20Run%20Local%20LLMs%20for%20Coding%20(and%20Why%20the%20Quant%20Matters)" style="color: var(--color-accent);" class="underline">Submit a Pull Request</a> to help me out!</p><p class="text-sm font-mono mt-2"><a href="https://www.buymeacoffee.com/skittles" style="color: var(--color-accent);" class="hover:underline">Buy me a ☕ to support!</a></p></div><!-- Sidebar --><aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"><h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">Related Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/strata-qwen3-8-flash-next-rtx-3090/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</a><time datetime="2026-10-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/asp-net-xss-protection/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">ASP.NET XSS protection</a><time datetime="2017-09-06T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Sep 2017</time></li><li><a href="/i-scanned-the-ble-devices-around-my-house/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">BLE Devices Around My House Are Sharing Everything</a><time datetime="2026-06-17T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Jun 2026</time></li></ul><h3 class="text-xs font-bold font-mono mt-6 mb-3 uppercase tracking-wide" style="color: var(--color-text);">Latest Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/home-automation-overnight-success/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">My Home Automation Rules After 10 Years</a><time datetime="2026-10-28T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/strata-qwen3-8-flash-next-rtx-3090/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</a><time datetime="2026-10-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/sony-a6000-a6400-research/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Sony A6000/A6400 Hacks, Mods and Community Resources</a><time datetime="2026-08-29T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/running-local-llms-for-coding/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">How I Run Local LLMs for Coding (and Why the Quant Matters)</a><time datetime="2026-08-19T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/i-scanned-the-ble-devices-around-my-house/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">BLE Devices Around My House Are Sharing Everything</a><time datetime="2026-06-17T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Jun 2026</time></li></ul></aside></div></main><footer class="mt-12 py-6" style="border-top: 1px solid var(--color-border);"><div class="container mx-auto px-4 text-center text-sm font-mono" style="color: var(--color-text-muted);"><div class="flex items-center justify-center gap-4"><a href="/terms/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Terms</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/privacy/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Privacy</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a></div><p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p></div></footer></body></html>
