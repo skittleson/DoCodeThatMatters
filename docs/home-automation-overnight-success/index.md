@@ -231,6 +231,45 @@ That's both talks, ten-plus years apart. The rules barely changed between them, 
 
 A third talk is coming, and this one is built around agentic use cases. The same rules still apply when an AI agent is the one flipping the switches, and I expect a few new ones once it is.
 
+## What readers told me
+
+When I shared the "no internet, no problem" rule on LinkedIn, I asked for the most pointless internet dependency people had found in a device. Dozens of people answered, and the answers were better than the post. Here is what stood out.
+
+### Everyone has one
+
+Most examples were basic functions locked behind an app, an account, or a server:
+
+- A fridge whose temperature can't be changed because of a bug in the manufacturer's phone app.
+- A TV that can't even switch inputs when the internet is down, and another that has to be signed in before it works as a plain HDMI monitor. One reader's older smart TV has dead apps but still works as a regular TV, which is how a device should fail.
+- A heating system whose app doesn't work from the local network.
+- A kitchen vent and a dishwasher that need the internet even when you control them from Home Assistant.
+- A smart plug that can't be set up on an isolated network.
+- Noise-cancelling headphones that search for a Bluetooth device forever, so you can't just turn on the noise cancelling.
+- Synthesizers and MIDI keyboards that need a cloud login for first use or firmware updates.
+- A meat thermometer that only worked through its app and stopped working when the company went out of business.
+
+The meat thermometer bothers me most. The hardware outlived the company, and it stopped working anyway.
+
+### Rules readers added
+
+- Offline first, online as a bonus. A device should work on its own and use the internet for extras. Connectivity is great. Depending on it is the problem.
+- Treat every third-party dependency as a risk. APIs change, so plan a local fallback or a clear degraded mode. One mobile developer put it this way: the core action works offline or from cache, and only the nice-to-have extras wait for a connection.
+- Decide what must work offline. My answer: turning things on and off, temperature and safety controls, and anything a guest has to use without learning an app. As one reader said, if a visitor can't turn something on or adjust the temperature without an app account, the design has failed.
+- Clean up when you throw things away. Remove a connected printer from your account first. An abandoned connected device can be an easy way in for an attacker.
+
+### Practical tips
+
+- Use local protocols. One reader recommends Zigbee and Z-Wave over Wi-Fi: fewer problems, and a switch that doesn't need the cloud tends to behave the same year after year. Another uses Zigbee for the smart plugs that can't be set up without internet.
+- Old Nest thermostats have a way out. [No Longer Evil](https://nolongerevil.com/) is open source firmware for Nest Gen 1 and Gen 2 thermostats.
+- Smart TVs can be tamed. Reset the TV and never connect it to the network, and the input problem goes away.
+- Remote access is the cost of staying local. I use Tailscale on the router and keep the individual devices off the tailnet. One reader ran OpenVPN on OpenWrt, which worked but felt clunky, and is now trying Tailscale.
+- There's a gap to fill. One reader said they would happily pay for a pre-built, open "works with everything" Raspberry Pi image with MQTT. DietPi and OpenWrt come close and have a small footprint, but you need some understanding to get going.
+- Right to repair is the bigger fight. Readers pointed to the right-to-repair movement and groups like the [FULU Foundation](https://www.fulu.org/), which work to keep companies from locking you out of what you bought.
+
+### Counterpoints
+
+Connectivity isn't the villain. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking, which is the other side of it. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another skips connected appliances entirely and keeps only computers and phones online.
+
 ## Devices I've used
 
 <small>(This section has Amazon affiliate links. If you buy through them, I may earn a small commission at no extra cost to you.)</small>
