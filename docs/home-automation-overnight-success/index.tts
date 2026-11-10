@@ -1,33 +1,33 @@
 AI;DR: I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
 
-TLDR; If a light switch in my house needs someone else's server to work, it doesn't go in. That has been rule one for ten years of home automation, and the other rules I follow grew out of it. Below are the rules and why I keep them, followed by both talks I've given on this, slide by slide.
+TLDR; Nothing core in my house depends on a vendor's server. If the internet goes down, the house keeps running. That's been rule one for about ten years, and my other rules came out of it. This post has the rules, then both talks I've given on home automation, slide by slide.
 
-The cloud is the weak link
+Why local
 
-Hardware you pay for once shouldn't stop working because a company changed its plans. It happens anyway. My Nest integration worked until Google broke the API. A Samsung fridge shows a TLS certificate error on its own screen. A Camp Chef grill controller needs Wi-Fi to tell you the temperature.
+My Nest integration worked until Google broke the API. That's the failure I plan around now. The talks have a few more: a Samsung fridge showing a TLS certificate error on its own screen, and a Camp Chef grill controller that needs Wi-Fi to show you the temperature.
 
-I still use cloud services where they help, including Alexa and a handful of AWS services. They're add-ons, though. The logic that runs the house lives on hardware I own: Tasmota firmware on ESP boards, an MQTT broker, and Node-RED on a Raspberry Pi. When the internet goes out, the house keeps working.
+Everything that matters runs on hardware I own. That's Tasmota on ESP boards, an MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services, mostly Alexa and a few AWS ones. Alexa is just another way to flip a switch. If it's down, the wall switches and the wall dashboard still work.
 
 The rules
 
-These came out of the first talk and got restated in the second:
+From the first talk, restated in the second:
 
-1. No internet, no problem. Anything core to the house has to work with the internet unplugged.
-2. Don't remove the old way while introducing the new one. A wall switch taped in the on position so a smart bulb keeps power is what happens when you skip this.
-3. Be agile. Rooms get used differently and people move in and out, so everything has to be cheap to change.
-4. Check your automations. I once had four scheduled triggers all pointing at the same garden pump.
-5. Exceptions must be exceptional. I can break a rule, but only for a reason I'd still defend six months later.
+1. No internet, no problem. Core stuff has to work with the internet unplugged. Alexa can be a way in, but never the only way.
+2. Don't remove the old way while adding the new one. If someone tapes a wall switch on so a smart bulb keeps power, I skipped this rule.
+3. Be agile. Rooms get used differently and people move in and out, so it all has to be cheap to change.
+4. Check your automations. I once had four scheduled triggers hitting the same garden pump.
+5. Exceptions must be exceptional. I can break a rule, but only for a reason I'd still agree with six months later.
 
-These came after year five, once more people lived in the house:
+Added after year five, once more people lived in the house:
 
-6. A cloud device needs an API with logs, or it doesn't get installed. I won't run a black box in my house.
-7. Configuration lives in one place instead of five vendor apps.
-8. People get more than one way in: an app, Alexa, a QR code, or an NFC tag.
-9. Any sequence of actions that keeps repeating becomes a routine.
+6. A cloud device needs an API with logs or it doesn't get installed. I don't want a black box in the house.
+7. Config lives in one place instead of five vendor apps.
+8. More than one way in: an app, Alexa, a QR code, or an NFC tag.
+9. If I keep doing the same steps, they become a routine.
 10. Devices talk pub/sub over MQTT instead of point to point.
-11. No batteries unless the device can go a year or more between changes. A dead battery on a door sensor at 2am is how you end up outside in the cold.
+11. No batteries unless they last a year or more between changes. Nobody wants to swap a door sensor battery at 2am.
 
-The build I get asked about most is the Tasmota sprinkler controller (/automate-sprinkler-with-tasmota/). It runs on these rules and shows up in both talks, along with the garage door automation that has been running just as long.
+The build I get asked about most is the Tasmota sprinkler controller (/automate-sprinkler-with-tasmota/). It's in both talks, and so is the garage door setup, which has been running about as long.
 
 Talk One: Home Automation
 
@@ -233,7 +233,7 @@ A third talk is coming, and this one is built around agentic use cases. The same
 
 What readers told me
 
-When I shared the "no internet, no problem" rule on LinkedIn, I asked for the most pointless internet dependency people had found in a device. Dozens of people answered, and the answers were better than the post. Here is what stood out.
+I shared the "no internet, no problem" rule on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered. A Hacker News thread added more. Here's what came back.
 
 Everyone has one
 
@@ -252,23 +252,25 @@ The meat thermometer bothers me most. The hardware outlived the company, and it 
 
 Rules readers added
 
-- Offline first, online as a bonus. A device should work on its own and use the internet for extras. Connectivity is great. Depending on it is the problem.
-- Treat every third-party dependency as a risk. APIs change, so plan a local fallback or a clear degraded mode. One mobile developer put it this way: the core action works offline or from cache, and only the nice-to-have extras wait for a connection.
-- Decide what must work offline. My answer: turning things on and off, temperature and safety controls, and anything a guest has to use without learning an app. As one reader said, if a visitor can't turn something on or adjust the temperature without an app account, the design has failed.
+- Offline first, with the internet for extras. A device should do its main job on its own.
+- Treat every third-party dependency as a risk. APIs change, so plan a local fallback or a clear degraded mode. One mobile developer works the same way: the core action works offline or from cache, and only the extras wait for a connection.
+- Decide what must work offline. My answer is turning things on and off, temperature and safety controls, and anything a guest has to use without learning an app. As one reader said, if a visitor can't turn something on or adjust the temperature without an app account, the design has failed.
+- A stricter version of my first two rules: everything core works with the Wi-Fi or the automation server shut down, and smart features never take away the dumb ones. The wall switch should control the light directly and let automation flip it. A switch that only sends a request to the automation fails. That reader says my sprinkler controller fails this bar too. The only sprinkler controller they'd found with a local API and full control on the device itself was RainMachine, which is gone.
 - Clean up when you throw things away. Remove a connected printer from your account first. An abandoned connected device can be an easy way in for an attacker.
 
 Practical tips
 
-- Use local protocols. One reader recommends Zigbee and Z-Wave over Wi-Fi: fewer problems, and a switch that doesn't need the cloud tends to behave the same year after year. Another uses Zigbee for the smart plugs that can't be set up without internet.
+- Use local protocols. One reader recommends Zigbee and Z-Wave over Wi-Fi, because a switch that doesn't need the cloud tends to behave the same year after year. Another uses Zigbee for the smart plugs that can't be set up without internet.
+- Let an LLM find the firmware. One reader buys the cheapest hardware that does the job, ignores reviews that complain about the app, and asks an LLM for local-first custom firmware once it arrives. That has worked for their switches, a thermostat, an air quality monitor, a thermometer, and a window fan. They'd have paid about 2.5x for hardware that was local out of the box.
 - Old Nest thermostats have a way out. No Longer Evil (https://nolongerevil.com/) is open source firmware for Nest Gen 1 and Gen 2 thermostats.
 - Smart TVs can be tamed. Reset the TV and never connect it to the network, and the input problem goes away.
 - Remote access is the cost of staying local. I use Tailscale on the router and keep the individual devices off the tailnet. One reader ran OpenVPN on OpenWrt, which worked but felt clunky, and is now trying Tailscale.
-- There's a gap to fill. One reader said they would happily pay for a pre-built, open "works with everything" Raspberry Pi image with MQTT. DietPi and OpenWrt come close and have a small footprint, but you need some understanding to get going.
+- There's a gap to fill. One reader would happily pay for a pre-built, open "works with everything" Raspberry Pi image with MQTT. DietPi and OpenWrt come close and have a small footprint, but you need some understanding to get going. Another wanted a hub that ships with the house, like a water heater or a router. Home Assistant sells hub hardware that's close to that.
 - Right to repair is the bigger fight. Readers pointed to the right-to-repair movement and groups like the FULU Foundation (https://www.fulu.org/), which work to keep companies from locking you out of what you bought.
 
 Counterpoints
 
-Connectivity isn't the villain. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking, which is the other side of it. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another skips connected appliances entirely and keeps only computers and phones online.
+Connectivity has real uses. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another expects the shift away from internet-connected devices to come from resilience worries rather than consumer complaints, since enough connected homes make a target. And one skips connected appliances entirely, keeping only computers and phones online.
 
 Devices I've used
 
