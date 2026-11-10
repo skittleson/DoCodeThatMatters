@@ -57,6 +57,11 @@ If `git status --short src/` shows edits that aren't yours, either:
 
 Leave the other edits uncommitted and tell Spencer they're there.
 
+The reverse also happens: another session's `docs/` commit can publish *your* unfinished post,
+because it built from a working tree that had your untracked file. Before your first commit of a
+new post, run `git ls-files docs/<slug>/`; if it's already tracked, tell Spencer which commit
+published it (`git log --oneline -1 -- docs/<slug>/index.html`).
+
 ## Stale output and look-alike slugs
 
 - `draft: true` posts get no page, but an old `docs/<slug>/` from before the post became a draft
@@ -99,6 +104,9 @@ gh api repos/skittleson/DoCodeThatMatters/pages/builds/latest --jq '.status+" "+
 - HN uses the article's own title, so retitle the post itself: a short stance, about 7 words.
 - Top stories cluster at 6–11am PT, Tue–Thu. Post an "Author here" first comment, don't ask
   for votes, don't resubmit.
+- To check a title or topic against real HN data, use the `hn-dataset` skill (the
+  `open-index/hacker-news` parquet dataset, cached per month with DuckDB). Across 2023–2026,
+  "I built / I made" titles reached 300+ points at 24% vs a 15% baseline; question titles 13%.
 
 ## Audio on demand (`npm run audio`)
 
