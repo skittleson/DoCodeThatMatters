@@ -1,3 +1,5 @@
+AI;DR: I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass.
+
 TLDR; Out of 8,809 Sony photos in my Immich library, exactly one burst was steady enough to merge cleanly. That one number changed what the app had to be. Burst Super-Res (https://github.com/skittleson/burst-superres) is free, open source (MIT), runs offline on macOS, Windows and Linux, and you can download it here (https://github.com/skittleson/burst-superres/releases/latest).
 
 Sony A6000/A6400 series: Part 1: Modernization (/hacking-sony-a6000-for-modernization/) · Part 2: More Hacks (/hacking-sony-a6000-more/) · Part 3: Tethered Raspberry Pi (/sony-camera-part3/) · Research & Community Resources (/sony-a6000-a6400-research/) · Burst Super-Res (this post)

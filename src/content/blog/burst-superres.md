@@ -10,6 +10,7 @@ keywords:
   - Sony ARW
   - RAW decoder
   - tinyjs
+  - AI;DR
 date: 2026-11-09
 description: "Burst Super-Res merges a burst of photos into one image with twice the width and height, using sub-pixel alignment and plain math, no AI. What it does, why the gain is only about 1 dB, and the research that got it there."
 image: /images/burst-superres/app-real-burst.webp
@@ -18,6 +19,8 @@ imageWidth: 1600
 imageHeight: 1025
 priority: 0.8
 ---
+
+> **AI;DR:** I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass.
 
 TLDR; Out of 8,809 Sony photos in my Immich library, exactly one burst was steady enough to merge cleanly. That one number changed what the app had to be. [Burst Super-Res](https://github.com/skittleson/burst-superres) is free, open source (MIT), runs offline on macOS, Windows and Linux, and you can [download it here](https://github.com/skittleson/burst-superres/releases/latest).
 

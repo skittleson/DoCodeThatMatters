@@ -28,14 +28,15 @@
         "sub-pixel alignment",
         "Sony ARW",
         "RAW decoder",
-        "tinyjs"
+        "tinyjs",
+        "AI;DR"
       ],
       "authors": [
         {
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2027
+      "word_count": 2047
     },
     {
       "id": "https://docodethatmatters.com/home-automation-overnight-success/",
