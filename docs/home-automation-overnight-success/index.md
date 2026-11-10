@@ -69,7 +69,7 @@ The garage cooling flow starts from a manual trigger and checks whether the door
 
 ![Node-RED garage sensor flow feeding Grafana, plus an Opens counter and On Status chart](/images/home-automation/t1-10.webp "Garage door sensor state feeding Grafana, with an opens-count and on-status history")
 
-The door sensor and reed switch both report into a transform step that sets a global `garage-closed` flag and logs to Grafana. Below that is the chart from a few real days: 21 opens, with spikes showing when each one happened. Most people skip this part, and it's the part that tells me whether I left the garage open without opening an app.
+The door sensor and reed switch both report into a transform step that sets a global `garage-closed` flag and logs to Grafana. Below that is the chart from a few real days: 21 opens, with spikes showing when each one happened. It's easy to skip reporting/alerting. This can alert me if the garage was left open, which is useful when I accidentally leave it open.
 
 ![Node-RED scheduled injects feeding a Garden Water Pump node](/images/home-automation/t1-11.webp "Check automations: four scheduled triggers feeding the garden water pump")
 
@@ -93,15 +93,13 @@ The Sonoff Mini is small enough to hide inside the fireplace's existing wiring. 
 
 ![Sprinkler controller wiring, a 3D PCB render, the Tasmota web UI, scheduled nodes, and a bare PCB layout](/images/home-automation/t1-16.webp "The sprinkler build end to end: enclosure wiring, PCB design, Tasmota UI, schedule flow, and the bare board")
 
-The whole sprinkler build fits on one slide: the relay and ESP module in the enclosure, the 3D board render, the Tasmota UI with BME280 sensor readings, the Node-RED schedule feeding the pump, and the finished PCB layout. [The sprinkler post](/automate-sprinkler-with-tasmota/) has the full writeup, including why I picked Tasmota over custom firmware.
+The whole sprinkler build: the relay and ESP module in the enclosure, the 3D board render, the Tasmota UI with BME280 sensor readings, the Node-RED schedule feeding the pump, and the finished PCB layout. [The sprinkler post](/automate-sprinkler-with-tasmota/) has the full writeup, including why I picked Tasmota over custom firmware. It's a bit hacky but I love it :D
 
 ![The Rules Guidelines Recap bullet list](/images/home-automation/t1-17.webp "The rules, guidelines, recap: don't swap the new way in before the old way is gone, no internet no problem, must be agile, check automations, exceptions must be exceptional")
 
 The recap slide is the whole talk in five lines. I break the first one (don't introduce a new way while removing the old way) carelessly more often than the others, and I regret it every time. The last one keeps the other four honest. "I was in a hurry" doesn't count as exceptional.
 
 ![Memorable Home Automations bullet list](/images/home-automation/t1-18.webp "A grab bag: heart-rate light blinking, fireplace sim, rain-skip watering, phone-presence garage, AWS services, 3D printer status lights")
-
-The highlight reel: lights that blink when my heart rate is too low, sprinklers that skip watering if rain is coming, a garage that opens when my phone shows up but the car doesn't, light and water for an indoor garden, an air quality sensor that kicks on a fan, backyard landscaping lighting, living room LED strips that shift between warm and cool, washer and dryer notifications based on power usage instead of a vendor app, 3D printer status lights, AC and heating monitoring, and a pile of AWS services (Alexa, Polly, S3, IoT, Cognito) stitched together along the way. The Nest integration gets a eulogy: "until Google broke the API." Every home automation person writes that sentence eventually.
 
 ![Questions? Feedback!](/images/home-automation/t1-19.webp "Closing slide for talk one: Questions? Feedback!")
 
