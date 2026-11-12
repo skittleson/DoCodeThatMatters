@@ -1,5 +1,6 @@
 AI;DR: I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
-Secondary note: From HN, I know you don't like AI written content so i've reworked most of this post to be written in my own words. The slide decks are the most interesting, LLMs was used to add context. I making those available as downloads for first talk (/downloads/home-automation-talk-1.pdf) and then second talk (/downloads/home-automation-talk-2.pdf).    
+
+Secondary note: From HN, I know you don't like AI written content so I've reworked most of this post to be written in my own words. The slide decks are the most interesting, LLMs were used to add context. I'm making those available as downloads for first talk (/downloads/home-automation-talk-1.pdf) and then second talk (/downloads/home-automation-talk-2.pdf).    
 
 TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Check out each slide by slide.
 
@@ -212,18 +213,15 @@ The "more than one way in" rule in hardware: the wall tablet for whoever is stan
 The tools I build and debug all of this with.
 
 !A soldering iron and stand, a 3D printer mid-print, a digital multimeter, and a precision screwdriver kit (/images/home-automation/t2-29.webp "The workbench: a soldering iron, a 3D printer, a multimeter, and a screwdriver kit")
-
-A soldering iron for permanent connections, a 3D printer for enclosures and brackets you can't buy, a multimeter for when something isn't working, and a precision screwdriver kit for devices the manufacturer didn't want opened.
-
 !Questions? Feedback! (/images/home-automation/t2-30.webp "Closing slide for talk two: Questions? Feedback!")
 
-That's both talks, five years apart. The rules barely changed. The list of problems kept growing.
+That's both talks five years apart. The rules barely changed, just extended. The list of problems kept growing.
 
-A third talk is coming, built around agentic use cases. The same rules should hold when an AI agent is the one flipping the switches, and I expect to add a few.
+A third talk is coming around agentic use cases. The same rules should hold when an AI agent is the one flipping the switches.  I expect to add a few more rules in the process.
 
 What Readers are telling me
 
-I shared this post on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered then Hacker News commenters added more.
+I shared this post on LinkedIn and Hacker News and asked for the most pointless internet dependency people had found in a device.  Summarizations of those thoughts:
 
 Everyone has one
 
@@ -260,7 +258,7 @@ Practical tips
 
 Counterpoints
 
-Connectivity has real uses. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another expects the shift away from internet-connected devices to come from resilience worries rather than consumer complaints, since enough connected homes make a target. And one skips connected appliances entirely, keeping only computers and phones online.
+Internet connectivity has real cases that are obvious, such as a meat thermometer that lets you watch the game while the steak cooks.  Remote access to systems where you really need them such as cameras.
 
 Devices I've used
 
