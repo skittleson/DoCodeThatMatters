@@ -13,6 +13,7 @@ keywords:
   - conference talk
 date: 2026-10-28
 description: Rule one is that nothing in my house needs a vendor's server to work. The rest of the rules I follow after ten years of home automation, plus both talks I gave on it, slide by slide.
+modified: 2026-11-12
 image: /images/home-automation/t1-07.webp
 alt: Scissors cutting an ethernet cable under the words No Internet, No Problem.
 imageWidth: 1500
@@ -21,6 +22,7 @@ priority: 0.8
 ---
 
 > **AI;DR:** I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
+> **Secondary note:** From HN, I know you don't like AI written content so i've reworked most of this post to be written in my own words. The slide decks are the most interesting, LLMs was used to add context. I making those available as downloads for [first talk](/downloads/home-automation-talk-1.pdf) and then [second talk](/downloads/home-automation-talk-2.pdf).    
 
 TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Check out each slide by slide.
 
