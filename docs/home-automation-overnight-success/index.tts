@@ -1,55 +1,53 @@
 AI;DR: I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
 
-TLDR; Nothing core in my house depends on a vendor's server. If the internet goes down, the house keeps running. That's been rule one for about ten years, and my other rules came out of it. This post has the rules, then both talks I've given on home automation, slide by slide.
+TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes does down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Checkout each slide by slide.
 
 Why local
+My Nest integration worked one day until it didnt.  They had changed the api (around the same time they Google acquired them). I have a few more examples in these talks that show a samsung fridge and a grill controller that needs wifi to show temperature.  I dont/should need wifi and/or vendor service to interact with hardware.
 
-My Nest integration worked until Google broke the API. That's the failure I plan around now. The talks have a few more: a Samsung fridge showing a TLS certificate error on its own screen, and a Camp Chef grill controller that needs Wi-Fi to show you the temperature.
-
-Everything that matters runs on hardware I own. That's Tasmota on ESP boards, an MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services, mostly Alexa and a few AWS ones. Alexa is just another way to flip a switch. If it's down, the wall switches and the wall dashboard still work.
+So everything that matters runs on hardware I own. Mostly on Tasmota on esp8226/esp32 boards, MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services for enhancements like Alexa and a few AWS ones BUT those are secondary.  If the internet is down, the switches all work like normal.
 
 The rules
 
-From the first talk, restated in the second:
+From the first talk:
 
-1. No internet, no problem. Core stuff has to work with the internet unplugged. Alexa can be a way in, but never the only way.
-2. Don't remove the old way while adding the new one. If someone tapes a wall switch on so a smart bulb keeps power, I skipped this rule.
-3. Be agile. Rooms get used differently and people move in and out, so it all has to be cheap to change.
-4. Check your automations. I once had four scheduled triggers hitting the same garden pump.
-5. Exceptions must be exceptional. I can break a rule, but only for a reason I'd still agree with six months later.
+1. No internet, no problem. Core stuff has to work with the internet unplugged.
+2. Don't remove the old way while adding the new one.
+3. Be agile. 
+4. Check your automations.
+5. Exceptions must be exceptional.
 
 Added after year five, once more people lived in the house:
 
 6. A cloud device needs an API with logs or it doesn't get installed. I don't want a black box in the house.
-7. Config lives in one place instead of five vendor apps.
-8. More than one way in: an app, Alexa, a QR code, or an NFC tag.
-9. If I keep doing the same steps, they become a routine.
+7. Configuration lives in one place instead of five vendor apps.
+8. More than one way to do something. An app, Alexa, a QR code, or an NFC tag. 
+9. If I keep doing the same steps, it becomes routine (node red or on the tasmota device itself).
 10. Devices talk pub/sub over MQTT instead of point to point.
-11. No batteries unless they last a year or more between changes. Nobody wants to swap a door sensor battery at 2am.
+11. No batteries unless they last a year or more between changes. 
 
-The build I get asked about most is the Tasmota sprinkler controller (/automate-sprinkler-with-tasmota/). It's in both talks, and so is the garage door setup, which has been running about as long.
+I get asked about the the Tasmota sprinkler controller (/automate-sprinkler-with-tasmota/) the most as well as the garage door setup. Both have been running for years with no real changes. 
 
 Talk One: Home Automation
 
 !Home Automation, for fun and convenience (/images/home-automation/t1-01.webp "Title slide: Home Automation, for fun and convenience")
 
-Nobody needs any of this. I like building things that just work in the background. Each automation is a small puzzle.
+Nobody needs any of this. I like building things that just work in the background. Each automation is a small puzzle.  Its a hobby.
 
 !Connected Everything collage of icons (/images/home-automation/t1-02.webp "Connected Everything: the modern everything-is-online mess")
-
-Everything talks to a cloud now: phones, laptops, thermostats, locks. Those clouds may or may not be up when you need them, so know what you're signing up for before you plug something in.
+Everything seems to want to reach out to the cloud. Laptops, phones, etc make sense. However my thermostats and locks... smart devices need to be questioned since they could be critical useful in your home.  They may go out of business so be mindful what your signing up.
 
 !Nest thermostat, Amazon smart plug, and Yale smart lock keypad (/images/home-automation/t1-03.webp "The retail starting point: Nest, an Amazon smart plug, and a Yale lock")
 
-Most people start here: a thermostat, a plug, a lock. Each has its own app and account.
+Many start start with these devices: thermostat, smart plug, smart lock. Each can have its own account and app.  Usually people will try to combine devices into the same ecosystem when possible.
 
 !Privacy, Integration/Flexibility, and Cost triangle (/images/home-automation/t1-04.webp "Privacy, Integration and Flexibility, Cost: pick your tradeoffs")
 
-Every device lands somewhere on this triangle. A cloud camera is cheap and easy. It also costs you privacy. A switch I flash myself takes longer to set up, but I can hook it into anything. I figure out where a device lands before I buy it.
+Know this triangle: cloud cam is cheap and easy but in exchange for costs you privacy. A smart plug I flash myself takes longer to set up, but I can hook it into anything. Figure out where a device lands before buying it.
 
 !A light switch taped on with a note reading Leave Switch On, This is BAD (/images/home-automation/t1-05.webp "This is bad: a switch taped in the on position so automation can take over")
 
-Someone (often me) automates a light, then has to tape the wall switch on so the smart bulb keeps power. If a switch in a room ever did nothing, this is why.
+This is bad behavior. Don't tape switches to the on position.
 
 !Wemo Wi-Fi Light Switch retail box (/images/home-automation/t1-06.webp "A Wemo Wi-Fi light switch, the in-wall alternative to a taped switch")
 
@@ -61,23 +59,23 @@ Rule one: if the internet goes down, my lights still turn on.
 
 !Must Be Agile: sticky notes on a planning board (/images/home-automation/t1-08.webp "Must be agile")
 
-It's never done (see rule 3).
+Being agile means willing to understand that changes will come that you must in your system.
 
 !Node-RED flow for Garage Cool Off logic (/images/home-automation/t1-09.webp "Garage Cool Off flow: checks if the door is closed before running the fan")
 
-The garage cooling flow starts from a manual trigger. Is the door closed? Then it opens the door, waits, and turns on the fan. Already cooling? It just sends a notification. Small flow, but it has kept the garage from baking more than once.
+A small workflow to keep my garage cool in the summer time. I've had to change it multiple times.
 
 !Node-RED garage sensor flow feeding Grafana, plus an Opens counter and On Status chart (/images/home-automation/t1-10.webp "Garage door sensor state feeding Grafana, with an opens-count and on-status history")
 
-The door sensor and reed switch both report into a transform step that sets a global garage-closed flag and logs to Grafana. Below that is the chart from a few real days: 21 opens, with spikes showing when each one happened. It's easy to skip reporting/alerting. This one tells me when I accidentally leave the garage open.
+I have a reed switch wired up to the tasmota esp32 that controls the garage door with global state.  I use grafana to monitor the state changes.  I want to know if the garage door was left open so i could get message to me that its been open for too long. 
 
 !Node-RED scheduled injects feeding a Garden Water Pump node (/images/home-automation/t1-11.webp "Check automations: four scheduled triggers feeding the garden water pump")
 
-Four scheduled triggers all hit the same pump. It's easy to end up with automations fighting over one device, so every so often I check whether they still make sense together.
+Scheduled triggers on a single pump. Be careful here, automations fighting over one device can happen and has caused me problems. Make it a habit to check every so often.
 
 !Captain Jack Sparrow meme: The Rules, more of what you'd call guidelines than actual rules (/images/home-automation/t1-12.webp "The Rules: more of what you'd call guidelines than actual rules")
 
-I've broken all of these plenty of times, so they're more like guidelines.
+Broken many of these rules so now i refer to them as guidelines!
 
 !Node-RED logo, a Phillips Hue IFTTT-style applet, and an Alexa routine editor (/images/home-automation/t1-13.webp "Node-RED, a community applet for blinking Hue lights on low phone battery, and an Alexa routine")
 
@@ -85,7 +83,7 @@ Three ways to do "event in, action out." Node-RED is my main tool. Alexa routine
 
 !MQTT publish/subscribe diagram with a temperature sensor, broker, and two subscribers (/images/home-automation/t1-14.webp "MQTT: one publisher, one broker, two subscribers getting the same message")
 
-MQTT keeps things decoupled. The temperature sensor publishes and doesn't care who's listening, so a phone and a backend can both subscribe without the sensor doing anything extra. The sprinkler controller in the Tasmota post (/automate-sprinkler-with-tasmota/) works the same way.
+MQTT keeps things decoupled as a pub sub event system. The temperature sensor publishes and doesn't care who's listening. So a phone and a backend can both subscribe without the sensor doing anything extra. The sprinkler controller in the Tasmota post (/automate-sprinkler-with-tasmota/) works the same way.
 
 !Sonoff Mini Wi-Fi DIY smart switch and a Node-RED fireplace flow (/images/home-automation/t1-15.webp "A Sonoff Mini wired into the fireplace, controlled from a UI node and an Alexa trigger")
 
