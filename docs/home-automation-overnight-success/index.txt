@@ -135,7 +135,7 @@ My setup assumed one person lived in the house.
 
 !Some of those problems: more foot traffic, more keys needed, longer absences, water flooding (/images/home-automation/t2-09.webp "Some of those problems: more foot traffic, more people needing keys, longer trips away, and a water flooding scare")
 
-More people meant traffic pattern differences and additional access keys.  Also, I would be longer away. So i needed two additional systems water flooding detection and presence detection.
+More people meant traffic pattern differences and additional access keys.  Also, I would be longer away. So I needed two additional systems water flooding detection and presence detection.
 
 !Captain Jack Sparrow meme again: The Extended Rules, still guidelines (/images/home-automation/t2-10.webp "The Extended Rules: still guidelines")
 
@@ -154,32 +154,29 @@ Now the builds!
 A motor and PVC pipe rig for outdoor lighting, a UV grow light clipped to a houseplant, and a UV strip under the cabinets for sanitizing.
 
 !Sprinkler build collage, reused from talk one (/images/home-automation/t2-14.webp "The sprinkler build again, still running the same way years later")
-
-Same sprinkler slide as talk one.
-
 !A wall-mounted presence sensor, a robot vacuum on carpet, and an AirGradient air quality sensor kit with dashboard (/images/home-automation/t2-15.webp "New sensors: a wall-mounted presence unit, a robot vacuum, and a DIY AirGradient air quality kit")
 
-A sensor that sits on a credenza, a robot vacuum that runs on its own, and an AirGradient kit I put together from a CO2 sensor, a particulate sensor and a microcontroller, with its own dashboard. The air quality kit gives me the most peace of mind of anything here.
+Random automations with a water pump, AirGradient kit, and robot vacuum.
 
 !Wall-mounted tablet dashboard next to a Nest thermostat set to 80 (/images/home-automation/t2-16.webp "The wall dashboard: garage, locks, lights, all on one screen next to the thermostat")
 
-This dashboard replaced more apps than anything else: garage door, side door unlock, front lock, all lights on or off, brightness, a coffee bar color picker, and warm-to-cool for the living room. It's one cheap tablet next to the thermostat, so nobody digs through five apps.
+This dashboard replaced more apps than anything else: garage door, side door unlock, front lock, all lights on or off, brightness, a coffee bar color picker, and warm-to-cool for the living room. It's one cheap tablet next to the thermostat. No one needs an app. Its a physical device everyone can go to if needed.
 
 !A large wall-mounted TV with warm backlighting glowing against the wall (/images/home-automation/t2-17.webp "Bias lighting behind the TV, automated to match whatever's on screen")
 
-The lights behind the TV run through the same system instead of their own remote.
+The lights behind the TV run through the same system instead of their own remote. These lights turn on when the TV comes on. Shuts off at smart times as well.
 
 !A Schlage deadbolt with a physical key and a black touchscreen smart lock with multiple unlock methods (/images/home-automation/t2-18.webp "Two generations of smart lock: a retrofit deadbolt and a full touchscreen keypad lock")
 
-The smart locks came out of the more-people-more-keys problem. The newer one takes a password, the app, a keycard or a regular key, so everyone uses what they're comfortable with.
+I do recommend smart locks when you need to have access controls in places other than just keys.
 
 !Hardware section divider (/images/home-automation/t2-19.webp "Hardware")
 
-The parts bin, for anyone who wants to build this.
+Check out the parts at the end of this post to see what I have used.
 
 !ESP32 D1 mini board, a dual-outlet smart plug, and a Raspberry Pi 4 (/images/home-automation/t2-20.webp "Core compute: an ESP32 D1 mini, a smart plug, and a Raspberry Pi 4")
 
-The ESP32 D1 mini handles anything custom. The smart plug is the off-the-shelf shortcut when I don't need custom. The Pi 4 runs Node-RED and Grafana.
+The ESP32 D1 mini handles anything custom (it's cheap). I've been able to find smart plugs I can flash with Tasmota. The Raspberry Pi 2 B runs Node-RED and Grafana.
 
 !A 100ft RGB LED strip kit, a tray of TO-220 power transistors, and relay modules with header pins (/images/home-automation/t2-21.webp "LED strips, power transistors, and relay modules for anything that needs switching")
 
@@ -195,7 +192,7 @@ Node-RED for the logic, Grafana to see what's happening, Tasmota on anything I f
 
 !Node-RED flow for the Garage tab with sensors, Tasmota topics, Telegram notifications, and light counters (/images/home-automation/t2-24.webp "The current garage flow: sensors, Tasmota commands, Telegram alerts, and a light-on counter")
 
-The garage flow today. The door sensor and reed switch feed Grafana and a global closed state. Toggle nodes publish straight to Tasmota command topics. Notifications go to Telegram and an audio chime, and a light-on counter resets at midnight. The tabs across the top (Lights, Sensors, Garage, Sprinkler, NFC Tags, Door Lock Security) show how much it has grown since the single garage cooling flow in talk one.
+My Garage flow today. It's crazy but it works and gets changed often.
 
 !Grafana dashboard grid with humidity, temp, dew point, pressure, gas, air quality, energy, opens, and on-status panels (/images/home-automation/t2-25.webp "The full Grafana dashboard: climate, energy, and device activity all on one screen")
 
@@ -223,9 +220,9 @@ That's both talks, five years apart. The rules barely changed. The list of probl
 
 A third talk is coming, built around agentic use cases. The same rules should hold when an AI agent is the one flipping the switches, and I expect to add a few.
 
-What readers told me
+What Readers are telling me
 
-I shared the "no internet, no problem" rule on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered. A Hacker News thread added more.
+I shared this post on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered then Hacker News commenters added more.
 
 Everyone has one
 
