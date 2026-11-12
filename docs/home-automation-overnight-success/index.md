@@ -1,13 +1,13 @@
 > **AI;DR:** I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
 
-TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes does down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Checkout each slide by slide.
+TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Check out each slide by slide.
 
 ## Why local
 
 
-My Nest integration worked one day until it didnt.  They had changed the api (around the same time they Google acquired them). I have a few more examples in these talks that show a samsung fridge and a grill controller that needs wifi to show temperature.  I dont/should need wifi and/or vendor service to interact with hardware.
+My Nest integration worked one day until it didn't.  They had changed the api (around the same time Google acquired them). I have a few more examples in these talks that show a samsung fridge and a grill controller that needs wifi to show temperature.  I don't/shouldn't need wifi and/or vendor service to interact with hardware.
 
-So everything that matters runs on hardware I own. Mostly on Tasmota on esp8226/esp32 boards, MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services for enhancements like Alexa and a few AWS ones BUT those are secondary.  If the internet is down, the switches all work like normal.
+So everything that matters runs on hardware I own. Mostly on Tasmota on esp8266/esp32 boards, MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services for enhancements like Alexa and a few AWS ones BUT those are secondary.  If the internet is down, the switches all work like normal.
 
 ## The rules
 
@@ -121,35 +121,33 @@ More devices means more decisions made without me. It's a little unsettling but 
 
 ![Connected Everything collage, reused from talk one](/images/home-automation/t2-04.webp "The same Connected Everything slide from talk one, as the recap anchor")
 
-Same slide as before, with more icons.
-
 ![A printer-pickup note taped to a pole, a Samsung fridge showing a certificate warning, and a Camp Chef grill WiFi controller](/images/home-automation/t2-05.webp "IoT in the wild: a handwritten printer note, a fridge throwing a cert error, a smart grill controller")
 
-Everyone else is dealing with this too. The fridge and grill from the top of this post are on this slide, plus a note taped to a pole about an internet-connected printer someone forgot to log out of.
+Everyone else is dealing with this too from what I can see.
 
 ![The Rules bullet list recap](/images/home-automation/t2-06.webp "The Rules, restated: keep existing functionality, IoT must work without internet, be flexible, review periodically, exceptions must be exceptional")
 
-The same rules from talk one, worded a bit tighter, since part of the audience hadn't seen the first talk.
+The same rules from talk one (worded a bit tighter).
 
 ![What has changed? That's why I'm here today](/images/home-automation/t2-07.webp "What has changed? That's why I'm here today")
 
-The rules stayed the same, but what they had to survive got harder.
+The rules stayed the same but more were added.
 
 ![Einstein quote: We cannot solve our problems with the same thinking we used when we created them](/images/home-automation/t2-08.webp "We cannot solve our problems with the same thinking we used when we created them")
 
-My setup assumed one person lived in the house. When that changed, I had to patch a single-user system into a multi-user one. The next few slides are how that went.
+My setup assumed one person lived in the house.
 
 ![Some of those problems: more foot traffic, more keys needed, longer absences, water flooding](/images/home-automation/t2-09.webp "Some of those problems: more foot traffic, more people needing keys, longer trips away, and a water flooding scare")
 
-More people meant more foot traffic and more keys, and longer trips away meant things could fail with nobody around to notice. A water flooding scare finally got me to take leak and presence detection seriously.
+More people meant traffic pattern differences and additional access keys.  Also, I would be longer away. So i needed two additional systems water flooding detection and presence detection.
 
 ![Captain Jack Sparrow meme again: The Extended Rules, still guidelines](/images/home-automation/t2-10.webp "The Extended Rules: still guidelines")
 
-Same joke, new rules. The first set came after year one, these after year five.
+Same joke, new rules.
 
 ![The Extended Rules bullet list](/images/home-automation/t2-11.webp "The extended rules: APIs with logs, central config, multiple interaction methods, routines, pub/sub, battery-life minimums")
 
-These are rules 6 to 11 at the top of the post, written after the house went from one person to several.
+These are rules 6 to 11 at the top of the post.
 
 ![Examples section divider](/images/home-automation/t2-12.webp "Examples")
 
@@ -161,7 +159,7 @@ A motor and PVC pipe rig for outdoor lighting, a UV grow light clipped to a hous
 
 ![Sprinkler build collage, reused from talk one](/images/home-automation/t2-14.webp "The sprinkler build again, still running the same way years later")
 
-Same sprinkler slide as talk one. It's one of the few builds that never needed a rewrite.
+Same sprinkler slide as talk one.
 
 ![A wall-mounted presence sensor, a robot vacuum on carpet, and an AirGradient air quality sensor kit with dashboard](/images/home-automation/t2-15.webp "New sensors: a wall-mounted presence unit, a robot vacuum, and a DIY AirGradient air quality kit")
 
