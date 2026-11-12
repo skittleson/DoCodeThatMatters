@@ -1,188 +1,152 @@
-A quick note before we dive in: I wrote the first draft of this, AI helped me edit and rewrite it, and I made the final pass. But the rules, setups, and talks are my own.
+I wrote the first draft of this, but AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
 
-Here is the short version. Nothing core in my house depends on a vendor's server. If the internet goes down, the house keeps running. That has been rule one for about ten years, and my other rules came out of it. In this post, I’ll share those rules, and then walk you through both talks I’ve given on home automation, slide by slide.
+Here is the short version: Nothing core in my house depends on a vendor's server. If the internet goes down, the house keeps running. That's been rule one for about ten years, and my other rules came out of it. This post covers the rules, and then walks through both talks I've given on home automation, slide by slide.
 
-### Why Local
+Let's start with why I went local. My Nest integration worked until Google broke the API. That is the failure I plan around now. The talks mention a few more examples: a Samsung fridge showing a TLS certificate error on its own screen, and a Camp Chef grill controller that needs Wi-Fi to show you the temperature.
 
-My Nest integration worked until Google broke the API. That is the failure I plan around now. The talks have a few more examples: a Samsung fridge showing a TLS certificate error on its own screen, and a Camp Chef grill controller that needs Wi-Fi to show you the temperature.
+Everything that matters runs on hardware I own. That means Tasmota on ESP boards, an MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services, mostly Alexa and a few AWS ones. But Alexa is just another way to flip a switch. If it's down, the wall switches and the wall dashboard still work.
 
-Everything that matters in my house runs on hardware I own. That means Tasmota on ESP boards, an MQTT broker, and Node-RED on a Raspberry Pi. I do use some cloud services, mostly Alexa and a few AWS ones. But Alexa is just another way to flip a switch. If it’s down, the wall switches and the wall dashboard still work.
-
-### The Rules
-
-Here are the rules from the first talk, which were restated in the second.
+Here are the rules. These come from my first talk, restated in the second:
 
 First, no internet, no problem. Core stuff has to work with the internet unplugged. Alexa can be a way in, but never the only way.
-Second, don’t remove the old way while adding the new one. If someone tapes a wall switch on so a smart bulb keeps power, I skipped this rule.
+Second, don't remove the old way while adding the new one. If someone tapes a wall switch on so a smart bulb keeps power, I skipped this rule.
 Third, be agile. Rooms get used differently and people move in and out, so it all has to be cheap to change.
 Fourth, check your automations. I once had four scheduled triggers hitting the same garden pump.
-Fifth, exceptions must be exceptional. I can break a rule, but only for a reason I’d still agree with six months later.
+Fifth, exceptions must be exceptional. I can break a rule, but only for a reason I'd still agree with six months later.
 
-I added these next five rules after year five, once more people lived in the house.
+Then, after year five, once more people lived in the house, I added these:
 
-Sixth, a cloud device needs an API with logs or it doesn’t get installed. I don’t want a black box in the house.
+Sixth, a cloud device needs an API with logs or it doesn't get installed. I don't want a black box in the house.
 Seventh, config lives in one place instead of five vendor apps.
-Eighth, there must be more than one way in: an app, Alexa, a QR code, or an NFC tag.
+Eighth, more than one way in: an app, Alexa, a QR code, or an NFC tag.
 Ninth, if I keep doing the same steps, they become a routine.
 Tenth, devices talk pub/sub over MQTT instead of point to point.
-Eleventh, no batteries unless they last a year or more between changes. Nobody wants to swap a door sensor battery at 2 a.m.
+Eleventh, no batteries unless they last a year or more between changes. Nobody wants to swap a door sensor battery at 2am.
 
-The build I get asked about most is the Tasmota sprinkler controller. You can find the link on the blog post for the full details. It’s in both talks, and so is the garage door setup, which has been running about as long.
+The build I get asked about most is the Tasmota sprinkler controller. It's in both talks, and so is the garage door setup, which has been running about as long.
 
-### Talk One: Home Automation
+Now, let's look at Talk One, titled "Home Automation, for fun and convenience."
 
-Let’s start with the first talk, titled "Home Automation, for fun and convenience." The image for this slide shows scissors cutting an ethernet cable under the words "No Internet, No Problem."
+The first slide says: "Nobody needs any of this. I like building things that just work in the background. Each automation is a small puzzle."
 
-Nobody needs any of this. I like building things that just work in the background, and each automation is a small puzzle.
+The next slide is a collage of icons labeled "Connected Everything." It shows the modern everything-is-online mess. Everything talks to a cloud now: phones, laptops, thermostats, locks. Those clouds may or may not be up when you need them, so know what you're signing up for before you plug something in.
 
-The next slide is titled "Connected Everything." It’s a collage of icons showing the modern mess where everything is online. Everything talks to a cloud now: phones, laptops, thermostats, locks. Those clouds may or may not be up when you need them, so know what you're signing up for before you plug something in.
+The third slide shows a Nest thermostat, an Amazon smart plug, and a Yale smart lock keypad. Most people start here. Each has its own app and account.
 
-Most people start here. The slide shows a Nest thermostat, an Amazon smart plug, and a Yale smart lock keypad. Each of these has its own app and account.
+The fourth slide is a triangle labeled "Privacy, Integration and Flexibility, Cost." Every device lands somewhere on this triangle. A cloud camera is cheap and easy. It also costs you privacy. A switch I flash myself takes longer to set up, but I can hook it into anything. I figure out where a device lands before I buy it.
 
-Every device lands somewhere on this triangle: Privacy, Integration and Flexibility, and Cost. You have to pick your tradeoffs. A cloud camera is cheap and easy, and it costs you privacy. A switch I flash myself takes longer to set up, but I can hook it into anything. I figure out where a device lands before I buy it.
+The fifth slide shows a light switch taped on with a note reading "Leave Switch On, This is BAD." Someone, often me, automates a light, then has to tape the wall switch on so the smart bulb keeps power. If a switch in a room ever did nothing, this is why.
 
-This next image shows a light switch taped on with a note reading "Leave Switch On, This is BAD." Someone, often me, automates a light, then has to tape the wall switch on so the smart bulb keeps power. If a switch in a room ever did nothing, this is why.
+The sixth slide shows a Wemo Wi-Fi Light Switch retail box. The better fix is an in-wall Wi-Fi switch. It still works like a normal switch and I can automate it. It is more work to install than a smart plug, but nobody has to change their habits.
 
-The better fix is an in-wall Wi-Fi switch, like the Wemo switch shown here. The switch still works like a normal switch and I can still automate it. It's more work to install than a smart plug, but nobody has to change their habits.
+The seventh slide is the title image for the post: scissors cutting an ethernet cable under the words "No Internet, No Problem." Rule one: if the internet goes down, my lights still turn on.
 
-Rule one: if the internet goes down, my lights still turn on.
+The eighth slide shows sticky notes on a planning board labeled "Must Be Agile." It's never done. That's rule three.
 
-It’s never done. Rooms get used differently, people move in and out, new devices show up. Whatever you build has to be cheap to change. This slide shows sticky notes on a planning board with the text "Must Be Agile."
+The ninth slide shows a Node-RED flow for "Garage Cool Off" logic. The garage cooling flow starts from a manual trigger. Is the door closed? Then it opens the door, waits, and turns on the fan. If it is already cooling, it just sends a notification. Small flow, but it has kept the garage from baking more than once.
 
-Here is the garage cooling flow. It starts from a manual trigger and checks if the door is closed. Then it opens the door, waits, and turns on the fan. If cooling is already running, it just sends a notification. Small flow, but it has kept the garage from baking more than once.
+The tenth slide shows the Node-RED garage sensor flow feeding Grafana, plus an "Opens" counter and an "On Status" chart. The door sensor and reed switch both report into a transform step that sets a global garage-closed flag and logs to Grafana. Below that is the chart from a few real days: 21 opens, with spikes showing when each one happened. It's easy to skip reporting and alerting. This one tells me when I accidentally leave the garage open.
 
-The door sensor and reed switch both report into a transform step that sets a global "garage-closed" flag and logs to Grafana. Below that is the chart from a few real days: 21 opens, with spikes showing when each one happened. It’s easy to skip reporting or alerting. This can alert me if the garage was left open, which is useful when I accidentally leave it open.
+The eleventh slide shows Node-RED scheduled injects feeding a Garden Water Pump node. Four scheduled triggers all hit the same pump. It's easy to end up with automations fighting over one device, so every so often I check whether they still make sense together.
 
-Here we see four scheduled triggers all hitting the same pump. It's easy to end up with automations fighting over one device, so every so often I check whether they still make sense together.
+The twelfth slide is a Captain Jack Sparrow meme that says, "The Rules: more of what you'd call guidelines than actual rules." I've broken all of these plenty of times, so they're more like guidelines.
 
-I’ve broken all of these rules plenty of times, so they're more like guidelines. This slide features a Captain Jack Sparrow meme that says "The Rules: more of what you'd call guidelines than actual rules."
+The thirteenth slide shows the Node-RED logo, a Phillips Hue IFTTT-style applet, and an Alexa routine editor. There are three ways to do "event in, action out." Node-RED is my main tool. Alexa routines and IFTTT-style applets cover the stuff I don't want to build myself.
 
-Here are three ways to do "event in, action out": Node-RED, a community applet for blinking Hue lights on low phone battery, and an Alexa routine. Node-RED is my main tool. Alexa routines and IFTTT-style applets cover the stuff I don't want to build myself.
+The fourteenth slide is an MQTT publish/subscribe diagram with a temperature sensor, broker, and two subscribers. MQTT keeps things decoupled. The temperature sensor publishes and doesn't care who's listening, so a phone and a backend can both subscribe without the sensor doing anything extra. The sprinkler controller works the same way.
 
-MQTT keeps things decoupled. The temperature sensor publishes and doesn't care who's listening, so a phone and a backend can both subscribe without the sensor doing anything extra. The sprinkler controller in my Tasmota post works the same way. You can find that link on the blog post.
+The fifteenth slide shows a Sonoff Mini Wi-Fi DIY smart switch and a Node-RED fireplace flow. A Sonoff Mini fits inside the fireplace wiring, and the dashboard or Alexa can flip it. A fake fire you can turn on by voice is a good party trick.
 
-A Sonoff Mini fits inside the fireplace wiring, and the dashboard or Alexa can flip it. A fake fire you can turn on by voice is a good party trick.
+The sixteenth slide shows the sprinkler controller wiring, a 3D PCB render, the Tasmota web UI, scheduled nodes, and a bare PCB layout. This is the whole sprinkler build: the relay and ESP module in the enclosure, the 3D board render, the Tasmota UI with BME280 sensor readings, the Node-RED schedule feeding the pump, and the finished PCB layout. The sprinkler post has the full writeup, including why I picked Tasmota over custom firmware. It's a bit hacky but I love it.
 
-Here is the whole sprinkler build: the relay and ESP module in the enclosure, the 3D board render, the Tasmota UI with BME280 sensor readings, the Node-RED schedule feeding the pump, and the finished PCB layout. The sprinkler post has the full writeup, including why I picked Tasmota over custom firmware. It's a bit hacky but I love it.
+The seventeenth slide is a recap of the rules. Talk one in five lines. The one I break most is the first: don't introduce a new way while removing the old one, and I regret it every time. The last one stops me from breaking the others for no good reason. "I was in a hurry" doesn't count.
 
-The whole talk in five lines: don't swap the new way in before the old way is gone, no internet no problem, must be agile, check automations, exceptions must be exceptional. The one I break most is the first, don't introduce a new way while removing the old one, and I regret it every time. The last one stops me from breaking the others for no good reason. "I was in a hurry" doesn't count.
+The eighteenth slide is a list of "Memorable Home Automations." It includes a heart-rate light blinking, a fireplace simulation, rain-skip watering, phone-presence garage control, AWS services, and 3D printer status lights.
 
-This slide lists memorable home automations: heart-rate light blinking, fireplace sim, rain-skip watering, phone-presence garage, AWS services, and 3D printer status lights.
+The nineteenth slide is the closing slide for talk one: "Questions? Feedback!"
 
 That was talk one. Most of the "memorable automations" later broke in some new way or got replaced, so there's a sequel.
 
-### Talk Two: Home Automation, The Sequel
+Talk Two is titled "Home Automation, The Sequel."
 
-The title slide for this follow-up is "Home Automation, The Sequel." Enough time passed between the talks that I had a new list of problems.
+The first slide says: "Enough time passed between the talks that I had a new list of problems."
 
-This meme shows Marvin the android saying he could calculate your chance of survival but you won't like it. It’s a nod to how much more is now automated. More devices means more decisions made without me. It's a little unsettling but mostly harmless.
+The second slide is a meme of Marvin the android saying, "When robots take over the world... I could calculate your chance of survival but you won't like it." More devices means more decisions made without me. It's a little unsettling but mostly harmless.
 
-We start with a recap. It uses the same "Connected Everything" slide from talk one, just with more icons.
+The third slide is a section divider for "Recap."
 
-Everyone else is dealing with this too. This slide shows a handwritten printer note taped to a pole, a fridge throwing a cert error, and a smart grill controller. A fridge showing a TLS certificate error, a grill controller that needs Wi-Fi to show the temperature, and a note about an internet-connected printer someone forgot to log out of.
+The fourth slide reuses the "Connected Everything" collage from talk one, but with more icons.
 
-The same rules from talk one are restated here, worded a bit tighter, since part of the audience hadn't seen the first talk: keep existing functionality, IoT must work without internet, be flexible, review periodically, exceptions must be exceptional.
+The fifth slide shows IoT in the wild: a handwritten printer note taped to a pole, a Samsung fridge throwing a certificate error, and a Camp Chef smart grill controller. Everyone else is dealing with this too. The fridge and grill from the top of this post are on this slide, plus a note about an internet-connected printer someone forgot to log out of.
 
-The rules stayed the same, but what they had to survive got harder. As Einstein said, "We cannot solve our problems with the same thinking we used when we created them."
+The sixth slide lists the rules again. The same rules from talk one, worded a bit tighter, since part of the audience hadn't seen the first talk.
 
-My setup assumed one person lived in the house. When that changed, I had to patch a single-user system into a multi-user one. The next few slides are how that went.
+The seventh slide asks, "What has changed? That's why I'm here today." The rules stayed the same, but what they had to survive got harder.
 
-More people meant more foot traffic and more keys, and longer trips away meant things could fail with nobody around to notice. A water flooding scare finally got me to take leak and presence detection seriously.
+The eighth slide has an Einstein quote: "We cannot solve our problems with the same thinking we used when we created them." My setup assumed one person lived in the house. When that changed, I had to patch a single-user system into a multi-user one. The next few slides are how that went.
 
-Same joke, new rules. The first set came after year one, these after year five. This is the Captain Jack Sparrow meme again: "The Extended Rules: still guidelines."
+The ninth slide lists some of those problems: more foot traffic, more people needing keys, longer trips away, and a water flooding scare. More people meant more foot traffic and more keys, and longer trips away meant things could fail with nobody around to notice. A water flooding scare finally got me to take leak and presence detection seriously.
 
-These are rules 6 to 11 at the top of the post, written after the house went from one person to several: APIs with logs, central config, multiple interaction methods, routines, pub/sub, battery-life minimums.
+The tenth slide is the Captain Jack Sparrow meme again: "The Extended Rules: still guidelines." Same joke, new rules. The first set came after year one, these after year five.
 
-Now the builds, my favorite part. This slide shows a DIY motorized outdoor rig, a UV grow light over plant leaves, and a purple UV strip under cabinets. A motor and PVC pipe rig for outdoor lighting, a UV grow light clipped to a houseplant, and a UV strip under the cabinets for sanitizing.
+The eleventh slide lists the extended rules. These are rules 6 to 11 at the top of the post, written after the house went from one person to several.
 
-We see the sprinkler build again. It's one of the few builds that never needed a rewrite.
+The twelfth slide is a section divider for "Examples." Now the builds!
 
-Here are new sensors: a wall-mounted presence unit, a robot vacuum, and a DIY AirGradient air quality kit with dashboard. A sensor that sits on a credenza, a robot vacuum that runs on its own, and an AirGradient kit I put together from a CO2 sensor, a particulate sensor and a microcontroller, with its own dashboard. The air quality kit gives me the most peace of mind of anything here.
+The thirteenth slide shows new builds: a motorized outdoor device, a plant grow light, and a closet UV sanitizing light. A motor and PVC pipe rig for outdoor lighting, a UV grow light clipped to a houseplant, and a UV strip under the cabinets for sanitizing.
 
-This wall-mounted tablet dashboard replaced more apps than anything else: garage door, side door unlock, front lock, all lights on or off, brightness, a coffee bar color picker, and warm-to-cool for the living room. It's one cheap tablet next to the thermostat, so nobody digs through five apps.
+The fourteenth slide reuses the sprinkler build collage from talk one. It's one of the few builds that never needed a rewrite.
 
-The lights behind the TV run through the same system instead of their own remote. This slide shows a large wall-mounted TV with warm backlighting glowing against the wall.
+The fifteenth slide shows new sensors: a wall-mounted presence unit, a robot vacuum, and a DIY AirGradient air quality kit. A sensor that sits on a credenza, a robot vacuum that runs on its own, and an AirGradient kit I put together from a CO2 sensor, a particulate sensor and a microcontroller, with its own dashboard. The air quality kit gives me the most peace of mind of anything here.
 
-The smart locks came out of the more-people-more-keys problem. The newer one takes a password, the app, a keycard or a regular key, so everyone uses what they're comfortable with. The slide shows two generations of smart lock: a retrofit deadbolt and a full touchscreen keypad lock.
+The sixteenth slide shows a wall-mounted tablet dashboard next to a Nest thermostat set to 80. This dashboard replaced more apps than anything else: garage door, side door unlock, front lock, all lights on or off, brightness, a coffee bar color picker, and warm-to-cool for the living room. It's one cheap tablet next to the thermostat, so nobody digs through five apps.
 
-Let’s look at the hardware, the parts bin for anyone who wants to build this.
-The ESP32 D1 mini handles anything custom. The smart plug is the off-the-shelf shortcut when I don't need custom. The Pi 4 runs Node-RED and Grafana.
+The seventeenth slide shows a large wall-mounted TV with warm backlighting glowing against the wall. The lights behind the TV run through the same system instead of their own remote.
 
-LED strips for ambient lighting, power transistors for higher-current loads, and small relay modules so a microcontroller can switch mains voltage safely.
+The eighteenth slide shows two generations of smart lock: a retrofit deadbolt and a full touchscreen keypad lock. The smart locks came out of the more-people-more-keys problem. The newer one takes a password, the app, a keycard or a regular key, so everyone uses what they're comfortable with.
 
-The rest of the bin: a resistor assortment, color-coded wire so I can trace a circuit later, and a capacitor kit for smoothing and timing.
+The nineteenth slide is a section divider for "Hardware." The parts bin, for anyone who wants to build this.
 
-Here is the software stack: Node-RED for the logic, Grafana to see what's happening, Tasmota on anything I flash, Telegram for notifications, and Python or JavaScript for glue code that doesn't fit in a flow.
+The twentieth slide shows core compute: an ESP32 D1 mini, a smart plug, and a Raspberry Pi 4. The ESP32 D1 mini handles anything custom. The smart plug is the off-the-shelf shortcut when I don't need custom. The Pi 4 runs Node-RED and Grafana.
 
-This is the current garage flow. The door sensor and reed switch feed Grafana and a global closed state. Toggle nodes publish straight to Tasmota command topics. Notifications go to Telegram and an audio chime, and a light-on counter resets at midnight. The tabs across the top (Lights, Sensors, Garage, Sprinkler, NFC Tags, Door Lock Security) show how much it has grown since the single garage cooling flow in talk one.
+The twenty-first slide shows LED strips, power transistors, and relay modules. LED strips for ambient lighting, power transistors for higher-current loads, and small relay modules so a microcontroller can switch mains voltage safely.
 
-This is the "is everything okay" dashboard: humidity, temperature, dew point, pressure and gas on one side, and energy use, door opens and on-status history on the other. I built it because I got tired of guessing.
+The twenty-second slide shows the passive components drawer: resistors, color-coded wire, and capacitors. The rest of the bin: a resistor assortment, color-coded wire so I can trace a circuit later, and a capacitor kit for smoothing and timing.
 
-Dashboards and Grafana panels work for me. Everyone else in the house just wants the light on.
+The twenty-third slide lists the software stack: Node-RED, Grafana, Tasmota, Telegram, Python, JavaScript, and whatever vendor app I can't avoid. Node-RED for the logic, Grafana to see what's happening, Tasmota on anything I flash, Telegram for notifications, and Python or JavaScript for glue code that doesn't fit in a flow.
 
-The "more than one way in" rule in hardware: the wall tablet for whoever is standing there, NFC tags and a QR code to tap, and an Echo Dot for anyone who would rather talk to the house.
+The twenty-fourth slide shows the current garage flow in Node-RED. The door sensor and reed switch feed Grafana and a global closed state. Toggle nodes publish straight to Tasmota command topics. Notifications go to Telegram and an audio chime, and a light-on counter resets at midnight. The tabs across the top—Lights, Sensors, Garage, Sprinkler, NFC Tags, Door Lock Security—show how much it has grown since the single garage cooling flow in talk one.
 
-Here are the tools I build and debug all of this with. A soldering iron for permanent connections, a 3D printer for enclosures and brackets you can't buy, a multimeter for when something isn't working, and a precision screwdriver kit for devices the manufacturer didn't want opened.
+The twenty-fifth slide shows the full Grafana dashboard: climate, energy, and device activity all on one screen. This is the "is everything okay" dashboard: humidity, temperature, dew point, pressure and gas on one side, and energy use, door opens and on-status history on the other. I built it because I got tired of guessing.
 
-That’s both talks, five years apart. The rules barely changed between them, but the list of problems kept growing. A third talk is coming, built around agentic use cases. The same rules should hold when an AI agent is the one flipping the switches, and I expect to add a few.
+The twenty-sixth slide is a section divider for "UX." Dashboards and Grafana panels work for me. Everyone else in the house just wants the light on.
 
-### What Readers Told Me
+The twenty-seventh slide shows interaction methods: the wall dashboard up close, NFC tags and a QR code, and an Echo Dot. The "more than one way in" rule in hardware: the wall tablet for whoever is standing there, NFC tags and a QR code to tap, and an Echo Dot for anyone who would rather talk to the house.
 
-I shared the "no internet, no problem" rule on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered. A Hacker News thread added more. Here's what came back.
+The twenty-eighth slide is a section divider for "Tools." The tools I build and debug all of this with.
 
-First, everyone has one. Most examples were basic functions locked behind an app, an account, or a server:
-A fridge whose temperature can't be changed because of a bug in the manufacturer's phone app.
-A TV that can't even switch inputs when the internet is down, and another that has to be signed in before it works as a plain HDMI monitor. One reader's older smart TV has dead apps but still works as a regular TV, which is how a device should fail.
-A heating system whose app doesn't work from the local network.
-A kitchen vent and a dishwasher that need the internet even when you control them from Home Assistant.
-A smart plug that can't be set up on an isolated network.
-Noise-cancelling headphones that search for a Bluetooth device forever, so you can't just turn on the noise cancelling.
-Synthesizers and MIDI keyboards that need a cloud login for first use or firmware updates.
-And a meat thermometer that only worked through its app and stopped working when the company went out of business.
+The twenty-ninth slide shows the workbench: a soldering iron, a 3D printer, a multimeter, and a screwdriver kit. A soldering iron for permanent connections, a 3D printer for enclosures and brackets you can't buy, a multimeter for when something isn't working, and a precision screwdriver kit for devices the manufacturer didn't want opened.
 
-The meat thermometer bothers me most. The hardware outlived the company, and it stopped working anyway.
+The thirtieth slide is the closing slide for talk two: "Questions? Feedback!"
 
-Next, here are the rules readers added:
-Offline first, with the internet for extras. A device should do its main job on its own.
-Treat every third-party dependency as a risk. APIs change, so plan a local fallback or a clear degraded mode. One mobile developer works the same way: the core action works offline or from cache, and only the extras wait for a connection.
-Decide what must work offline. My answer is turning things on and off, temperature and safety controls, and anything a guest has to use without learning an app. As one reader said, if a visitor can't turn something on or adjust the temperature without an app account, the design has failed.
-A stricter version of my first two rules: everything core works with the Wi-Fi or the automation server shut down, and smart features never take away the dumb ones. The wall switch should control the light directly and let automation flip it. A switch that only sends a request to the automation fails. That reader says my sprinkler controller fails this bar too. The only sprinkler controller they'd found with a local API and full control on the device itself was RainMachine, which is gone.
-And clean up when you throw things away. Remove a connected printer from your account first. An abandoned connected device can be an easy way in for an attacker.
+That's both talks, five years apart. The rules barely changed. The list of problems kept growing. A third talk is coming, built around agentic use cases. The same rules should hold when an AI agent is the one flipping the switches, and I expect to add a few.
 
-Here are some practical tips:
-Use local protocols. One reader recommends Zigbee and Z-Wave over Wi-Fi, because a switch that doesn't need the cloud tends to behave the same year after year. Another uses Zigbee for the smart plugs that can't be set up without internet.
-Let an LLM find the firmware. One reader buys the cheapest hardware that does the job, ignores reviews that complain about the app, and asks an LLM for local-first custom firmware once it arrives. That has worked for their switches, a thermostat, an air quality monitor, a thermometer, and a window fan. They'd have paid about 2.5 times more for hardware that was local out of the box.
-Old Nest thermostats have a way out. There is open source firmware called "No Longer Evil" for Nest Gen 1 and Gen 2 thermostats. You can find the link on the blog post.
-Smart TVs can be tamed. Reset the TV and never connect it to the network, and the input problem goes away.
-Remote access is the cost of staying local. I use Tailscale on the router and keep the individual devices off the tailnet. One reader ran OpenVPN on OpenWrt, which worked but felt clunky, and is now trying Tailscale.
-There's a gap to fill. One reader would happily pay for a pre-built, open "works with everything" Raspberry Pi image with MQTT. DietPi and OpenWrt come close and have a small footprint, but you need some understanding to get going. Another wanted a hub that ships with the house, like a water heater or a router. Home Assistant sells hub hardware that's close to that.
-Right to repair is the bigger fight. Readers pointed to the right-to-repair movement and groups like the FULU Foundation, which work to keep companies from locking you out of what you bought. You can find the link on the blog post.
+Finally, here is what readers told me. I shared the "no internet, no problem" rule on LinkedIn and asked for the most pointless internet dependency people had found in a device. Dozens of people answered. A Hacker News thread added more.
 
-Finally, some counterpoints. Connectivity has real uses. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another expects the shift away from internet-connected devices to come from resilience worries rather than consumer complaints, since enough connected homes make a target. And one skips connected appliances entirely, keeping only computers and phones online.
+First, everyone has one. Most examples were basic functions locked behind an app, an account, or a server. For example, a fridge whose temperature can't be changed because of a bug in the manufacturer's phone app. A TV that can't even switch inputs when the internet is down, and another that has to be signed in before it works as a plain HDMI monitor. One reader's older smart TV has dead apps but still works as a regular TV, which is how a device should fail. A heating system whose app doesn't work from the local network. A kitchen vent and a dishwasher that need the internet even when you control them from Home Assistant. A smart plug that can't be set up on an isolated network. Noise-cancelling headphones that search for a Bluetooth device forever, so you can't just turn on the noise cancelling. Synthesizers and MIDI keyboards that need a cloud login for first use or firmware updates. And a meat thermometer that only worked through its app and stopped working when the company went out of business. The meat thermometer bothers me most. The hardware outlived the company. It stopped working anyway.
 
-### Devices I've Used
+Readers also added some rules. First, offline first, with the internet for extras. A device should do its main job on its own. Second, treat every third-party dependency as a risk. APIs change, so plan a local fallback or a clear degraded mode. One mobile developer works the same way: the core action works offline or from cache, and only the extras wait for a connection. Third, decide what must work offline. My answer is turning things on and off, temperature and safety controls, and anything a guest has to use without learning an app. As one reader said, if a visitor can't turn something on or adjust the temperature without an app account, the design has failed. Fourth, a stricter version of my first two rules: everything core works with the Wi-Fi or the automation server shut down, and smart features never take away the dumb ones. The wall switch should control the light directly and let automation flip it. A switch that only sends a request to the automation fails. That reader says my sprinkler controller fails this bar too. The only sprinkler controller they'd found with a local API and full control on the device itself was RainMachine, which is gone. Fifth, clean up when you throw things away. Remove a connected printer from your account first. An abandoned connected device can be an easy way in for an attacker.
 
-This section lists the parts from my home automation builds, grouped by project. Note that if you buy through the links mentioned in the blog post, I may earn a small commission at no extra cost to you.
+Here are some practical tips. Use local protocols. One reader recommends Zigbee and Z-Wave over Wi-Fi, because a switch that doesn't need the cloud tends to behave the same year after year. Another uses Zigbee for the smart plugs that can't be set up without internet. Let an LLM find the firmware. One reader buys the cheapest hardware that does the job, ignores reviews that complain about the app, and asks an LLM for local-first custom firmware once it arrives. That has worked for their switches, a thermostat, an air quality monitor, a thermometer, and a window fan. They'd have paid about 2.5 times more for hardware that was local out of the box. Old Nest thermostats have a way out. There is open source firmware called "No Longer Evil" for Nest Gen 1 and Gen 2 thermostats. Smart TVs can be tamed. Reset the TV and never connect it to the network, and the input problem goes away. Remote access is the cost of staying local. I use Tailscale on the router and keep the individual devices off the tailnet. One reader ran OpenVPN on OpenWrt, which worked but felt clunky, and is now trying Tailscale. There's a gap to fill. One reader would happily pay for a pre-built, open "works with everything" Raspberry Pi image with MQTT. DietPi and OpenWrt come close and have a small footprint, but you need some understanding to get going. Another wanted a hub that ships with the house, like a water heater or a router. Home Assistant sells hub hardware that's close to that. Right to repair is the bigger fight. Readers pointed to the right-to-repair movement and groups like the FULU Foundation, which work to keep companies from locking you out of what you bought.
 
-For the sprinkler controller, I use:
-A HiLetgo ESP8266 NodeMCU board, which is a Wi-Fi microcontroller that runs Tasmota.
-An SSD1306 OLED screen for the status display.
-An Inkbird SSR-40DA solid state relay to switch the 24 VAC sprinkler valve.
-A BME280 sensor for temperature, humidity and pressure.
-And a 24 VAC power supply for the valve.
+And finally, some counterpoints. Connectivity has real uses. A connected meat thermometer lets you watch the game while the steak cooks. The same reader also had an oven decide to update its software in the middle of cooking. One reader pointed out the business model behind all of this: companies would rather sell you a service than a product. Another expects the shift away from internet-connected devices to come from resilience worries rather than consumer complaints, since enough connected homes make a target. And one skips connected appliances entirely, keeping only computers and phones online.
 
-For lights, switches and plugs:
-A Martin Jerry smart dimmer switch, which comes with Tasmota pre-flashed.
-A Martin Jerry humidity fan switch to run the bathroom fan when humidity gets too high.
-A Sonoff S31 smart plug to act as a power watchdog for the cable modem.
-And a serial-to-USB adapter to connect an ESP8266 to your PC for flashing Tasmota.
+This last section lists the specific devices I've used, grouped by project. Note that this section has Amazon affiliate links. If you buy through them, I may earn a small commission at no extra cost to you. You can find the specific links on the blog post.
 
-For the garage door:
-A Raspberry Pi 3 to run Docker and the web API.
-A SunFounder 2-channel 5V relay module to simulate the button press.
-And a LiftMaster wired control panel to bypass the anti-tamper wiring.
+For the sprinkler controller, I use a HiLetgo ESP8266 NodeMCU board that runs Tasmota, an SSD1306 OLED screen for status, an Inkbird SSR-40DA solid state relay to switch the valve, a BME280 sensor for temperature and humidity, and a 24 VAC power supply.
 
-And around the house:
-A GL.iNet Flint 2 router that runs OpenWrt and an MQTT broker locally.
-A cheap tablet mounted on the wall as the dashboard.
-And a Lefant robot vacuum to clean the floors.
+For lights, switches, and plugs, I use a Martin Jerry smart dimmer switch that runs Tasmota out of the box, a Martin Jerry humidity fan switch, a Sonoff S31 smart plug acting as a power watchdog for the cable modem, and a serial-to-USB adapter for flashing firmware.
+
+For the garage door, I use a Raspberry Pi 3 running Docker and the web API, a SunFounder 2-channel 5V relay module to simulate the button press, and a LiftMaster wired control panel to bypass anti-tamper wiring.
+
+And around the house, I use a GL.iNet Flint 2 router running OpenWrt and an MQTT broker, a cheap tablet mounted on the wall as the dashboard, and a Lefant robot vacuum.
