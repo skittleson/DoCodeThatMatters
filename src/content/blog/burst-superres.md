@@ -145,5 +145,3 @@ gpg --verify SHA256SUMS.txt.asc SHA256SUMS.txt
 ## What's left
 
 It has only been tested on Linux. The macOS, Windows and Linux ARM64 builds come out of CI and nobody has launched them yet. Try one and [open an issue](https://github.com/skittleson/burst-superres/issues) if it breaks.
-
-The open item that matters most is a real tripod burst on the A6400 in RAW, 6 to 8 frames. That would replace the simulated RAW numbers with real ones.

@@ -1,85 +1,119 @@
-Hello, and welcome. I’d like to talk to you about a project called Burst Super-Res. It is a tool that merges a burst of photos into one single image with twice the width and height. It does this using sub-pixel alignment and plain math. There is no AI involved.
+I wrote the first draft of this post, AI helped me edit and rewrite it, and I made the final pass.
 
-I wrote the first draft of this post myself, AI helped me edit and rewrite it, and I made the final pass.
+So, the short version: Out of 8,809 Sony photos in my Immich library, only one burst was steady enough to merge cleanly. That changed what the app had to be. Burst Super-Res is free and open source under the MIT license. It runs offline on macOS, Windows, and Linux. You can find the download link on the blog post.
 
-To give you a quick summary: Out of 8,809 Sony photos in my Immich library, only one burst was steady enough to merge cleanly. That changed what the app had to be. Burst Super-Res is free and open source under the MIT license. It runs offline on macOS, Windows, and Linux. You can find the link to download it in the blog post.
+If you are interested in the Sony A6000 or A6400 series, there is a Part 1 on modernization, Part 2 on more hacks, Part 3 on tethering with a Raspberry Pi, and a section on research and community resources. This post covers Burst Super-Res.
 
-If you are following my Sony A6000 and A6400 series, this post is the final part, following the modernization guide, the additional hacks, the tethered Raspberry Pi setup, and the research resources.
+There is an image at the top of this section. It shows the app merging a real eight-shot Sony A6000 burst. There is a before-and-after slider over some cliffs. To the left of the slider, you see one photo upscaled by two times. To the right, you see the mean of all eight photos.
 
-Here is what the image at the top shows: It depicts the app merging a real eight-shot Sony A6000 burst of a canyon scene. There is a slider you can imagine dragging across the cliffs; on one side, you see a single photo upscaled by two times, and on the other side, you see the mean of all eight photos merged together.
+What it is
 
-So, what is this thing? You drop in a burst of photos of the same still scene. The app lines them up to a fraction of a pixel and merges them. The result has twice the width and height. Four photos that are 6000 by 4000 pixels become one image that is 12000 by 8000 pixels. It reads JPEG, PNG, and Sony ARW raw files, and it keeps your EXIF data intact. A split slider shows you what the merge did.
+Drop in a burst of photos of the same still scene. The app lines them up to a fraction of a pixel and merges them. The result has twice the width and height. Four photos that are 6000 by 4000 pixels become one image that is 12,000 by 8,000 pixels. It reads JPEG, PNG, and Sony ARW RAW files, and it keeps your EXIF data. A split slider shows what the merge did.
 
-There is no AI in the processing. Every output pixel comes from pixels the camera actually recorded, averaged after alignment. AI upscalers invent detail that looks plausible. This only uses detail that is really there. Which is also why the gain is small.
+There is no AI in the processing. Every output pixel comes from pixels the camera recorded, averaged after alignment. AI upscalers invent detail that looks plausible. This only uses detail that is really there. Which is also why the gain is small.
 
-Expect less noise and cleaner fine edges. Do not expect four times the detail. That’s why the app never shows a megapixel number. On simulated bursts with a known answer, the gain over one upscaled photo was plus 0.7 to plus 1.3 dB in Peak Signal-to-Noise Ratio. Real, but modest.
+Expect less noise and cleaner fine edges. Do not expect four times the detail. That's why the app never shows a megapixel number. On simulated bursts with a known answer, the gain over one upscaled photo was positive 0.7 to positive 1.3 decibels of PSNR. Real, but modest.
 
-Why did I build it? Part 1 of my Sony series has a super-resolution trick. You shoot four photos, upscale each by 200 percent, align them, blend two at 50 percent, and then blend the two results. On paper, that’s 24.3 megapixels times two, times two, which equals 97.2 megapixels. In practice, it looked more like 48.6 megapixels.
+Why build it
 
-You might ask, why not just use the script? Well, nobody wants to set up a Python environment just to merge four photos. A download is easier.
+Part 1 of the Sony series has a super-resolution trick. You shoot four photos, upscale each by 200 percent, align them, blend two at 50 percent, and then blend the two results. On paper, that's 24.3 megapixels times two, times two, equaling 97.2 megapixels. In practice, it looked more like 48.6 megapixels.
 
-So, rules first, then research. Here are the rules, set before any code was written. First, no AI in the processing. Every pixel has to come from the photos. Second, measure on real data and publish the numbers, including where a feature hurts. Third, cross-platform without Electron. The app uses tinyjs, which runs the user interface in the operating system’s webview. The Linux build is about 10 megabytes.
+Why not just use the script? Nobody wants to set up a Python environment to merge four photos. A download is easier.
+
+Rules first, then research
+
+Here are the rules, set before any code was written.
+
+First, no AI in the processing. Every pixel has to come from the photos.
+Second, measure on real data and publish the numbers, including where a feature hurts.
+Third, cross-platform without Electron. The app uses tinyjs, which runs the UI in the OS webview. The Linux build is about 10 megabytes.
 
 Research drove the changes below. Each idea got measured against a benchmark before it went in.
 
-Let’s talk about the benchmark. A real burst has no true high-resolution image to score against. So I made one. Take a real 24-megapixel A6000 or A6400 photo as the answer. Shift copies by random sub-pixel amounts. Downsample them two times the way a sensor pixel averages light. Add noise and save as JPEG. Then merge them back and score against the original. The baseline is the same reference photo upscaled two times with Lanczos-3, so both sides have the same output size.
+The benchmark
 
-My first attempt at the benchmark was wrong, and nothing looked off. The harness decoded with jpeg-js, which truncates instead of rounding. That shifted every pixel by minus 0.53 levels per round trip and skewed every score. Switching to libjpeg-turbo’s djpeg and cjpeg fixed it. Every number in this post comes from that harness. You can run it yourself using the command listed in the blog post.
+A real burst has no true high-resolution image to score against. So I made one. Take a real 24-megapixel A6000 or A6400 photo as the answer. Shift copies by random sub-pixel amounts. Downsample them two times the way a sensor pixel averages light. Add noise and save as JPEG. Then merge them back and score against the original. The baseline is the same reference photo upscaled two times with Lanczos-3, so both sides have the same output size.
 
-The original method is just a mean. The pairwise 50-50 blend from Part 1 is a plain average with extra rounding. For four photos, you blend A plus B, blend C plus D, then blend those two. Every photo ends up at 25 percent. That’s a mean, rounded to 8 bits after each stage. For three photos, it’s worse; the weights come out 25, 25, and 50.
+The first attempt at the benchmark was wrong, and nothing looked off. The harness decoded with jpeg-js, which truncates instead of rounding. That shifted every pixel by negative 0.53 levels per round trip and skewed every score. Switching to libjpeg-turbo's djpeg and cjpeg fixed it. Every number in this post comes from that harness. You can run it yourself using the command npm run bench with the flags --gt your-photo.jpg.
 
-The default became a per-pixel mean or median over all aligned photos. The weights are exact for any count. Pairwise is still in the app if you want to compare.
+The original method is just a mean
 
-The bigger change was alignment. The Python version, version zero, matched SIFT features and fit a homography. Version 0.1 uses sub-pixel registration instead. It builds an image pyramid, runs the Lucas-Kanade method on tiles, then fits an affine warp through the tile shifts. On simulated bursts, it lands within 0.03 pixels, even rotated 0.5 degrees.
+The pairwise 50/50 blend from Part 1 is a plain average with extra rounding. For four photos, you blend A and B, blend C and D, and then blend those two. Every photo ends up at 25 percent. That's a mean, rounded to eight bits after each stage. For three photos, it's worse because the weights come out as 25, 25, and 50.
 
-Shift-and-add got tried and dropped. It places every input pixel at its exact sub-pixel spot on the two-times grid. On synthetic test patterns with heavy aliasing, it beat the mean by 1.0 to 1.7 dB. On real photos, it tied the mean. On a detailed canyon crop, it was 0.2 to 0.5 dB worse. Out it went.
+The default became a per-pixel mean, or median, over all aligned photos. The weights are exact for any count. Pairwise is still in the app if you want to compare.
 
-You need a tripod; don’t forget it. Version 0.1 only had simulated bursts to show. So I went looking for real ones in Immich. It has 1,880 Sony photos from the A6400 and 6,929 from the A6000. Shots seconds apart with the same settings gave 732 burst candidates. I ran the app’s own alignment over 348 of them.
+The bigger change was alignment. The Python version, which I call v0, matched SIFT features and fit a homography. v0.1 uses sub-pixel registration instead. It builds an image pyramid, runs Lucas-Kanade on tiles, and then fits an affine warp through the tile shifts. On simulated bursts, it lands within 0.03 pixels, even if rotated by 0.5 degrees.
 
-302 were handheld and more than 10 pixels off. One was steady. It’s a 13-shot A6000 canyon burst, taken at 20 millimeters, f/11, ISO 100. That is the photo at the top of this post. Even that one had three frames that didn’t line up well enough for version 0.1.
+Shift-and-add got tried and dropped. It places every input pixel at its exact sub-pixel spot on the two-times grid. On synthetic test patterns with heavy aliasing, it beat the mean by 1.0 to 1.7 decibels. On real photos, it tied the mean. On a detailed canyon crop, it was 0.2 to 0.5 decibels worse. Out it went.
 
-Here is an image showing one photo upscaled two times next to five real photos merged together. It’s a 200 percent crop. You can see less noise and fewer JPEG block edges in the merged version.
+You need a tripod, don't forget it
 
-That’s 302 of 348 bursts shot handheld. By someone who wrote a guide on this! A tool that only works on a tripod is a tool for almost nobody.
+v0.1 only had simulated bursts to show. So I went looking for real ones in Immich. It has 1,880 Sony photos from the A6400 and 6,929 from the A6000. Shots seconds apart with the same settings gave 732 burst candidates. I ran the app's own alignment over 348 of them.
 
-So, I started borrowing from tools that already solved this. Here is how other tools handle it. These got checked before building more. First, DeepSkyStacker scores every frame and stacks only the best ones. Version 0.1 warned about bad frames and made you untick them by hand. Second, Lightroom uses the backslash key to toggle before and after, and the Y key for side by side. Photographers already know those keys. Third, Topaz Gigapixel compares results with one shared navigator. Fourth, Sony’s own pixel-shift workflow gives you the shooting rules and the wait time up front. Fifth, Google’s Handheld Multi-Frame Super-Resolution paper by Wronski and others in 2019 is the paper behind Pixel’s Super Res Zoom. It treats hand tremor as the source of the useful sub-pixel shifts. The catch is that each region needs its own alignment.
+302 were handheld and more than 10 pixels off. One was steady. It's a 13-shot A6000 canyon burst, taken at 20 millimeters, f/11, ISO 100. That is the photo at the top of this post. Even that one had three frames that didn't line up well enough for v0.1.
 
-That last one changed the plan. Version 0.2 added local alignment. When the global fit is worse than 0.1 pixel, a grid of 64-pixel cells gets measured and corrected on top of it. Take a real handheld pair where the camera moved 52 pixels. The near cactus and the far hills shifted by different amounts. The error went from 4.36 pixels, which looked like a doubled cactus, to 0.06 pixels. All eight canyon frames came in at 0.22 pixels or better.
+There is an image here showing one photo upscaled two times next to five real photos merged. It is a 200 percent crop. You can see less noise and fewer JPEG block edges in the merged version.
 
-The image here shows the same handheld pair merged with one shift and rotation, and with local alignment. On the left, using one shift and rotation for the whole photo, it is 4.36 pixels off. On the right, using local alignment, it is 0.06 pixels off.
+That's 302 of 348 bursts shot handheld, by someone who wrote a guide on this. A tool that only works on a tripod is a tool for almost nobody.
 
-Version 0.2 also added the Lightroom keys and a Good, Soft, or Too Far Off badge per photo. Bad frames get unticked for you. Any 64-pixel area where something moved, like water, leaves, or people, is left out of that photo so it doesn’t ghost. When a burst is too far gone, the app says so.
+Borrowing from tools that already solved this
 
-Here is a screenshot of the app warning that a soft photo is used and part of it was left out. It shows two handheld shots four seconds apart, with about 370 pixels of movement. The app uses the photo but says it’s soft.
+Here is how other tools handle it. These got checked before building more.
 
-What did the papers say, and what measured better? Next came the research on alignment and stacking. I measured the cheap ideas before adopting any of them.
+DeepSkyStacker scores every frame and stacks only the best ones. v0.1 warned about bad frames and made you untick them by hand.
+Lightroom uses the backslash key to toggle before and after, and Y for side by side. Photographers already know those keys.
+Topaz Gigapixel compares results with one shared navigator.
+Sony's own pixel-shift workflow gives you the shooting rules and the wait time up front.
+Google's Handheld Multi-Frame Super-Resolution paper, by Wronski and others in 2019, is the paper behind Pixel's Super Res Zoom. It treats hand tremor as the source of the useful sub-pixel shifts. The catch is that each region needs its own alignment.
 
-Let’s look at the numbers for a four-frame simulated burst. On an A6000 canyon photo, one photo upscaled two times scored 33.51 dB. The mean merge scored 34.58 dB. Mean plus gentle deblur scored 35.54 dB. Sigma-clipped mean scored between 34.48 and 34.54 dB. Deblur on one photo alone scored 32.69 dB. On an A6400 photo, which was mostly out of focus, the upscaled single photo was 38.60 dB. The mean merge was 39.84 dB. Mean plus gentle deblur was 39.79 dB. Sigma-clipped mean was between 39.77 and 39.82 dB. Deblur on one photo alone was 37.56 dB.
+That last one changed the plan. v0.2 added local alignment. When the global fit is worse than 0.1 pixels, a grid of 64-pixel cells gets measured and corrected on top of it. Take a real handheld pair where the camera moved 52 pixels. The near cactus and the far hills shifted by different amounts. The error went from 4.36 pixels, which looked like a doubled cactus, to 0.06 pixels. All eight canyon frames came in at 0.22 pixels or better.
 
-Deblurring only helps after the merge. On a single photo, it made things worse. That matches the two-step approach in the paper Fast and Robust Multiframe Super Resolution by Farsiu and others in 2004. Stacking lowers the noise enough for deconvolution to work. Sigma clipping is the astro stacking staple from Siril. It didn’t help here because the per-area masking already takes care of moving things.
+There is an image showing the same handheld pair merged with one shift and rotation, and with local alignment. On the left, you see one shift and rotation for the whole photo, which is 4.36 pixels off. On the right, you see local alignment, which is 0.06 pixels off.
 
-That turned into three features in version 0.3.
+v0.2 also added the Lightroom keys and a Good, Soft, or Too Far Off badge per photo. Bad frames get unticked for you. Any 64-pixel area where something moved, like water, leaves, or people, is left out of that photo so it doesn't ghost. When a burst is too far gone, the app says so.
 
-First, sharpening after the merge. It’s a gentle Richardson-Lucy deconvolution. Clarkvision compares it against unsharp masking on real photos in two articles. The Auto mode leaves one photo out of the merge and picks the amount that predicts that photo best. It’s off by default for camera JPEGs. They’re already sharpened in camera, and Auto measured up to 0.9 dB worse on those.
+There is another image showing the app warning that a soft photo is used and part of it was left out. It shows two handheld shots taken four seconds apart, with about 370 pixels of movement. The app uses the photo but says it's soft.
+
+What the papers said, and what measured better
+
+Next came the research on alignment and stacking. I measured the cheap ideas before adopting any of them.
+
+There is a table here comparing different methods on a four-frame simulated burst, using an A6000 canyon photo and an A6400 photo that was mostly out of focus.
+
+One photo upscaled two times scored 33.51 decibels on the canyon and 38.60 decibels on the A6400.
+Mean merge scored 34.58 decibels on the canyon and 39.84 decibels on the A6400.
+Mean plus gentle deblur scored 35.54 decibels on the canyon and 39.79 decibels on the A6400.
+Sigma-clipped mean scored between 34.48 and 34.54 decibels on the canyon, and between 39.77 and 39.82 decibels on the A6400.
+Deblur on one photo alone scored 32.69 decibels on the canyon and 37.56 decibels on the A6400.
+
+Deblurring only helps after the merge. On a single photo, it made things worse. That matches the two-step approach in Fast and Robust Multiframe Super Resolution by Farsiu and others in 2004. Stacking lowers the noise enough for deconvolution to work. Sigma clipping is the astro stacking staple from Siril. It didn't help here because the per-area masking already takes care of moving things.
+
+That turned into three features in v0.3.
+
+First, sharpening after the merge. It's a gentle Richardson-Lucy deconvolution. Clarkvision compares it against unsharp masking on real photos. Auto leaves one photo out of the merge and picks the amount that predicts that photo best. It's off by default for camera JPEGs. They're already sharpened in camera, and Auto measured up to 0.9 decibels worse on those.
 
 Second, brightness matching. Exposure flicker gets measured per photo and color, then evened out. With plus or minus 5 percent simulated flicker, it recovered the true gains to within 0.001.
 
-Third, RAW support for Sony ARW files. Wronski’s point is that a camera JPEG already threw away the fine aliasing detail super-resolution needs. With six or more ARW files, every output pixel is built from the raw sensor samples of all the photos. There’s no demosaicing in between. The ARW decoder is written from scratch in JavaScript. It matches LibRaw on all 24.2 million samples of a real A6000 file. In simulations, RAW scored 0.9 to 2.5 dB better than the same burst as JPEGs.
+Third, RAW, specifically Sony ARW. Wronski's point is that a camera JPEG already threw away the fine aliasing detail super-resolution needs. With six or more ARW files, every output pixel is built from the raw sensor samples of all the photos. There's no demosaicing in between. The ARW decoder is written from scratch in JavaScript. It matches LibRaw on all 24.2 million samples of a real A6000 file. In simulations, RAW scored 0.9 to 2.5 decibels better than the same burst as JPEGs.
 
-The image shows six camera-style JPEGs merged next to the same six RAW files merged from sensor samples. It’s a simulated six-photo burst.
+There is an image showing six camera-style JPEGs merged next to the same six RAW files merged from sensor samples. It is a simulated six-photo burst, showing the difference between merging as camera JPEGs and merging from RAW sensor samples.
 
 I have one real ARW to test with and no real RAW burst. So every RAW quality number above is from simulated bursts.
 
-Deep-learning burst super-resolution tops the benchmarks. You can find the papers Deep Burst Super-Resolution by Bhat et al. in 2021, and Burstormer from 2023, linked in the post. It also invents detail and needs a big model or a GPU, which breaks the first rule. If you want more on the classical side, the IPOL re-implementation of Google’s method by Lafenêtre, Facciolo, and Eboli in 2023 walks through every step with its own measurements. CANDID covers optical-flow alignment for scenes with a lot of depth.
+Deep-learning burst super-resolution tops the benchmarks. You can look at Deep Burst Super-Resolution by Bhat and others in 2021, and Burstormer from 2023. It also invents detail and needs a big model or a GPU, which breaks the first rule. If you want more on the classical side, the IPOL re-implementation of Google's method by Lafenêtre, Facciolo, and Eboli in 2023 walks through every step with its own measurements. CANDID covers optical-flow alignment for scenes with a lot of depth.
 
-Where does the pixel work run? tinyjs apps have two halves. There’s a txiki.js backend and the OS webview, which could be WebKitGTK, WKWebView, or WebView2. The backend runs QuickJS with no JIT. A tight loop over 96 megabytes of pixels per photo is exactly where a JIT matters. So all the math runs in the page in Web Workers. The backend only writes the output file.
+Where the pixel work runs
 
-One gotcha: Chromium, which WebView2 uses, blocks workers loaded from file URLs. The worker gets built from function source as a Blob URL instead. The output goes back to the backend in three-megabyte base64 chunks because the bridge is text.
+tinyjs apps have two halves. There's a txiki.js backend and the OS webview, which is WebKitGTK, WKWebView, or WebView2. The backend runs QuickJS with no JIT. A tight loop over 96 megabytes of pixels per photo is exactly where a JIT matters. So all the math runs in the page in Web Workers. The backend only writes the output file.
 
-The latest change spreads alignment and merging over a pool of helper workers. Four real 24-megapixel JPEGs went from 31.5 seconds to 14.1 seconds on a 24-core machine. The output matches the single-threaded version pixel for pixel. That shipped in version 0.4.0 along with EXIF in PNG output.
+One gotcha: Chromium, which WebView2 uses, blocks workers loaded from file URLs. The worker gets built from function source as a Blob URL instead. The output goes back to the backend in 3-megabyte base64 chunks because the bridge is text.
 
-Shipping it: GitHub Actions builds every platform from a tag, plus Linux AppImages. Every release file has a GitHub build attestation. The checksum file and AppImages are GPG-signed. You can check your download using the commands provided in the blog post.
+The latest change spreads alignment and merging over a pool of helper workers. Four real 24-megapixel JPEGs went from 31.5 seconds to 14.1 seconds on a 24-core machine. The output matches the single-threaded version pixel for pixel. That shipped in v0.4.0 along with EXIF in PNG output.
 
-What’s left? It has only been tested on Linux. The macOS, Windows, and Linux ARM64 builds come out of CI, and nobody has launched them yet. Try one, and open an issue if it breaks.
+Shipping it
 
-The open item that matters most is a real tripod burst on the A6400 in RAW, six to eight frames. That would replace the simulated RAW numbers with real ones.
+GitHub Actions builds every platform from a tag, plus Linux AppImages. Every release file has a GitHub build attestation. The checksum file and AppImages are GPG-signed. You can check your download using the gh attestation verify command or gpg verification commands, which you can find in the blog post.
+
+What's left
+
+It has only been tested on Linux. The macOS, Windows, and Linux ARM64 builds come out of CI and nobody has launched them yet. Try one and open an issue if it breaks.
