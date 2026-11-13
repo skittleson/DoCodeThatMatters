@@ -2,7 +2,7 @@
 
 TLDR; Out of 8,809 Sony photos in my Immich library, only one burst was steady enough to merge cleanly. That changed what the app had to be. [Burst Super-Res](https://github.com/skittleson/burst-superres) is free and open source (MIT). It runs offline on macOS, Windows and Linux. [Download it here](https://github.com/skittleson/burst-superres/releases/latest).
 
-[This is a web version](https://skittleson.github.io/burst-superres/) that can be used, but be mindful it is running in the browser. The desktop app is preferred and optimized for it.
+[This is a web version](https://skittleson.github.io/burst-superres/) that can be used, but it runs in the browser. The desktop app is preferred and optimized for it.
 
 **Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · [Research & Community Resources](/sony-a6000-a6400-research/) · Burst Super-Res (this post)
 
@@ -30,7 +30,7 @@ Here are the rules, set before any code was written.
 - Measure on real data and publish the numbers (including where a feature hurts).
 - Cross platform without Electron. The app uses [tinyjs](https://tinyjs.app/), which runs the UI in the OS webview. The Linux build is about 10 MB.
 
-Research drove the changes below. Each idea got measured against a benchmark before it went in.
+Each idea below was measured against the benchmark before it went in.
 
 ### The benchmark
 
@@ -42,7 +42,7 @@ First attempt at the benchmark was wrong and nothing looked off. The harness dec
 
 The pairwise 50/50 blend from Part 1 is a plain average with extra rounding. For 4 photos you blend A+B, blend C+D, then blend those two. Every photo ends up at 25%. That's a mean, rounded to 8 bits after each stage. For 3 photos it's worse (the weights come out 25/25/50).
 
-The default became a per-pixel mean (or median) over all aligned photos. The weights are exact for any count. Pairwise is still in the app if you want to compare.
+So the default is a per-pixel mean (or median) over all aligned photos. The weights are exact for any count. Pairwise is still in the app if you want to compare.
 
 The bigger change was alignment. The Python version (v0) matched <abbr title="Scale-Invariant Feature Transform: finds distinctive points in each photo and matches them between photos.">SIFT</abbr> features and fit a homography. v0.1 uses sub-pixel registration instead. It builds an image pyramid, runs [Lucas-Kanade](https://en.wikipedia.org/wiki/Lucas%E2%80%93Kanade_method) on tiles, then fits an affine warp through the tile shifts. On simulated bursts it lands within 0.03 px, even rotated 0.5 degrees.
 
@@ -60,7 +60,7 @@ That's 302 of 348 bursts shot handheld (from someone who wrote a guide on this!)
 
 ### Borrowing from tools that already solved this
 
-Here is how other tools handle it. These got checked before building more.
+Here is how other tools handle it. I checked these before building more.
 
 - [DeepSkyStacker](http://deepskystacker.free.fr/english/userguide.htm) scores every frame and stacks only the best ones. v0.1 warned about bad frames and made you untick them by hand.
 - [Lightroom](https://www.schubertphotography.com/lightroom-before-after/) uses `\` to toggle before/after and `Y` for side by side. Photographers already know those keys.
@@ -78,7 +78,7 @@ v0.2 also added the Lightroom keys and a Good/Soft/Too far off badge per photo. 
 
 ### What the papers said, and what measured better
 
-Next came the research on alignment and stacking. I measured the cheap ideas before adopting any of them.
+Then I looked at the papers on alignment and stacking. I measured the cheap ideas before adopting any.
 
 | Method (4-frame simulated burst) | A6000 canyon photo | A6400 photo (mostly out of focus) |
 |---|---|---|
