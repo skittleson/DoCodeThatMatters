@@ -24,6 +24,8 @@ priority: 0.8
 
 TLDR; Out of 8,809 Sony photos in my Immich library, only one burst was steady enough to merge cleanly. That changed what the app had to be. [Burst Super-Res](https://github.com/skittleson/burst-superres) is free and open source (MIT). It runs offline on macOS, Windows and Linux. [Download it here](https://github.com/skittleson/burst-superres/releases/latest).
 
+[This is a web version](https://skittleson.github.io/burst-superres/) that can be used, but be mindful it is running in the browser. The desktop app is preferred and optimized for it.
+
 **Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · [Research & Community Resources](/sony-a6000-a6400-research/) · Burst Super-Res (this post)
 
 ![Burst Super-Res merging a real 8-shot Sony A6000 burst, with the before/after slider](/images/burst-superres/app-real-burst.webp "A real 8-shot A6000 burst. Left of the slider: one photo upscaled 2x. Right: the mean of all 8.")
