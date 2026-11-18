@@ -1,0 +1,220 @@
+<!DOCTYPE html><html lang="en-US" data-theme="dark" itemscope itemtype="http://schema.org/Blog"><head><!-- Flash-of-wrong-theme prevention: runs before first paint --><script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch (_) {}
+    })();
+  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com https://gist.github.com; style-src 'self' 'unsafe-inline' https://github.githubassets.com https://news.google.com; font-src 'self' https://github.githubassets.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com; frame-src https://news.google.com https://www.youtube.com https://www.youtube-nocookie.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com"><title>I Replaced My Gaming PC with a 128GB Mini PC — Do Code That Matters</title><link rel="canonical" href="https://docodethatmatters.com/m5-strix-halo-local-llm-server/"><meta name="description" content="Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit."><meta itemprop="description" content="Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit."><meta name="keywords" content="AI;DR, local llm, strix halo, ryzen ai max, bosgame m5, gufo, qwen3.8-flash-next, thinkingcap, mtp, opencode, omniroute, llama.cpp, rocm, homelab"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="NOINDEX,NOFOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="I Replaced My Gaming PC with a 128GB Mini PC — Do Code That Matters"><meta property="og:description" content="Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit."><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/m5-strix-halo-local-llm-server/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/agile.jpg"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="I Replaced My Gaming PC with a 128GB Mini PC — Do Code That Matters"><meta name="twitter:description" content="Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit."><meta name="twitter:creator" content="@skittleson"><!-- Structured data --><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","@id":"https://docodethatmatters.com/#website","url":"https://docodethatmatters.com/","name":"Do Code That Matters","publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><script src="/register-sw.js" defer></script><link rel="author" href="/humans.txt"><link rel="resume" type="application/json" href="/resume.json"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ', {
+      linker: { domains: ['docodethatmatters.com', 'dctmlab.taila665d5.ts.net'] }
+    });
+  </script><!-- Subscribe with Google (SWG) --><script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script><script>
+    (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+      basicSubscriptions.init({
+        type: "NewsArticle",
+        isPartOfType: ["Product"],
+        isPartOfProductId: "CAowiJDiCw:openaccess",
+        clientOptions: { theme: "light", lang: "en" },
+      });
+    });
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DLE7MitE.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  (function () {
+    function syncIcons(theme) {
+      var isDark = theme === 'dark';
+      // mobile
+      var sunM = document.getElementById('icon-sun');
+      var moonM = document.getElementById('icon-moon');
+      // desktop
+      var sunD = document.getElementById('icon-sun-desktop');
+      var moonD = document.getElementById('icon-moon-desktop');
+
+      if (sunM) sunM.style.display = isDark ? '' : 'none';
+      if (moonM) moonM.style.display = isDark ? 'none' : '';
+      if (sunD) sunD.style.display = isDark ? '' : 'none';
+      if (moonD) moonD.style.display = isDark ? 'none' : '';
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.dataset.theme || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (_) {}
+      syncIcons(next);
+    }
+
+    // Sync icons on initial load
+    var initialTheme = document.documentElement.dataset.theme || 'dark';
+    syncIcons(initialTheme);
+
+    var btn = document.getElementById('theme-toggle');
+    var btnD = document.getElementById('theme-toggle-desktop');
+    if (btn) btn.addEventListener('click', toggleTheme);
+    if (btnD) btnD.addEventListener('click', toggleTheme);
+  })();
+</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://docodethatmatters.com/m5-strix-halo-local-llm-server/","url":"https://docodethatmatters.com/m5-strix-halo-local-llm-server/","headline":"I Replaced My Gaming PC with a 128GB Mini PC","description":"Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit.","datePublished":"2026-11-18T00:00:00.000Z","wordCount":1984,"author":{"@id":"https://docodethatmatters.com/about/#person"},"publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Person","@id":"https://docodethatmatters.com/about/#person","name":"Spencer Kittleson","url":"https://docodethatmatters.com/about/","jobTitle":"Software Engineer","sameAs":["https://github.com/skittleson","https://www.linkedin.com/in/skittleson/","https://stackoverflow.com/users/2414540/spencer","https://twitter.com/skittleson"]},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="wordCount" content="1984"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/m5-strix-halo-local-llm-server/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">I Replaced My Gaming PC with a 128GB Mini PC</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2026-11-18T00:00:00.000Z">Nov 2026</time><span aria-hidden="true">·</span><span>1984 words</span><span aria-hidden="true">·</span><span>10 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mb-6"><audio controls preload="metadata" class="w-full"><source src="/audio/m5-strix-halo-local-llm-server/index.opus" type="audio/ogg; codecs=opus"><source src="/audio/m5-strix-halo-local-llm-server/index.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><a href="/audio/m5-strix-halo-local-llm-server/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><blockquote>
+<p><strong>AI;DR</strong> — This post was written with AI assistance from my own local model, then edited by me. The setup, tests, and numbers are from my own box.</p>
+</blockquote>
+<p>TLDR; My coding model now runs on a mini PC with no GPU at all: a Bosgame M5 with a Ryzen AI Max+ 395 and 128GB of unified LPDDR5X. It reads a 200K-token prompt in 137 seconds, serves two OpenCode sessions of 200K context at once, and over a typical day answers 975 requests with a median turn of 8 seconds. The engine is <a href="https://github.com/gufo-org/gufo">Gufo</a> and the model is ThinkingCap-Qwen3.8-Flash-Next. This follows <a href="/strata-qwen3-8-flash-next-rtx-3090/">my Strata trial on the RTX 3090 Ti</a>, which the M5 has now replaced.</p>
+<h2 id="why-move-off-the-3090-at-all">Why move off the 3090 at all</h2>
+<p>The Strata setup was good. A 125B MoE at ~100 tok/s decode, 2,500 t/s prompt reading, on a card with 24GB of VRAM and 64GB of system RAM. But the whole thing worked by juggling: experts streamed between RAM and VRAM, the conversation cache wanted 6GB more RAM than I had to spare, and the box had 9GB free on a good day. Every long session was a memory argument.</p>
+<p>Strix Halo removes the argument. The Radeon 8060S iGPU and the CPU share one 128GB pool, so the model is just <em>there</em>, addressable, no streaming, no offload tiers, no learned expert cache. What I gave up: decode is 52-75 t/s against Strata’s 94-101 on the 3090. What I got: prompt reading at 1,443-1,790 t/s against Strata’s 2,500… which sounds like a loss and isn’t the point. The point is two 200K sessions resident at once, a 64GB disk prompt cache that survives restarts, no second box hogging a desk slot, and a machine that idles at 41 °C drawing a fraction of what the gaming PC did.</p>
+<p>For an agent workload, where every turn re-sends a huge prompt and cache hits are everything, that trade was worth it. It also fixed a problem the 3090 post documents: my gaming PC was both the model server and a machine I occasionally wanted to use.</p>
+<h2 id="the-box">The box</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Part</th><th>What I have</th></tr></thead><tbody><tr><td>Model</td><td>Bosgame M5 (Sixunited AXB35 board, BIOS 3.11)</td></tr><tr><td>CPU/GPU</td><td>Ryzen AI Max+ 395, Radeon 8060S iGPU (gfx1151)</td></tr><tr><td>Memory</td><td>128GB LPDDR5X unified</td></tr><tr><td>Disk</td><td>2TB NVMe</td></tr><tr><td>OS</td><td>Debian 13 (DietPi), kernel 7.2.12 from backports</td></tr><tr><td>Network</td><td>Wired only, 192.168.4.227</td></tr><tr><td>Power</td><td>Balanced mode, 85W sustained (measured flat 83-86W under load)</td></tr></tbody></table>
+<p>I left power mode at 85W. A published test on this exact board found 120W buys ~7% on prompt reading and 0% on generation, because generation is memory-bandwidth bound, not power bound. Thermals under sustained load run 84-90 °C with the GPU clocked 2.1-2.8 GHz against its 85W limit, which is normal for these chips.</p>
+<p>Three kernel things matter:</p>
+<ul>
+<li><code>ttm.pages_limit=31457280 ttm.page_pool_size=31457280</code> on the kernel command line, so the GPU can address ~120GB of the pool. BIOS UMA framebuffer stays at 1GB.</li>
+<li><code>amd_iommu=off</code>.</li>
+<li>No swap, and <strong>earlyoom</strong> tuned to back the model up instead: SIGTERM at ~1.9GB free, SIGKILL at ~1GB, with <code>--prefer (^|/)llama-server$</code> so the server dies before anything else. Heavy compiles alongside the model tripped it exactly once, during a ROCm build.</li>
+</ul>
+<p>One DietPi quirk cost me time: <code>eth0</code> shipped disabled in <code>/etc/network/interfaces</code> (<code>#allow-hotplug eth0</code>). And <code>dietpi-wifi-monitor</code> silently re-enabled Wi-Fi behind me three days after I turned it off, so that service is disabled now too. Wi-Fi off, wired only, DHCP reservation for the MAC.</p>
+<h2 id="the-engine-shoot-out">The engine shoot-out</h2>
+<p>I ran the same Flash-Next weights on three engines, plus a model shoot-out besides. The numbers, all on this box:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>llama.cpp Vulkan</th><th>llama.cpp ROCm (tuned)</th><th>Gufo stock</th><th>Gufo ThinkingCap (now)</th></tr></thead><tbody><tr><td>Prompt read 5K</td><td>504 t/s</td><td>1,002 t/s</td><td>1,790 t/s</td><td>1,688 t/s</td></tr><tr><td>Prompt read 35K</td><td>400 t/s</td><td>943 t/s</td><td>1,649 t/s</td><td></td></tr><tr><td>Prompt read ~200K</td><td>249 t/s @103K</td><td>630 t/s</td><td>1,472 t/s</td><td><strong>1,443 t/s @257,720, recall correct</strong></td></tr><tr><td>Output</td><td>32-39 t/s</td><td>38-46 t/s</td><td>58-67 t/s</td><td>52-75 t/s</td></tr><tr><td>Cold OpenCode turn (38K prompt)</td><td>125 s</td><td>50 s</td><td>23 s</td><td></td></tr></tbody></table>
+<p>The order was Vulkan first (the community strix-halo llama.cpp fork, fine but slow), then a ROCm/HIP build against retained-PM4 ROCm, which doubled prefill and gained ~40% on decode, then <a href="https://github.com/gufo-org/gufo">Gufo</a>, an MIT-licensed engine built specifically for Strix Halo, which roughly doubled that again and added an agent-oriented prompt cache in RAM plus disk. That cache is what my 3090 setup was missing most; more on what it does below.</p>
+<p>The model shoot-out ran on a small eval suite I wrote (10 base plus 5 hard coding tasks, reference-validated). Flash-Next with MTP speculative decoding beat everything: 10/10 and 5/5. Qwen3.6-35B-A3B and Gemma-4-26B-A4B got 10/10 on base but not the hard set. A dense Qwen3.8-27B scored 9/10 plus 3/5 at ~30 t/s. Dense models simply can’t compete with a ~6B-active MoE on this hardware; 27B tops out around 38 t/s here even with FP4 and MTP.</p>
+<h2 id="the-quant-gufo-wouldnt-load-and-the-conversion-it-forced">The quant Gufo wouldn’t load, and the conversion it forced</h2>
+<p><a href="https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-Flash-Next">ThinkingCap</a> is a post-train of Flash-Next that thinks less. Same correctness on my eval, ~37% fewer reasoning tokens, 31% faster wall time. At <code>low</code> effort my eval went 264 s with 13,868 reasoning tokens on stock to 182 s with 8,765 on ThinkingCap. On a coding agent, hidden reasoning is latency you pay for per turn, so this was the model I wanted.</p>
+<p>Gufo refused to load its official Q4_K_M quant: <code>tensor ... has unsupported format Q4_K</code>. Gufo only reads Unsloth’s UD-Q4_K_XL tensor layout, and their PR to accept standard Q4_K was closed unmerged. So I converted it myself:</p>
+<ol>
+<li>Downloaded ThinkingCap Q8_0 (178GB) and the Unsloth UD-Q4_K_XL Flash-Next file as a template.</li>
+<li>Exported the exact per-tensor quant types from the Unsloth file (1,224 tensors) and ran <code>llama-quantize --allow-requantize --prune-layers 48 --tensor-type-file</code> so every tensor got the same type the Unsloth file uses.</li>
+<li>Removed <code>nextn_predict_layers</code> and <code>attention.recurrent_layers</code>, and trimmed <code>attention.compress_ratios</code> from 49 to 48 entries. ThinkingCap embeds its MTP head as <code>blk.48</code> inside the weights; Gufo uses a separate sidecar draft model instead, so the embedded head would double-count.</li>
+<li>Verified the result matched the Unsloth file name-for-name, type-for-type, shape-for-shape.</li>
+</ol>
+<p>The A/B was close enough that I switched the same afternoon. The intermediate downloads (284GB) got deleted. The converted file lives beside a copy of the stock Unsloth quant as rollback, and one <code>systemctl restart</code> switches back.</p>
+<p>For the MTP draft I use a shared Q8_0 head as a sidecar. On llama.cpp I swept lookahead counts and 3 won (44.3 t/s against 39-43 for the others). Gufo picks lookahead on its own.</p>
+<h2 id="whats-actually-running">What’s actually running</h2>
+<p>One systemd unit, enabled at boot, running Gufo in Docker:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>docker run --rm --name gufo-fn --device /dev/kfd --device /dev/dri --group-add 44 \</span></span>
+<span class="line"><span>  --group-add 991 --ulimit memlock=-1 --security-opt seccomp=unconfined \</span></span>
+<span class="line"><span>  -v /opt/models:/models:ro -v /var/cache/gufo/thinkingcap:/cache \</span></span>
+<span class="line"><span>  -p 8080:8080 ghcr.io/gufo-org/toolboxes/gufo-runtime:latest \</span></span>
+<span class="line"><span>  gufo serve llm --host 0.0.0.0 --port 8080 --served-model-name Qwen3.8-Flash-Next \</span></span>
+<span class="line"><span>  --model /models/thinkingcap-ud/ThinkingCap-Qwen3.8-Flash-Next-UD-Q4_K_XL.gguf \</span></span>
+<span class="line"><span>  --speculative mtp --mtp-model /models/qwen3.8-flash-next/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf \</span></span>
+<span class="line"><span>  --mmproj /models/thinkingcap-ud/mmproj-ThinkingCap-Qwen3.8-Flash-Next-f16.gguf \</span></span>
+<span class="line"><span>  --context 204800 --sessions 2 --reasoning-effort medium \</span></span>
+<span class="line"><span>  --cache-ram-bytes 10737418240 --cache-disk /cache --cache-disk-bytes 68719476736 \</span></span>
+<span class="line"><span>  --stall-timeout-ms 300000</span></span></code></pre>
+<p>The decisions in it:</p>
+<ul>
+<li><strong>2 sessions × 200K instead of 1 × 262K.</strong> The model’s native max is 262,144 and I ran that first (a 257,720-token recall test passed). But when my main session and a subagent share one session slot they evict each other’s cache; one turn took 96 seconds to process 235 new tokens. Two slots fixed it. Two sessions cost 14.4GB of the pool. Beyond 262K needs YaRN, which has worse recall, so no.</li>
+<li><strong>10GB RAM prompt cache + 64GB disk cache.</strong> This is Gufo’s agent-oriented feature and the single biggest daily win.</li>
+<li><strong>Server default effort <code>medium</code>, but OpenCode requests <code>low</code>.</strong> At medium, long turns were 97-99% hidden reasoning, 4-9K tokens, up to 5-6 minutes before an answer appeared. Research on this model family says <code>low</code> is about equal to medium on quality while xhigh triples tokens for small gains. <code>low</code> it is.</li>
+<li><strong>Served model name is constant</strong> (<code>Qwen3.8-Flash-Next</code>) regardless of which weights are loaded, so clients never change when I swap quant or engine.</li>
+</ul>
+<p>A small <code>llm-switch</code> script (status with no arg) keeps one server on port 8080: <code>flash</code> for Gufo (the boot default), <code>flash-llama</code> for the tuned ROCm llama.cpp, <code>flash-vulkan</code>, <code>pi</code> for the dense 27B, <code>off</code>. Server load takes ~75 s.</p>
+<p>Clients reach it through <a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a> as <code>m5/Qwen3.8-Flash-Next</code>, then OpenCode, same pattern as the last post. Two extras worth copying:</p>
+<ul>
+<li>A <strong>slim agent</strong> (<code>m5.md</code>, mode primary) with no skills, MCP, browser or subagents. First prompt drops from 38.3K to 8.3K tokens.</li>
+<li><strong>Maintenance traffic off the box.</strong> Title, summary and compaction requests go to an OmniRoute combo pointing at a 27B on the gaming PC, so a background ping never evicts the M5’s prompt cache. On the one-request-per-session local servers, background noise is expensive.</li>
+</ul>
+<h2 id="what-a-day-looks-like">What a day looks like</h2>
+<p>Last 24 hours on the current setup: <strong>975 requests, 972 OK.</strong> Median turn 8.0 s, p90 28 s, max 163 s. New tokens read per turn: median 351, p90 1,861. That means <strong>98.9% of 97.1M prompt tokens came from cache</strong> rather than being re-read. Largest context reached: 187,924 tokens. Two sessions decoding at once gave 47.6 + 52.6 = 93.2 t/s combined against 73.6 for one session alone, so concurrency is nearly free. Vision works too: ThinkingCap’s own mmproj loaded first try, and a test image described correctly in 2.0 s.</p>
+<p>The four errors worth mentioning: 18 × <code>503 Loading model</code> (all during one planned reboot), 5 client cancels, one session that outgrew the context limit before compaction fired, and two 404s from a client calling <code>/chat/completions</code> without <code>/v1</code>.</p>
+<h2 id="gotchas">Gotchas</h2>
+<ul>
+<li><strong>OmniRoute’s Vision Bridge silently reroutes image requests</strong> away from any model it doesn’t know is vision-capable. Mine went to a text-only cloud model and came back a 400, with the M5 never seeing the request. Fix: set <code>supportsVision: true</code> on the model through <code>PUT /api/provider-models</code>.</li>
+<li><strong>Gufo’s disk cache directory must be owned by uid 1000</strong>, or the container dies with <code>invalid cache ownership lock in /cache</code>.</li>
+<li><strong>First turns after any Gufo restart re-read the whole history.</strong> The RAM cache is gone and disk restores only part of it. One 103K-token turn took 259 s.</li>
+<li><strong>Long turns are reasoning, not the engine.</strong> Generation is 50-75 t/s, so a 5-9K-token thinking turn still takes minutes. When a turn is slow, check reasoning tokens before blaming the box.</li>
+<li><strong><code>pkill -f</code> inside <code>ssh '...'</code> matches its own command line</strong> and kills your SSH session. Use <code>pkill -f "llama[-]server"</code> bracket tricks or pid files. I learned this on the 3090 and re-learned it here.</li>
+<li><strong>dropbear (DietPi’s SSH) has no SFTP.</strong> <code>ssh root@host 'cat > /path' &#x3C; localfile</code> instead of scp.</li>
+<li><strong>Port 8080 has no API key, on purpose.</strong> The box is wired-only on a trusted LAN. If yours isn’t, put something in front of it.</li>
+</ul>
+<h2 id="where-this-leaves-me">Where this leaves me</h2>
+<p>The open list is short: renew the cloud fallback credential in OmniRoute, move OpenCode’s compaction point to ~180K so a session never hits the hard 204,800 limit (one already did, once), run the 5 hard eval tasks against ThinkingCap, and optionally see whether a 2.5GbE switch port changes anything (the NIC links at 1 Gbps today; LAN is 942 Mbit/s both ways, 0.45 ms ping, which has not felt like a bottleneck once).</p>
+<p>The honest summary against the 3090: the gaming PC with Strata still decodes faster, and for one session at small context it wins outright. The M5 wins where my work lives. Two or three big concurrent agent sessions, all warm in cache, on a box that does one thing.</p></section></article><hr class="my-8"><p class="text-sm font-mono" style="color: var(--color-text-muted);">See something inaccurate or need more detail? <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20I%20Replaced%20My%20Gaming%20PC%20with%20a%20128GB%20Mini%20PC" style="color: var(--color-accent);" class="underline">Submit a Pull Request</a> to help me out!</p><p class="text-sm font-mono mt-2"><a href="https://www.buymeacoffee.com/skittles" style="color: var(--color-accent);" class="hover:underline">Buy me a ☕ to support!</a></p></div><!-- Sidebar --><aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"><h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">Related Posts</h3><ul class="space-y-3 list-none p-0 m-0"></ul><h3 class="text-xs font-bold font-mono mt-6 mb-3 uppercase tracking-wide" style="color: var(--color-text);">Latest Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/burst-superres/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">I Built Photo Super-Resolution Without AI</a><time datetime="2026-11-09T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Nov 2026</time></li><li><a href="/home-automation-overnight-success/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Smart home devices should work without the internet</a><time datetime="2026-10-28T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/strata-qwen3-8-flash-next-rtx-3090/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</a><time datetime="2026-10-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/sony-a6000-a6400-research/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Sony A6000/A6400 Hacks, Mods and Community Resources</a><time datetime="2026-08-29T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/running-local-llms-for-coding/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">How I Run Local LLMs for Coding (and Why the Quant Matters)</a><time datetime="2026-08-19T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li></ul></aside></div></main><footer class="mt-12 py-6" style="border-top: 1px solid var(--color-border);"><div class="container mx-auto px-4 text-center text-sm font-mono" style="color: var(--color-text-muted);"><div class="flex items-center justify-center gap-4"><a href="/terms/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Terms</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/privacy/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Privacy</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a></div><p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p></div></footer></body></html>

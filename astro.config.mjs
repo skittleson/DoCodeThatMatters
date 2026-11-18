@@ -21,6 +21,7 @@ const oneDarkProAccessible = JSON.parse(
 
 const BLOG_DIR = join(__dirname, 'src/content/blog');
 const postDateMap = new Map();
+const draftSlugs = new Set();
 for (const file of readdirSync(BLOG_DIR)) {
   if (!file.endsWith('.md')) continue;
   const slug = file.replace(/\.md$/, '');
@@ -29,6 +30,7 @@ for (const file of readdirSync(BLOG_DIR)) {
     date: data.date ? new Date(data.date) : undefined,
     modified: data.modified ? new Date(data.modified) : undefined,
   });
+  if (data.draft) draftSlugs.add(slug);
 }
 
 export default defineConfig({
@@ -38,10 +40,15 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      filter: (page) =>
-        !page.includes('/offline/') &&
-        !page.includes('/admin/') &&
-        !page.includes('/edit/'),
+      filter: (page) => {
+        const slug = slugFromUrl(page);
+        return (
+          !page.includes('/offline/') &&
+          !page.includes('/admin/') &&
+          !page.includes('/edit/') &&
+          !(slug && draftSlugs.has(slug))
+        );
+      },
       serialize: async (item) => {
         const url = new URL(item.url);
         if (url.pathname === '/') {

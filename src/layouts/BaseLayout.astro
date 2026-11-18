@@ -11,6 +11,7 @@ interface Props {
   canonicalUrl?: string;
   ogType?: string;
   twitterCard?: string;
+  robots?: string;
 }
 
 const {
@@ -21,6 +22,7 @@ const {
   canonicalUrl,
   ogType = 'website',
   twitterCard = 'summary',
+  robots = 'INDEX,FOLLOW',
 } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
@@ -77,7 +79,7 @@ const jsonLd = JSON.stringify([
   <meta name="author" content={company} />
   <meta name="Distribution" content="Global" />
   <meta name="Rating" content="General" />
-  <meta name="Robots" content="INDEX,FOLLOW" />
+  <meta name="Robots" content={robots} />
   <meta name="Revisit-after" content="31 Days" />
   <meta name="application-name" content={company} />
 

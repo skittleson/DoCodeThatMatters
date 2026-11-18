@@ -1,0 +1,140 @@
+---
+title: "I Replaced My Gaming PC with a 128GB Mini PC"
+keywords:
+  - AI;DR
+  - local llm
+  - strix halo
+  - ryzen ai max
+  - bosgame m5
+  - gufo
+  - qwen3.8-flash-next
+  - thinkingcap
+  - mtp
+  - opencode
+  - omniroute
+  - llama.cpp
+  - rocm
+  - homelab
+date: 2026-11-18
+draft: true
+description: Why and how I moved my daily coding model from an RTX 3090 Ti running Strata to a Bosgame M5 (Ryzen AI Max+ 395, 128GB unified memory) running Gufo with ThinkingCap-Qwen3.8-Flash-Next. The engine shoot-out between Vulkan, ROCm and Gufo, the quant conversion Gufo forced on me, 2 sessions of 200K context, 98.9% of prompt tokens served from cache, and the DietPi and OmniRoute gotchas that bit.
+---
+
+> **AI;DR** — This post was written with AI assistance from my own local model, then edited by me. The setup, tests, and numbers are from my own box.
+
+TLDR; My coding model now runs on a mini PC with no GPU at all: a Bosgame M5 with a Ryzen AI Max+ 395 and 128GB of unified LPDDR5X. It reads a 200K-token prompt in 137 seconds, serves two OpenCode sessions of 200K context at once, and over a typical day answers 975 requests with a median turn of 8 seconds. The engine is [Gufo](https://github.com/gufo-org/gufo) and the model is ThinkingCap-Qwen3.8-Flash-Next. This follows [my Strata trial on the RTX 3090 Ti](/strata-qwen3-8-flash-next-rtx-3090/), which the M5 has now replaced.
+
+## Why move off the 3090 at all
+
+The Strata setup was good. A 125B MoE at ~100 tok/s decode, 2,500 t/s prompt reading, on a card with 24GB of VRAM and 64GB of system RAM. But the whole thing worked by juggling: experts streamed between RAM and VRAM, the conversation cache wanted 6GB more RAM than I had to spare, and the box had 9GB free on a good day. Every long session was a memory argument.
+
+Strix Halo removes the argument. The Radeon 8060S iGPU and the CPU share one 128GB pool, so the model is just *there*, addressable, no streaming, no offload tiers, no learned expert cache. What I gave up: decode is 52-75 t/s against Strata's 94-101 on the 3090. What I got: prompt reading at 1,443-1,790 t/s against Strata's 2,500... which sounds like a loss and isn't the point. The point is two 200K sessions resident at once, a 64GB disk prompt cache that survives restarts, no second box hogging a desk slot, and a machine that idles at 41 °C drawing a fraction of what the gaming PC did.
+
+For an agent workload, where every turn re-sends a huge prompt and cache hits are everything, that trade was worth it. It also fixed a problem the 3090 post documents: my gaming PC was both the model server and a machine I occasionally wanted to use.
+
+## The box
+
+| Part | What I have |
+|---|---|
+| Model | Bosgame M5 (Sixunited AXB35 board, BIOS 3.11) |
+| CPU/GPU | Ryzen AI Max+ 395, Radeon 8060S iGPU (gfx1151) |
+| Memory | 128GB LPDDR5X unified |
+| Disk | 2TB NVMe |
+| OS | Debian 13 (DietPi), kernel 7.2.12 from backports |
+| Network | Wired only, 192.168.4.227 |
+| Power | Balanced mode, 85W sustained (measured flat 83-86W under load) |
+
+I left power mode at 85W. A published test on this exact board found 120W buys ~7% on prompt reading and 0% on generation, because generation is memory-bandwidth bound, not power bound. Thermals under sustained load run 84-90 °C with the GPU clocked 2.1-2.8 GHz against its 85W limit, which is normal for these chips.
+
+Three kernel things matter:
+
+- `ttm.pages_limit=31457280 ttm.page_pool_size=31457280` on the kernel command line, so the GPU can address ~120GB of the pool. BIOS UMA framebuffer stays at 1GB.
+- `amd_iommu=off`.
+- No swap, and **earlyoom** tuned to back the model up instead: SIGTERM at ~1.9GB free, SIGKILL at ~1GB, with `--prefer (^|/)llama-server$` so the server dies before anything else. Heavy compiles alongside the model tripped it exactly once, during a ROCm build.
+
+One DietPi quirk cost me time: `eth0` shipped disabled in `/etc/network/interfaces` (`#allow-hotplug eth0`). And `dietpi-wifi-monitor` silently re-enabled Wi-Fi behind me three days after I turned it off, so that service is disabled now too. Wi-Fi off, wired only, DHCP reservation for the MAC.
+
+## The engine shoot-out
+
+I ran the same Flash-Next weights on three engines, plus a model shoot-out besides. The numbers, all on this box:
+
+| | llama.cpp Vulkan | llama.cpp ROCm (tuned) | Gufo stock | Gufo ThinkingCap (now) |
+|---|---|---|---|---|
+| Prompt read 5K | 504 t/s | 1,002 t/s | 1,790 t/s | 1,688 t/s |
+| Prompt read 35K | 400 t/s | 943 t/s | 1,649 t/s | |
+| Prompt read ~200K | 249 t/s @103K | 630 t/s | 1,472 t/s | **1,443 t/s @257,720, recall correct** |
+| Output | 32-39 t/s | 38-46 t/s | 58-67 t/s | 52-75 t/s |
+| Cold OpenCode turn (38K prompt) | 125 s | 50 s | 23 s | |
+
+The order was Vulkan first (the community strix-halo llama.cpp fork, fine but slow), then a ROCm/HIP build against retained-PM4 ROCm, which doubled prefill and gained ~40% on decode, then [Gufo](https://github.com/gufo-org/gufo), an MIT-licensed engine built specifically for Strix Halo, which roughly doubled that again and added an agent-oriented prompt cache in RAM plus disk. That cache is what my 3090 setup was missing most; more on what it does below.
+
+The model shoot-out ran on a small eval suite I wrote (10 base plus 5 hard coding tasks, reference-validated). Flash-Next with MTP speculative decoding beat everything: 10/10 and 5/5. Qwen3.6-35B-A3B and Gemma-4-26B-A4B got 10/10 on base but not the hard set. A dense Qwen3.8-27B scored 9/10 plus 3/5 at ~30 t/s. Dense models simply can't compete with a ~6B-active MoE on this hardware; 27B tops out around 38 t/s here even with FP4 and MTP.
+
+## The quant Gufo wouldn't load, and the conversion it forced
+
+[ThinkingCap](https://huggingface.co/bottlecapai/ThinkingCap-Qwen3.8-Flash-Next) is a post-train of Flash-Next that thinks less. Same correctness on my eval, ~37% fewer reasoning tokens, 31% faster wall time. At `low` effort my eval went 264 s with 13,868 reasoning tokens on stock to 182 s with 8,765 on ThinkingCap. On a coding agent, hidden reasoning is latency you pay for per turn, so this was the model I wanted.
+
+Gufo refused to load its official Q4_K_M quant: `tensor ... has unsupported format Q4_K`. Gufo only reads Unsloth's UD-Q4_K_XL tensor layout, and their PR to accept standard Q4_K was closed unmerged. So I converted it myself:
+
+1. Downloaded ThinkingCap Q8_0 (178GB) and the Unsloth UD-Q4_K_XL Flash-Next file as a template.
+2. Exported the exact per-tensor quant types from the Unsloth file (1,224 tensors) and ran `llama-quantize --allow-requantize --prune-layers 48 --tensor-type-file` so every tensor got the same type the Unsloth file uses.
+3. Removed `nextn_predict_layers` and `attention.recurrent_layers`, and trimmed `attention.compress_ratios` from 49 to 48 entries. ThinkingCap embeds its MTP head as `blk.48` inside the weights; Gufo uses a separate sidecar draft model instead, so the embedded head would double-count.
+4. Verified the result matched the Unsloth file name-for-name, type-for-type, shape-for-shape.
+
+The A/B was close enough that I switched the same afternoon. The intermediate downloads (284GB) got deleted. The converted file lives beside a copy of the stock Unsloth quant as rollback, and one `systemctl restart` switches back.
+
+For the MTP draft I use a shared Q8_0 head as a sidecar. On llama.cpp I swept lookahead counts and 3 won (44.3 t/s against 39-43 for the others). Gufo picks lookahead on its own.
+
+## What's actually running
+
+One systemd unit, enabled at boot, running Gufo in Docker:
+
+```
+docker run --rm --name gufo-fn --device /dev/kfd --device /dev/dri --group-add 44 \
+  --group-add 991 --ulimit memlock=-1 --security-opt seccomp=unconfined \
+  -v /opt/models:/models:ro -v /var/cache/gufo/thinkingcap:/cache \
+  -p 8080:8080 ghcr.io/gufo-org/toolboxes/gufo-runtime:latest \
+  gufo serve llm --host 0.0.0.0 --port 8080 --served-model-name Qwen3.8-Flash-Next \
+  --model /models/thinkingcap-ud/ThinkingCap-Qwen3.8-Flash-Next-UD-Q4_K_XL.gguf \
+  --speculative mtp --mtp-model /models/qwen3.8-flash-next/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf \
+  --mmproj /models/thinkingcap-ud/mmproj-ThinkingCap-Qwen3.8-Flash-Next-f16.gguf \
+  --context 204800 --sessions 2 --reasoning-effort medium \
+  --cache-ram-bytes 10737418240 --cache-disk /cache --cache-disk-bytes 68719476736 \
+  --stall-timeout-ms 300000
+```
+
+The decisions in it:
+
+- **2 sessions × 200K instead of 1 × 262K.** The model's native max is 262,144 and I ran that first (a 257,720-token recall test passed). But when my main session and a subagent share one session slot they evict each other's cache; one turn took 96 seconds to process 235 new tokens. Two slots fixed it. Two sessions cost 14.4GB of the pool. Beyond 262K needs YaRN, which has worse recall, so no.
+- **10GB RAM prompt cache + 64GB disk cache.** This is Gufo's agent-oriented feature and the single biggest daily win.
+- **Server default effort `medium`, but OpenCode requests `low`.** At medium, long turns were 97-99% hidden reasoning, 4-9K tokens, up to 5-6 minutes before an answer appeared. Research on this model family says `low` is about equal to medium on quality while xhigh triples tokens for small gains. `low` it is.
+- **Served model name is constant** (`Qwen3.8-Flash-Next`) regardless of which weights are loaded, so clients never change when I swap quant or engine.
+
+A small `llm-switch` script (status with no arg) keeps one server on port 8080: `flash` for Gufo (the boot default), `flash-llama` for the tuned ROCm llama.cpp, `flash-vulkan`, `pi` for the dense 27B, `off`. Server load takes ~75 s.
+
+Clients reach it through [OmniRoute](https://github.com/diegosouzapw/OmniRoute) as `m5/Qwen3.8-Flash-Next`, then OpenCode, same pattern as the last post. Two extras worth copying:
+
+- A **slim agent** (`m5.md`, mode primary) with no skills, MCP, browser or subagents. First prompt drops from 38.3K to 8.3K tokens.
+- **Maintenance traffic off the box.** Title, summary and compaction requests go to an OmniRoute combo pointing at a 27B on the gaming PC, so a background ping never evicts the M5's prompt cache. On the one-request-per-session local servers, background noise is expensive.
+
+## What a day looks like
+
+Last 24 hours on the current setup: **975 requests, 972 OK.** Median turn 8.0 s, p90 28 s, max 163 s. New tokens read per turn: median 351, p90 1,861. That means **98.9% of 97.1M prompt tokens came from cache** rather than being re-read. Largest context reached: 187,924 tokens. Two sessions decoding at once gave 47.6 + 52.6 = 93.2 t/s combined against 73.6 for one session alone, so concurrency is nearly free. Vision works too: ThinkingCap's own mmproj loaded first try, and a test image described correctly in 2.0 s.
+
+The four errors worth mentioning: 18 × `503 Loading model` (all during one planned reboot), 5 client cancels, one session that outgrew the context limit before compaction fired, and two 404s from a client calling `/chat/completions` without `/v1`.
+
+## Gotchas
+
+- **OmniRoute's Vision Bridge silently reroutes image requests** away from any model it doesn't know is vision-capable. Mine went to a text-only cloud model and came back a 400, with the M5 never seeing the request. Fix: set `supportsVision: true` on the model through `PUT /api/provider-models`.
+- **Gufo's disk cache directory must be owned by uid 1000**, or the container dies with `invalid cache ownership lock in /cache`.
+- **First turns after any Gufo restart re-read the whole history.** The RAM cache is gone and disk restores only part of it. One 103K-token turn took 259 s.
+- **Long turns are reasoning, not the engine.** Generation is 50-75 t/s, so a 5-9K-token thinking turn still takes minutes. When a turn is slow, check reasoning tokens before blaming the box.
+- **`pkill -f` inside `ssh '...'` matches its own command line** and kills your SSH session. Use `pkill -f "llama[-]server"` bracket tricks or pid files. I learned this on the 3090 and re-learned it here.
+- **dropbear (DietPi's SSH) has no SFTP.** `ssh root@host 'cat > /path' < localfile` instead of scp.
+- **Port 8080 has no API key, on purpose.** The box is wired-only on a trusted LAN. If yours isn't, put something in front of it.
+
+## Where this leaves me
+
+The open list is short: renew the cloud fallback credential in OmniRoute, move OpenCode's compaction point to ~180K so a session never hits the hard 204,800 limit (one already did, once), run the 5 hard eval tasks against ThinkingCap, and optionally see whether a 2.5GbE switch port changes anything (the NIC links at 1 Gbps today; LAN is 942 Mbit/s both ways, 0.45 ms ping, which has not felt like a bottleneck once).
+
+The honest summary against the 3090: the gaming PC with Strata still decodes faster, and for one session at small context it wins outright. The M5 wins where my work lives. Two or three big concurrent agent sessions, all warm in cache, on a box that does one thing.

@@ -1,0 +1,7 @@
+A full stack engineer is someone who knows a lot about software and hardware but focuses on the details only when needed.
+
+## The Early Days
+
+Imagine this. Building your hardware, installing an OS, installing web and database hosting software, setting up a domain, setting up DNS, installing SSL certificates, programming a website in html, css, javascript, c that will then be searchable on Google. Sounds familiar? Then you were a full stack engineer before 2010.
+
+## Cloud Full Stack Engineer

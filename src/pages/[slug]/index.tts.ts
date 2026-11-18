@@ -3,7 +3,7 @@ import type { GetStaticPaths } from 'astro';
 import { markdownToTTSPlainText, stripExt } from '../../lib/markdownToText';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = await getCollection('blog');
   return posts.map((post) => ({
     params: { slug: stripExt(post.id) },
     props: { post },

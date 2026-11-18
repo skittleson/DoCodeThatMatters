@@ -62,10 +62,18 @@ because it built from a working tree that had your untracked file. Before your f
 new post, run `git ls-files docs/<slug>/`; if it's already tracked, tell Spencer which commit
 published it (`git log --oneline -1 -- docs/<slug>/index.html`).
 
+## Drafts (semi-private pages)
+
+`draft: true` posts ARE built and committed with `docs/`: the page exists at
+`/<slug>/` for review, but is `<meta name="Robots" content="NOINDEX,NOFOLLOW">`, absent from the
+home page, blog list, RSS, JSON feed, llms.txt, sitemap, and every post's sidebar/related list.
+Anyone with the exact URL can see it, so treat the URL as the secret. Flipping `draft: false`
+and rebuilding makes it public everywhere at once.
+
 ## Stale output and look-alike slugs
 
-- `draft: true` posts get no page, but an old `docs/<slug>/` from before the post became a draft
-  is never cleaned up.
+- When a post flips `draft: false → true`, its `docs/<slug>/` page stays served (now noindexed,
+  unlisted). That's intended while you keep reviewing it; delete the output when the post dies.
 - Slugs can look alike: `i-scanned-the-ble-devices-around-my-house.md` (live) and
   `i-scanned-the-ble-devices-around-my-house-they-are-sharing-everything.md` (deleted draft) once
   led to deleting the live post's output. Before deleting `docs/<slug>/`, open the source file

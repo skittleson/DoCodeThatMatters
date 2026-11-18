@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en-US" data-theme="dark" itemscope itemtype="http://schema.org/Blog"><head><!-- Flash-of-wrong-theme prevention: runs before first paint --><script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.dataset.theme = stored;
+        }
+      } catch (_) {}
+    })();
+  </script><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com https://gist.github.com; style-src 'self' 'unsafe-inline' https://github.githubassets.com https://news.google.com; font-src 'self' https://github.githubassets.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com https://www.google-analytics.com https://www.googletagmanager.com https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com https://news.google.com; frame-src https://news.google.com https://www.youtube.com https://www.youtube-nocookie.com; base-uri 'self'; form-action 'self' https://t0aqplp9ri.execute-api.us-east-1.amazonaws.com"><title>Smart Home That Runs on a Router, No Cloud Needed — Do Code That Matters</title><link rel="canonical" href="https://docodethatmatters.com/small-home-automations/"><meta name="description" content="Building a mini smart home for common tasks.  Lessons and insights"><meta itemprop="description" content="Building a mini smart home for common tasks.  Lessons and insights"><meta name="keywords" content="offline internet of things, esp32, home automation, smart home, smart light, Tasmota, control plane, lua"><meta name="author" content="Do Code That Matters"><meta name="Distribution" content="Global"><meta name="Rating" content="General"><meta name="Robots" content="NOINDEX,NOFOLLOW"><meta name="Revisit-after" content="31 Days"><meta name="application-name" content="Do Code That Matters"><!-- Open Graph --><meta property="og:title" content="Smart Home That Runs on a Router, No Cloud Needed — Do Code That Matters"><meta property="og:description" content="Building a mini smart home for common tasks.  Lessons and insights"><meta property="og:locale" content="en_US"><meta property="og:type" content="article"><meta property="og:url" content="https://docodethatmatters.com/small-home-automations/"><meta property="og:site_name" content="Do Code That Matters"><meta property="og:image" content="https://docodethatmatters.com/images/control_ux.png"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Smart Home That Runs on a Router, No Cloud Needed — Do Code That Matters"><meta name="twitter:description" content="Building a mini smart home for common tasks.  Lessons and insights"><meta name="twitter:creator" content="@skittleson"><!-- Structured data --><script type="application/ld+json">[{"@context":"https://schema.org","@type":"WebSite","@id":"https://docodethatmatters.com/#website","url":"https://docodethatmatters.com/","name":"Do Code That Matters","publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><!-- Feeds --><link type="application/rss+xml" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/rss.xml"><link type="application/feed+json" rel="alternate" title="Do Code That Matters - Spencer Kittleson" href="/feed.json"><link rel="sitemap" href="/sitemap-index.xml"><!-- Favicons --><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-icon-180x180.png"><link rel="icon" type="image/png" sizes="192x192" href="/images/android-icon-192x192.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="shortcut icon" href="/favicon.ico"><meta name="msapplication-TileColor" content="#232b32"><meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"><meta name="theme-color" content="#232b32"><link rel="preload" href="/fonts/Inconsolata.woff2" as="font" type="font/woff2" crossorigin><link rel="manifest" href="/manifest.json"><script src="/register-sw.js" defer></script><link rel="author" href="/humans.txt"><link rel="resume" type="application/json" href="/resume.json"><!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-3TW4YP50BZ"></script><script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3TW4YP50BZ', {
+      linker: { domains: ['docodethatmatters.com', 'dctmlab.taila665d5.ts.net'] }
+    });
+  </script><!-- Subscribe with Google (SWG) --><script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script><script>
+    (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+      basicSubscriptions.init({
+        type: "NewsArticle",
+        isPartOfType: ["Product"],
+        isPartOfProductId: "CAowiJDiCw:openaccess",
+        clientOptions: { theme: "light", lang: "en" },
+      });
+    });
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.DLE7MitE.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  (function () {
+    function syncIcons(theme) {
+      var isDark = theme === 'dark';
+      // mobile
+      var sunM = document.getElementById('icon-sun');
+      var moonM = document.getElementById('icon-moon');
+      // desktop
+      var sunD = document.getElementById('icon-sun-desktop');
+      var moonD = document.getElementById('icon-moon-desktop');
+
+      if (sunM) sunM.style.display = isDark ? '' : 'none';
+      if (moonM) moonM.style.display = isDark ? 'none' : '';
+      if (sunD) sunD.style.display = isDark ? '' : 'none';
+      if (moonD) moonD.style.display = isDark ? 'none' : '';
+    }
+
+    function toggleTheme() {
+      var html = document.documentElement;
+      var current = html.dataset.theme || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (_) {}
+      syncIcons(next);
+    }
+
+    // Sync icons on initial load
+    var initialTheme = document.documentElement.dataset.theme || 'dark';
+    syncIcons(initialTheme);
+
+    var btn = document.getElementById('theme-toggle');
+    var btnD = document.getElementById('theme-toggle-desktop');
+    if (btn) btn.addEventListener('click', toggleTheme);
+    if (btnD) btnD.addEventListener('click', toggleTheme);
+  })();
+</script><script type="application/ld+json">[{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://docodethatmatters.com/small-home-automations/","url":"https://docodethatmatters.com/small-home-automations/","headline":"Smart Home That Runs on a Router, No Cloud Needed","description":"Building a mini smart home for common tasks.  Lessons and insights","image":"https://docodethatmatters.com/images/control_ux.png","datePublished":"2026-06-23T00:00:00.000Z","wordCount":1817,"author":{"@id":"https://docodethatmatters.com/about/#person"},"publisher":{"@id":"https://docodethatmatters.com/about/#organization"}},{"@context":"https://schema.org","@type":"Person","@id":"https://docodethatmatters.com/about/#person","name":"Spencer Kittleson","url":"https://docodethatmatters.com/about/","jobTitle":"Software Engineer","sameAs":["https://github.com/skittleson","https://www.linkedin.com/in/skittleson/","https://stackoverflow.com/users/2414540/spencer","https://twitter.com/skittleson"]},{"@context":"https://schema.org","@type":"Organization","@id":"https://docodethatmatters.com/about/#organization","name":"Do Code That Matters","url":"https://docodethatmatters.com/","logo":"https://docodethatmatters.com/images/agile.jpg"}]</script><main class="container mx-auto px-4 py-8 max-w-4xl"><div class="lg:grid lg:grid-cols-4 lg:gap-8"><!-- Main Article --><div class="lg:col-span-3"><article class="article-body" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting"><meta itemprop="wordCount" content="1817"><meta itemprop="mainEntityOfPage" content="https://docodethatmatters.com/small-home-automations/"><header class="mb-6"><h1 itemprop="name headline" class="text-2xl font-bold mb-3" style="color: var(--color-text);">Smart Home That Runs on a Router, No Cloud Needed</h1><!-- Metadata: date · reading time · author --><p class="text-xs font-mono mb-4 flex flex-wrap items-center gap-x-2 gap-y-1" style="color: var(--color-text-muted);"><time itemprop="datePublished" datetime="2026-06-23T00:00:00.000Z">Jun 2026</time><span aria-hidden="true">·</span><span>1817 words</span><span aria-hidden="true">·</span><span>10 min read</span><span aria-hidden="true">·</span><span itemprop="author" itemscope itemtype="https://schema.org/Person"><a rel="author" itemprop="url" href="https://docodethatmatters.com/about/" style="color: var(--color-accent);" class="hover:underline"><span itemprop="name">Spencer Kittleson</span></a><meta itemprop="jobTitle" content="Software Engineer"></span><span itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="Do Code That Matters"><span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="https://docodethatmatters.com/images/agile.jpg"></span></span></p><!-- Audio player: MP3 is generated by main.py after astro build --><div class="audio-player mb-6"><audio controls preload="metadata" class="w-full"><source src="/audio/small-home-automations/index.opus" type="audio/ogg; codecs=opus"><source src="/audio/small-home-automations/index.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio><a href="/audio/small-home-automations/index.mp3" download class="text-xs font-mono mt-1 inline-block hover:underline" style="color: var(--color-accent);">Download audio</a></div><figure itemprop="image" itemscope itemtype="https://schema.org/ImageObject" class="mb-6"><picture><source type="image/webp" srcset="/images/control_ux.webp"><img itemprop="url contentUrl" src="/images/control_ux.png" alt="Running on a openwrt router with minimal amount of code as possible." width="800" height="600" class="rounded-md w-full object-cover" loading="eager" fetchpriority="high" decoding="async"></picture><figcaption itemprop="caption" class="text-xs mt-1 text-center" style="color: var(--color-text-muted);">Running on a openwrt router with minimal amount of code as possible.</figcaption></figure></header><section itemprop="articleBody" class="prose prose-invert max-w-none"><p>TLDR; alternative to home assistant, I built a small home automation using off-the-shelf parts and a dashboard using simple html/js. <a href="https://gist.github.com/skittleson/5027ed28c908b4426e07b6cf8eca8e9f">Full github gist</a></p>
+<p><strong>What was done:</strong> A router running OpenWrt + MQTT is enough: no server, no Pi, no cloud. Tasmota rules handle most logic on the devices themselves. 50MB of storage forced me to use Lua instead of Python, which worked fine. Everything is modular: swap a switch, change a rule, done.</p>
+<p>I built a home automation system that runs entirely a router with 50MB of storage and no cloud services (Tailscale was an exception). It’s been running for 2 months. The goal was a “hands off” experience to a single user for lights, fans, vacuum, air quality. All working without asking the user to do anything other then going to a simple html web app.</p>
+<h2 id="things-to-automate">Things to automate</h2>
+<ul>
+<li>light switches (on a sunset, off at midnight)</li>
+<li>fan switches (never on too long to prevent burn out)</li>
+<li>vacuum (its Tuya device but it has local access)</li>
+<li>smart plugs</li>
+<li>ceiling fans</li>
+<li>remote access to all of this</li>
+<li>human presence</li>
+</ul>
+<h2 id="how-are-we-going-to-do-all-of-this">How are we going to do all of this</h2>
+<p>To be honest, I know some of this will be hacky but that’s okay to us get moving in the right direction. Here is the part list.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component</th><th>Purpose</th><th>Buy</th></tr></thead><tbody><tr><td><a href="https://www.amazon.com/dp/B0CP7S3117?tag=dctm-20">GL.iNet Flint 2 router</a></td><td>Runs OpenWrt + MQTT broker locally</td><td><a href="https://www.amazon.com/dp/B0CP7S3117?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B0DP6NKJ5B?tag=dctm-20">Martin Jerry smart switches</a></td><td>Tasmota-loaded ESP32 light/fan switches</td><td><a href="https://amzn.to/49xMQnw">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B08TNF4835?tag=dctm-20">Sonoff S31 smart plugs</a></td><td>Power watchdog for the cable modem</td><td><a href="https://www.amazon.com/dp/B08TNF4835?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4pQVtk9">Cheap tuya vacuum</a></td><td>To clean the floor</td><td><a href="https://amzn.to/4pQVtk9">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4zcyjcj">Cheap Tablet</a></td><td>Mounted to wall for dashboard</td><td><a href="https://amzn.to/4zcyjcj">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4g7vYaJ">Fan humidity switches</a></td><td>Trigger when humidity is too hight</td><td><a href="https://amzn.to/4g7vYaJ">Amazon</a></td></tr></tbody></table>
+<p>Openwrt router from gl.net (flint 2.). Its a  Only 50mb of space so I have to budget it. Some i’m using mosquito mqtt package for for retaining messages, authorization and message deliveries. Tailscale for remote access and health monitoring.</p>
+<p>Tasmota is prefect for offline access so i’m using some Martin Jerry switches preloaded with it since these are easy to install. Mostly esp32 devices.  I dont need to think too much here on setup and have a ton of local compute now. I ordered the dimmers for a few rooms then rest were typically switches.  There was one spot i wanted a <a href="https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/">4-way-switch but i ran into problems</a>. However, I did get to work even with a few quirks. It was done over mqtt when a light turns off to send a message to the other switch.</p>
+<p>Using Sonoff S31 smart plugs to be a watch dog for the cable modem.  That thing can be flaky and requires a hard reboot from time to time. I have no idea why, so i have a smart plug that is always on (PowerOnState 1 with Tasmota in case it restarts). Then a small watchdog script on the router that checks the internet connection. I can see the speed in the dashboard. If it looks like the device is malfunctioning, i can reboot it. I have a smart plug running tasmota that once it’s turned off, it turns back on in 3 seconds. Simple and effective in case someone pushes the button.</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Rule1 ON Power1#State=0 DO SetPower1 1 IN 3 ENDON</span></span>
+<span class="line"><span>Rule1 1</span></span></code></pre>
+<h3 id="mqtt-server">MQTT Server</h3>
+<p>I really needed a durable message queue.  MQTT is easy and has native support with Tasmota. Works good enough but here is a full breakdown on the setup if your interested.</p>
+<details>
+    <summary>Full AI generated guide for mqtt setup on openwrt router</summary>
+<h4 id="platform">Platform</h4>
+<ul>
+<li>OpenWrt <code>23.05-SNAPSHOT</code> (TIP-devel build), <code>ipq60xx/generic</code>, aarch64</li>
+<li>Broker runs directly <strong>on the router itself</strong> — no separate Pi/server</li>
+</ul>
+<h4 id="install-opkg">Install (opkg)</h4>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">opkg</span><span style="color:#032F62;--shiki-dark:#98C379"> update</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">opkg</span><span style="color:#032F62;--shiki-dark:#98C379"> install</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto-ssl</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto-client-ssl</span><span style="color:#032F62;--shiki-dark:#98C379"> luci-app-mosquitto</span></span></code></pre>
+<p>This pulls in <code>libmosquitto-ssl</code> as a dependency. Installed versions:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Package</th><th>Version</th></tr></thead><tbody><tr><td>mosquitto-ssl</td><td>2.0.18-2</td></tr><tr><td>mosquitto-client-ssl</td><td>2.0.18-2</td></tr><tr><td>libmosquitto-ssl</td><td>2.0.18-2</td></tr><tr><td>luci-app-mosquitto</td><td>git-25.088.25299-77109ee</td></tr></tbody></table>
+<h4 id="config--uci-managed-not-raw-mosquittoconf">Config — UCI-managed (not raw mosquitto.conf)</h4>
+<p><code>luci-app-mosquitto</code> drives Mosquitto through UCI (<code>/etc/config/mosquitto</code>,
+<code>option use_uci '1'</code>), NOT by hand-editing <code>/etc/mosquitto/mosquitto.conf</code>.
+The raw conf file just has stock comments + one injected <code>listener 1883 0.0.0.0</code> line — the real config lives here:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>config mosquitto 'mosquitto'</span></span>
+<span class="line"><span>    option log_dest 'stderr stdout syslog'</span></span>
+<span class="line"><span>    option allow_anonymous '1'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>config persistence 'persistence'</span></span>
+<span class="line"><span>    option persistence '1'</span></span>
+<span class="line"><span>    option location '/etc/mosquitto/data/'</span></span>
+<span class="line"><span>    option file 'mosquitto.db'</span></span>
+<span class="line"><span>    option autosave_interval '30'</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>config listener 'default'</span></span>
+<span class="line"><span>    option port '1883'</span></span>
+<span class="line"><span>    option host '0.0.0.0'</span></span>
+<span class="line"><span>    option protocol 'mqtt'</span></span></code></pre>
+<p>Edit via LuCI (<code>luci-app-mosquitto</code> page) or <code>uci set mosquitto.mosquitto.allow_anonymous='1'; uci commit mosquitto; /etc/init.d/mosquitto restart</code>.</p>
+<h4 id="enable-at-boot">Enable at boot</h4>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">/etc/init.d/mosquitto</span><span style="color:#032F62;--shiki-dark:#98C379"> enable</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # creates /etc/rc.d/S80mosquitto symlink</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">/etc/init.d/mosquitto</span><span style="color:#032F62;--shiki-dark:#98C379"> start</span></span></code></pre>
+<h4 id="verify">Verify</h4>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">/etc/init.d/mosquitto</span><span style="color:#032F62;--shiki-dark:#98C379"> status</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # -> running</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">netstat</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -tlnp</span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> |</span><span style="color:#6F42C1;--shiki-dark:#61AFEF"> grep</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 1883</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">      # -> 0.0.0.0:1883 and :::1883, mosquitto</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">mosquitto_sub</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -h</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 192.168.22.1</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -t</span><span style="color:#032F62;--shiki-dark:#98C379"> 'test/#'</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -v</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> &#x26;</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">mosquitto_pub</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -h</span><span style="color:#005CC5;--shiki-dark:#D19A66"> 192.168.22.1</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -t</span><span style="color:#032F62;--shiki-dark:#98C379"> 'test/topic'</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -m</span><span style="color:#032F62;--shiki-dark:#98C379"> hello</span></span></code></pre>
+<h3 id="️-known-gap--no-auth-no-tls">⚠️ Known gap — no auth, no TLS</h3>
+<ul>
+<li><code>allow_anonymous '1'</code> — any device on the LAN can publish/subscribe to
+any topic, no username/password</li>
+<li>SSL variant of mosquitto is installed but <strong>not configured</strong> — only the
+plain <code>1883</code> listener exists, no <code>8883</code>/TLS listener, no cert/key set</li>
+<li>No password file (<code>password_file</code>), no ACL file</li>
+<li>No explicit firewall rule for 1883 — relies on default OpenWrt
+LAN-input-accept; the port is not blocked but also not intentionally
+opened</li>
+</ul>
+<p>Given this router also drives the Tasmota switches (hallway/bathroom/exterior
+lights, RF fan control) via MQTT, anonymous+no-TLS means any device on the
+WiFi can toggle those. To lock down:</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">opkg</span><span style="color:#032F62;--shiki-dark:#98C379"> install</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto-client-ssl</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # already installed</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">touch</span><span style="color:#032F62;--shiki-dark:#98C379"> /etc/mosquitto/pwfile</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">mosquitto_passwd</span><span style="color:#005CC5;--shiki-dark:#D19A66"> -b</span><span style="color:#032F62;--shiki-dark:#98C379"> /etc/mosquitto/pwfile</span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> &#x3C;</span><span style="color:#032F62;--shiki-dark:#98C379">use</span><span style="color:#24292E;--shiki-dark:#ABB2BF">r</span><span style="color:#D73A49;--shiki-dark:#ABB2BF">></span><span style="color:#D73A49;--shiki-dark:#ABB2BF"> &#x3C;</span><span style="color:#032F62;--shiki-dark:#98C379">passwor</span><span style="color:#24292E;--shiki-dark:#ABB2BF">d</span><span style="color:#D73A49;--shiki-dark:#ABB2BF">></span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">uci</span><span style="color:#032F62;--shiki-dark:#98C379"> set</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto.mosquitto.allow_anonymous='0'</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">uci</span><span style="color:#032F62;--shiki-dark:#98C379"> set</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto.default.password_file='/etc/mosquitto/pwfile'</span><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic">   # or a listener-scoped option per luci-app-mosquitto's schema</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">uci</span><span style="color:#032F62;--shiki-dark:#98C379"> commit</span><span style="color:#032F62;--shiki-dark:#98C379"> mosquitto</span></span>
+<span class="line"><span style="color:#6F42C1;--shiki-dark:#61AFEF">/etc/init.d/mosquitto</span><span style="color:#032F62;--shiki-dark:#98C379"> restart</span></span></code></pre>
+</details>
+<h3 id="air-quality-and-mold-prevention">Air Quality and Mold Prevention</h3>
+<p>Other issue was the bathroom shower drain is an open drain. It can build up a smell in that space if the exhaust is not turned on. I’m sure there is a better way to prevent that but I did an approach that makes sense to me: turns the fan on for 5 mins every hour then turns it off. if you turn the fan on, it resets the timer to turn it on again in another hour. Kind of neat rule there.</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Rule1 ON Rules#Timer=2 DO Backlog Power1 1; RuleTimer1 300; RuleTimer2 3600 ENDON ON Rules#Timer=1 DO Power1 0 ENDON</span></span></code></pre>
+<p>Then enable it via <code>rule1 1</code>. A cool side affect of this is if someone turns it on 30 mins into the hour cycle, it resets.</p>
+<p>The vanity also has a fan with a humidity detection so it has a rule for humidity but i still want to make sure it turns off after 20 minutes of being on.</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Rule2 ON Power1#State=1 DO RuleTimer1 1200 ENDON ON Rules#Timer=1 DO Power1 0 ENDON ON Power1#State=0 DO RuleTimer1 0 ENDON</span></span></code></pre>
+<p>Then enable it via <code>rule2 1</code>.  I have a shower fan that will also need the same treatment since this is already on the vanity which im not sure if it should ever trigger. Basically states that if the humdity is over 80, turn on the fan else under 75, turn it off.</p>
+<pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ON HDC1080#Humidity>80 DO power 1 ENDON ON HDC1080#Humidity&#x3C;75 DO power 0 ENDON</span></span></code></pre>
+<p>Last thing, there is paint you can get that prevents mold. I’d recommend it once everything has been cleaned extremely well.  One more idea that has worked out well was auto closing door hinges. Keeps those little rooms isolated and easier to control.</p>
+<h2 id="remote-access">Remote access</h2>
+<p>I’m using tailscale to monitor this router remotely but don’t want to see all the devices on my tailscale network. However, i do want to access the devices sometimes. My approach is to login to the router when needed to make it part of my active network, ssh proxy into the network, or considering a simple proxy on the router to access the devices.</p>
+<h2 id="where-is-this-at-project">Where is this at project</h2>
+<p>I’ve done a lot with proven hardware that can be swapped out at almost any given time. I only have 50mb of space on this openwrt router which means python is pretty tight to run.  It was fun restriction to push boundaries on. Using lua script instead of python version was also tricky since conversion wasn’t always straightforward.  I did have to use python lib to sniff the network for Tuya vacuum keys to begin with tho.</p>
+<p>It’s been running for 2 months with zero downtime.</p>
+<h2 id="the-rules">The Rules</h2>
+<p>After a decade of doing home automatons, i’ve settled on these rules (mostly) (Even give a few presentations on this!). You don’t want to be in situation where is grandma/grandpa/parents are calling you to turn on  a light.  Applying these rules to this project with constraints I had was difficult.</p>
+<h3 id="must-rules">Must rules</h3>
+<ul>
+<li><strong>Preserve existing functionality if it’s the norm.</strong> If a light switch already works, automation shouldn’t break that first way of using it.</li>
+<li><strong>IoT devices must operate without the internet.</strong> If the network dies, your lights should still turn on. Bonus if they work without power too.</li>
+<li><strong>Must be flexible in configuration.</strong> Rigid setups break when life changes. You should be able to adjust behavior without rewriting everything.</li>
+</ul>
+<h3 id="should-rules">Should rules</h3>
+<ul>
+<li><strong>Do periodic reviews of automations.</strong> What made sense six months ago may not make sense now. Revisit rules regularly.</li>
+<li><strong>When breaking a rule, make it exceptional.</strong> If a must rule is violated, document why and make it clear that the exception is deliberate, not accidental.</li>
+</ul>
+<h3 id="extended-rules">Extended rules</h3>
+<ul>
+<li><strong>Have an API when using cloud-connected devices, with logs.</strong> If you rely on a cloud service, demand access and visibility. No black boxes.</li>
+<li><strong>Keep common configurations in one location.</strong> Don’t scatter settings across three apps. One source of truth makes changes painless.</li>
+<li><strong>Provide multiple ways to interact with the smart home.</strong> App, Alexa, QR codes, NFC tags — give people options, don’t lock them into one interface.</li>
+<li><strong>Identify common tasks that can become routines.</strong> If you’re doing the same sequence of actions, automate it into a routine.</li>
+<li><strong>Use pub/sub events such as MQTT.</strong> Decouple devices from each other. Point-to-point systems create dependency chains that break.</li>
+<li><strong>Only use batteries if the device can last a year or more.</strong> Batteries are a maintenance tax. If a device dies in three months, it’s not worth the convenience.</li>
+</ul>
+<h2 id="conclusion-with-insights">Conclusion with Insights</h2>
+<p>The tight 50MB restriction forced me to use Lua instead of Python, which was a good constraint. Most of what people buy for home automation a server, a Raspberry Pi, and/or a cloud account. A router, off-the-shelf devices, and a handful of Tasmota rules does the job. When it breaks, I can reconfigure everything in under an hour. That’s the part I like most: easy to swap, easy to remove.</p></section></article><hr class="my-8"><p class="text-sm font-mono" style="color: var(--color-text-muted);">See something inaccurate or need more detail? <a href="https://github.com/skittleson/DoCodeThatMatters/issues/new?title=Post%20-%20Smart%20Home%20That%20Runs%20on%20a%20Router%2C%20No%20Cloud%20Needed" style="color: var(--color-accent);" class="underline">Submit a Pull Request</a> to help me out!</p><p class="text-sm font-mono mt-2"><a href="https://www.buymeacoffee.com/skittles" style="color: var(--color-accent);" class="hover:underline">Buy me a ☕ to support!</a></p></div><!-- Sidebar --><aside class="hidden lg:block lg:col-span-1 mt-8 lg:mt-0"><h3 class="text-xs font-bold font-mono mb-3 uppercase tracking-wide" style="color: var(--color-text);">Related Posts</h3><ul class="space-y-3 list-none p-0 m-0"></ul><h3 class="text-xs font-bold font-mono mt-6 mb-3 uppercase tracking-wide" style="color: var(--color-text);">Latest Posts</h3><ul class="space-y-3 list-none p-0 m-0"><li><a href="/burst-superres/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">I Built Photo Super-Resolution Without AI</a><time datetime="2026-11-09T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Nov 2026</time></li><li><a href="/home-automation-overnight-success/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Smart home devices should work without the internet</a><time datetime="2026-10-28T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/strata-qwen3-8-flash-next-rtx-3090/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Strata on an RTX 3090 Ti: Research and Config Guide for Qwen3.8-Flash-Next</a><time datetime="2026-10-15T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Oct 2026</time></li><li><a href="/sony-a6000-a6400-research/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">Sony A6000/A6400 Hacks, Mods and Community Resources</a><time datetime="2026-08-29T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li><li><a href="/running-local-llms-for-coding/" class="text-xs font-mono leading-snug block hover:underline" style="color: var(--color-accent);">How I Run Local LLMs for Coding (and Why the Quant Matters)</a><time datetime="2026-08-19T00:00:00.000Z" class="text-xs font-mono block mt-0.5" style="color: var(--color-text-muted);">Aug 2026</time></li></ul></aside></div></main><footer class="mt-12 py-6" style="border-top: 1px solid var(--color-border);"><div class="container mx-auto px-4 text-center text-sm font-mono" style="color: var(--color-text-muted);"><div class="flex items-center justify-center gap-4"><a href="/terms/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Terms</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/privacy/" class="transition-colors hover:underline" style="color: var(--color-text-muted);">Privacy</a><span aria-hidden="true" style="color: var(--color-text-muted);">&middot;</span><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a></div><p>&copy; 2026 Do Code That Matters &mdash; Spencer Kittleson</p></div></footer></body></html>
