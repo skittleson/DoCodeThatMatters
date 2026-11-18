@@ -9,27 +9,6 @@ Sony A6000/A6400 series: Part 1: Modernization (/hacking-sony-a6000-for-moderniz
 As in my other posts, i've made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts (Part 1 (/hacking-sony-a6000-for-modernization/)) and 2 (Part 2 (/hacking-sony-a6000-more/)): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.
 So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.
 
-<div class="guide-card" style="margin:2rem 0;padding:1.25rem 1.5rem 0.5rem;border:1px solid var(--color-accent, #9da2ff);border-radius:12px;background-color:var(--color-surface, #1e262f);box-shadow:0 0 0 4px rgba(157,162,255,0.10);">
-<span style="display:inline-block;padding:2px 10px;border:1px solid var(--color-accent, #9da2ff);border-radius:999px;color:var(--color-accent, #9da2ff);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Early release</span>
-<h2 id="get-the-full-field-guide" style="margin-top:0.75rem;">Get the full field guide</h2>
-
-<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
-
-This build is chapter 9 of my field guide for the A6000 and A6400. The guide version has the corrected script paths, the 5 byte wire format and compression sizes I measured on a real a6400 photo.
-
-- Getting photos off the camera fast without the Pi: gphoto2, the postview hack, and card renaming
-- OpenMemories-Tweak on the A6000 and the language unlock on the A6400
-- Burst super-resolution, with a free desktop app (Burst Super-Res) to do the merge
-- Only in the guide: the chapter 2 firmware backup and risk notes, and a troubleshooting index for the errors people hit most, like "No Tweaks found" and the A6400 dropping into charging mode
-
-It launched at $39. During the early release it's $19, or $14 if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
-
-<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $19</a>
-
-Full disclosure: this is my own guide, and the money comes to me. If it doesn't help you, reply to the delivery email within 30 days and I'll refund you. Some of the mods in it are irreversible, so read the risk notes before you start.
-
-</div>
-
 Gear for This Build
 
 | Gear | Purpose | Buy |

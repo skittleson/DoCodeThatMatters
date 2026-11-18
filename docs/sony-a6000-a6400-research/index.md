@@ -4,27 +4,6 @@ If you want a starting point, read [this post first about modernization of this 
 
 **Sony A6000/A6400 series:** [Part 1: Modernization](/hacking-sony-a6000-for-modernization/) · [Part 2: More Hacks](/hacking-sony-a6000-more/) · [Part 3: Tethered Raspberry Pi](/sony-camera-part3/) · Research & Community Resources (this post) · [Burst Super-Res](/burst-superres/)
 
-<div class="guide-card" style="margin:2rem 0;padding:1.25rem 1.5rem 0.5rem;border:1px solid var(--color-accent, #9da2ff);border-radius:12px;background-color:var(--color-surface, #1e262f);box-shadow:0 0 0 4px rgba(157,162,255,0.10);">
-<span style="display:inline-block;padding:2px 10px;border:1px solid var(--color-accent, #9da2ff);border-radius:999px;color:var(--color-accent, #9da2ff);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Early release</span>
-<h2 id="get-the-full-field-guide" style="margin-top:0.75rem;">Get the full field guide</h2>
-
-<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
-
-This page is the link dump. It has every repo, thread and video I found, so it's good for finding where things are. The field guide is the version I'd hand a friend. I checked it against Sony's own Help Guides and the tool repos, and I wrote out each step.
-
-- Chapter 2 comes first: the firmware backup and risk notes, so you know what you could lose before you touch anything
-- Step-by-step chapters for each hack listed here, ordered from safe to irreversible: OpenMemories-Tweak, the A6400 language unlock, clean HDMI, timelapse, power, S-Log, IR and astro conversion
-- Sony's burst settings for both cameras, then a merge in [Burst Super-Res](https://github.com/skittleson/burst-superres), the free desktop app I built for it
-- A troubleshooting index for the errors people hit most, like "No Tweaks found" and the A6400 dropping into charging mode
-
-It launched at $39. During the early release it's **$19**, or **$14** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
-
-<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $19</a>
-
-Full disclosure: this is my own guide, and the money comes to me. If it doesn't help you, reply to the delivery email within 30 days and I'll refund you. Some of the mods in it are irreversible, so read the risk notes before you start.
-
-</div>
-
 ## 0. Recommended Gear for A6000/A6400 Mods
 
 Things that make the mods and sessions in this post actually usable day-to-day:
@@ -76,7 +55,7 @@ Steps (high-level):
 5. Apply language unlock patch directly to settings file
 6. Reboot camera
 
-> Chapter 4 of [my field guide](https://dctmlab.taila665d5.ts.net/) has this unlock written out: the Zadig driver swap, the PowerShell commands for service mode and the unlock script, and the fix when PMCA-RE says "No Tweaks found".
+> This unlock is written out in the guide chapter on the A6400: the Zadig driver swap, the PowerShell commands for service mode and the unlock script, and the fix when PMCA-RE says "No Tweaks found".
 
 **Additional coverage:** This unlock has been confirmed working on a much wider range of newer Alpha bodies than just the A6400/a6600 — the Reddit thread "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)" <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a> reports success on A6400, A6600, A7C, A7M3, A7RM3, and A7RM4. A February 2025 YouTube tutorial ("Unlock ALL Languages on Sony A7III, A7IV, A7C, 6400, 6600 & More!") demonstrates the same method and notes it also removes the 30-minute record limit — a step-by-step service-mode walkthrough of unlocking the language menu on region-locked Alpha bodies, download the two files, enter service mode, and apply the patch: [Unlock all languages on Sony A7III / A7IV / A7C / A6400 / A6600 (Feb 2025 tutorial)](https://www.youtube.com/watch?v=WM_PoshgLPY)
 
@@ -232,7 +211,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 - **Warranty:** Voided by any internal mod
 - **Risk:** Sensor is fragile. Professional modding recommended if not experienced
 
-> If you're doing the A6000 conversion yourself, chapter 13 of [my field guide](https://dctmlab.taila665d5.ts.net/) has the teardown order, the shim gotcha that costs you infinity focus, and the white balance fix afterwards.
+> If you're doing the A6000 conversion yourself, my full teardown write-up has the teardown order, the shim gotcha that costs you infinity focus, and the white balance fix afterwards.
 
 ---
 
@@ -611,7 +590,7 @@ Because of this, the classic A6000 apps (Time-lapse, Smart Remote Control, Touch
 5. **Sensor damage:** IR mod requires careful disassembly — sensor is fragile
 6. **No official support:** All hacks are unofficial and unsupported by Sony
 
-> Back up your firmware before you try anything on this page. Chapter 2 of [my field guide](https://dctmlab.taila665d5.ts.net/) has the commands for a non-destructive firmware dump on the A6000, plus the risk notes for every mod.
+> Back up your firmware before you try anything on this page. The guide has the commands for a non-destructive firmware dump on the A6000, plus the risk notes for every mod.
 
 **If you break your camera, you get to keep both pieces.** — OpenMemories-Tweak README
 

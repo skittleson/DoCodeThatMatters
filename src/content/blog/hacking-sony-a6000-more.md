@@ -23,27 +23,6 @@ priority: 0.9
 
 This is a smaller continuation of the previous blog post on [hacking the Sony A6000 camera](/hacking-sony-a6000-for-modernization/) (come back for more updates).
 
-<div class="guide-card" style="margin:2rem 0;padding:1.25rem 1.5rem 0.5rem;border:1px solid var(--color-accent, #9da2ff);border-radius:12px;background-color:var(--color-surface, #1e262f);box-shadow:0 0 0 4px rgba(157,162,255,0.10);">
-<span style="display:inline-block;padding:2px 10px;border:1px solid var(--color-accent, #9da2ff);border-radius:999px;color:var(--color-accent, #9da2ff);font-size:0.75rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;">Early release</span>
-<h2 id="get-the-full-field-guide" style="margin-top:0.75rem;">Get the full field guide</h2>
-
-<a href="https://dctmlab.taila665d5.ts.net/" aria-label="Get the Sony A6000 and A6400 Hacking Guide"><img src="/images/sony-guide-early-release.webp" alt="Pages from the Sony A6000 and A6400 Hacking Guide: the cover, the chapter 1 hack matrix, and the chapter 7 burst merge walkthrough" width="1600" height="900" decoding="async" style="width:100%;height:auto;border-radius:8px;" /></a>
-
-The free apps, the USB-C battery hack and the FTP uploader from this post all made it into my field guide for the A6000 and A6400, along with what I learned since.
-
-- Timelapse on both bodies: the A6400's built-in menu, and app or trigger options for the A6000
-- Power options compared: the AC-PW20 dummy battery, battery grips and power banks, with the real charge math
-- The discontinued PlayMemories apps, and where the archived copies live now that Sony's store is gone
-- Only in the guide: the chapter 2 firmware backup and risk notes, and a troubleshooting index for the errors people hit most, like "No Tweaks found" and the A6400 dropping into charging mode
-
-It launched at $39. During the early release it's **$19**, or **$14** if you tick the box promising to send me feedback after you've tried it (honor system). It's a 25-page PDF, emailed as soon as you pay.
-
-<a href="https://dctmlab.taila665d5.ts.net/" style="display:inline-block;margin:8px 0;padding:10px 18px;border-radius:8px;background:var(--color-accent,#9da2ff);color:#1a2129;font-weight:700;text-decoration:none;">Get the guide for $19</a>
-
-Full disclosure: this is my own guide, and the money comes to me. If it doesn't help you, reply to the delivery email within 30 days and I'll refund you. Some of the mods in it are irreversible, so read the risk notes before you start.
-
-</div>
-
 ## Free Apps
 
 To install time-lapse and an FTP Uploader with some additional hacks, this open source project was awesome https://github.com/ma1co/Sony-PMCA-RE. Download the executable from the releases, then it will provide you on the applications to install. I would also recommend the OpenMemories:Tweaks app as it allows changing some limits on the camera.
