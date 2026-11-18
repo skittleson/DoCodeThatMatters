@@ -41,7 +41,7 @@ For an agent workload, where every turn re-sends a huge prompt and cache hits ar
 | Memory | 128GB LPDDR5X unified |
 | Disk | 2TB NVMe |
 | OS | Debian 13 (DietPi), kernel 7.2.12 from backports |
-| Network | Wired only, 192.168.4.227 |
+| Network | Wired only |
 | Power | Balanced mode, 85W sustained (measured flat 83-86W under load) |
 
 I left power mode at 85W. A published test on this exact board found 120W buys ~7% on prompt reading and 0% on generation, because generation is memory-bandwidth bound, not power bound. Thermals under sustained load run 84-90 °C with the GPU clocked 2.1-2.8 GHz against its 85W limit, which is normal for these chips.
@@ -81,7 +81,7 @@ Gufo refused to load its official Q4_K_M quant: `tensor ... has unsupported form
 3. Removed `nextn_predict_layers` and `attention.recurrent_layers`, and trimmed `attention.compress_ratios` from 49 to 48 entries. ThinkingCap embeds its MTP head as `blk.48` inside the weights; Gufo uses a separate sidecar draft model instead, so the embedded head would double-count.
 4. Verified the result matched the Unsloth file name-for-name, type-for-type, shape-for-shape.
 
-The A/B was close enough that I switched the same afternoon. The intermediate downloads (284GB) got deleted. The converted file lives beside a copy of the stock Unsloth quant as rollback, and one `systemctl restart` switches back.
+The A/B was close enough that I switched the same afternoon. The converted file lives beside a copy of the stock Unsloth quant as rollback, and one `systemctl restart` switches back.
 
 For the MTP draft I use a shared Q8_0 head as a sidecar. On llama.cpp I swept lookahead counts and 3 won (44.3 t/s against 39-43 for the others). Gufo picks lookahead on its own.
 
