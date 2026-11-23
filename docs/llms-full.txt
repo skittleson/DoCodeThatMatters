@@ -1425,6 +1425,8 @@ Both are the kind of thing you only find by testing on your own hardware with yo
 ## BLE Devices Around My House Are Sharing Everything
 URL: https://docodethatmatters.com/i-scanned-the-ble-devices-around-my-house/ | Date: 2026-06-17
 
+A 2017 build on a Raspberry Pi walks through the basics — the original 2017 Raspberry Pi proximity build (/raspberry-pi-bluetooth-proximity/) — and this post builds on that with a persistent scanner.
+
 Many devices (such as a tv) only broadcast Bluetooth low energy while they are on then disappears when it turns off. That means anyone standing outside your house with a laptop can tell when you're watching TV, when you get up, and when you go to bed. No pairing, no password, nothing to hack.
 
 I built a tool to explore exactly this: bluetooth-wos (https://github.com/skittleson/bluetooth-wos), a terminal scanner (inspired by DEFCON's Wall of Sheep) that sort of fingerprints nearby BLE devices past their randomized MACs, estimates their distance from signal strength, and uses known device to calibrate the rest. This post walks through how it works and how to stop your own devices from leaking this stuff.
@@ -3049,20 +3051,22 @@ References
 - https://msdn.microsoft.com/en-us/library/ff649310.aspx (https://msdn.microsoft.com/en-us/library/ff649310.aspx)
 - https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP (https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 
-## Raspberry Pi Bluetooth Proximity Detector - A Simple Guide
+## How Do I Detect Nearby Bluetooth Devices with a Raspberry Pi?
 URL: https://docodethatmatters.com/raspberry-pi-bluetooth-proximity/ | Date: 2017-05-26
+
+A quick 2017-era build, but the same steps still work today — see what a real scan of my house found (/i-scanned-the-ble-devices-around-my-house/) for a modern 2026 take with bleak and a persistent scanner.
 
 Let's create a Bluetooth proximity detector using a Raspberry Pi, USB Bluetooth adapter, and a phone with Bluetooth enabled. This tutorial will guide you through the process of detecting a known Bluetooth device within range of the Raspberry Pi, without the need for pairing the devices.
 
-Step 1. Ensure USB Bluetooth is working on the Raspberry Pi.  
+Step 1. How do I confirm USB Bluetooth is working on the Raspberry Pi?  
 Install   
-Check it Bluetooth status with this command:   
+Check the Bluetooth status with this command:   
 Should return the device's Bluetooth address: 
 
-Step 2. Getting the MAC address of a device.
+Step 2. How do I get the MAC address of a Bluetooth device?
 On an Android Phone version 6.0.1, Settings > System > About device > Status > Bluetooth address.
 
-Step 3. Test Connection to Client Device  
+Step 3. How do I confirm a device is within range?  
 Command:   
 Result:  
 Checkout some of the additional commands in this blog post (/research-bluetooth-proximity)

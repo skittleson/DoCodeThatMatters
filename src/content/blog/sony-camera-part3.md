@@ -1,5 +1,5 @@
 ---
-title: Tethered Raspberry Pi for Modern Camera Functionality 
+title: Tethered Raspberry Pi for Modern Camera Functionality
 keywords:
   - Sony a6400
   - Sony a6000
@@ -11,11 +11,19 @@ keywords:
   - copyparty
 date: 2024-06-28
 modified: 2026-11-06
-description: How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing.
+description: Tether a Sony a6400 to a Raspberry Pi Zero 2 W — realtime capture, server-side JPEG compression, and zero-config LAN browsing, no laptop required.
 image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6400 tethered to Raspberry Pi
 priority: 0.9
+faq:
+  - q: "How do I tether a Sony a6400 camera to a Raspberry Pi without a laptop?"
+    a: "Drop the files over ssh onto a Raspberry Pi Zero 2 W with a micro-USB OTG cable and the camera goes into PC Remote mode. gphoto2 (rebuilt from source, 2.5.32+) streams realtime events and full images, which the phone or LAN browser picks up without any laptop in the loop — no ssh, no app, no manual cables."
+  - q: "How do I browse photos from a tethered Sony camera with zero config?"
+    a: "Install copyparty with `bash scripts/copyparty-setup.sh`. That turns the Pi into a full HTTP file browser at `http://<pi-ip>:8080` with thumbnails and a grid view — no nginx, no Apache, no config files, no setup. Default login is admin/admin and it is meant for booths, events, or a bigger screen without Bluetooth."
+  - q: "How can I send photos from a Sony a6400 to a phone over Bluetooth with low overhead?"
+    a: "The Pi runs a custom 5-byte-header Bluetooth binary protocol (1-byte opcode + 4-byte big-endian length + payload) instead of OBEX/OPP or HTTP over PAN/DUN. Commands are LIST, GET, WAIT (pushes a 0x83 NOTIFY for each new capture) and error responses; server-side Pillow compression scales a 6000×3376 a6400 shot from 11.4 MB down to a 28 KB quality-3 preview in under 10 seconds."
 ---
+
 
 ## TLDR; 
 

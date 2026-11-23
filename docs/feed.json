@@ -180,7 +180,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 1774
+      "word_count": 1804
     },
     {
       "id": "https://docodethatmatters.com/the-infinite-echo-state-mirror-bug/",
@@ -265,7 +265,7 @@
       "id": "https://docodethatmatters.com/sony-camera-part3/",
       "url": "https://docodethatmatters.com/sony-camera-part3/",
       "title": "Tethered Raspberry Pi for Modern Camera Functionality",
-      "summary": "How I built a laptop-free tethered camera setup on a Raspberry Pi, with a custom Bluetooth binary protocol, server-side JPEG compression, and zero-config LAN browsing.",
+      "summary": "Tether a Sony a6400 to a Raspberry Pi Zero 2 W — realtime capture, server-side JPEG compression, and zero-config LAN browsing, no laptop required.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2024-06-28T00:00:00.000Z",
       "date_modified": "2026-11-06T00:00:00.000Z",
@@ -696,11 +696,11 @@
     {
       "id": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity/",
       "url": "https://docodethatmatters.com/raspberry-pi-bluetooth-proximity/",
-      "title": "Raspberry Pi Bluetooth Proximity Detector - A Simple Guide",
-      "summary": "Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.",
+      "title": "How Do I Detect Nearby Bluetooth Devices with a Raspberry Pi?",
+      "summary": "Build a Bluetooth proximity detector on a Raspberry Pi with hcitool and l2ping — detect nearby devices without pairing. Try it today.",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Raspberry-Pi-2-Bare-BR.jpg/330px-Raspberry-Pi-2-Bare-BR.jpg",
       "date_published": "2017-05-26T00:00:00.000Z",
-      "date_modified": "2023-01-25T00:00:00.000Z",
+      "date_modified": "2026-11-23T00:00:00.000Z",
       "tags": [
         "Bluetooth proximity detector",
         "Raspberry Pi",
@@ -713,7 +713,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 154
+      "word_count": 197
     }
   ]
 }

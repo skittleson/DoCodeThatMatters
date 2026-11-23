@@ -28,6 +28,8 @@ faq:
     a: "Many BLE devices only advertise while on and vanish when off (e.g. TVs), leaking when someone's home and when the house is quiet. AirTags and Tiles advertise their MAC for 15 minutes at a time. A persistent scanner can fingerprint devices past randomized MACs using RSSI, service/characteristic data and near-real-time RSSI, and a calibrated known device can anchor distance estimates."
 ---
 
+A 2017 build on a Raspberry Pi walks through the basics — [the original 2017 Raspberry Pi proximity build](/raspberry-pi-bluetooth-proximity/) — and this post builds on that with a persistent scanner.
+
 Many devices (such as a tv) only broadcast Bluetooth low energy while they are on then disappears when it turns off. That means anyone standing outside your house with a laptop can tell when you're watching TV, when you get up, and when you go to bed. No pairing, no password, nothing to hack.
 
 I built a tool to explore exactly this: [bluetooth-wos](https://github.com/skittleson/bluetooth-wos), a terminal scanner (inspired by DEFCON's Wall of Sheep) that sort of fingerprints nearby BLE devices past their randomized MACs, estimates their distance from signal strength, and uses known device to calibrate the rest. This post walks through how it works and how to stop your own devices from leaking this stuff.
