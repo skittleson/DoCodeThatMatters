@@ -17,6 +17,7 @@ const blog = defineCollection({
     draft: z.boolean().optional().default(false),
     consulting: z.boolean().optional().default(false),
     audio: z.boolean().optional().default(true),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
   }),
 });
 

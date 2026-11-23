@@ -143,7 +143,7 @@ The tool caught one person walking in and putting in earbuds at 23:59:
 - The LE advertiser rotated MAC 3× while approaching: 2.12 m → 2.02 m → 0.27 m
 - The classic Bluetooth audio profile lit up at the exact same second and identical 101-observation window as the final LE fingerprint — earbuds switched on and worn at the desk.
 
-How to protect yourself
+How Do You Protect Yourself from BLE Tracking?
 
 This section matters as much as the scanning. Reduce your exposure with the following concrete steps:
 

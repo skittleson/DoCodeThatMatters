@@ -42,7 +42,7 @@ The Tuya wrinkle
 My next idea was to mirror only on the physical button press, since an MQTT-driven relay change shouldn't generate a button event. Structurally loop-proof. Great plan, except the logs killed it too:
 One of these switches is a Tuya device. The ESP talks to a separate Tuya MCU over serial. There is no Button1#State. The button press and the commanded relay change both come back as the same TuyaReceived dpId 1 event. They are indistinguishable. So "only react to physical presses" isn't even expressible on that hardware. Dead end. Good thing I checked instead of writing the rule and assuming.
 
-The fix
+How Do You Fix the State-Mirror Echo?
 
 Once I understood the actual mechanism, the fix was almost embarrassingly small. The bug is that an incoming mirror command updates the relay but not VAR1. So fix that: don't let the peer write Power directly. Have it send an event, and have the receiver set VAR1 before moving the relay.
 That's the whole thing. When the SYNC event lands, the handler sets VAR1 = value first, then sets the relay. Now the resulting Power1#State equals VAR1, so the publish rule sees no change and stays quiet. The echo dies after exactly one hop. No timers, no debounce, no boot guard, and it works fine on the Tuya device because it's all just Power and MQTT.

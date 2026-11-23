@@ -19,6 +19,13 @@ alt: Scissors cutting an ethernet cable under the words No Internet, No Problem.
 imageWidth: 1500
 imageHeight: 844
 priority: 0.8
+faq:
+  - q: "Why should smart home devices work without the internet?"
+    a: "Because every core device should do its main job with the vendor's server or the internet unplugged. For this house, everything that matters runs on hardware owned by the owner — Tasmota on ESP8266/ESP32 boards, an MQTT broker, and Node-RED plus Grafana on a Raspberry Pi — with cloud services like Alexa secondary. If the internet is down, the switches all work like normal."
+  - q: "What is the rule about introducing a new way while the old way is still live?"
+    a: "Don't remove the old way while adding the new one. Keep the old path until the new way is proven, and only then swap it. This is rule two from the first talk, and one of the rules the author breaks most."
+  - q: "What does offline-first home automation look like?"
+    a: "Core stuff — turning things on and off, temperature and safety controls, and anything a guest must use without an app — works with the Wi-Fi or automation server shut down, and smart features never remove the dumb ones. The wall switch controls the light directly and lets automation flip it; a switch that only sends a request to the automation fails that bar."
 ---
 
 > **AI;DR:** I wrote the first draft, AI helped me edit and rewrite it, and I made the final pass. The rules, setups, and talks are my own.
@@ -27,7 +34,7 @@ priority: 0.8
 
 TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Check out each slide by slide.
 
-## Why local
+## Why Should Smart Home Devices Work Without the Internet?
 
 
 My Nest integration worked one day until it didn't.  They had changed the api (around the same time Google acquired them). I have a few more examples in these talks that show a samsung fridge and a grill controller that needs wifi to show temperature.  I don't/shouldn't need wifi and/or vendor service to interact with hardware.

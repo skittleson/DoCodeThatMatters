@@ -23,6 +23,13 @@ alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU 
 imageWidth: 1200
 imageHeight: 800
 draft: false
+faq:
+  - q: "Which quant should I use for a coding LLM on an RTX 3090 Ti?"
+    a: "Stick to k-quants like Q4_K_M or Q5_K_M on an Ampere GPU. i-quants (IQ4_XS) produced subtle garbage on Qwen3.8 (extra characters, Cyrillic swapped for Latin) that CPU-only runs did not. A Q4_K_M k-quant of the same model ran completely clean on the same GPU. Always test a new model by echoing an exact path ten times before trusting it with real work."
+  - q: "What flag stops local LLM repetition loops?"
+    a: "Use --presence-penalty 1.0. Testing presence_penalty values 0.6, 1.0 and 1.5 across five loop-prone prompt types at 1200 tokens each, only 1.0 gave 5 of 5 clean results with no side effects, while the recommended 1.5 started stopping early. Speed was identical across all three."
+  - q: "How fast is a 3090 Ti for local coding in 2026?"
+    a: "Roughly 50-95 tok/s generation depending on context and how predictable the text is. A Qwen3.8-27B-pi dense 27B with MTP draft runs ~95 tok/s at a 6.7K-token prompt and ~52 at 107K, with 1,509 tok/s prompt reading at 6.7K. MoE models are much faster: ~208 tok/s with MTP on a Gemma 4 26B-A4B."
 ---
 
 > **AI;DR** — This post was written with AI assistance from my own local model, then edited by me. The setup, tests, and numbers are all real.
@@ -109,7 +116,7 @@ Every one of those flags is doing something specific:
 - **`--alias Qwen3.8-27B-pi`**: the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
 - **`--host 0.0.0.0 --port 8080`** — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 
-## The Quant Type Quietly Broke Things
+## Which Quant Should You Use on a 3090 Ti?
 
 When [Unsloth](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs) shipped their Dynamic 3.0 quants for Qwen3.8, the pitch was great: more accuracy at the same file size. So I downloaded their `IQ4_XS` build and tested it.
 
@@ -121,7 +128,7 @@ Here is the part that took a second round to figure out: **it was the quant *typ
 
 The lesson: on an Ampere GPU, stick to **k-quants** (`Q4_K_M`, `Q5_K_M`, and friends). The i-quants (`IQ*`) squeeze into less VRAM, which is tempting, but they lean on kernels that are not always solid. I verify every new model with a dumb little test now — ask it to echo an exact path ten times and check the characters are right before I trust it with real work.
 
-## One Flag Fixed My Looping Problem
+## What Flag Stops Local LLM Repetition Loops?
 
 The other issue was repetition. In long agentic sessions the model would occasionally get stuck repeating itself. Short prompts were fine; long ones would eventually self-reinforce a pattern with nothing to break it.
 
@@ -189,7 +196,7 @@ The pi model is text-only on my box, since I don't load a vision projector (`--m
 }
 ```
 
-## Speed history: six months on one card
+## How Fast Is a 3090 Ti for Local Coding in 2026?
 
 I went back through my OpenCode sessions and pulled every benchmark I ran on the 3090 Ti. These aren't apples to apples. The prompts, lengths, and quants changed along the way. But the shape of it holds up: MoE models were fast and I kept leaving them, and every dense model was slow until speculative decoding showed up.
 

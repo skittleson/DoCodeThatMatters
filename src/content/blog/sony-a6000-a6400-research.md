@@ -18,7 +18,17 @@ image: /images/Sony-A6000-Sony-16-50mm.jpg
 alt: Sony a6000
 priority: 0.9
 audio: false
+faq:
+  - q: "Does OpenMemories-Tweak work on the Sony A6400?"
+    a: "No. The A6400 (CXD90045) has no PlayMemories app support, so OpenMemories-Tweak cannot install — installs fail with MTP error 0x2006, and Sony-PMCA-RE issue #381 confirms 'Tweak do not work on Sony a6400'. You can still unlock all languages on the A6400 through a service-mode workaround using Zadig driver swaps, confirmed working on the A6400, a6600, A7C, A7M3, A7RM3, and A7RM4."
+  - q: "How do I get clean HDMI output from a Sony A6000 or A6400?"
+    a: "Both cameras have it natively: MENU → Setup → HDMI Settings → HDMI Info. Display → OFF removes all overlays. The A6400 can also act as a USB webcam via Sony's official Imaging Edge Webcam software with no capture card. The A6000 is not listed in Imaging Edge, so the capture-card route (or the PMCA-HDMICam app installed via PMCA-RE) is its only webcam path."
+  - q: "Can the Sony A6000 shoot timelapse, or only the A6400?"
+    a: "The A6400 has a native built-in intervalometer (MENU → Camera Settings1 → Interval Shoot Func.) that shoots 1–9999 frames at 1–60 second intervals. The A6000 has no built-in intervalometer — you need the discontinued Sony PMCA Time-lapse app reinstalled via PMCA-RE, the open-source timelapse-sony Android WiFi app, the OpenMemories TimeLapse app, or a wired timer remote on the Multi/Micro USB terminal."
 ---
+
+The Sony A6000 is an Android-based mirrorless camera that still runs the full OpenMemories/PMCA modding toolchain, while the newer A6400 dropped Android app support and is modded mainly through USB service mode.
+
 
 
 TLDR; This is my research dump for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400). I own both and shoot with them all the time. An AI agent gathered most of these links and I reviewed them, so use this page to find things. The steps I actually tested are in the field guide below.
@@ -38,7 +48,7 @@ Things that make the mods and sessions in this post actually usable day-to-day:
 | [3-pack NP-FW50 replacement batteries](https://amzn.to/4h0uaAR) | High-capacity spares for timelapse/astro sessions away from an outlet (§5, §7) | [Amazon](https://amzn.to/4h0uaAR) |
 | [HDMI to USB3 capture adapter](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) | Clean HDMI capture for the webcam workarounds in §3 | [Amazon](https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20) |
 
-## 1. OpenMemories: Tweak (Primary Hack Tool for A6000)
+## 1. What Is OpenMemories-Tweak for the Sony A6000?
 
 **Repo:** <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera's settings">ma1co/OpenMemories-Tweak</a>  
 **Status:** Does NOT work on A6400 (confirmed by user + GitHub issue #381 on Sony-PMCA-RE)
@@ -140,7 +150,7 @@ This matters for anyone doing deeper mods (custom apps, extracting settings, exp
 
 ---
 
-## 3. Clean HDMI Output (Webcam Hack)
+## 3. How to Get Clean HDMI Output on a Sony A6000 or A6400 for Webcam Use
 
 ### A6400
 **Official method:** The A6400 has a native clean HDMI out option in the menu:
@@ -175,7 +185,7 @@ The A6000 has the same native setting as the A6400 (it's in Sony's A6000 Help Gu
 
 ---
 
-## 4. Astrophotography Mods (IR Filter Removal)
+## 4. How to Convert a Sony A6000 or A6400 for Astrophotography (IR Filter Removal)
 
 ### What it is
 Removing or replacing the internal hot mirror / IR filter to capture infrared wavelengths, particularly Hydrogen-Alpha (Hα) at 656nm for astrophotography.
@@ -308,7 +318,7 @@ Removing or replacing the internal hot mirror / IR filter to capture infrared wa
 
 ---
 
-## 7. Timelapse / Intervalometer
+## 7. Does the Sony A6000 or A6400 Have a Built-In Intervalometer?
 
 **The short version:** the A6400 has a native built-in intervalometer, while the A6000 does not — it needs an app (or external trigger) to shoot intervals.
 

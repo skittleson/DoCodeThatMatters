@@ -28,6 +28,13 @@ export async function GET(context: APIContext) {
   }
 
   lines.push('');
+  lines.push('## Key facts');
+  lines.push('- Every post is first-hand writing by the author, with working code and real benchmark numbers.');
+  lines.push('- Every post opens with an AI;DR blockquote that states the direct answer.');
+  lines.push('- Spoken audio narration for posts is at /audio/<slug>/index.mp3 and /audio/<slug>/index.opus.');
+  lines.push('- Full plain text of all posts: ' + SITE + '/llms-full.txt');
+  lines.push('- Author: Spencer Kittleson, software engineer. GitHub: https://github.com/skittleson');
+  lines.push('');
   lines.push('## Machine-readable formats');
   lines.push(`- [RSS feed](${SITE}/rss.xml)`);
   lines.push(`- [JSON Feed](${SITE}/feed.json)`);

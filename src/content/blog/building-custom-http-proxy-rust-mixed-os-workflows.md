@@ -17,6 +17,13 @@ consulting: true
 image: /images/broken-window.jpeg
 alt: Broken window glass with bullet impact hole
 draft: false
+faq:
+  - q: "What does a transparent HTTP forward proxy do?"
+    a: "A forward proxy sits between your apps and the internet: apps point their proxy settings at its host and port, and it relays traffic for them. This one is written in Rust and supports HTTP and HTTPS via CONNECT tunneling, SSL/TLS error detection with diagnostics for corporate certs, automatic Windows firewall rules, and cross-platform binaries for Windows, Linux, and macOS. It lets you route work traffic through a corp VPN while everything else goes direct."
+  - q: "Why use an HTTP proxy instead of a full-tunnel VPN for development?"
+    a: "A full-tunnel corporate VPN forces all traffic through the corporate network, which makes NPM, NuGet, and pip installs extremely slow, and the intermediate certificate it installs into the chain causes SSL headaches. A proxy avoids that: work traffic goes through the corp VPN, everything else connects directly. The proxy also keeps traffic private and gives remote access to home devices with no app needed on each device."
+  - q: "How do I run Chromium through a specific proxy on Linux?"
+    a: "Launch Chromium with the --proxy-server flag pointing at your proxy host and port, for example --proxy-server=\"http://myproxy:3129;https://myproxy:3129\", optionally with --ignore-certificate-errors for internal corporate certs. On PopOS I run it through Flatpak with --command=/app/bin/chromium plus a dedicated --profile-directory, keeping proxy settings isolated from the regular Chrome install via a shell alias."
 ---
 
 TLDR; I built a Rust proxy to keep my traffic private and give me remote access to home devices. It's lightweight, no‑app, works on any device that can point to a proxy. I'll walk through the privacy benefits, how I use it for local services, and why I still use it even with a full‑tunnel VPN.
@@ -35,7 +42,7 @@ I tried Squid proxy first. It worked… mostly. But I'd get random issues from t
 
 I knew I could do better. And I wanted to learn Rust anyway.
 
-## The Rust Proxy
+## What My Rust HTTP(S) Forward Proxy Does (CONNECT Tunneling, TLS Diagnostics)
 
 I built a transparent HTTP(S) forward proxy in Rust. It's nothing fancy, but it solves my specific problem:
 
@@ -188,7 +195,7 @@ If it's crashing:
 codium --disable-gpu
 ```
 
-## Chromium Proxy Setup
+## How to Launch Chromium Through a Specific Proxy Server on Linux
 
 This is the part that actually makes everything usable. I run different work apps through different proxies. Here's how I launch Chromium with specific proxy settings:
 
@@ -228,7 +235,7 @@ It's been over a year now. Here's where I'm at:
 
 Would I do anything differently? Maybe not have spent so much time optimizing Windows when all of work systems deploy to linux container in production anyways. The ecosystem lock‑in is real. Once you're in, it's hard to get out. But with some creativity and a custom code, you can make mixed‑OS workflows work for you.
 
-## Work VPN Conflicts
+## Why Use an HTTP Proxy Instead of a Full-Tunnel Work VPN?
 
 I use a full‑tunnel work VPN, which can be problematic for development. NPM, NuGet, and pip can be extremely slow because all traffic is forced through the corporate network. SSL certificates can also be an issue: with a full VPN, an intermediate certificate is installed and becomes part of the chain. I'm not a TLS expert, but it can cause headaches.
 

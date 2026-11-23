@@ -1,3 +1,5 @@
+Qwen3.8-Flash-Next is a 125B-parameter Mixture-of-Experts model that runs on a single 24GB RTX 3090 Ti with Strata's k8v4 quant, serving as a coding model with 200K context.
+
 AI;DR — This post was written with AI assistance, then edited by me. The research, commands, and numbers are from my own box.
 
 TLDR; On the same RTX 3090 Ti, a 125B model now reads an 86K-token prompt in 32 seconds. My old 27B took 83. It generates at ~100 tok/s where the 27B did 49-70. The engine is Strata (https://github.com/Niko1221/Strata) and the model is Qwen3.8-Flash-Next (https://huggingface.co/Qwen/Qwen3.8-Flash-Next). This is the research I did to pick the settings and the config I ended up with, so you can copy it.
@@ -65,7 +67,7 @@ The Qwen model card (https://huggingface.co/Qwen/Qwen3.8-Flash-Next) gives two p
 
 I use thinking mode. The r/LocalLLM benchmarker recommends the same values.
 
-Configuration
+What Config Runs Qwen3.8-Flash-Next on One 24GB Card?
 
 Install
 
@@ -152,7 +154,7 @@ OmniRoute also gives up on a request if the first event takes too long. That "re
 Last, compaction. OpenCode compacts at roughly the context limit minus the output reserve minus compaction.buffer, and the buffer defaults to 10% of the limit. At 204,800 and 32,768 that works out to ~151K. One session compacted at 163,875. I tried a buffer of 4096, which compacted at 182.9K, and settled on this in the global config (it applies to every model):
 That compacts near ~155K. Why I don't squeeze out the last 30K is below (#what-the-first-day-of-real-use-changed).
 
-Results
+How Fast Does It Run?
 
 I ran the same script against both servers. Streamed, 512 output tokens, a random nonce at the start of every prompt so nothing came from a prompt cache, two runs each.
 

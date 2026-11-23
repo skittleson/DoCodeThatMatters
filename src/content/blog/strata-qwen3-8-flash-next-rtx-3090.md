@@ -21,7 +21,16 @@ alt: An NVIDIA GeForce RTX 3090 Ti Founders Edition 24GB graphics card, the GPU 
 imageWidth: 1200
 imageHeight: 800
 draft: false
+faq:
+  - q: "What config runs Qwen3.8-Flash-Next on a single RTX 3090 Ti?"
+    a: "Use Strata with the IQ3_XXS quant, 200K context, k8v4 KV cache, and the thinking-mode sampling block (temperature 1.0, top_p 0.95, top_k 20, min_p 0). Setup flags: --family qwen --model IQ3_XXS --context 204800 --kv k8v4 --vram-reserve-mib 1024 --vision no. Keep the calibrated engine args --pool-workers 4 --adapt-every 1 --adapt-swaps 80 --adapt-decay 0.97 (105.4 tok/s)."
+  - q: "How fast does Qwen3.8-Flash-Next run on a 3090 Ti?"
+    a: "About 2,400-2,724 tok/s prompt read and ~94-102 tok/s generation past a few thousand tokens. An 86K-token prompt reads in 32 seconds and generates at ~100 tok/s, vs the 27B which reads at 1,059 tok/s and generates at 49. 200K with k8v4 costs 5-8% vs 128K int8 but still gives ~97 tok/s at 27K."
+  - q: "How does a 125B model fit in 24GB of VRAM?"
+    a: "Qwen3.8-Flash-Next is a Mixture-of-Experts model with 125B total parameters but only ~6B active per token. Strata keeps the hottest experts in VRAM, keeps the rest in system RAM (62 GiB on the author's box), and computes the rest on CPU, plus a 29GB n-gram lookup table on SSD. i-quant sizes (IQ3_XXS, ~47GB) fit the 24GB card."
 ---
+
+Qwen3.8-Flash-Next is a 125B-parameter Mixture-of-Experts model that runs on a single 24GB RTX 3090 Ti with Strata's k8v4 quant, serving as a coding model with 200K context.
 
 > **AI;DR** — This post was written with AI assistance, then edited by me. The research, commands, and numbers are from my own box.
 
@@ -90,7 +99,7 @@ The [Qwen model card](https://huggingface.co/Qwen/Qwen3.8-Flash-Next) gives two 
 
 I use thinking mode. The r/LocalLLM benchmarker recommends the same values.
 
-## Configuration
+## What Config Runs Qwen3.8-Flash-Next on One 24GB Card?
 
 ### Install
 
@@ -281,7 +290,7 @@ Last, compaction. OpenCode compacts at roughly the context limit minus the outpu
 
 That compacts near ~155K. Why I don't squeeze out the last 30K is [below](#what-the-first-day-of-real-use-changed).
 
-## Results
+## How Fast Does It Run?
 
 I ran the same script against both servers. Streamed, 512 output tokens, a random nonce at the start of every prompt so nothing came from a prompt cache, two runs each.
 

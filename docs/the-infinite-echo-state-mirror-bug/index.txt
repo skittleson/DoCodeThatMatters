@@ -56,7 +56,7 @@ My next idea was to mirror only on the physical button press, since an MQTT-driv
 TYA: RX Relay-1 --> MCU State: Off
 One of these switches is a Tuya device. The ESP talks to a separate Tuya MCU over serial. There is no Button1#State. The button press and the commanded relay change both come back as the same TuyaReceived dpId 1 event. They are indistinguishable. So "only react to physical presses" isn't even expressible on that hardware. Dead end. Good thing I checked instead of writing the rule and assuming.
 
-The fix
+How Do You Fix the State-Mirror Echo?
 
 Once I understood the actual mechanism, the fix was almost embarrassingly small. The bug is that an incoming mirror command updates the relay but not VAR1. So fix that: don't let the peer write Power directly. Have it send an event, and have the receiver set VAR1 before moving the relay.
 

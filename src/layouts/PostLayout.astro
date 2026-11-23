@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, modified, image, alt, imageWidth, imageHeight, keywords, audio = true } = post.data;
+const { title, description, date, modified, image, alt, imageWidth, imageHeight, keywords, audio = true, faq } = post.data;
 
 const siteUrl = Astro.site ? Astro.site.href.replace(/\/$/, '') : '';
 const postUrl = new URL(`/${stripExt(post.id)}/`, Astro.site).href;
@@ -71,6 +71,26 @@ const jsonLd = JSON.stringify([
     url: `${siteUrl}/`,
     logo: `${siteUrl}/images/agile.jpg`,
   },
+  ...(audio
+    ? [{
+        '@context': 'https://schema.org',
+        '@type': 'AudioObject',
+        url: `${siteUrl}/audio/${stripExt(post.id)}/index.mp3`,
+        encodingFormat: 'audio/mpeg',
+        name: `${title} (audio narration)`,
+      }]
+    : []),
+  ...(faq && faq.length
+    ? [{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faq.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }]
+    : []),
 ]);
 
 const issueTitle = encodeURIComponent(`Post - ${title}`);
@@ -217,6 +237,17 @@ const localWebp = isLocalImage
           <section itemprop="articleBody" class="prose prose-invert max-w-none">
             <slot />
           </section>
+          {faq && faq.length > 0 && (
+            <section class="faq mt-8">
+              <h2 class="text-xl font-bold mb-3" style="color: var(--color-text);">FAQ</h2>
+              {faq.map((f) => (
+                <div class="mb-4">
+                  <h3 class="text-base font-bold mb-1" style="color: var(--color-text);">{f.q}</h3>
+                  <p style="color: var(--color-text-muted);">{f.a}</p>
+                </div>
+              ))}
+            </section>
+          )}
         </article>
 
         <hr class="my-8" />

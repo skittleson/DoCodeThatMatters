@@ -7,7 +7,7 @@ Components
 | NEO Coolcam Siren Multisensor (https://templates.blakadder.com/neocoolcamNAS-AB02W.html) | The device being flashed | — |
 | Serial-to-USB Adapter (https://amzn.to/3sW2QaW) | Connects the ESP8266 to your PC for flashing | Amazon (https://amzn.to/3sW2QaW) |
 
-Wiring Guide
+Neo Coolcam Siren Multisensor Wiring for Tasmota Flashing (ESP8266)
 
 This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official documentation (https://tasmota.github.io/docs/Getting-Started/).
 
@@ -27,7 +27,7 @@ Finalized soldering
 
 !Wired to flasher (/images/neo_coolcam-wired-to-flasher.jpg)
 
-Flashing
+Flashing Tasmota on the ESP8266 with esptool
 
 Install esptool. PyPi was quick for this: https://pypi.org/project/esptool/ 
 

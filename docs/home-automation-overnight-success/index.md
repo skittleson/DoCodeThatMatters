@@ -4,7 +4,7 @@
 
 TLDR; Every core smart device in my house does not depend on a vendor's server. If the internet goes down, everything works (downgraded experience perhaps).  It has been my rule for 10 years and it has been challenging to follow. I've given two talks about it.  Check out each slide by slide.
 
-## Why local
+## Why Should Smart Home Devices Work Without the Internet?
 
 
 My Nest integration worked one day until it didn't.  They had changed the api (around the same time Google acquired them). I have a few more examples in these talks that show a samsung fridge and a grill controller that needs wifi to show temperature.  I don't/shouldn't need wifi and/or vendor service to interact with hardware.

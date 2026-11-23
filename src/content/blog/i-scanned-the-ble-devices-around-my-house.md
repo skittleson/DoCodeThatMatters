@@ -19,6 +19,13 @@ description: An inspired project from DEFCON 2024 of the Wall of Sheep with ble 
 image: /images/ble_wall_of_sheep.jpg
 alt: A bluetooth device that can be discovered with simple scan.
 priority: 0.9
+faq:
+  - q: "How can I detect someone scanning for BLE devices around my house?"
+    a: "Passive scanning (listening) is invisible, so you cannot detect it with a phone or laptop. Active scanning sends SCAN_REQ to advertisers, but that is very low level and still nearly impossible to capture. Practical defense is to control your own exposure: turn off Bluetooth on devices that don't need it, use airplane mode in sensitive areas, and turn on unknown-tracker alerts (iOS has them by default; Android under Settings > Safety & emergency > Unknown tracker alerts)."
+  - q: "How does a BLE scanner estimate distance from signal strength?"
+    a: "The official formula is 10^((tx_power - rssi)/(10 * signal_propagation_constant)), where the constant is typically 2-10 (2 for open space, 10 for heavy interference; typical drywall homes see 4-6; the author uses 8). An approximation uses RSSI = C - 10n * log10(distance). The author calibrated a log-linear regression of log10(distance) vs RSSI against known TX-power devices, giving ~5m at RSSI -60 and ~12-15m at -75."
+  - q: "How can I tell if devices are broadcasting my presence?"
+    a: "Many BLE devices only advertise while on and vanish when off (e.g. TVs), leaking when someone's home and when the house is quiet. AirTags and Tiles advertise their MAC for 15 minutes at a time. A persistent scanner can fingerprint devices past randomized MACs using RSSI, service/characteristic data and near-real-time RSSI, and a calibrated known device can anchor distance estimates."
 ---
 
 Many devices (such as a tv) only broadcast Bluetooth low energy while they are on then disappears when it turns off. That means anyone standing outside your house with a laptop can tell when you're watching TV, when you get up, and when you go to bed. No pairing, no password, nothing to hack.
@@ -180,7 +187,7 @@ The tool caught one person walking in and putting in earbuds at 23:59:
 - The LE advertiser rotated MAC 3× while approaching: 2.12 m → 2.02 m → 0.27 m
 - The classic Bluetooth audio profile lit up at the exact same second and identical 101-observation window as the final LE fingerprint — earbuds switched on and worn at the desk.
 
-## How to protect yourself
+## How Do You Protect Yourself from BLE Tracking?
 
 This section matters as much as the scanning. Reduce your exposure with the following concrete steps:
 

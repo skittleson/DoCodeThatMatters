@@ -35,6 +35,13 @@
 - [ASP.NET XSS protection](https://docodethatmatters.com/asp-net-xss-protection/) (2017-09-06): Hardening an ASP.NET Web API for PCI XSS testing — web.config security headers, strict input validation, and OWASP-aligned mitigations.
 - [Raspberry Pi Bluetooth Proximity Detector - A Simple Guide](https://docodethatmatters.com/raspberry-pi-bluetooth-proximity/) (2017-05-26): Build a Bluetooth proximity detector using Raspberry Pi. Tutorial shows how to detect nearby Bluetooth devices without pairing.
 
+## Key facts
+- Every post is first-hand writing by the author, with working code and real benchmark numbers.
+- Every post opens with an AI;DR blockquote that states the direct answer.
+- Spoken audio narration for posts is at /audio/<slug>/index.mp3 and /audio/<slug>/index.opus.
+- Full plain text of all posts: https://docodethatmatters.com/llms-full.txt
+- Author: Spencer Kittleson, software engineer. GitHub: https://github.com/skittleson
+
 ## Machine-readable formats
 - [RSS feed](https://docodethatmatters.com/rss.xml)
 - [JSON Feed](https://docodethatmatters.com/feed.json)

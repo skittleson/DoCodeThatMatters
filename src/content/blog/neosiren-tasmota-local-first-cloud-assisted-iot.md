@@ -21,6 +21,13 @@ description: Guide for flashing a temperature and humidity multisensor with Tasm
 image: /images/finalResultOfTasmotaUi.png
 alt: Flash MultiSensor with Tasmota
 priority: 0.9
+faq:
+  - q: "How do you flash Tasmota on a Neo Coolcam siren multisensor?"
+    a: "Open the case, remove three screws, and solder a Serial-to-USB adapter to the ESP8266 pads: GPIO0 to GND to boot in flash mode, GND to GND, TX to RX, RX to TX, and 3.3V to 3.3V. Then run esptool --port COM3 write_flash -fs 1MB -fm dout 0x0 tasmota-sensors.bin after pip install esptool. The GUI alternative is Tasmotizer; afterwards connect to the access point to set up your local WiFi."
+  - q: "What Tasmota commands configure the Tuya Neo Coolcam multisensor?"
+    a: "First apply the Neo Siren 3in1 template (BASE 54) in Configure Other. Then: Backlog SetOption65 1; SetOption66 1; Module 54 registers it as a Tuya module; TuyaMCU 11,104 maps the alarm siren/LED to a toggle; TuyaMCU 71,105 maps temperature; TuyaMCU 73,106 maps humidity; TempRes 1 shows 29.1 instead of 291. MQTT must be configured or temperature and humidity data won't show. Undo with SetOption66 0."
+  - q: "How do you turn a Tasmota siren on and off over MQTT?"
+    a: "Send ON or OFF to the topic cmnd/tasmota_REPLACEWITHID/POWER; the state returns on stat/tasmota_REPLACEWITHID/POWER. Temperature and humidity are published to tele/tasmota_REPLACEWITHID/SENSOR — subscribe there in Node-RED with a function node that tolerates undefined values, since updates do not always include both readings. Replace the ID with the MQTT Full Topic from Tasmota's Information screen."
 ---
 
 Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) with Tasmota for local network first setup.
@@ -32,7 +39,7 @@ Guide for flashing a [NEO Coolcam Siren with Temperature and Humidity Multisenso
 | [NEO Coolcam Siren Multisensor](https://templates.blakadder.com/neo_coolcam_NAS-AB02W.html) | The device being flashed | — |
 | [Serial-to-USB Adapter](https://amzn.to/3sW2QaW) | Connects the ESP8266 to your PC for flashing | [Amazon](https://amzn.to/3sW2QaW) |
 
-## Wiring Guide
+## Neo Coolcam Siren Multisensor Wiring for Tasmota Flashing (ESP8266)
 
 This is a condensed guide on flashing with tasmota. A full guide/getting started can be found in the official [documentation](https://tasmota.github.io/docs/Getting-Started/).
 
@@ -52,7 +59,7 @@ Finalized soldering
 
 ![Wired to flasher](/images/neo_coolcam-wired-to-flasher.jpg)
 
-## Flashing
+## Flashing Tasmota on the ESP8266 with esptool
 
 Install esptool. PyPi was quick for this: https://pypi.org/project/esptool/ 
 

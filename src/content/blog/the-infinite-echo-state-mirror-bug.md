@@ -16,6 +16,13 @@ description: A state-mirror rule that updates the relay but never the dedup key 
 image: /images/tasmota-runaway-loop-before.png
 alt: Both switches firing Publish at each other in the Tasmota console
 priority: 0.8
+faq:
+  - q: "How do you fix an infinite state-mirror echo between two Tasmota switches?"
+    a: "Stop writing the peer's relay directly and send an event instead. The publisher sets VAR1 = value before publishing; the receiver sets VAR1 = value when the SYNC event lands, then sets the relay. After that, the resulting Power1#State equals VAR1 so the publish rule stays quiet and the echo dies after one hop."
+  - q: "Why does a state-mirror guard based on VAR1 fail after a power blip?"
+    a: "The naive guard stores the last value it acted on in VAR1 and only publishes on change, but the peer's mirror command never updates that variable. Incoming values always differ from the stale VAR1, so the rule fires and republishes. Under any sustained back-and-forth the guard is useless; it only ever worked for a single isolated toggle."
+  - q: "How did the author find the state-mirror bug instead of guessing?"
+    a: "By cranking the log level and polling Tasmota's web console endpoint http://<ip>/cs?c2=<counter> in a loop while flicking the switch. The logs showed both devices (one a plain ESP, one a Tuya) firing Publish on every hop. Debounce would not have fixed it — it was a state-tracking bug, not a timing bug."
 ---
 
 At 2am the hallway started clicking. Not once. Forever. Two wall switches were flipping each other on and off in a tight loop. A soft relay machine gun in the dark. I finally went and watched the logs. The shape of it was unmistakable:
@@ -94,7 +101,7 @@ TYA: RX Relay-1 --> MCU State: Off
 
 One of these switches is a Tuya device. The ESP talks to a separate Tuya MCU over serial. There is no `Button1#State`. The button press and the commanded relay change both come back as the same `TuyaReceived` dpId 1 event. They are indistinguishable. So "only react to physical presses" isn't even expressible on that hardware. Dead end. Good thing I checked instead of writing the rule and assuming.
 
-## The fix
+## How Do You Fix the State-Mirror Echo?
 
 Once I understood the actual mechanism, the fix was almost embarrassingly small. The bug is that an incoming mirror command updates the relay but not `VAR1`. So fix that: don't let the peer write `Power` directly. Have it send an *event*, and have the receiver set `VAR1` **before** moving the relay.
 

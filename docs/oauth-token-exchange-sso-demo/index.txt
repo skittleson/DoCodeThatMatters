@@ -1,3 +1,4 @@
+OAuth 2.0 token exchange (RFC 8693) is a grant type where the identity provider swaps a user's existing access token for a new one scoped to a different service, keeping the user's identity cryptographically inside the new token.
 I was building a service that needed to call another internal API on behalf of a logged-in user.  This is a standard issue where services need to talk to each other was that user. I had Authentik running already so I went looking for RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693) token exchange support which is not supported! Instead it is JWT authentication (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication) which is a legitimate machine-to-machine pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
 
 I built a demo repo (https://github.com/skittleson/IdentityExchangeAppsDemo) that runs both approaches side by side - Keycloak with native RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693), and Authentik with the JWT federation workaround - so you can see exactly where they diverge.
@@ -12,7 +13,7 @@ App A cannot just forward the user's token. It has aud: app-a. App B will reject
 
 You need the IdP to issue a new token for App B, carrying the original user's sub.
 
-Option A - Authentik (JWT Authentication)
+Option A: How Authentik Handles Token Exchange Without RFC 8693 (JWT Authentication)
 
 Authentik does not implement RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693). What it does offer is JWT authentication (https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machinetomachine/#jwt-authentication) (RFC 7523 (https://datatracker.ietf.org/doc/html/rfc7523) client assertion), which lets one service prove it is who it says it is using a signed JWT as the client_assertion.
 
@@ -50,7 +51,7 @@ The concrete risk: if App A is ever compromised (a dependency vulnerability, a l
 
 </details>
 
-Option B - Keycloak (RFC 8693)
+Option B: OAuth 2.0 Token Exchange with Keycloak (RFC 8693, Native Support)
 
 Keycloak has supported RFC 8693 (https://datatracker.ietf.org/doc/html/rfc8693) token exchange natively since version 12. The grant type is urn:ietf:params:oauth:grant-type:token-exchange.
 
@@ -103,7 +104,7 @@ if (IDP_TYPE === 'keycloak') {
 }
 This is where the security models visibly diverge. Keycloak: identity comes from the token. Authentik: identity comes from a header App A set.
 
-The Key Difference
+Keycloak vs Authentik: What Is the Security Difference in Token Exchange?
 
 sequenceDiagram
     autonumber

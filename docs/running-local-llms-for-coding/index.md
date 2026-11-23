@@ -82,7 +82,7 @@ Every one of those flags is doing something specific:
 - **`--alias Qwen3.8-27B-pi`**: the model name the OpenAI-compatible `/v1/models` endpoint reports, so OpenCode's model picker shows something readable instead of the raw GGUF filename.
 - **`--host 0.0.0.0 --port 8080`** — bind every interface, not just localhost, so other machines on the LAN (my editor) can reach it.
 
-## The Quant Type Quietly Broke Things
+## Which Quant Should You Use on a 3090 Ti?
 
 When [Unsloth](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs) shipped their Dynamic 3.0 quants for Qwen3.8, the pitch was great: more accuracy at the same file size. So I downloaded their `IQ4_XS` build and tested it.
 
@@ -94,7 +94,7 @@ Here is the part that took a second round to figure out: **it was the quant *typ
 
 The lesson: on an Ampere GPU, stick to **k-quants** (`Q4_K_M`, `Q5_K_M`, and friends). The i-quants (`IQ*`) squeeze into less VRAM, which is tempting, but they lean on kernels that are not always solid. I verify every new model with a dumb little test now — ask it to echo an exact path ten times and check the characters are right before I trust it with real work.
 
-## One Flag Fixed My Looping Problem
+## What Flag Stops Local LLM Repetition Loops?
 
 The other issue was repetition. In long agentic sessions the model would occasionally get stuck repeating itself. Short prompts were fine; long ones would eventually self-reinforce a pattern with nothing to break it.
 
@@ -162,7 +162,7 @@ The pi model is text-only on my box, since I don't load a vision projector (`--m
 }
 ```
 
-## Speed history: six months on one card
+## How Fast Is a 3090 Ti for Local Coding in 2026?
 
 I went back through my OpenCode sessions and pulled every benchmark I ran on the 3090 Ti. These aren't apples to apples. The prompts, lengths, and quants changed along the way. But the shape of it holds up: MoE models were fast and I kept leaving them, and every dense model was slow until speculative decoding showed up.
 

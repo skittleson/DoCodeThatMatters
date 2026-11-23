@@ -15,7 +15,17 @@ image: /images/oauth-token-exchange-network.jpg
 alt: City lights connected across a global network like services passing identity tokens between each other
 consulting: true
 draft: false
+faq:
+  - q: "Does Authentik support RFC 8693 OAuth 2.0 token exchange?"
+    a: "No. Authentik does not implement RFC 8693 token exchange. The workaround is its JWT authentication feature (RFC 7523 client assertion): App A posts grant_type client_credentials with the user's access token as the client_assertion, and Authentik issues a new token scoped to App B. But the issued token's sub is a service account like ak-App-A-Provider-client_credentials, not the original user — so user identity must be passed separately."
+  - q: "Why is passing user identity in an X-User-Sub header a security risk?"
+    a: "Because the user identity is not bound to the token — it is just a header App A sets, trusted only because the bearer token proves the caller is App A's server. That trust is implicit, not cryptographic. If App A is ever compromised through a dependency vulnerability, leaked secret, or misconfigured env var, an attacker can call App B as any user in the system; the identity provider has no knowledge of who the request is for."
+  - q: "How does Keycloak preserve user identity in OAuth token exchange?"
+    a: "Keycloak has natively supported RFC 8693 token exchange since version 12, using grant type urn:ietf:params:oauth:grant-type:token-exchange. Keycloak validates the subject_token, checks the exchange policy, and issues a token with aud: app-b, sub set to the original user's sub, and azp: app-a recording which service performed the exchange. App B reads the user identity directly from the cryptographically signed token — no extra header, no implicit trust."
 ---
+
+OAuth 2.0 token exchange (RFC 8693) is a grant type where the identity provider swaps a user's existing access token for a new one scoped to a different service, keeping the user's identity cryptographically inside the new token.
+
 
 I was building a service that needed to call another internal API on behalf of a logged-in user.  This is a standard issue where services need to talk to each other was that user. I had Authentik running already so I went looking for [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) token exchange support which is not supported! Instead it is [JWT authentication](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication) which is a legitimate machine-to-machine pattern but has a trust assumption baked in that is easy to miss until something goes wrong.
 
@@ -34,7 +44,7 @@ App A cannot just forward the user's token. It has `aud: app-a`. App B will reje
 
 You need the IdP to issue a new token for App B, carrying the original user's `sub`.
 
-## Option A - Authentik (JWT Authentication)
+## Option A: How Authentik Handles Token Exchange Without RFC 8693 (JWT Authentication)
 
 Authentik does not implement [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693). What it does offer is [JWT authentication](https://docs.goauthentik.io/add-secure-apps/providers/oauth2/machine_to_machine/#jwt-authentication) ([RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) client assertion), which lets one service prove it is who it says it is using a signed JWT as the `client_assertion`.
 
@@ -78,7 +88,7 @@ App B trusts `X-User-Sub` because the bearer token proves the caller is App A's 
 
 </details>
 
-## Option B - Keycloak (RFC 8693)
+## Option B: OAuth 2.0 Token Exchange with Keycloak (RFC 8693, Native Support)
 
 Keycloak has supported [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693) token exchange natively since version 12. The grant type is `urn:ietf:params:oauth:grant-type:token-exchange`.
 
@@ -143,7 +153,7 @@ if (IDP_TYPE === 'keycloak') {
 
 This is where the security models visibly diverge. Keycloak: identity comes from the token. Authentik: identity comes from a header App A set.
 
-## The Key Difference
+## Keycloak vs Authentik: What Is the Security Difference in Token Exchange?
 
 ```mermaid
 sequenceDiagram
