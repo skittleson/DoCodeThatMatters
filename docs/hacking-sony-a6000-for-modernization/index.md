@@ -259,3 +259,5 @@ while True:
 In conclusion, adding modern features to the Sony A6000 camera has its challenges and it is possible to overcome them with a little creativity. One possible solution to improve data transfer capabilities and add GPS functionality is to use a Raspberry Pi as a bridge between the camera and other devices. It could provide a stable and fast connection, allowing for seamless data transfer and GPS tracking. With the added capabilities of the Raspberry Pi, the Sony A6000 camera can truly be brought into the modern era.  [See the full code on GitHub](https://github.com/skittleson/dslrCameraPowerRename/blob/main/)  
 
 [🚀 Part 2 micro version has been published. 🎉](/hacking-sony-a6000-more/)
+
+Curious how much of this carries to the newer body? My [Sony A6400 custom firmware research](/sony-a6000-a6400-research/) covers what works on the A6400 — and what doesn't.

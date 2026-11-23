@@ -1,4 +1,10 @@
-The Sony A6000 is an Android-based mirrorless camera that still runs the full OpenMemories/PMCA modding toolchain, while the newer A6400 dropped Android app support and is modded mainly through USB service mode.
+Sony A6400 custom firmware doesn't exist as a flashable ROM: the A6400 dropped Android app support and is modded through USB service mode, while the Android-based Sony A6000 still runs the full OpenMemories/PMCA modding toolchain.
+
+Does Sony A6400 Custom Firmware Exist?
+
+No — there is no flashable Sony A6400 custom firmware. The A6400's firmware is cryptographically signed (CXD90045), so the firmware-updater exploit path used on older bodies doesn't work. In practice, "Sony A6400 custom firmware" means PMCA-RE service-mode property writes — all languages, and per user reports the 30-minute record limit. Full app-based modding is limited to the Android PMCA generation (A6000, A6300, A6500).
+
+If you own an A6000 instead, start with my tested A6000 modernization walkthrough (/hacking-sony-a6000-for-modernization/).
 TLDR; This is my research dump for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400). I own both and shoot with them all the time. An AI agent gathered most of these links and I reviewed them, so use this page to find things. The steps I actually tested are in the field guide below.
 
 If you want a starting point, read this post first about modernization of this camera (https://docodethatmatters.com/hacking-sony-a6000-for-modernization/) 
@@ -31,7 +37,7 @@ How it works
 The PMCA-RE project reverse engineered how Sony PlayMemories Camera Apps (PMCA) are installed. With knowledge from firmware dumps, settings are stored in a file called Backup.bin. The app can change these settings directly, including ones locked by Sony.
 
 Installation
-Requires the Sony-PMCA-RE tool to install the APK onto the camera:
+Requires the Sony-PMCA-RE tool to install the APK onto the camera. Tweak installs natively on the A6000 and A6300 — both Android PMCA bodies — but not on the A6400:
 1. Install PMCA-RE (Windows/macOS/Linux)
 2. Connect camera via USB
 3. Use pmca-console install -i or the GUI to install OpenMemories-Tweak.apk
@@ -58,6 +64,20 @@ Steps (high-level):
 
 This unlock is written out in the guide chapter on the A6400: the Zadig driver swap, the PowerShell commands for service mode and the unlock script, and the fix when PMCA-RE says "No Tweaks found".
 
+How the A6400 Language Unlock Actually Works (Consolidated)
+
+Pulling together what the sections above scatter across issues #381, #513, and #733, the Sony A6400 custom firmware language unlock runs end-to-end like this:
+
+1. Mass storage first. Set the camera to USB Mass Storage, connect, and install the USB driver with Zadig (zadig.akeo.ie).
+2. Enter service mode: pmca-console serviceshell. The device disconnects the moment service mode engages — that is part of the process, not a crash (issue #513).
+3. Zadig again. With the camera now in service mode, re-run Zadig and bind the libusb driver to the device that re-appears as "Sony USB Device."
+4. Apply the patch directly to the settings file — the same Backup.bin-style settings store the tweak app edits on older bodies (see "How it works" above). Per Sony-PMCA-RE issue #733, whole-file backup reads (BACKUPPDTREAD) crash the camera's USB on the A6400, so the workaround reads and writes properties one at a time (readBackup/writeBackup).
+5. Reboot the camera. The language menu now shows all languages.
+
+What "No Tweaks found" actually means: it is almost always a driver-binding failure, not a camera limitation — issue #381 documents that Zadig 2.9's libusb driver causes it and reinstalling the driver with Zadig 2.8 fixes it for several users.
+
+Restore path: because the unlock is a property write, saving the original property value via readBackup before patching lets you write it back to undo the change. Back up firmware before any of this (see §12/§13). For the driver-swap pattern in practice, see more PMCA-RE installs on the A6000 (/hacking-sony-a6000-more/).
+
 Additional coverage: This unlock has been confirmed working on a much wider range of newer Alpha bodies than just the A6400/a6600 — the Reddit thread "Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)" <a href="https://www.reddit.com/r/SonyAlpha/comments/18fb0d8/" title="Language unlock on newer Alpha Cameras (A6400 A6600 A7C A7M3 A7RM3 A7RM4)">r/SonyAlpha thread</a> reports success on A6400, A6600, A7C, A7M3, A7RM3, and A7RM4. A February 2025 YouTube tutorial ("Unlock ALL Languages on Sony A7III, A7IV, A7C, 6400, 6600 & More!") demonstrates the same method and notes it also removes the 30-minute record limit — a step-by-step service-mode walkthrough of unlocking the language menu on region-locked Alpha bodies, download the two files, enter service mode, and apply the patch: Unlock all languages on Sony A7III / A7IV / A7C / A6400 / A6600 (Feb 2025 tutorial) (https://www.youtube.com/watch?v=WM_PoshgLPY)
 
 Scope note: These service-mode unlocks work on cameras that share the A6400's generation, but the classic app-install route (opening the "Application List" menu and installing OpenMemories-Tweak APKs) remains the path for older Android-based bodies like the A6000, which do have the full Android subsystem.
@@ -72,7 +92,7 @@ App Installer
 - For cameras supporting PlayMemories Camera Apps (PMCA)
 - Install custom Android apps (OpenMemories-Tweak, etc.)
 - A6000: Supported  
-- A6400: Limited support (see language unlock workaround above)
+- A6400: Limited support — the Sony A6400 custom firmware story on this body starts and ends with the language unlock workaround above
 
 Firmware Updater Mode
 - Sony cameras can boot from a secondary partition for firmware updates
@@ -103,6 +123,48 @@ A dedicated reverse-engineering project by CliffVale — sony-a6000-firmware-res
 - The physical OK-press gotcha is documented so others can reproduce the dump reliably
 
 This matters for anyone doing deeper mods (custom apps, extracting settings, exploring hidden firmware features): because the A6000 is Android-based, the toolchain for extracting and modifying its internals is far more mature than for the A6400.
+Does the Sony A6300 Support Custom Firmware?
+
+Yes — Sony A6300 custom firmware works in exactly the same sense as on the A6000. The A6300 is an Android PMCA-generation body, which means everything the OpenMemories toolchain does on the A6000 applies: OpenMemories-Tweak installs via PMCA-RE, and with it comes the 30-minute record-limit removal, the full language menu, the NTSC nag disable, and telnet/adb daemons. Once telnet is up, the firmware dump from §2 works the same way:
+unpacked afterwards with fwtool.py. The TimeLapse app author tested primarily on the a6300 — direct evidence it sits in the same PMCA generation as the A6000. Since Sony shut the PlayMemories store down (Aug 31, 2025), the same Internet Archive APK collection plus pmca-console install -i recovers store apps on the A6300 too.
+
+- A6500: also PMCA-generation — the Sony Alpha Forum thread in §10 documents users installing OpenMemories-Tweak on an A6500 over USB/MTP.
+- A6100: this page's sources don't classify its modding generation, so no claim here.
+
+So for Sony A6300 custom firmware the practical answer is: skip the service-mode gymnastics the A6400 needs — the app route works. For what the tethered-app route enables on this generation, see tethering the A6000 to a Raspberry Pi (/sony-camera-part3/). Back up your firmware before installing anything.
+
+Which Sony Cameras Can Be Modded? A Generation Map
+
+"Sony camera custom firmware" isn't one answer — support depends on the internal architecture, and there are two clean lines. The oldest generation runs Android under the UI, so a Sony firmware hack can install real apps and open telnet/adb. The newer generation (signed CXD90045/CXD90057 architectures) rejects both the app installer and the firmware-updater exploit path, leaving only service-mode property writes. Where the post's sources don't cover a cell, it shows "—".
+
+| Model | Architecture | App install (PMCA) | Tweak | Language unlock | Firmware dump |
+|---|---|---|---|---|---|
+| A6000 | Android PMCA | ✅ | ✅ | ✅ Via Tweak | ✅ Via telnet / updatershell |
+| A6300 | Android PMCA | ✅ | ✅ | ✅ Via Tweak | ✅ Via telnet |
+| A6500 | Android PMCA | ✅ | ✅ (install reports in §10) | ✅ Via Tweak | — |
+| A6400 | CXD90045 service mode | ❌ | ❌ (#381) | ⚠️ Service-mode workaround | ⚠️ Service mode only |
+| A6600 | Service mode (same flow as A6400) | ❌ | — | ✅ Reported working | — |
+| A7C | Service mode (same flow as A6400) | — | — | ✅ Reported working | — |
+| A7M3 | Service mode (same flow as A6400) | — | — | ✅ Reported working | — |
+| A7RM3 | Service mode (same flow as A6400) | — | — | ✅ Reported working | — |
+| A7RM4 | Service mode (same flow as A6400) | — | — | ✅ Reported working | — |
+| A6700 | Shares A6400's service-mode entry (#513) | ❌ | — | — | — |
+
+The "older A7 series" is Android-based per the OpenMemories-Tweak explainer in §10; the newer bodies dropped Android, which is exactly why Sony A6400 custom firmware in the app sense is impossible there.
+
+Why Does PMCA-RE Say "No Tweaks Found" on A6400?
+
+Almost always a Windows driver-binding failure, not a camera limitation. When chasing Sony A6400 custom firmware errors with the PMCA-RE tool, match the message to the fix:
+
+| Message / symptom | Cause | Fix |
+|---|---|---|
+| No Tweaks found from pmca-console tweak | Zadig 2.9's libusb driver binds incorrectly (issue #381) | Reinstall the USB driver with Zadig 2.8 |
+| Device disconnects right after serviceshell | Expected part of entering service mode (issue #513) | Re-run Zadig; bind the re-appearing "Sony USB Device" |
+| USB crash during whole-file backup read | BACKUPPDTREAD crashes the ILCE-6400's USB stack (issue #733) | Use per-property readBackup/writeBackup workaround |
+| MTP error 0x2006 on Tweak install | A6400 has no PlayMemories app support | No app route — use the service-mode unlock instead |
+| Camera not recognized over USB | USB LUN reporting | MENU → Setup (yellow) → USB LUN → Single |
+
+The Zadig 2.9→2.8 rollback fixes the "No Tweaks found" case for most reporters; the per-property workaround (#733) is what lets the language patch go through without crashing the camera mid-transfer.
 3. How to Get Clean HDMI Output on a Sony A6000 or A6400 for Webcam Use
 
 A6400
@@ -357,6 +419,7 @@ Development Requirements
 - Install via PMCA-RE tool
 
 A6400 Limitations
+Sony A6400 custom firmware in the app sense is impossible here:
 - A6400 does NOT support PMCA app installation (newer architecture)
 - Custom apps only work on A6000 and older models
 - A6400 mods are limited to:
@@ -514,6 +577,8 @@ Blog Posts / Tutorials
 | 4K video | ❌ No (1080p max) | ✅ Yes (4K30) |
 | Eye AF (human) | ✅ Yes (assign [Eye AF] to a custom key) | ✅ Yes (Eye AF) |
 | Eye AF (animal) | ❌ No | ✅ Firmware 2.00 |
+
+A6300: same row as the A6000 for every app-based feature (Tweak, PMCA install, telnet/adb firmware dump — see "Does the Sony A6300 Support Custom Firmware?" above).
 12. Recommendations
 
 For A6000 Owners
@@ -527,7 +592,7 @@ For A6400 Owners
 1. Use native clean HDMI out for webcam / external recording (best option)
 2. Use S-Log2 (PP7) for log video — avoid S-Log3 on 8-bit
 3. Record to external device (Atomos Ninja V, etc.) for 8-bit 4:2:2 (10-bit requires A7S III or newer)
-4. Language unlock via service mode workaround if needed (see gist)
+4. Language unlock via service mode workaround if needed (see gist) — the closest thing to real Sony A6400 custom firmware today
 5. Consider IR mod for astrophotography (commercial service recommended)
 6. Use built-in intervalometer for timelapse
 7. Add high-capacity batteries (2250mAh) or DC coupler for extended power
@@ -545,13 +610,14 @@ For Both
 4. Firmware updates: Sony updates may break custom mods or remove unlocked features
 5. Sensor damage: IR mod requires careful disassembly — sensor is fragile
 6. No official support: All hacks are unofficial and unsupported by Sony
+7. Terminology: every "Sony A6400 custom firmware" claim out there means service-mode property writes — never a replaced firmware image
 
 Back up your firmware before you try anything on this page. The guide has the commands for a non-destructive firmware dump on the A6000, plus the risk notes for every mod.
 
 If you break your camera, you get to keep both pieces. — OpenMemories-Tweak README
 14. Further Research Directions
 
-1. A6400 PMCA compatibility: Track Sony-PMCA-RE issue #733 for potential A6400 support
+1. A6400 PMCA compatibility: Track Sony-PMCA-RE issue #733 — the most likely route to anything resembling Sony A6400 custom firmware app support
 2. Firmware analysis: Dump and analyze A6400 firmware for hidden settings (the A6000 now has a full RE project — CliffVale's repo — as a template; a comparable A6400 dump is the natural next step)
 3. Custom app for A6400: If PMCA support is added, develop custom apps for A6400
 4. USB service protocol: Reverse engineer the A6400's USB service mode for more tweaks — Sony-PMCA-RE issue #513 confirms a shared service-mode entry with the A6700, widening the target set beyond the A6400

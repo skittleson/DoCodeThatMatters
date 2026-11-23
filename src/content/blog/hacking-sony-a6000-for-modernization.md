@@ -279,4 +279,6 @@ In conclusion, adding modern features to the Sony A6000 camera has its challenge
 
 [🚀 Part 2 micro version has been published. 🎉](/hacking-sony-a6000-more/)
 
+Curious how much of this carries to the newer body? My [Sony A6400 custom firmware research](/sony-a6000-a6400-research/) covers what works on the A6400 — and what doesn't.
+
 

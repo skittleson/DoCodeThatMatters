@@ -97,11 +97,11 @@
     {
       "id": "https://docodethatmatters.com/sony-a6000-a6400-research/",
       "url": "https://docodethatmatters.com/sony-a6000-a6400-research/",
-      "title": "Sony A6000/A6400 Hacks, Mods and Community Resources",
-      "summary": "Deep-dive reference on hacking, modding, and community resources for the Sony A6000 (ILCE-6000) and A6400 (ILCE-6400) — OpenMemories-Tweak, PMCA-RE firmware dumping, clean HDMI/webcam hacks, IR & full-spectrum conversions, power/battery mods, S-Log video, timelapse, and the Sony PlayMemories app archive.",
+      "title": "Sony A6400 Custom Firmware: What Actually Works (2026)",
+      "summary": "There's no flashable Sony A6400 custom firmware — but service-mode unlocks work. Tested steps for A6400, A6300, A6000: language, 30-min limit, dumps.",
       "image": "/images/Sony-A6000-Sony-16-50mm.jpg",
       "date_published": "2026-08-29T00:00:00.000Z",
-      "date_modified": "2026-11-06T00:00:00.000Z",
+      "date_modified": "2026-11-23T00:00:00.000Z",
       "tags": [
         "Sony A6000",
         "Sony a6400",
@@ -119,7 +119,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 6848
+      "word_count": 8049
     },
     {
       "id": "https://docodethatmatters.com/running-local-llms-for-coding/",
@@ -350,7 +350,7 @@
           "name": "Spencer Kittleson"
         }
       ],
-      "word_count": 2288
+      "word_count": 2314
     },
     {
       "id": "https://docodethatmatters.com/linux-wifi-hotspot-usb3/",
