@@ -23,7 +23,7 @@
         clientOptions: { theme: "light", lang: "en" },
       });
     });
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.1_ZOtBW0.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.D_LOBccP.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
   (function () {
     function syncIcons(theme) {
       var isDark = theme === 'dark';
@@ -66,44 +66,44 @@
 <p>I updated this after the first day of real agent work. The config below is now 200K context with a conversation cache, and the new section near the end covers what broke and what it cost.</p>
 <p>This follows <a href="/running-local-llms-for-coding/">how I run local LLMs for coding</a>. That setup (dense Qwen3.8-27B on llama.cpp) is still on disk and one command away. I’m giving Strata a week as my daily OpenCode model before I decide.</p>
 <h2 id="my-box">My box</h2>
-<table>
-<thead>
-<tr>
-<th>Part</th>
-<th>What I have</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GPU</td>
-<td>RTX 3090 Ti, 24GB, driver 580.173</td>
-</tr>
-<tr>
-<td>CPU</td>
-<td>Ryzen 9 5950X (AVX2, no AVX-512)</td>
-</tr>
-<tr>
-<td>RAM</td>
-<td>62GiB DDR4 (2x32GB)</td>
-</tr>
-<tr>
-<td>Board</td>
-<td>Gigabyte B450 AORUS M, so the GPU is on PCIe 3.0 x16</td>
-</tr>
-<tr>
-<td>Disk</td>
-<td>Samsung 980 PRO 2TB</td>
-</tr>
-<tr>
-<td>OS</td>
-<td>Pop!_OS 22.04</td>
-</tr>
-<tr>
-<td>Network</td>
-<td>Wi-Fi. This matters for an 82GB download.</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Part</th><th>What I have</th></tr></thead><tbody><tr><td>GPU</td><td>RTX 3090 Ti, 24GB, driver 580.173</td></tr><tr><td>CPU</td><td>Ryzen 9 5950X (AVX2, no AVX-512)</td></tr><tr><td>RAM</td><td>62GiB DDR4 (2x32GB)</td></tr><tr><td>Board</td><td>Gigabyte B450 AORUS M, so the GPU is on PCIe 3.0 x16</td></tr><tr><td>Disk</td><td>Samsung 980 PRO 2TB</td></tr><tr><td>OS</td><td>Pop!_OS 22.04</td></tr><tr><td>Network</td><td>Wi-Fi. This matters for an 82GB download.</td></tr></tbody></table>
 <p>OpenCode runs on my laptop and talks to the box over the LAN through <a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a>.</p>
 <h2 id="research">Research</h2>
 <h3 id="how-a-125b-model-fits-on-24gb">How a 125B model fits on 24GB</h3>
@@ -112,37 +112,37 @@
 <p>The best comparison I found is from InsiderLLM: <a href="https://insiderllm.com/guides/strata-vs-llama-cpp-rtx-3090/">Strata at 78 tok/s vs llama.cpp at 18</a>, on a 3090 with 64GB of DDR4. With drafting on, Strata did ~119 tok/s and read a 32K prompt in ~12 seconds. In their run, 98.7% of expert lookups during decode hit the card. That box is close enough to mine that I stopped looking at other engines.</p>
 <h3 id="which-size">Which size</h3>
 <p>Strata offers four sizes of the original model, from ISTA-DASLab’s GSQ-RCO quants:</p>
-<table>
-<thead>
-<tr>
-<th>Size</th>
-<th>RAM + VRAM it needs</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Q2_0</td>
-<td>37.6GB</td>
-<td>Fastest in Strata’s tables</td>
-</tr>
-<tr>
-<td>IQ2_XS</td>
-<td>39.2GB</td>
-<td>Strata’s general recommendation</td>
-</tr>
-<tr>
-<td>IQ3_XXS</td>
-<td>47.0GB</td>
-<td>What InsiderLLM benchmarked on a 3090</td>
-</tr>
-<tr>
-<td>IQ3_S</td>
-<td>54.8GB</td>
-<td>“Matches the full model on the published tests”</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Size</th><th>RAM + VRAM it needs</th><th>Notes</th></tr></thead><tbody><tr><td>Q2_0</td><td>37.6GB</td><td>Fastest in Strata’s tables</td></tr><tr><td>IQ2_XS</td><td>39.2GB</td><td>Strata’s general recommendation</td></tr><tr><td>IQ3_XXS</td><td>47.0GB</td><td>What InsiderLLM benchmarked on a 3090</td></tr><tr><td>IQ3_S</td><td>54.8GB</td><td>”Matches the full model on the published tests”</td></tr></tbody></table>
 <p>I started with Q2_0 and stopped the download at 20.7GB. Two things changed my mind.</p>
 <ul>
 <li>Part of Q2_0’s speed comes from an AVX-512 CPU kernel. The 5950X does not have AVX-512.</li>
@@ -201,36 +201,36 @@
 <span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "reasoning_budget_tokens"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: </span><span style="color:#005CC5;--shiki-dark:#D19A66">16384</span><span style="color:#24292E;--shiki-dark:#ABB2BF">,</span></span>
 <span class="line"><span style="color:#005CC5;--shiki-dark:#E07C82">  "aliases"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">: [</span><span style="color:#032F62;--shiki-dark:#98C379">"strata"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">, </span><span style="color:#032F62;--shiki-dark:#98C379">"Qwen3.8-Flash-Next"</span><span style="color:#24292E;--shiki-dark:#ABB2BF">]</span></span>
 <span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">}</span></span></code></pre>
-<table>
-<thead>
-<tr>
-<th>Key</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>expert_profile_save</code></td>
-<td>Saves what the expert cache learned about your usage, so a restart doesn’t start cold</td>
-</tr>
-<tr>
-<td><code>fit_max_tokens</code></td>
-<td>Shortens an agent’s requested <code>max_tokens</code> to the room left in context, instead of a 400 error</td>
-</tr>
-<tr>
-<td><code>reasoning_close_retry</code></td>
-<td>Catches a reply that ends inside its thinking with no answer. Without it, the agent just stops.</td>
-</tr>
-<tr>
-<td><code>reasoning_budget_tokens</code></td>
-<td>Closes the thinking at 16,384 tokens and makes the model answer. I added it after two turns ran out of tokens mid-thought.</td>
-</tr>
-<tr>
-<td><code>aliases</code></td>
-<td>Extra names in <code>/v1/models</code></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Key</th><th>What it does</th></tr></thead><tbody><tr><td><code>expert_profile_save</code></td><td>Saves what the expert cache learned about your usage, so a restart doesn’t start cold</td></tr><tr><td><code>fit_max_tokens</code></td><td>Shortens an agent’s requested <code>max_tokens</code> to the room left in context, instead of a 400 error</td></tr><tr><td><code>reasoning_close_retry</code></td><td>Catches a reply that ends inside its thinking with no answer. Without it, the agent just stops.</td></tr><tr><td><code>reasoning_budget_tokens</code></td><td>Closes the thinking at 16,384 tokens and makes the model answer. I added it after two turns ran out of tokens mid-thought.</td></tr><tr><td><code>aliases</code></td><td>Extra names in <code>/v1/models</code></td></tr></tbody></table>
 <p>Running <code>./setup.sh --setup</code> again rewrites this file, so I keep these keys in a small script and run it after every setup. That script also puts back the calibrated engine args and the conversation cache flags, for reasons that come up below.</p>
 <p>Setup also turned <strong>KV streaming off</strong> by itself. It estimated ~60GB of RAM for IQ3_XXS plus 1.8GB for streaming, and I have 63. So the KV cache stays in VRAM, and there is a bit less room for experts.</p>
 <h3 id="calibrate">Calibrate</h3>
@@ -319,82 +319,82 @@
 <p>That compacts near ~155K. Why I don’t squeeze out the last 30K is <a href="#what-the-first-day-of-real-use-changed">below</a>.</p>
 <h2 id="how-fast-does-it-run">How Fast Does It Run?</h2>
 <p>I ran the same script against both servers. Streamed, 512 output tokens, a random nonce at the start of every prompt so nothing came from a prompt cache, two runs each.</p>
-<table>
-<thead>
-<tr>
-<th>Prompt</th>
-<th>27B first token</th>
-<th>Strata first token</th>
-<th>27B prompt read</th>
-<th>Strata prompt read</th>
-<th>27B generate</th>
-<th>Strata generate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>~925 tokens</td>
-<td><strong>1.2 s</strong></td>
-<td>2.0 s</td>
-<td><strong>1,166 t/s</strong></td>
-<td>530 t/s</td>
-<td>70 t/s</td>
-<td><strong>96 t/s</strong></td>
-</tr>
-<tr>
-<td>~27K tokens</td>
-<td>21.0 s</td>
-<td><strong>11.5 s</strong></td>
-<td>1,332 t/s</td>
-<td><strong>2,400 t/s</strong></td>
-<td>62 t/s</td>
-<td><strong>102 t/s</strong></td>
-</tr>
-<tr>
-<td>~86K tokens</td>
-<td>83.1 s</td>
-<td><strong>32.2 s</strong></td>
-<td>1,059 t/s</td>
-<td><strong>2,724 t/s</strong></td>
-<td>49 t/s</td>
-<td><strong>101 t/s</strong></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt</th><th>27B first token</th><th>Strata first token</th><th>27B prompt read</th><th>Strata prompt read</th><th>27B generate</th><th>Strata generate</th></tr></thead><tbody><tr><td>~925 tokens</td><td><strong>1.2 s</strong></td><td>2.0 s</td><td><strong>1,166 t/s</strong></td><td>530 t/s</td><td>70 t/s</td><td><strong>96 t/s</strong></td></tr><tr><td>~27K tokens</td><td>21.0 s</td><td><strong>11.5 s</strong></td><td>1,332 t/s</td><td><strong>2,400 t/s</strong></td><td>62 t/s</td><td><strong>102 t/s</strong></td></tr><tr><td>~86K tokens</td><td>83.1 s</td><td><strong>32.2 s</strong></td><td>1,059 t/s</td><td><strong>2,724 t/s</strong></td><td>49 t/s</td><td><strong>101 t/s</strong></td></tr></tbody></table>
 <p>The 27B is Qwen3.8-27B-MTP-Q4_K_M on llama.cpp at 200K context, the command from the last post.</p>
 <p>The 27B still wins on tiny prompts. What surprised me was the other end. Strata’s own 3090 table shows ~500 t/s prompt reading, so I expected that to be its weak spot. Past a few thousand tokens it’s about 2.5x faster than llama.cpp. And generation barely changes as context grows: ~100 t/s at 86K, where the 27B drops from 70 to 49. A coding agent resends a big prompt every turn, so the long rows are where I spend my time.</p>
 <p>These are speed numbers only. I also started an agent benchmark (a refactor, a feature with tests, and a long-context question, all in a pinned more-itertools checkout). The 27B got the refactor right in 5.5 minutes, but the full set took too long, so I stopped it. Quality is what the trial week is for.</p>
 <p>I ran the same probe again after moving to 200K and k8v4:</p>
-<table>
-<thead>
-<tr>
-<th>Prompt</th>
-<th>Strata first token</th>
-<th>Strata prompt read</th>
-<th>Strata generate</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>~1K tokens (968)</td>
-<td>7.0 s</td>
-<td>371 t/s</td>
-<td>83 t/s</td>
-</tr>
-<tr>
-<td>~27K tokens (26,969)</td>
-<td>12.2 s</td>
-<td>2,258 t/s</td>
-<td>97 t/s</td>
-</tr>
-<tr>
-<td>~86K tokens (86,044)</td>
-<td>34.5 s</td>
-<td>2,525 t/s</td>
-<td>94 t/s</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt</th><th>Strata first token</th><th>Strata prompt read</th><th>Strata generate</th></tr></thead><tbody><tr><td>~1K tokens (968)</td><td>7.0 s</td><td>371 t/s</td><td>83 t/s</td></tr><tr><td>~27K tokens (26,969)</td><td>12.2 s</td><td>2,258 t/s</td><td>97 t/s</td></tr><tr><td>~86K tokens (86,044)</td><td>34.5 s</td><td>2,525 t/s</td><td>94 t/s</td></tr></tbody></table>
 <p>On the long prompts 200K costs 5-8% against the 128K int8 run. Generation there is still 1.5-1.9x the 27B’s 62 and 49 t/s. The ~1K row is odd. Its two runs were 4.6 and 9.4 seconds. My guess, which I haven’t confirmed, is that Strata was parking the previous conversation into the RAM cache with only ~9GB free. Small prompts aren’t where an agent spends its time, so I left it.</p>
 <h2 id="what-the-first-day-of-real-use-changed">What the first day of real use changed</h2>
 <p>My first real session was a long “review this project” run with subagents: 406 requests, 14.2M prompt tokens, and only 35.5% of them reused from cache. 308 requests reused nothing at all. That’s ~57 minutes of the session spent just reading prompts.</p>

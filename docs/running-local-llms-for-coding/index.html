@@ -23,7 +23,7 @@
         clientOptions: { theme: "light", lang: "en" },
       });
     });
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.1_ZOtBW0.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.D_LOBccP.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
   (function () {
     function syncIcons(theme) {
       var isDark = theme === 'dark';
@@ -171,189 +171,189 @@
 <span class="line"><span style="color:#24292E;--shiki-dark:#ABB2BF">}</span></span></code></pre>
 <h2 id="how-fast-is-a-3090-ti-for-local-coding-in-2026">How Fast Is a 3090 Ti for Local Coding in 2026?</h2>
 <p>I went back through my OpenCode sessions and pulled every benchmark I ran on the 3090 Ti. These aren’t apples to apples. The prompts, lengths, and quants changed along the way. But the shape of it holds up: MoE models were fast and I kept leaving them, and every dense model was slow until speculative decoding showed up.</p>
-<table>
-<thead>
-<tr>
-<th>When</th>
-<th>Model</th>
-<th>Type</th>
-<th>Generation (tok/s)</th>
-<th>Context</th>
-<th>What I learned</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>May 31</td>
-<td>gpt-oss-120b, experts in system RAM</td>
-<td>117B MoE</td>
-<td>~11</td>
-<td>128K</td>
-<td>A 7K-token prompt took ~88 s before the first token. OpenCode gave up at 30 s.</td>
-</tr>
-<tr>
-<td>May 31</td>
-<td>gpt-oss-20b</td>
-<td>MoE</td>
-<td>161</td>
-<td>128K</td>
-<td>Everything in VRAM. That ~88 s became ~1 s.</td>
-</tr>
-<tr>
-<td>Jun 1</td>
-<td>Gemma 4 31B, <code>Q4_K_M</code></td>
-<td>dense</td>
-<td>31</td>
-<td>48K</td>
-<td>Usable, but a 2,400-token answer took 77 s.</td>
-</tr>
-<tr>
-<td>Jun 1</td>
-<td>Gemma 4 26B-A4B</td>
-<td>MoE</td>
-<td>122</td>
-<td>48K</td>
-<td>About 4x the dense 31B on the same card.</td>
-</tr>
-<tr>
-<td>Jun 10</td>
-<td>Qwen3.6 40B, partly on CPU</td>
-<td>dense</td>
-<td>5.7</td>
-<td>—</td>
-<td>A few layers spilled to the CPU. That’s what it costs.</td>
-</tr>
-<tr>
-<td>Jun 13</td>
-<td>Qwen3.6-35B-A3B, Claude 4.7 distilled</td>
-<td>MoE</td>
-<td>~165</td>
-<td>128K</td>
-<td>My first daily driver.</td>
-</tr>
-<tr>
-<td>Jun 16</td>
-<td>Gemma 4 26B-A4B + MTP</td>
-<td>MoE</td>
-<td>~208</td>
-<td>192K</td>
-<td>The fastest thing I ever ran. 65% draft acceptance.</td>
-</tr>
-<tr>
-<td>Jun 16</td>
-<td>Qwen3.6-35B-A3B Wasserstein</td>
-<td>MoE</td>
-<td>170.5, then 174</td>
-<td>224K</td>
-<td>+1500 MHz on the VRAM bought 2%.</td>
-</tr>
-<tr>
-<td>Jun 16</td>
-<td>Qwen3.6-27B</td>
-<td>dense</td>
-<td>49.3</td>
-<td>32K</td>
-<td>Smarter, and 3.5x slower.</td>
-</tr>
-<tr>
-<td>Jun 17</td>
-<td>Qwopus3.6-27B v2 + MTP</td>
-<td>dense</td>
-<td>108 clean, 68 on a real refactor</td>
-<td>128K</td>
-<td>The first Qwen where MTP worked in llama.cpp.</td>
-</tr>
-<tr>
-<td>Jul 11</td>
-<td>Qwopus3.6-27B Coder + MTP, <code>Q4_K_M</code></td>
-<td>dense</td>
-<td>80 benchmark, ~61 real</td>
-<td>112K</td>
-<td>Slower than v2, but tuned for agent work.</td>
-</tr>
-<tr>
-<td>Aug 17</td>
-<td>Same, q4_0 KV cache</td>
-<td>dense</td>
-<td>60.7</td>
-<td>200K</td>
-<td>Gave up 8% of speed for 200K context.</td>
-</tr>
-<tr>
-<td>Aug 17</td>
-<td>Jackrong Qwen3.8-27B + MTP, <code>Q4_K_M</code></td>
-<td>dense hybrid</td>
-<td>76.7</td>
-<td>200K</td>
-<td>The k-quant that didn’t corrupt.</td>
-</tr>
-<tr>
-<td>Sep 23</td>
-<td>Same, rebuilt llama.cpp</td>
-<td>dense hybrid</td>
-<td>53–58, then 62.0</td>
-<td>200K</td>
-<td>Rebuild plus dropping <code>--spec-draft-p-min</code>. Also where I caught DRY corrupting paths.</td>
-</tr>
-<tr>
-<td>Oct 25</td>
-<td>Qwen3.8-27B-pi + MTP draft</td>
-<td>dense hybrid</td>
-<td>95 at 6.7K, 52 at 107K</td>
-<td>200K</td>
-<td>Faster than the Jackrong build at every prompt size.</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>When</th><th>Model</th><th>Type</th><th>Generation (tok/s)</th><th>Context</th><th>What I learned</th></tr></thead><tbody><tr><td>May 31</td><td>gpt-oss-120b, experts in system RAM</td><td>117B MoE</td><td>~11</td><td>128K</td><td>A 7K-token prompt took ~88 s before the first token. OpenCode gave up at 30 s.</td></tr><tr><td>May 31</td><td>gpt-oss-20b</td><td>MoE</td><td>161</td><td>128K</td><td>Everything in VRAM. That ~88 s became ~1 s.</td></tr><tr><td>Jun 1</td><td>Gemma 4 31B, <code>Q4_K_M</code></td><td>dense</td><td>31</td><td>48K</td><td>Usable, but a 2,400-token answer took 77 s.</td></tr><tr><td>Jun 1</td><td>Gemma 4 26B-A4B</td><td>MoE</td><td>122</td><td>48K</td><td>About 4x the dense 31B on the same card.</td></tr><tr><td>Jun 10</td><td>Qwen3.6 40B, partly on CPU</td><td>dense</td><td>5.7</td><td>—</td><td>A few layers spilled to the CPU. That’s what it costs.</td></tr><tr><td>Jun 13</td><td>Qwen3.6-35B-A3B, Claude 4.7 distilled</td><td>MoE</td><td>~165</td><td>128K</td><td>My first daily driver.</td></tr><tr><td>Jun 16</td><td>Gemma 4 26B-A4B + MTP</td><td>MoE</td><td>~208</td><td>192K</td><td>The fastest thing I ever ran. 65% draft acceptance.</td></tr><tr><td>Jun 16</td><td>Qwen3.6-35B-A3B Wasserstein</td><td>MoE</td><td>170.5, then 174</td><td>224K</td><td>+1500 MHz on the VRAM bought 2%.</td></tr><tr><td>Jun 16</td><td>Qwen3.6-27B</td><td>dense</td><td>49.3</td><td>32K</td><td>Smarter, and 3.5x slower.</td></tr><tr><td>Jun 17</td><td>Qwopus3.6-27B v2 + MTP</td><td>dense</td><td>108 clean, 68 on a real refactor</td><td>128K</td><td>The first Qwen where MTP worked in llama.cpp.</td></tr><tr><td>Jul 11</td><td>Qwopus3.6-27B Coder + MTP, <code>Q4_K_M</code></td><td>dense</td><td>80 benchmark, ~61 real</td><td>112K</td><td>Slower than v2, but tuned for agent work.</td></tr><tr><td>Aug 17</td><td>Same, q4_0 KV cache</td><td>dense</td><td>60.7</td><td>200K</td><td>Gave up 8% of speed for 200K context.</td></tr><tr><td>Aug 17</td><td>Jackrong Qwen3.8-27B + MTP, <code>Q4_K_M</code></td><td>dense hybrid</td><td>76.7</td><td>200K</td><td>The k-quant that didn’t corrupt.</td></tr><tr><td>Sep 23</td><td>Same, rebuilt llama.cpp</td><td>dense hybrid</td><td>53–58, then 62.0</td><td>200K</td><td>Rebuild plus dropping <code>--spec-draft-p-min</code>. Also where I caught DRY corrupting paths.</td></tr><tr><td>Oct 25</td><td>Qwen3.8-27B-pi + MTP draft</td><td>dense hybrid</td><td>95 at 6.7K, 52 at 107K</td><td>200K</td><td>Faster than the Jackrong build at every prompt size.</td></tr></tbody></table>
 <p>Two things in that table stand out. Context size cost nothing until I hit the VRAM wall. The Qwopus Coder ran 60.9 tok/s at 150K, 60.7 at 200K, and 60.6 at 262K, because decode cost scales with the context you actually use, not what you allocate. The other one is how much “real work” numbers trail benchmark numbers. Qwopus v2 did 108 tok/s on a clean prompt and 68 on a 12K-token refactor.</p>
 <h2 id="where-im-at-now">Where I’m at now</h2>
 <p>Same service file as above, same llama.cpp build (<code>2280f0fd</code>, from October 25), measured November 9 straight against the server with prompt caching off and 256 generated tokens:</p>
-<table>
-<thead>
-<tr>
-<th>Prompt</th>
-<th>Prompt reading, Oct 25</th>
-<th>Prompt reading, Nov 9</th>
-<th>Generation, Oct 25</th>
-<th>Generation, Nov 9</th>
-<th>Time to first token, Nov 9</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>~6.7K</td>
-<td>1,548 tok/s</td>
-<td>1,509 tok/s</td>
-<td>95.3 tok/s</td>
-<td>70.0 tok/s</td>
-<td>4.4 s</td>
-</tr>
-<tr>
-<td>~27K</td>
-<td>1,517 tok/s</td>
-<td>1,448 tok/s</td>
-<td>77.0 tok/s</td>
-<td>65.3 tok/s</td>
-<td>18.7 s</td>
-</tr>
-<tr>
-<td>~55K</td>
-<td>1,363 tok/s</td>
-<td>1,350 tok/s</td>
-<td>63.2 tok/s</td>
-<td>55.6 tok/s</td>
-<td>41 s</td>
-</tr>
-<tr>
-<td>~110K</td>
-<td>1,124 tok/s</td>
-<td>1,087 tok/s</td>
-<td>51.8 tok/s</td>
-<td>47.7 tok/s</td>
-<td>102 s</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Prompt</th><th>Prompt reading, Oct 25</th><th>Prompt reading, Nov 9</th><th>Generation, Oct 25</th><th>Generation, Nov 9</th><th>Time to first token, Nov 9</th></tr></thead><tbody><tr><td>~6.7K</td><td>1,548 tok/s</td><td>1,509 tok/s</td><td>95.3 tok/s</td><td>70.0 tok/s</td><td>4.4 s</td></tr><tr><td>~27K</td><td>1,517 tok/s</td><td>1,448 tok/s</td><td>77.0 tok/s</td><td>65.3 tok/s</td><td>18.7 s</td></tr><tr><td>~55K</td><td>1,363 tok/s</td><td>1,350 tok/s</td><td>63.2 tok/s</td><td>55.6 tok/s</td><td>41 s</td></tr><tr><td>~110K</td><td>1,124 tok/s</td><td>1,087 tok/s</td><td>51.8 tok/s</td><td>47.7 tok/s</td><td>102 s</td></tr></tbody></table>
 <p>Prompt reading is within a few percent of October. Generation is lower, and the reason is draft acceptance, not the box. Today’s prompts were synthetic code, and MTP accepted about 50% of its drafts. The October runs landed between 61% and 73%. MTP speed depends heavily on how predictable the text is, so I treat generation as a range: roughly 50 to 95 tok/s, depending on how deep into the context the session is and what the model is writing.</p>
 <p>The card sits at 23.6 of 24.5GB with the model loaded, so about 1GB of headroom.</p>
 <h2 id="would-i-do-it-again">Would I Do It Again?</h2>

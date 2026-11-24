@@ -23,7 +23,7 @@
         clientOptions: { theme: "light", lang: "en" },
       });
     });
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.1_ZOtBW0.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.D_LOBccP.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
   (function () {
     function syncIcons(theme) {
       var isDark = theme === 'dark';
@@ -97,32 +97,32 @@
 <h3 id="-web-camera-usage">📷 Web camera usage</h3>
 <p>Capturing the output of the camera is easy using a mini-HDMI to HDMI cable then a HDMI Video capture device.  It shows up as a web camera device on the computer.  The output is 1080p but good enough for most meetings.   <a href="https://www.hanselman.com/blog/good-better-best-creating-the-ultimate-remote-worker-webcam-setup-on-a-budget">Scott Hanselman’s Blog has a good write up. </a></p>
 <p>To deal with the camera heating over time open the screen to help dissipate it.  The screen is always on unless setting Menu > page 2 > subpage 3 > FINDER/MONITOR > FINDER.</p>
-<table>
-<thead>
-<tr>
-<th>Gear</th>
-<th>Purpose</th>
-<th>Buy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20">Sony A6000 body</a></td>
-<td>24.3 MP mirrorless camera</td>
-<td><a href="https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td>
-<td>Dummy battery for continuous power</td>
-<td><a href="https://amzn.to/4afC0jy">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">HDMI to USB3 capture adapter</a></td>
-<td>Camera output shows up as a webcam</td>
-<td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">Amazon</a></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Gear</th><th>Purpose</th><th>Buy</th></tr></thead><tbody><tr><td><a href="https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20">Sony A6000 body</a></td><td>24.3 MP mirrorless camera</td><td><a href="https://www.amazon.com/dp/B00IZDLDGE?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td><td>Dummy battery for continuous power</td><td><a href="https://amzn.to/4afC0jy">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">HDMI to USB3 capture adapter</a></td><td>Camera output shows up as a webcam</td><td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">Amazon</a></td></tr></tbody></table>
 <ul>
 <li><a href="https://www.jeffgeerling.com/blog/2020/how-i-livestream-obs-sony-a6000-and-cam-link">How I livestream with OBS, a Sony a6000, and a Cam Link | Jeff Geerling</a></li>
 </ul>
@@ -250,27 +250,27 @@
 <li>Use hardware device like <a href="https://amzn.to/44Mfexf">Neo 6m</a> hooked up to a raspberry pi/microcontroller to collect time/location then post process.</li>
 <li>My favorite is a combination of methods. Is to add a <a href="https://amzn.to/3X2tOOF">super small GPS device</a> that was hooked a to raspberry pi zero mounted on the camera.  With a quick POC, it worked wel!  Unfortunately uploading files to the camera sames impossible. At least with all the options I’ve tried.   The other major issue is the Pi’s microSD card fills up fast with 7-10MB JPEGs.  So it should be offloaded quickly.</li>
 </ul>
-<table>
-<thead>
-<tr>
-<th>Gear</th>
-<th>Purpose</th>
-<th>Buy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://amzn.to/44Mfexf">u-blox NEO-6M GPS module</a></td>
-<td>Logs time/location for post processing</td>
-<td><a href="https://amzn.to/44Mfexf">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://amzn.to/3X2tOOF">Super small GPS module</a></td>
-<td>Tiny GPS for the Pi Zero build</td>
-<td><a href="https://amzn.to/3X2tOOF">Amazon</a></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Gear</th><th>Purpose</th><th>Buy</th></tr></thead><tbody><tr><td><a href="https://amzn.to/44Mfexf">u-blox NEO-6M GPS module</a></td><td>Logs time/location for post processing</td><td><a href="https://amzn.to/44Mfexf">Amazon</a></td></tr><tr><td><a href="https://amzn.to/3X2tOOF">Super small GPS module</a></td><td>Tiny GPS for the Pi Zero build</td><td><a href="https://amzn.to/3X2tOOF">Amazon</a></td></tr></tbody></table>
 <p>Quick python script to collect GPS data off the GPS serial device.</p>
 <pre class="astro-code astro-code-themes github-light one-dark-pro-accessible" style="background-color:#fff;--shiki-dark-bg:#282c34;color:#24292e;--shiki-dark:#abb2bf; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D;--shiki-light-font-style:inherit;--shiki-dark:#9DA5B4;--shiki-dark-font-style:italic"># pip install pynmea2 pyserial</span></span>
 <span class="line"><span style="color:#D73A49;--shiki-dark:#C678DD">import</span><span style="color:#24292E;--shiki-dark:#ABB2BF"> serial</span></span>

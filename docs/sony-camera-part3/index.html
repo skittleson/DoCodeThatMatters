@@ -23,7 +23,7 @@
         clientOptions: { theme: "light", lang: "en" },
       });
     });
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.1_ZOtBW0.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.D_LOBccP.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
   (function () {
     function syncIcons(theme) {
       var isDark = theme === 'dark';
@@ -65,42 +65,42 @@
 <p>As in my other posts, i’ve made further progress with getting my camera to a modern era. This one is going to be taking advantage of using bit of mobile compute and finding some parts to make it ultra compact.  Also, I got a new a6400! a few new features that i really like. Before i go to far i do once to call out some of the biggest changes since my last posts (<a href="/hacking-sony-a6000-for-modernization/">Part 1</a>) and 2 (<a href="/hacking-sony-a6000-more/">Part 2</a>): no ssh into the device, the playmemories app is no longer so we cant get updated apps, and no more android subsystem. Looks like this has been rewritten by Sony.</p>
 <p>So why is this post a bit different?  We are using additiional hardware for on-the-go capture gathering/viewing.  A raspberry pi zero w, gps on it, external battery, and some small cables.  What does this get us?  Gets us realtime shots, online/offline networking, and convience.</p>
 <h2 id="gear-for-this-build">Gear for This Build</h2>
-<table>
-<thead>
-<tr>
-<th>Gear</th>
-<th>Purpose</th>
-<th>Buy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20">Raspberry Pi Zero 2 W</a></td>
-<td>The brains of the tethered setup; quad-core, so the gphoto2 build and JPEG compression run much faster than on the original Zero W (which also works)</td>
-<td><a href="https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20">Micro-USB OTG host adapter (2-pack)</a></td>
-<td>Breaks the Pi Zero’s micro-USB OTG port out to full-size USB-A for the camera cable</td>
-<td><a href="https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20">SanDisk 32GB Ultra A1 microSD card</a></td>
-<td>OS card for the Pi; A1 rating keeps gphoto2 + copyparty responsive</td>
-<td><a href="https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20">Anker PowerCore Slim 10000 USB-C battery</a></td>
-<td>Powers the Pi untethered in the field</td>
-<td><a href="https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td>
-<td>Dummy battery so the camera itself doesn’t die mid-session</td>
-<td><a href="https://amzn.to/4afC0jy">Amazon</a></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Gear</th><th>Purpose</th><th>Buy</th></tr></thead><tbody><tr><td><a href="https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20">Raspberry Pi Zero 2 W</a></td><td>The brains of the tethered setup; quad-core, so the gphoto2 build and JPEG compression run much faster than on the original Zero W (which also works)</td><td><a href="https://www.amazon.com/dp/B09LH5SBPS?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20">Micro-USB OTG host adapter (2-pack)</a></td><td>Breaks the Pi Zero’s micro-USB OTG port out to full-size USB-A for the camera cable</td><td><a href="https://www.amazon.com/dp/B084WNMZV5?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20">SanDisk 32GB Ultra A1 microSD card</a></td><td>OS card for the Pi; A1 rating keeps gphoto2 + copyparty responsive</td><td><a href="https://www.amazon.com/dp/B08L5HMJVW?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20">Anker PowerCore Slim 10000 USB-C battery</a></td><td>Powers the Pi untethered in the field</td><td><a href="https://www.amazon.com/dp/B0D5CLSMFB?tag=dctm-20">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td><td>Dummy battery so the camera itself doesn’t die mid-session</td><td><a href="https://amzn.to/4afC0jy">Amazon</a></td></tr></tbody></table>
 <h2 id="the-dead-ends">The Dead Ends</h2>
 <p>Using the Sony App is kind of slow. I know they did a general good job on it. It’s just really flaky to get going. I tried a bunch of ways but it could be my phone or the camera itself. Not sure but i dont see Sony making a ton of improvements on it.</p>
 <ul>
@@ -195,42 +195,42 @@
 <li><code>0xFE</code>: error responses with ASCII messages (<code>FILE_NOT_FOUND</code>, <code>BAD_QUALITY</code>, etc.)</li>
 </ul>
 <p><strong>Quality tiers (server-side compression with Pillow/LANCZOS):</strong></p>
-<table>
-<thead>
-<tr>
-<th>Quality</th>
-<th>Resize</th>
-<th>JPEG quality</th>
-<th>Size (one 6000×3376 a6400 shot)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>None (original)</td>
-<td>—</td>
-<td>11.4 MB</td>
-</tr>
-<tr>
-<td>1</td>
-<td>Half-size</td>
-<td>75</td>
-<td>350 KB</td>
-</tr>
-<tr>
-<td>2</td>
-<td>1200px wide</td>
-<td>75</td>
-<td>51 KB</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1200px wide</td>
-<td>40</td>
-<td>28 KB</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Quality</th><th>Resize</th><th>JPEG quality</th><th>Size (one 6000×3376 a6400 shot)</th></tr></thead><tbody><tr><td>0</td><td>None (original)</td><td>—</td><td>11.4 MB</td></tr><tr><td>1</td><td>Half-size</td><td>75</td><td>350 KB</td></tr><tr><td>2</td><td>1200px wide</td><td>75</td><td>51 KB</td></tr><tr><td>3</td><td>1200px wide</td><td>40</td><td>28 KB</td></tr></tbody></table>
 <ul>
 <li>Quality 3 = preview in under 10 seconds over Bluetooth</li>
 <li>Pi does the CPU work; phone receives final compressed JPEG</li>

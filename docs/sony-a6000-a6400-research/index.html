@@ -23,7 +23,7 @@
         clientOptions: { theme: "light", lang: "en" },
       });
     });
-  </script><link rel="stylesheet" href="/_astro/BaseLayout.1_ZOtBW0.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
+  </script><link rel="stylesheet" href="/_astro/BaseLayout.D_LOBccP.css"></head><body class="pt-20 min-h-screen" style="background-color: var(--color-bg); color: var(--color-text);"><nav class="fixed top-0 left-0 right-0 z-50" style="background-color: var(--color-surface); border-bottom: 1px solid var(--color-border);"><div class="container mx-auto px-4"><!-- Mobile: two rows. Desktop: single row --><div class="md:hidden py-2 flex flex-col gap-1"><!-- Row 1: brand --><a href="/" class="font-mono font-bold text-base leading-tight transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><!-- Row 2: nav links + RSS + EPUB + theme toggle --><div class="flex items-center gap-4"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><!-- File icon --><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><!-- Sun icon (shown in dark mode) --><svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><!-- Moon icon (shown in light mode) --><svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div><!-- Desktop: single row --><div class="hidden md:flex items-center justify-between h-14"><a href="/" class="font-mono font-bold text-base transition-colors" style="color: var(--color-text);" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text)'">Do Code That Matters</a><div class="flex items-center gap-6"><a href="/blog/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">Blog</a><a href="/about/" class="font-mono text-sm transition-colors" style="color: var(--color-text-muted);">About</a><a href="/rss.xml" aria-label="RSS feed" class="transition-colors" style="color: var(--color-text-muted);" title="RSS feed"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg></a><a href="/blog.epub" aria-label="Download EPUB" class="transition-colors" style="color: var(--color-text-muted);" title="Download blog as EPUB"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 16v-5l-4-4H8c-1.1 0-2 .9-2 2v8.9c0 .5.4 1 1 1h11v-3.1l2.5-2.5L22 14v4a1 1 0 0 1-1 1H8a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5l-3 3 3 3 3-3 3 3zm-9.4-7.6 1.2-1.2 1.4 1.4L9.6 11l-1.4-1.4 1.2-1.2c.3-.3.8-.3 1.2 0z"></path></svg></a><a href="/resume.json" aria-label="JSON Resume" class="transition-colors" style="color: var(--color-text-muted);" title="JSON Resume"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 9H18.5L13 3.5V9M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2z"></path></svg></a><button id="theme-toggle-desktop" aria-label="Toggle light/dark theme" class="transition-colors cursor-pointer bg-transparent border-0 p-0" style="color: var(--color-text-muted);"><svg id="icon-sun-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg><svg id="icon-moon-desktop" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div></div></div></nav><script>
   (function () {
     function syncIcons(theme) {
       var isDark = theme === 'dark';
@@ -67,37 +67,37 @@
 <p><strong>Sony A6000/A6400 series:</strong> <a href="/hacking-sony-a6000-for-modernization/">Part 1: Modernization</a> · <a href="/hacking-sony-a6000-more/">Part 2: More Hacks</a> · <a href="/sony-camera-part3/">Part 3: Tethered Raspberry Pi</a> · Research &#x26; Community Resources (this post) · <a href="/burst-superres/">Burst Super-Res</a></p>
 <h2 id="0-recommended-gear-for-a6000a6400-mods">0. Recommended Gear for A6000/A6400 Mods</h2>
 <p>Things that make the mods and sessions in this post actually usable day-to-day:</p>
-<table>
-<thead>
-<tr>
-<th>Gear</th>
-<th>Purpose</th>
-<th>Buy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td>
-<td>Dummy battery for continuous power during long service-mode/firmware sessions (§5, §8)</td>
-<td><a href="https://amzn.to/4afC0jy">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://amzn.to/4xvUtVy">NP-FW50 dummy battery</a></td>
-<td>Pairs with the AC-PW20 coupler on both A6000 and A6400</td>
-<td><a href="https://amzn.to/4xvUtVy">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://amzn.to/4h0uaAR">3-pack NP-FW50 replacement batteries</a></td>
-<td>High-capacity spares for timelapse/astro sessions away from an outlet (§5, §7)</td>
-<td><a href="https://amzn.to/4h0uaAR">Amazon</a></td>
-</tr>
-<tr>
-<td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">HDMI to USB3 capture adapter</a></td>
-<td>Clean HDMI capture for the webcam workarounds in §3</td>
-<td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">Amazon</a></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Gear</th><th>Purpose</th><th>Buy</th></tr></thead><tbody><tr><td><a href="https://amzn.to/4afC0jy">AC-PW20 power adapter</a></td><td>Dummy battery for continuous power during long service-mode/firmware sessions (§5, §8)</td><td><a href="https://amzn.to/4afC0jy">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4xvUtVy">NP-FW50 dummy battery</a></td><td>Pairs with the AC-PW20 coupler on both A6000 and A6400</td><td><a href="https://amzn.to/4xvUtVy">Amazon</a></td></tr><tr><td><a href="https://amzn.to/4h0uaAR">3-pack NP-FW50 replacement batteries</a></td><td>High-capacity spares for timelapse/astro sessions away from an outlet (§5, §7)</td><td><a href="https://amzn.to/4h0uaAR">Amazon</a></td></tr><tr><td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">HDMI to USB3 capture adapter</a></td><td>Clean HDMI capture for the webcam workarounds in §3</td><td><a href="https://www.amazon.com/dp/B08Z3XDYQ7?tag=dctm-20">Amazon</a></td></tr></tbody></table>
 <h2 id="1-what-is-openmemories-tweak-for-the-sony-a6000">1. What Is OpenMemories-Tweak for the Sony A6000?</h2>
 <p><strong>Repo:</strong> <a href="https://github.com/ma1co/OpenMemories-Tweak" title="Unlock your Sony camera&#x27;s settings">ma1co/OpenMemories-Tweak</a><br>
 <strong>Status:</strong> Does NOT work on A6400 (confirmed by user + GitHub issue #381 on Sony-PMCA-RE)</p>
@@ -215,139 +215,139 @@
 <p>So for Sony A6300 custom firmware the practical answer is: skip the service-mode gymnastics the A6400 needs — the app route works. For what the tethered-app route enables on this generation, see <a href="/sony-camera-part3/">tethering the A6000 to a Raspberry Pi</a>. Back up your firmware before installing anything.</p>
 <h2 id="which-sony-cameras-can-be-modded-a-generation-map">Which Sony Cameras Can Be Modded? A Generation Map</h2>
 <p>“Sony camera custom firmware” isn’t one answer — support depends on the internal architecture, and there are two clean lines. The oldest generation runs Android under the UI, so a Sony firmware hack can install real apps and open telnet/adb. The newer generation (signed CXD90045/CXD90057 architectures) rejects both the app installer and the firmware-updater exploit path, leaving only service-mode property writes. Where the post’s sources don’t cover a cell, it shows ”—”.</p>
-<table>
-<thead>
-<tr>
-<th>Model</th>
-<th>Architecture</th>
-<th>App install (PMCA)</th>
-<th>Tweak</th>
-<th>Language unlock</th>
-<th>Firmware dump</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>A6000</td>
-<td>Android PMCA</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅ Via Tweak</td>
-<td>✅ Via telnet / updatershell</td>
-</tr>
-<tr>
-<td>A6300</td>
-<td>Android PMCA</td>
-<td>✅</td>
-<td>✅</td>
-<td>✅ Via Tweak</td>
-<td>✅ Via telnet</td>
-</tr>
-<tr>
-<td>A6500</td>
-<td>Android PMCA</td>
-<td>✅</td>
-<td>✅ (install reports in §10)</td>
-<td>✅ Via Tweak</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A6400</td>
-<td>CXD90045 service mode</td>
-<td>❌</td>
-<td>❌ (#381)</td>
-<td>⚠️ Service-mode workaround</td>
-<td>⚠️ Service mode only</td>
-</tr>
-<tr>
-<td>A6600</td>
-<td>Service mode (same flow as A6400)</td>
-<td>❌</td>
-<td>—</td>
-<td>✅ Reported working</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A7C</td>
-<td>Service mode (same flow as A6400)</td>
-<td>—</td>
-<td>—</td>
-<td>✅ Reported working</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A7M3</td>
-<td>Service mode (same flow as A6400)</td>
-<td>—</td>
-<td>—</td>
-<td>✅ Reported working</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A7RM3</td>
-<td>Service mode (same flow as A6400)</td>
-<td>—</td>
-<td>—</td>
-<td>✅ Reported working</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A7RM4</td>
-<td>Service mode (same flow as A6400)</td>
-<td>—</td>
-<td>—</td>
-<td>✅ Reported working</td>
-<td>—</td>
-</tr>
-<tr>
-<td>A6700</td>
-<td>Shares A6400’s service-mode entry (#513)</td>
-<td>❌</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Architecture</th><th>App install (PMCA)</th><th>Tweak</th><th>Language unlock</th><th>Firmware dump</th></tr></thead><tbody><tr><td>A6000</td><td>Android PMCA</td><td>✅</td><td>✅</td><td>✅ Via Tweak</td><td>✅ Via telnet / updatershell</td></tr><tr><td>A6300</td><td>Android PMCA</td><td>✅</td><td>✅</td><td>✅ Via Tweak</td><td>✅ Via telnet</td></tr><tr><td>A6500</td><td>Android PMCA</td><td>✅</td><td>✅ (install reports in §10)</td><td>✅ Via Tweak</td><td>—</td></tr><tr><td>A6400</td><td>CXD90045 service mode</td><td>❌</td><td>❌ (#381)</td><td>⚠️ Service-mode workaround</td><td>⚠️ Service mode only</td></tr><tr><td>A6600</td><td>Service mode (same flow as A6400)</td><td>❌</td><td>—</td><td>✅ Reported working</td><td>—</td></tr><tr><td>A7C</td><td>Service mode (same flow as A6400)</td><td>—</td><td>—</td><td>✅ Reported working</td><td>—</td></tr><tr><td>A7M3</td><td>Service mode (same flow as A6400)</td><td>—</td><td>—</td><td>✅ Reported working</td><td>—</td></tr><tr><td>A7RM3</td><td>Service mode (same flow as A6400)</td><td>—</td><td>—</td><td>✅ Reported working</td><td>—</td></tr><tr><td>A7RM4</td><td>Service mode (same flow as A6400)</td><td>—</td><td>—</td><td>✅ Reported working</td><td>—</td></tr><tr><td>A6700</td><td>Shares A6400’s service-mode entry (#513)</td><td>❌</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>
 <p>The “older A7 series” is Android-based per the OpenMemories-Tweak explainer in §10; the newer bodies dropped Android, which is exactly why Sony A6400 custom firmware in the app sense is impossible there.</p>
 <h2 id="why-does-pmca-re-say-no-tweaks-found-on-a6400">Why Does PMCA-RE Say “No Tweaks Found” on A6400?</h2>
 <p>Almost always a Windows driver-binding failure, not a camera limitation. When chasing Sony A6400 custom firmware errors with the PMCA-RE tool, match the message to the fix:</p>
-<table>
-<thead>
-<tr>
-<th>Message / symptom</th>
-<th>Cause</th>
-<th>Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>No Tweaks found</code> from <code>pmca-console tweak</code></td>
-<td>Zadig 2.9’s libusb driver binds incorrectly (issue #381)</td>
-<td>Reinstall the USB driver with <strong>Zadig 2.8</strong></td>
-</tr>
-<tr>
-<td>Device disconnects right after <code>serviceshell</code></td>
-<td>Expected part of entering service mode (issue #513)</td>
-<td>Re-run Zadig; bind the re-appearing “Sony USB Device”</td>
-</tr>
-<tr>
-<td>USB crash during whole-file backup read</td>
-<td><code>BACKUP_PDT_READ</code> crashes the ILCE-6400’s USB stack (issue #733)</td>
-<td>Use per-property <code>readBackup</code>/<code>writeBackup</code> workaround</td>
-</tr>
-<tr>
-<td>MTP error <code>0x2006</code> on Tweak install</td>
-<td>A6400 has no PlayMemories app support</td>
-<td>No app route — use the service-mode unlock instead</td>
-</tr>
-<tr>
-<td>Camera not recognized over USB</td>
-<td>USB LUN reporting</td>
-<td>MENU → Setup (yellow) → USB LUN → <strong>Single</strong></td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Message / symptom</th><th>Cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>No Tweaks found</code> from <code>pmca-console tweak</code></td><td>Zadig 2.9’s libusb driver binds incorrectly (issue #381)</td><td>Reinstall the USB driver with <strong>Zadig 2.8</strong></td></tr><tr><td>Device disconnects right after <code>serviceshell</code></td><td>Expected part of entering service mode (issue #513)</td><td>Re-run Zadig; bind the re-appearing “Sony USB Device”</td></tr><tr><td>USB crash during whole-file backup read</td><td><code>BACKUP_PDT_READ</code> crashes the ILCE-6400’s USB stack (issue #733)</td><td>Use per-property <code>readBackup</code>/<code>writeBackup</code> workaround</td></tr><tr><td>MTP error <code>0x2006</code> on Tweak install</td><td>A6400 has no PlayMemories app support</td><td>No app route — use the service-mode unlock instead</td></tr><tr><td>Camera not recognized over USB</td><td>USB LUN reporting</td><td>MENU → Setup (yellow) → USB LUN → <strong>Single</strong></td></tr></tbody></table>
 <p>The Zadig 2.9→2.8 rollback fixes the “No Tweaks found” case for most reporters; the per-property workaround (#733) is what lets the language patch go through without crashing the camera mid-transfer.</p>
 <hr>
 <h2 id="3-how-to-get-clean-hdmi-output-on-a-sony-a6000-or-a6400-for-webcam-use">3. How to Get Clean HDMI Output on a Sony A6000 or A6400 for Webcam Use</h2>
@@ -383,37 +383,37 @@
 </li>
 </ol>
 <h3 id="comparison">Comparison</h3>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>A6000</th>
-<th>A6400</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Native clean HDMI</td>
-<td>Yes (HDMI Info. Display → Off)</td>
-<td>Yes (menu option)</td>
-</tr>
-<tr>
-<td>PMCA-HDMICam</td>
-<td>Yes</td>
-<td>No (no PMCA app support; not needed)</td>
-</tr>
-<tr>
-<td>Official webcam software</td>
-<td>No</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td>Best for webcam use</td>
-<td>HDMI + capture card</td>
-<td>USB, no capture card</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>A6000</th><th>A6400</th></tr></thead><tbody><tr><td>Native clean HDMI</td><td>Yes (HDMI Info. Display → Off)</td><td>Yes (menu option)</td></tr><tr><td>PMCA-HDMICam</td><td>Yes</td><td>No (no PMCA app support; not needed)</td></tr><tr><td>Official webcam software</td><td>No</td><td>Yes</td></tr><tr><td>Best for webcam use</td><td>HDMI + capture card</td><td>USB, no capture card</td></tr></tbody></table>
 <hr>
 <h2 id="4-how-to-convert-a-sony-a6000-or-a6400-for-astrophotography-ir-filter-removal">4. How to Convert a Sony A6000 or A6400 for Astrophotography (IR Filter Removal)</h2>
 <h3 id="what-it-is">What it is</h3>
@@ -878,102 +878,102 @@ Channel: **HardReset.Info**. Shows how to fix A6400 USB connection problems by c
 </ul>
 <hr>
 <h2 id="11-quick-reference-what-works-on-each-camera">11. Quick Reference: What Works on Each Camera</h2>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>A6000</th>
-<th>A6400</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>OpenMemories-Tweak</td>
-<td>✅ Yes</td>
-<td>❌ No (issue #381)</td>
-</tr>
-<tr>
-<td>PMCA app install</td>
-<td>✅ Yes</td>
-<td>❌ No</td>
-</tr>
-<tr>
-<td>Language unlock</td>
-<td>✅ Via Tweak</td>
-<td>⚠️ Via service mode workaround</td>
-</tr>
-<tr>
-<td>Clean HDMI out</td>
-<td>✅ Native menu option</td>
-<td>✅ Native menu option</td>
-</tr>
-<tr>
-<td>Webcam (USB)</td>
-<td>❌ Not supported (use HDMI + capture card)</td>
-<td>✅ Official software</td>
-</tr>
-<tr>
-<td>IR filter removal</td>
-<td>✅ DIY or commercial</td>
-<td>✅ DIY or commercial</td>
-</tr>
-<tr>
-<td>Battery grip / DC coupler</td>
-<td>✅ Yes</td>
-<td>✅ Yes</td>
-</tr>
-<tr>
-<td>S-Log2</td>
-<td>❌ No</td>
-<td>✅ PP7</td>
-</tr>
-<tr>
-<td>S-Log3</td>
-<td>❌ No</td>
-<td>⚠️ Possible (not ideal, 8-bit)</td>
-</tr>
-<tr>
-<td>Built-in intervalometer</td>
-<td>❌ No</td>
-<td>✅ Yes</td>
-</tr>
-<tr>
-<td>Timelapse app (PMCA)</td>
-<td>✅ Yes</td>
-<td>❌ No</td>
-</tr>
-<tr>
-<td>Telnet / ADB access</td>
-<td>✅ Via Tweak</td>
-<td>❌ No</td>
-</tr>
-<tr>
-<td>Firmware dump</td>
-<td>✅ Via telnet</td>
-<td>⚠️ Service mode only</td>
-</tr>
-<tr>
-<td>External HDMI recording (8-bit 4:2:2)</td>
-<td>⚠️ 1080 only (HDMI Info. Display → Off)</td>
-<td>✅ Native clean HDMI</td>
-</tr>
-<tr>
-<td>4K video</td>
-<td>❌ No (1080p max)</td>
-<td>✅ Yes (4K30)</td>
-</tr>
-<tr>
-<td>Eye AF (human)</td>
-<td>✅ Yes (assign [Eye AF] to a custom key)</td>
-<td>✅ Yes (Eye AF)</td>
-</tr>
-<tr>
-<td>Eye AF (animal)</td>
-<td>❌ No</td>
-<td>✅ Firmware 2.00</td>
-</tr>
-</tbody>
-</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Feature</th><th>A6000</th><th>A6400</th></tr></thead><tbody><tr><td>OpenMemories-Tweak</td><td>✅ Yes</td><td>❌ No (issue #381)</td></tr><tr><td>PMCA app install</td><td>✅ Yes</td><td>❌ No</td></tr><tr><td>Language unlock</td><td>✅ Via Tweak</td><td>⚠️ Via service mode workaround</td></tr><tr><td>Clean HDMI out</td><td>✅ Native menu option</td><td>✅ Native menu option</td></tr><tr><td>Webcam (USB)</td><td>❌ Not supported (use HDMI + capture card)</td><td>✅ Official software</td></tr><tr><td>IR filter removal</td><td>✅ DIY or commercial</td><td>✅ DIY or commercial</td></tr><tr><td>Battery grip / DC coupler</td><td>✅ Yes</td><td>✅ Yes</td></tr><tr><td>S-Log2</td><td>❌ No</td><td>✅ PP7</td></tr><tr><td>S-Log3</td><td>❌ No</td><td>⚠️ Possible (not ideal, 8-bit)</td></tr><tr><td>Built-in intervalometer</td><td>❌ No</td><td>✅ Yes</td></tr><tr><td>Timelapse app (PMCA)</td><td>✅ Yes</td><td>❌ No</td></tr><tr><td>Telnet / ADB access</td><td>✅ Via Tweak</td><td>❌ No</td></tr><tr><td>Firmware dump</td><td>✅ Via telnet</td><td>⚠️ Service mode only</td></tr><tr><td>External HDMI recording (8-bit 4:2:2)</td><td>⚠️ 1080 only (HDMI Info. Display → Off)</td><td>✅ Native clean HDMI</td></tr><tr><td>4K video</td><td>❌ No (1080p max)</td><td>✅ Yes (4K30)</td></tr><tr><td>Eye AF (human)</td><td>✅ Yes (assign [Eye AF] to a custom key)</td><td>✅ Yes (Eye AF)</td></tr><tr><td>Eye AF (animal)</td><td>❌ No</td><td>✅ Firmware 2.00</td></tr></tbody></table>
 <p>A6300: same row as the A6000 for every app-based feature (Tweak, PMCA install, telnet/adb firmware dump — see “Does the Sony A6300 Support Custom Firmware?” above).</p>
 <hr>
 <h2 id="12-recommendations">12. Recommendations</h2>

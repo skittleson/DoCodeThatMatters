@@ -1,5 +1,5 @@
 ---
-title: Reading My Onewheel Pint S From Linux (No App, No Cloud)
+title: My Onewheel Unlocks With a Static Secret
 keywords:
   - Onewheel
   - Onewheel Pint S
@@ -14,7 +14,7 @@ keywords:
   - telemetry
   - hacker project
 date: 2026-10-12
-description: How I read live telemetry off my Onewheel Pint S from a Linux laptop, no phone and no Future Motion cloud. Capturing the GemAuth unlock handshake with an Android HCI snoop log, then replaying it from Python with bleak at ~200 Hz.
+description: How I read live telemetry off my Onewheel Pint S from a Linux laptop. The unlock handshake turned out to be a static 20-byte signature bound to the board, so I captured it once with an Android HCI snoop log and replay it from Python with bleak at ~200 Hz.
 image: /images/onewheel-golden-hour.jpg
 alt: My Onewheel Pint S parked on a wood-chip path at golden hour, shot from above as the sun drops behind the tree line.
 imageWidth: 900
@@ -22,22 +22,19 @@ imageHeight: 1906
 draft: true
 ---
 
-The unlock token is a **static 20-byte signature bound to the board**, not a per-session key. The official app just re-sends the same secret every time it connects, which is why I can pull live telemetry off my Onewheel Pint S from a Linux laptop with no phone and no Future Motion cloud in the loop.
+> TLDR; I want live telemetry off my Onewheel Pint S without the phone app. The unlock handshake turned out to be a static 20-byte secret, so I captured it once from the official app and replay it from Python.
 
-I can capture the following: pitch, RPM, motor amps, battery voltage, controller temp, straight to a CSV file at about 200 Hz. It's part 1 of building a small device I can mount on the board itself so I can look down at the stats while riding.
+Pitch, RPM, amps, pack voltage and temps, straight to a CSV file at about 200 Hz, from a laptop. The gate is the handshake Future Motion added, and it turns out to be a **static 20-byte signature bound to the board**. Not a per-session key. The official app sends the same secret every time it connects, so anything that knows those bytes gets the same access.
+
+This is part 1 of building a small device I can mount on the board itself so I can look down at the stats while riding.
 
 ![Onewheel Pint S on a wood-chip path at golden hour](/images/onewheel-golden-hour.jpg)
 
-## Discovery process
-
-The board talks plain BLE GATT with about 30 characteristics, mostly 2-byte big-endian values, under one primary service with a UUID that has been stable since the version 1. The hard part is the unlock handshake Future Motion added on XR and later (thank you online forums!)
-
-![The same board in flat afternoon light before the session got started](/images/onewheel-daytime.jpg)
-
-
 ## What the board exposes
 
-One GATT service:
+The board talks plain BLE GATT with about 30 characteristics, mostly 2-byte big-endian values, under one primary service with a UUID that has been stable since version 1 (thank you online forums!).
+
+![The same board in flat afternoon light before the session got started](/images/onewheel-daytime.jpg)
 
 ```
 e659f300-ea98-11e3-ac10-0800200c9a66
@@ -57,13 +54,13 @@ Every characteristic shares that base. Only the 4-digit prefix changes. Here is 
 | `f3fe` | UartSerialRead | **challenge from board** (20 bytes) |
 | `f3ff` | UartSerialWrite | **your response** (20 bytes) |
 
-Without unlock, the Pint S returns `0x0000` for almost everything and stops sending live notifications after a few seconds. You can still read the static stuff like battery %, hardware rev, and serial number, but the live signals (pitch, RPM, amps) go dark.
+Without unlock, the Pint S returns `0x0000` for almost everything and stops sending live notifications after a few seconds. Battery %, hardware rev, and serial number stay readable. The live signals don't.
 
 ---
 
-## The GemAuth handshake
+## The handshake
 
-Starting with the XR (and continuing on Pint / Pint X / GT), Future Motion added a challenge-response:
+Starting with the XR (and continuing on Pint / Pint X / GT), Future Motion added a challenge response:
 
 1. A few seconds after you connect, the board pushes a 20-byte challenge on `f3fe`.
 2. You have about 30 s to write a correct 20-byte response on `f3ff`.
@@ -75,9 +72,9 @@ The XR algorithm is open-sourced (the `gemurf` Go project, ~150 lines):
 response = b"\x43\x52\x58" + md5(b"\x43\x52\x58" + challenge[3:]).digest()[:16] + checksum
 ```
 
-Where `checksum` is the XOR of the 19 preceding bytes. It is deterministic, with no per-session key involved.
+Where `checksum` is the XOR of the 19 preceding bytes. It's deterministic, with no per-session key involved.
 
-**The Pint changed this.** The response algorithm is different, and Future Motion tightened it. There are working implementations floating around, mostly Java (pOnewheel) and a few Go ports. I never found a Python version I was happy enough with to just use.
+**The Pint changed this.** The response algorithm is different, and Future Motion tightened it. There are working implementations floating around, mostly Java (pOnewheel) and a few Go ports. I never found a Python version I was happy with.
 
 ---
 
@@ -120,7 +117,7 @@ await client.connect()
 await client.write_gatt_char(F3FF, UNLOCK_MAGIC, response=True)
 ```
 
-Notifications start flowing within a second. I captured 4,738 events over 23 seconds at about 200 Hz on the primary channel, pitch through temp, all from a laptop.
+Notifications start flowing within a second. I captured 4,738 events over 23 seconds at about 200 Hz on the primary channel, pitch through temp.
 
 ---
 
@@ -149,19 +146,18 @@ Once it's unlocked, I can log a full ride to CSV and plot it after. Pitch, RPM, 
 
 - The unlock token is **board-specific**. Change boards, redo the snoop capture.
 - Future Motion could change the algorithm in a firmware update. The XR one has been stable for years; the Pint one might be too. But the data lives on the board, not in their cloud. If they ever gate telemetry behind a login or kill the API, this method still works as long as the handshake stays the same.
-- This is not a jailbreak. I am not writing to flash or modifying firmware. I am completing the same handshake the official app does, from a different central.
+- This is not a jailbreak. I'm not writing to flash or modifying firmware. I'm completing the same handshake the official app does, from a different central.
 - Do not write to `f302` (riding mode) or the light characteristics while riding. You can nose-dive yourself.
 
 ---
 
 ## Why I bothered
 
-I have 100+ hours on this board. I wanted to know what the motor is actually doing on a hill climb, whether it hits the current limit or the cells start sagging unevenly before the app ever shows a warning. I also plan to make it a device that I can stick on the top of it so I can look down at battery and other stats.
+I've put 100+ hours on this board. I wanted to know what the motor does on a hill climb, whether it hits the current limit or the cells sag unevenly before the app shows a warning.
 
 The board is talking BLE. You just need to know which characteristic to write to.
 
-
 ## Tools and gear
 
-- [USB Bluetooth adapter](https://link.amazon/B0diKZrtS?tag=dctm-20) — a dedicated dongle makes BlueZ scanning and the `bleak` client more reliable than a laptop's built-in radio.
-- [Raspberry Pi 5](https://link.amazon/B0bHT2yp5?tag=dctm-20) — this becomes the base for part 2, where I mount a small display on the board to read the live stats while riding.
+- [USB Bluetooth adapter](https://link.amazon/B0diKZrtS?tag=dctm-20). A dedicated dongle makes BlueZ scanning and the `bleak` client more reliable than a laptop's built-in radio.
+- [Raspberry Pi 5](https://link.amazon/B0bHT2yp5?tag=dctm-20). This becomes the base for part 2, a small display on the board for the live stats.

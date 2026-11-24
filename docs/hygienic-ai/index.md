@@ -1,0 +1,39 @@
+> **AI;DR** — This post was written with AI assistance from my own local model, then edited by me. The setup and the numbers are real.
+
+I took two weeks off in April and came back feeling like three months had passed in the agentic world. A lot had happened while I wasn't watching.
+
+My notes from the last year make the speed concrete. In four months I swapped my local coding model four times: Qwopus, then Qwen3.8 once a CUDA bug got overturned, then a Strata trial, then a fine-tuned 27B that became the boot default. When I finally rebuilt llama.cpp it was six hundred and eighty commits behind.
+
+A thread on LinkedIn put words to that a few days ago. Someone called it "hygienic AI." Use it for some things, not all of them. I'd been turning that over in my head for a while. This is what I actually changed over the last year so coming back from a vacation doesn't feel like missing three months.
+
+## The trap is re-absorption
+
+One comment stuck with me: we measure productivity by volume, and an improvement eventually becomes the baseline. Another put it as a question. Where are we headed if every hour AI saves just turns into more work?
+
+Re-absorption is letting the saved time get eaten by more work. If the answer to "the model wrote that in ten minutes" is "great, now do three more," you haven't bought anything. You've just lowered the floor, and the expectation follows it down.
+
+The first decision is where the time goes. For me the answer was already written down. I have a note in Joplin titled *Wants* that says, "What I want when I come home? It's peace. I want peace from work." The hours the machine saves go to family, the home lab, coffee, and reading, not a bigger queue.
+
+## Let the machine do the keeping-up
+
+Deciding where the time goes is easy to say and hard to hold onto when there's a feed full of new things. The part that actually broke my "keeping up" habit was automating the keeping-up itself. Three things, all local, all on hardware I own.
+
+First, a coding model that runs on my desk. A 27B coder on an RTX 3090 Ti, served over the LAN to my editor. No API bill, and nothing leaves the house. I wrote about the model choice separately. The assistant is something I own and can leave running, not a subscription I'm afraid to fall behind on.
+
+Then scheduled agents. I have cron jobs that run checks on their own: a daily standup prep, a PR merge-readiness sweep, rollbar triage. They ping me with a link when they finish. The "did anything happen while I was away" question has an answer that doesn't require me to sit in front of a screen refreshing feeds. That's the piece that lets me take a day off, because the machine watches the perimeter while I'm gone.
+
+And a memory palace. I stopped trying to remember things and started making them searchable instead. Remembering is hard, but searching for something can be made easy. The context that used to live in my head, decisions and preferences and what we decided last time, lives in a store the agents query before they answer.
+
+## The surprise
+
+One thing I didn't expect: when the agents started doing real work, I felt worse for a while. Less hands on the keyboard, less of that "I solved this" feeling. A lot of people in that thread are still in that place. For me it was temporary. The feeling came back once I spent my time building the tools instead of doing the tasks. If you automate a chunk of your work and then feel like a fraud, that's normal, and it passes.
+
+## What I don't do
+
+Hygienic means there's a line. I don't let the models plan my life or decide what matters. I stay off the feeds, and a fast model isn't a reason to take on more. Derek Robbins, who I talk to about this a lot, has a rule I agree with: before you use the force multiplier, you have to be able to do it by hand. I still write code by hand when it's worth it, because that's how I stay the expert in the room.
+
+## Where this leaves me
+
+I'm not fixed, and I'm not optimizing for output anymore. My 2026 goals are better relationships with my wife and family, and self-improvement. When I come back from a vacation and it doesn't feel like I missed three months, that's the metric.
+
+The next thing I'm building is a morning brief that assembles the standup prep, the PR sweep, and the rollbar triage into one page I read with coffee. I'll write it up when it's working.

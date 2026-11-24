@@ -424,8 +424,8 @@
       "title": "Top 5 Nuget Packages",
       "summary": "Top nuget packages in dotnet including fluent validation, counting lines, dependency injection, retry logic, and testing/mocking libraries.",
       "image": "/images/logo-header.svg",
-      "date_published": "2022-03-07T00:00:00.000Z",
-      "date_modified": "2022-03-07T00:00:00.000Z",
+      "date_published": "2022-03-07T08:00:00.000Z",
+      "date_modified": "2022-03-07T08:00:00.000Z",
       "tags": [
         "Nuget",
         "Fluent validation",
