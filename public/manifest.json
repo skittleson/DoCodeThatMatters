@@ -6,7 +6,7 @@
   "display": "standalone",
   "start_url": "/",
   "short_name": "DCTM",
-  "theme_color": "#232b32",
+  "theme_color": "#0d1117",
   "description": "Personal blog about software development, 3d printing, diy, maker, and c#",
   "orientation": "any",
   "background_color": "#ffffff",

@@ -37,19 +37,19 @@ const formatDate = (d: Date) =>
           )}
           <div class="blog-item flex-1">
             {post.data.date && (
-              <span class="text-xs text-[#a0aec0] font-mono" title={post.data.date.toISOString()}>
+              <span class="text-xs text-(--color-text-muted) font-mono" title={post.data.date.toISOString()}>
                 {formatDate(post.data.date)}
               </span>
             )}
             <h2 class="text-lg font-bold mt-1 mb-2">
-              <a href={`/${stripExt(post.id)}/`} class="text-[#9da2ff] hover:underline">
+              <a href={`/${stripExt(post.id)}/`} class="text-(--color-accent) hover:underline">
                 {post.data.title}
               </a>
             </h2>
             {post.data.description && (
-              <p class="text-sm text-[#a0aec0] font-mono mb-2">{post.data.description}</p>
+              <p class="text-sm text-(--color-text-muted) font-mono mb-2">{post.data.description}</p>
             )}
-            <a href={`/${stripExt(post.id)}/`} class="text-xs text-[#9da2ff] hover:underline font-mono">
+            <a href={`/${stripExt(post.id)}/`} class="text-xs text-(--color-accent) hover:underline font-mono">
               Read More &rarr;
             </a>
           </div>

@@ -28,7 +28,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
       Hi, I'm <strong>Spencer</strong> <span class="wave">👋</span>
     </h1>
 
-    <p class="mb-4 text-[#a0aec0] font-mono text-sm leading-relaxed">
+    <p class="mb-4 text-(--color-text-muted) font-mono text-sm leading-relaxed">
       I like to make things work... in software, on the bench, and around the house.
       I'm a software engineer who spends most of my days building and scaling systems
       with a focus on .NET, authentication, and database design. When the compiler
@@ -36,7 +36,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
       or automating another part of the house.
     </p>
 
-    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+    <p class="mb-6 text-(--color-text-muted) font-mono text-sm leading-relaxed">
       This site is where I write down what i build and what i learn along the way.
       The name says it: do code that matters. Build something real, ship it, and make
       sure it helps someone.
@@ -44,34 +44,34 @@ import ContactInfo from '../../components/ContactInfo.astro';
 
     <h2 class="text-xl font-bold mb-4">Things i've built</h2>
 
-    <ul class="mb-6 space-y-3 text-[#a0aec0] font-mono text-sm leading-relaxed">
+    <ul class="mb-6 space-y-3 text-(--color-text-muted) font-mono text-sm leading-relaxed">
       <li>
-        <span class="text-[#f5f5f5]">OAuth / SSO.</span>{' '}
+        <span class="text-(--color-text)">OAuth / SSO.</span>{' '}
         Worked through token exchange and SSO flows end to end.{' '}
-        <a href="/oauth-token-exchange-sso-demo/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+        <a href="/oauth-token-exchange-sso-demo/" class="text-(--color-accent) hover:underline">Read the writeup</a>.
       </li>
       <li>
-        <span class="text-[#f5f5f5]">Rust + mixed-OS tooling.</span>{' '}
+        <span class="text-(--color-text)">Rust + mixed-OS tooling.</span>{' '}
         Built a custom HTTP proxy in Rust to get corporate VPN working on Linux.{' '}
-        <a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+        <a href="/building-custom-http-proxy-rust-mixed-os-workflows/" class="text-(--color-accent) hover:underline">Read the writeup</a>.
       </li>
       <li>
-        <span class="text-[#f5f5f5]">Home automation.</span>{' '}
+        <span class="text-(--color-text)">Home automation.</span>{' '}
         Sprinklers, sensors, and smart switches that run local first.{' '}
-        <a href="/automate-sprinkler-with-tasmota/" class="text-[#9da2ff] hover:underline">The sprinkler build</a>
+        <a href="/automate-sprinkler-with-tasmota/" class="text-(--color-accent) hover:underline">The sprinkler build</a>
         {' '}&{' '}
-        <a href="/neosiren-tasmota-local-first-cloud-assisted-iot/" class="text-[#9da2ff] hover:underline">a local first multi sensor</a>.
+        <a href="/neosiren-tasmota-local-first-cloud-assisted-iot/" class="text-(--color-accent) hover:underline">a local first multi sensor</a>.
       </li>
       <li>
-        <span class="text-[#f5f5f5]">Hardware that ships.</span>{' '}
+        <span class="text-(--color-text)">Hardware that ships.</span>{' '}
         A 3D printed upgrade for an old printer.{' '}
-        <a href="/3dprinter-duplicator-i3-upgrade/" class="text-[#9da2ff] hover:underline">Read the writeup</a>.
+        <a href="/3dprinter-duplicator-i3-upgrade/" class="text-(--color-accent) hover:underline">Read the writeup</a>.
       </li>
     </ul>
 
     <h2 class="text-xl font-bold mb-4">How i got here</h2>
 
-    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+    <p class="mb-6 text-(--color-text-muted) font-mono text-sm leading-relaxed">
       I started out wanting to understand how things worked, and the only way to find
       out was to take them apart. That turned into a career building software for a
       living, and a habit of building stuff for fun that never really went away. The
@@ -81,13 +81,13 @@ import ContactInfo from '../../components/ContactInfo.astro';
 
     <h2 class="text-xl font-bold mb-4">What im after</h2>
 
-    <p class="mb-6 text-[#a0aec0] font-mono text-sm leading-relaxed">
+    <p class="mb-6 text-(--color-text-muted) font-mono text-sm leading-relaxed">
       My goal is simple: build software that's efficient, reliable, and a joy for other
       developers to use. Then write down what i learned so it helps someone else. If
       you're reading this, you're probably one of those someones.
     </p>
 
-    <p class="mb-6 text-[#f5f5f5] font-mono text-sm">Interested in consulting?</p>
+    <p class="mb-6 text-(--color-text) font-mono text-sm">Interested in consulting?</p>
 
     <ContactInfo />
 
@@ -101,7 +101,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
       onsubmit="event.preventDefault(); fetchContactRelay(this);"
     >
       <div>
-        <label for="emailFormControlInput" class="block text-sm font-mono text-[#a0aec0] mb-1">
+        <label for="emailFormControlInput" class="block text-sm font-mono text-(--color-text-muted) mb-1">
           Email address
         </label>
         <input
@@ -109,11 +109,11 @@ import ContactInfo from '../../components/ContactInfo.astro';
           id="emailFormControlInput"
           placeholder="name@example.com"
           required
-          class="w-full bg-[#1a2129] border border-white/20 rounded px-3 py-2 text-sm font-mono text-[#f5f5f5] placeholder-[#a0aec0] focus:outline-none focus:border-[#9da2ff]"
+          class="w-full bg-(--color-bg) border border-white/20 rounded px-3 py-2 text-sm font-mono text-(--color-text) placeholder-(--color-text-muted) focus:outline-none focus:border-(--color-accent)"
         />
       </div>
       <div>
-        <label for="messageFormControlInput" class="block text-sm font-mono text-[#a0aec0] mb-1">
+        <label for="messageFormControlInput" class="block text-sm font-mono text-(--color-text-muted) mb-1">
           Message
         </label>
         <textarea
@@ -121,7 +121,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
           rows="6"
           minlength="10"
           required
-          class="w-full bg-[#1a2129] border border-white/20 rounded px-3 py-2 text-sm font-mono text-[#f5f5f5] placeholder-[#a0aec0] focus:outline-none focus:border-[#9da2ff] resize-y"
+          class="w-full bg-(--color-bg) border border-white/20 rounded px-3 py-2 text-sm font-mono text-(--color-text) placeholder-(--color-text-muted) focus:outline-none focus:border-(--color-accent) resize-y"
         ></textarea>
       </div>
       <div>
@@ -129,7 +129,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
           id="submitFormControlInput"
           type="submit"
           value="Send"
-          class="bg-[#9da2ff] text-[#232b32] font-mono text-sm px-6 py-2 rounded cursor-pointer hover:bg-[#b8bcff] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="bg-(--color-accent) text-(--color-bg) font-mono text-sm px-6 py-2 rounded cursor-pointer hover:bg-(--color-accent-hover) transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         />
       </div>
     </form>
@@ -138,7 +138,7 @@ import ContactInfo from '../../components/ContactInfo.astro';
       <p class="font-mono text-sm font-bold mb-1" style="color: var(--color-accent);">
         &check; Message sent
       </p>
-      <p class="font-mono text-sm text-[#a0aec0]">
+      <p class="font-mono text-sm text-(--color-text-muted)">
         Thanks for reaching out... i'll get back to you soon.
       </p>
     </div>
