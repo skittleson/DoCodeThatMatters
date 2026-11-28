@@ -1,0 +1,127 @@
+---
+---
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: none;
+    font-family: "Inconsolata", monospace;
+    font-size: 0.875rem;
+    padding: 0.75rem 1rem;
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    background: var(--color-surface, #1e262f);
+    border-top: 1px solid var(--color-border, #2f3a45);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .sticky-cta.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .sticky-cta-inner {
+    max-width: 64rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .sticky-cta-text {
+    color: var(--color-text);
+  }
+
+  .sticky-cta-link {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: opacity 0.15s ease;
+  }
+
+  .sticky-cta-link:hover {
+    opacity: 0.85;
+  }
+
+  .sticky-cta-dismiss {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem;
+    line-height: 1;
+    transition: color 0.15s ease;
+  }
+
+  .sticky-cta-dismiss:hover {
+    color: var(--color-text);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-cta {
+      transition: none;
+    }
+  }
+</style>
+
+<div class="sticky-cta" id="sticky-cta">
+  <div class="sticky-cta-inner">
+    <span class="sticky-cta-text">Need help with a project like this?</span>
+    <a href="/about/#contact" class="sticky-cta-link">Hire me →</a>
+    <button class="sticky-cta-dismiss" aria-label="Dismiss" id="sticky-cta-dismiss">×</button>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const bar = document.getElementById('sticky-cta');
+    const dismissBtn = document.getElementById('sticky-cta-dismiss');
+    if (!bar || !dismissBtn) return;
+
+    // If already dismissed, never show
+    if (localStorage.getItem('sticky-cta-dismissed') === '1') return;
+
+    const handleScroll = () => {
+      const scrollHeight = document.body.scrollHeight;
+      const scrollTop = window.scrollY;
+      const innerHeight = window.innerHeight;
+
+      if (scrollHeight === 0) return;
+
+      const ratio = (scrollTop + innerHeight) / scrollHeight;
+
+      if (scrollTop > innerHeight * 0.5 && ratio > 0.75) {
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+    };
+
+    // Passive listener — only toggles a class
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
+
+    // Dismiss
+    dismissBtn.addEventListener('click', () => {
+      bar.classList.remove('visible');
+      localStorage.setItem('sticky-cta-dismissed', '1');
+    });
+  })();
+</script>

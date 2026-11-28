@@ -87,9 +87,65 @@ import ContactInfo from '../../components/ContactInfo.astro';
       you're reading this, you're probably one of those someones.
     </p>
 
-    <p class="mb-6 text-(--color-text) font-mono text-sm">Interested in consulting?</p>
+    <section id="contact">
+      <p class="mb-6 text-(--color-text) font-mono text-sm">Interested in consulting?</p>
 
-    <ContactInfo />
+      <ContactInfo />
+
+      <h2 class="text-xl font-bold mb-4">How working together works</h2>
+
+      <div class="mb-6 border border-white/10 rounded overflow-hidden">
+        <table class="w-full text-left font-mono text-sm text-(--color-text-muted)">
+          <thead>
+            <tr class="text-(--color-text) border-b border-white/10">
+              <th class="px-3 py-2 font-bold">Engagement</th>
+              <th class="px-3 py-2 font-bold">What you get</th>
+              <th class="px-3 py-2 font-bold">Indicative cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-white/10">
+              <td class="px-3 py-2">Hourly</td>
+              <td class="px-3 py-2">Debugging, code review, unblocking</td>
+              <td class="px-3 py-2">$$/hr</td>
+            </tr>
+            <tr class="border-b border-white/10">
+              <td class="px-3 py-2">Day rate</td>
+              <td class="px-3 py-2">Feature work, migrations, integrations</td>
+              <td class="px-3 py-2">$$$/day</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2">Fixed scope</td>
+              <td class="px-3 py-2">Defined deliverable, quoted up front</td>
+              <td class="px-3 py-2">Quote</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="text-xl font-bold mb-4">Consulting FAQ</h2>
+
+      <div class="mb-6 space-y-4 font-mono text-sm text-(--color-text-muted) leading-relaxed">
+        <div>
+          <h3 class="text-(--color-text) font-bold mb-1">What do you work with?</h3>
+          <p>
+            .NET, authentication/SSO, databases, plus embedded/Linux/home-automation side projects.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-(--color-text) font-bold mb-1">Remote and time zones?</h3>
+          <p>Remote-first, US Central time; async-friendly.</p>
+        </div>
+        <div>
+          <h3 class="text-(--color-text) font-bold mb-1">How do I start?</h3>
+          <p>
+            Use the form below or email
+            <a href="mailto:spencer@docodethatmatters.com" class="text-(--color-accent) hover:underline">spencer@docodethatmatters.com</a>
+            with a few lines about the problem.
+          </p>
+        </div>
+      </div>
+    </section>
 
     <hr class="my-8 border-white/10" />
 

@@ -5,6 +5,7 @@ import type { CollectionEntry } from 'astro:content';
 import { stripExt } from '../lib/markdownToText';
 import { buildTFIDF, getRelatedPosts } from '../lib/text-similarity';
 import ConsultingCallout from '../components/ConsultingCallout.astro';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -249,6 +250,8 @@ const localWebp = isLocalImage
             </section>
           )}
         </article>
+
+        <StickyCta />
 
         <hr class="my-8" />
 
