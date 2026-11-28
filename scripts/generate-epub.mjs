@@ -15,6 +15,7 @@ const outputEpub = join(rootDir, 'docs', 'blog.epub');
 const publicDir = join(rootDir, 'public');
 const coverPath = join(__dirname, 'assets', 'epub-cover.png');
 const fontPath = join(publicDir, 'fonts', 'Inconsolata.woff2');
+const ttfPath = join(__dirname, 'assets', 'Inconsolata.ttf');
 
 // Collect all non-draft slugs for internal link resolution
 const allSlugs = new Set();
@@ -220,7 +221,8 @@ async function generateEpub() {
     const title = post.title;
     const dateStr = formatDate(post.date);
     const desc = post.description ? `<p class="lede">${escapeHtml(post.description)}</p>` : '';
-    let data = `<h1>${escapeHtml(title)}</h1><p class="post-date">${dateStr}</p>${desc}${html}`;
+    const my = post.date ? post.date.toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }) : '';
+    let data = `<div class="chapter-head"><p class="post-date">${my}</p></div><h1>${escapeHtml(title)}</h1>${desc}${html}`;
     // Append FAQ if present
     if (Array.isArray(post.faq) && post.faq.length) {
       data += '<h2>Common questions</h2>';
@@ -231,6 +233,11 @@ async function generateEpub() {
       }
     }
     return { title, filename: post.slug, data };
+  });
+  chapters.unshift({
+    title: 'Title Page',
+    filename: 'title-page',
+    data: '<div class="title-page"><h1 class="tp-title">Code That Matters</h1><p class="tp-sub">Field notes from a builder</p><p class="tp-range">2016 &ndash; 2026</p><p class="tp-url">docodethatmatters.com</p></div>',
   });
 
   const epub = new EPub(
@@ -244,7 +251,7 @@ async function generateEpub() {
       date: new Date().toISOString().slice(0, 10),
       lang: 'en',
       css: epubCss,
-      fonts: [fontPath],
+      fonts: existsSync(ttfPath) ? [fontPath, ttfPath] : [fontPath],
       version: 3,
       content: chapters,
     },
@@ -261,24 +268,28 @@ async function generateEpub() {
 }
 
 const epubCss = `
-@font-face { font-family: 'Inconsolata'; src: url('fonts/Inconsolata.woff2') format('woff2'); }
-body { font-family: Georgia, 'DejaVu Serif', serif; line-height: 1.65; margin: 1em 0.5em; }
-h1, h2, h3, h4 { font-family: 'Inconsolata', monospace; line-height: 1.25; margin: 1.4em 0 0.5em; }
-h1 { font-size: 1.5em; }
-h2 { font-size: 1.25em; border: none; padding: 0; }
-h3 { font-size: 1.1em; }
-.post-date { color: #6b7280; font-family: 'Inconsolata', monospace; font-size: 0.9em; margin: 0 0 0.4em; }
-.lede { font-style: italic; color: #4b5563; margin: 0 0 1.5em; }
-p { margin: 0 0 1em; }
-code { font-family: 'DejaVu Sans Mono', Consolas, monospace; background: #f4f4f5; border-radius: 3px; padding: 0.1em 0.3em; font-size: 0.88em; }
-pre { background: #f4f4f5; border-radius: 4px; padding: 0.9em; white-space: pre-wrap; word-wrap: break-word; font-size: 0.85em; }
-pre code { background: none; padding: 0; }
-a { color: #4f46e5; }
-img { max-width: 100%; height: auto; }
-blockquote { border-left: 3px solid #d1d5db; margin: 1em 0; padding: 0.4em 1em; color: #4b5563; }
-table { border-collapse: collapse; width: 100%; font-size: 0.9em; margin: 1em 0; }
-th, td { border: 1px solid #d1d5db; padding: 0.35em 0.6em; text-align: left; }
-hr { border: none; border-top: 1px solid #d1d5db; margin: 2em 0; }
+@font-face { font-family:'Inconsolata'; src:url('Inconsolata.woff2') format('woff2'),url('Inconsolata.ttf') format('truetype'); font-weight:400; font-style:normal; }
+* { box-sizing: border-box; }
+body { font-family: serif; line-height: 1.6; }
+h1,h2,h3,h4 { font-family:'Inconsolata',monospace; font-weight:400; text-align:left; margin:1.6em 0 0.6em 0; }
+h1 { font-size:1.6em; page-break-before:always; }
+h2 { font-size:1.3em; } h3 { font-size:1.1em; }
+a { color:#0b6e75; }
+img { max-width:100%; height:auto; }
+pre { white-space:pre-wrap; word-break:break-word; font-family:'Inconsolata',monospace; font-size:0.85em; border-left:0.2em solid #0b6e75; padding:0.6em 0.8em; margin:1em 0; background:none; }
+code { font-family:'Inconsolata',monospace; font-size:0.85em; }
+blockquote { margin:1em 0; padding-left:1em; border-left:0.2em solid #0b6e75; font-style:italic; }
+table { border-collapse:collapse; margin:1em 0; }
+th,td { border:1px solid #d4d4d8; padding:0.4em 0.6em; text-align:left; }
+hr { border:none; border-top:1px solid #d4d4d8; margin:2em 0; }
+.post-date { font-family:'Inconsolata',monospace; font-size:0.75em; letter-spacing:0.15em; color:#6b7280; margin:0 0 0.5em; }
+.lede { font-style:italic; margin:0 0 1.5em; }
+.chapter-head { margin:0; }
+.title-page { text-align:center; margin-top:6em; }
+.tp-title { font-family:'Inconsolata',monospace; font-size:2.2em; letter-spacing:0.08em; margin-bottom:0.3em; page-break-before:avoid; }
+.tp-sub { font-family:'Inconsolata',monospace; font-size:1em; letter-spacing:0.2em; }
+.tp-range { font-family:'Inconsolata',monospace; font-size:0.85em; color:#6b7280; letter-spacing:0.15em; }
+.tp-url { font-family:'Inconsolata',monospace; font-size:0.8em; letter-spacing:0.1em; margin-top:3em; }
 `;
 
 generateEpub().catch((err) => {
